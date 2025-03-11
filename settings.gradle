@@ -1,0 +1,19 @@
+
+pluginManagement {
+    repositories {
+    }
+    buildscript {
+        repositories {
+            mavenCentral()
+        }
+        dependencies {
+            classpath group: 'org.liquibase', name: 'liquibase-core', version: "${liquibaseVersion}"
+        }
+    }
+    plugins {
+        id 'com.gorylenko.gradle-git-properties' version "${gitPropertiesPluginVersion}"
+        id "org.liquibase.gradle" version "${liquibasePluginVersion}"
+    }
+}
+
+rootProject.name = "gateway"

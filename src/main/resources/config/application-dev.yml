@@ -1,0 +1,80 @@
+
+logging:
+  level:
+    ROOT: DEBUG
+    org.hibernate.SQL: DEBUG
+    com.dazzle.asklepios: DEBUG
+
+management:
+  zipkin: # Use the "zipkin" Maven profile to have the Spring Cloud Zipkin dependencies
+    tracing:
+      endpoint: http://localhost:9411/api/v2/spans
+  tracing:
+    sampling:
+      probability: 1.0 # report 100% of traces
+
+spring:
+  devtools:
+    restart:
+      enabled: true
+      additional-exclude: static/**
+    livereload:
+      enabled: false # we use Webpack dev server + BrowserSync for livereload
+  jackson:
+    serialization:
+      indent-output: true
+  liquibase:
+    # Remove 'faker' if you do not want the sample data to be loaded automatically
+    contexts: dev, faker
+    url: jdbc:postgresql://localhost:5432/asklepios
+  mail:
+    host: localhost
+    port: 25
+    username:
+    password:
+  messages:
+    cache-duration: PT1S # 1 second, see the ISO 8601 standard
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/asklepios
+    username: postgres
+    password: 147741
+  thymeleaf:
+    cache: false
+
+server:
+  port: 8080
+  # make sure requests the proxy uri instead of the server one
+  forward-headers-strategy: native
+
+asklepios:
+  gateway:
+    rate-limiting:
+      enabled: false
+      limit: 100000
+      duration-in-seconds: 3600
+  # CORS is only enabled by default with the "dev" profile
+  cors:
+    allowed-origins: 'http://localhost:8100,https://localhost:8100'
+    allowed-origin-patterns: 'https://*.githubpreview.dev'
+    allowed-methods: '*'
+    allowed-headers: '*'
+    exposed-headers: 'Authorization,Link,X-Total-Count,X-${asklepios.clientApp.name}-alert,X-${asklepios.clientApp.name}-error,X-${asklepios.clientApp.name}-params'
+    allow-credentials: true
+    max-age: 1800
+  security:
+    authentication:
+      jwt:
+        # This token must be encoded using Base64 and be at least 256 bits long (you can type `openssl rand -base64 64` on your command line to generate a 512 bits one)
+        base64-secret: Y2RiNDRmMGM3ODZkM2FhMTEwYWYxZGE0NjQ3ODM5YThkYWFjZWYzMzY2ZDVkMTVhNGEyNDNmZTM0MzQ5NTRhMmVlMmFkNGVlODBmYTkyZWE4ZWYyMDRhZDJiZGU4YzJhMGEyN2U5NGUzMmNmNWU4Yzk2MDVkNzhmY2M3YTgyZDM=
+        # Token is valid 24 hours
+        token-validity-in-seconds: 86400
+        token-validity-in-seconds-for-remember-me: 2592000
+  mail:
+    base-url: http://127.0.0.1:8080
+  logging:
+    use-json-format: false # By default, logs are not in Json format
+    logstash: # Forward logs to logstash over a socket, used by LoggingConfiguration
+      enabled: false
+      host: localhost
+      port: 5000
+      ring-buffer-size: 512
