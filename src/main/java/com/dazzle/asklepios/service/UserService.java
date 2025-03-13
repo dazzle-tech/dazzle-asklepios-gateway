@@ -5,19 +5,15 @@ import com.dazzle.asklepios.domain.Authority;
 import com.dazzle.asklepios.domain.User;
 import com.dazzle.asklepios.repository.AuthorityRepository;
 import com.dazzle.asklepios.repository.UserRepository;
-import com.dazzle.asklepios.security.AuthoritiesConstants;
 import com.dazzle.asklepios.security.SecurityUtils;
 import com.dazzle.asklepios.service.dto.AdminUserDTO;
-import com.dazzle.asklepios.service.dto.UserDTO;
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,20 +41,6 @@ public class UserService {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityRepository = authorityRepository;
-    }
-
-    @Transactional
-    public Mono<User> activateRegistration(String key) {
-        LOG.debug("Activating user for activation key {}", key);
-        return userRepository
-            .findOneByActivationKey(key)
-            .flatMap(user -> {
-                // activate given user for the registration key.
-                user.setActivated(true);
-                user.setActivationKey(null);
-                return saveUser(user);
-            })
-            .doOnNext(user -> LOG.debug("Activated user: {}", user));
     }
 
     @Transactional
@@ -92,59 +74,6 @@ public class UserService {
     }
 
     @Transactional
-    public Mono<User> registerUser(AdminUserDTO userDTO, String password) {
-        return userRepository
-            .findOneByLogin(userDTO.getLogin().toLowerCase())
-            .flatMap(existingUser -> {
-                if (!existingUser.isActivated()) {
-                    return userRepository.delete(existingUser);
-                } else {
-                    return Mono.error(new UsernameAlreadyUsedException());
-                }
-            })
-            .then(userRepository.findOneByEmailIgnoreCase(userDTO.getEmail()))
-            .flatMap(existingUser -> {
-                if (!existingUser.isActivated()) {
-                    return userRepository.delete(existingUser);
-                } else {
-                    return Mono.error(new EmailAlreadyUsedException());
-                }
-            })
-            .publishOn(Schedulers.boundedElastic())
-            .then(
-                Mono.fromCallable(() -> {
-                    User newUser = new User();
-                    String encryptedPassword = passwordEncoder.encode(password);
-                    newUser.setLogin(userDTO.getLogin().toLowerCase());
-                    // new user gets initially a generated password
-                    newUser.setPassword(encryptedPassword);
-                    newUser.setFirstName(userDTO.getFirstName());
-                    newUser.setLastName(userDTO.getLastName());
-                    if (userDTO.getEmail() != null) {
-                        newUser.setEmail(userDTO.getEmail().toLowerCase());
-                    }
-                    newUser.setImageUrl(userDTO.getImageUrl());
-                    newUser.setLangKey(userDTO.getLangKey());
-                    // new user is not active
-                    newUser.setActivated(false);
-                    // new user gets registration key
-                    newUser.setActivationKey(RandomUtil.generateActivationKey());
-                    return newUser;
-                })
-            )
-            .flatMap(newUser -> {
-                Set<Authority> authorities = new HashSet<>();
-                return authorityRepository
-                    .findById(AuthoritiesConstants.USER)
-                    .map(authorities::add)
-                    .thenReturn(newUser)
-                    .doOnNext(user -> user.setAuthorities(authorities))
-                    .flatMap(this::saveUser)
-                    .doOnNext(user -> LOG.debug("Created Information for User: {}", user));
-            });
-    }
-
-    @Transactional
     public Mono<User> createUser(AdminUserDTO userDTO) {
         User user = new User();
         user.setLogin(userDTO.getLogin().toLowerCase());
@@ -159,10 +88,7 @@ public class UserService {
         } else {
             user.setLangKey(userDTO.getLangKey());
         }
-        return Flux.fromIterable(userDTO.getAuthorities() != null ? userDTO.getAuthorities() : new HashSet<>())
-            .flatMap(authorityRepository::findById)
-            .doOnNext(authority -> user.getAuthorities().add(authority))
-            .then(Mono.just(user))
+        return (Mono.just(user))
             .publishOn(Schedulers.boundedElastic())
             .map(newUser -> {
                 String encryptedPassword = passwordEncoder.encode(RandomUtil.generatePassword());
@@ -199,12 +125,6 @@ public class UserService {
                 Set<Authority> managedAuthorities = user.getAuthorities();
                 managedAuthorities.clear();
                 return user;
-//                return userRepository
-//                    .deleteUserAuthorities(user.getId())
-//                    .thenMany(Flux.fromIterable(userDTO.getAuthorities()))
-//                    .flatMap(authorityRepository::findById)
-//                    .map(managedAuthorities::add)
-//                    .then(Mono.just(user));
             })
             .flatMap(this::saveUser)
             .doOnNext(user -> LOG.debug("Changed Information for User: {}", user))
@@ -257,15 +177,9 @@ public class UserService {
                     user.setCreatedBy(login);
                 }
                 user.setLastModifiedBy(login);
-                // Saving the relationship can be done in an entity callback
-                // once https://github.com/spring-projects/spring-data-r2dbc/issues/215 is done
+
                 return userRepository
-                    .save(user)
-                    .flatMap(savedUser ->
-                        Flux.fromIterable(user.getAuthorities())
-                            .flatMap(authority -> userRepository.saveUserRole(savedUser.getId(), 1L))
-                            .then(Mono.just(savedUser))
-                    );
+                    .save(user);
             });
     }
 
@@ -294,43 +208,18 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public Flux<UserDTO> getAllPublicUsers(Pageable pageable) {
-        return userRepository.findAllByIdNotNullAndActivatedIsTrue(pageable).map(UserDTO::new);
-    }
-
-    @Transactional(readOnly = true)
     public Mono<Long> countManagedUsers() {
         return userRepository.count();
     }
 
     @Transactional(readOnly = true)
     public Mono<User> getUserWithAuthoritiesByLogin(String login) {
-        return userRepository.findOneWithAuthoritiesByEmailIgnoreCase(login);
+        return userRepository.findOneWithAuthoritiesByLogin(login);
     }
 
     @Transactional(readOnly = true)
     public Mono<User> getUserWithAuthorities() {
-        return SecurityUtils.getCurrentUserLogin().flatMap(userRepository::findOneWithAuthoritiesByEmailIgnoreCase);
-    }
-
-    /**
-     * Not activated users should be automatically deleted after 3 days.
-     * <p>
-     * This is scheduled to get fired every day, at 01:00 (am).
-     */
-    @Scheduled(cron = "0 0 1 * * ?")
-    public void removeNotActivatedUsers() {
-        removeNotActivatedUsersReactively().blockLast();
-    }
-
-    @Transactional
-    public Flux<User> removeNotActivatedUsersReactively() {
-        return userRepository
-            .findAllByActivatedIsFalseAndActivationKeyIsNotNullAndCreatedDateBefore(
-                LocalDateTime.ofInstant(Instant.now().minus(3, ChronoUnit.DAYS), ZoneOffset.UTC)
-            )
-            .flatMap(user -> userRepository.delete(user).thenReturn(user))
-            .doOnNext(user -> LOG.debug("Deleted User: {}", user));
+        return SecurityUtils.getCurrentUserLogin().flatMap(userRepository::findOneWithAuthoritiesByLogin);
     }
 
     /**
@@ -355,10 +244,6 @@ public class UserService {
         }
 
         public static String generatePassword() {
-            return generateRandomAlphanumericString();
-        }
-
-        public static String generateActivationKey() {
             return generateRandomAlphanumericString();
         }
 

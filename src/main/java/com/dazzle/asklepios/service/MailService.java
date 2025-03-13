@@ -2,11 +2,13 @@ package com.dazzle.asklepios.service;
 
 import com.dazzle.asklepios.domain.User;
 import jakarta.mail.MessagingException;
+import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -26,6 +28,7 @@ public class MailService {
 
     private static final String USER = "user";
 
+    @Value("${asklepios.mail.password}")
     private static final String BASE_URL = "baseUrl";
 
 
@@ -68,7 +71,7 @@ public class MailService {
             MimeMessageHelper message = new MimeMessageHelper(mimeMessage, isMultipart, StandardCharsets.UTF_8.name());
             message.setTo(to);
             //TODO: add this to to yml file
-            message.setFrom("email");
+            message.setFrom(new InternetAddress("asktest281@gmail.com"));
             message.setSubject(subject);
             message.setText(content, isHtml);
             javaMailSender.send(mimeMessage);
@@ -94,20 +97,10 @@ public class MailService {
         Context context = new Context(locale);
         context.setVariable(USER, user);
         //TODO: move this to yml
-        context.setVariable(BASE_URL, "");
+        context.setVariable(BASE_URL, "http://127.0.0.1:8080");
         String content = templateEngine.process(templateName, context);
         String subject = messageSource.getMessage(titleKey, null, locale);
         sendEmailSync(user.getEmail(), subject, content, false, true);
-    }
-
-    public void sendActivationEmail(User user) {
-        LOG.debug("Sending activation email to '{}'", user.getEmail());
-        sendEmailFromTemplate(user, "mail/activationEmail", "email.activation.title");
-    }
-
-    public void sendCreationEmail(User user) {
-        LOG.debug("Sending creation email to '{}'", user.getEmail());
-        sendEmailFromTemplate(user, "mail/creationEmail", "email.activation.title");
     }
 
     public void sendPasswordResetMail(User user) {

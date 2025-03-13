@@ -180,15 +180,18 @@ asklepios:
   mail:
     from: gateway@localhost
   api-docs:
-    default-include-pattern: /api/**
-    management-include-pattern: /management/**
-    title: Gateway API
-    description: Gateway API documentation
+    title: Asklepios API
+    description: Asklepios API documentation
     version: 0.0.1
     terms-of-service-url:
-    contact-name:
-    contact-url:
-    contact-email:
-    license: unlicensed
-    license-url:
+    contact-name: Mohammad
+    contact-url: Mohammad URL
+    contact-email: mohammad.mattour@asklepios.com
+    license: licensed
+    license-url: www.asklepios.licence-url.com
+    servers:
+      - url: "https://asklepios.com/api"
+        description: "Main server"
+      - url: "https://backup.asklepios.com/api"
+        description: "Backup server"
   security:

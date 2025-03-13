@@ -9,6 +9,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.BeanComparator;
 import org.springframework.data.domain.*;
 import org.springframework.data.domain.Sort;
@@ -28,9 +30,6 @@ import reactor.util.function.Tuples;
  */
 @Repository
 public interface UserRepository extends R2dbcRepository<User, Long>, UserRepositoryInternal {
-    Mono<User> findOneByActivationKey(String activationKey);
-
-    Flux<User> findAllByActivatedIsFalseAndActivationKeyIsNotNullAndCreatedDateBefore(LocalDateTime dateTime);
 
     Mono<User> findOneByResetKey(String resetKey);
 
@@ -38,17 +37,10 @@ public interface UserRepository extends R2dbcRepository<User, Long>, UserReposit
 
     Mono<User> findOneByLogin(String login);
 
-    Flux<User> findAllByIdNotNull(Pageable pageable);
-
-    Flux<User> findAllByIdNotNullAndActivatedIsTrue(Pageable pageable);
-
     Mono<Long> count();
 
     @Query("INSERT INTO user_role VALUES(:userId, :roleId)")
     Mono<Void> saveUserRole(Long userId, Long roleId);
-
-//    @Query("DELETE FROM user_authority")
-//    Mono<Void> deleteAllUserAuthorities();
 
     @Query("DELETE FROM user_role WHERE user_id = :userId AND role_id = :roleId")
     Mono<Void> deleteUserRole(Long userId, Long roleId);
@@ -59,13 +51,14 @@ interface DeleteExtended<T> {
 }
 
 interface UserRepositoryInternal extends DeleteExtended<User> {
-//    Mono<User> findOneWithAuthoritiesByLogin(String login);
+    Mono<User> findOneWithAuthoritiesByLogin(String login);
 
     Mono<User> findOneWithAuthoritiesByEmailIgnoreCase(String email);
 
     Flux<User> findAllWithAuthorities(Pageable pageable);
 }
 
+@Slf4j
 class UserRepositoryInternalImpl implements UserRepositoryInternal {
 
     private final DatabaseClient db;
@@ -78,14 +71,14 @@ class UserRepositoryInternalImpl implements UserRepositoryInternal {
         this.r2dbcConverter = r2dbcConverter;
     }
 
-//    @Override
-//    public Mono<User> findOneWithAuthoritiesByLogin(String login) {
-//        return findOneWithAuthoritiesBy("login", login);
-//    }
+    @Override
+    public Mono<User> findOneWithAuthoritiesByLogin(String login) {
+        return findOneWithAuthoritiesBy("login", login);
+    }
 
     @Override
     public Mono<User> findOneWithAuthoritiesByEmailIgnoreCase(String email) {
-        return findOneWithAuthoritiesByEmail(email.toLowerCase());
+        return findOneWithAuthoritiesBy("email", email.toLowerCase());
     }
 
     @Override
@@ -132,16 +125,16 @@ class UserRepositoryInternalImpl implements UserRepositoryInternal {
             .then(r2dbcEntityTemplate.delete(User.class).matching(query(where("id").is(user.getId()))).all().then());
     }
 
-    private Mono<User> findOneWithAuthoritiesByEmail(String email) {
+    private Mono<User> findOneWithAuthoritiesBy(String fieldName, Object fieldValue) {
         return db
             .sql("""
-            SELECT u.*, ra.authority_name
+            SELECT *
             FROM app_user u
             LEFT JOIN user_role ur ON u.id = ur.user_id
             LEFT JOIN role_authority ra ON ur.role_id = ra.role_id
-            WHERE u.email = :email
-        """)
-            .bind("email", email)
+            WHERE u.
+        """ + fieldName + " = :" + fieldName)
+            .bind(fieldName, fieldValue)
             .map((row, metadata) ->
                 Tuples.of(
                     r2dbcConverter.read(User.class, row, metadata),
@@ -153,7 +146,6 @@ class UserRepositoryInternalImpl implements UserRepositoryInternal {
             .filter(l -> !l.isEmpty())
             .map(l -> updateUserWithAuthorities(l.get(0).getT1(), l));
     }
-
 
 
     private User updateUserWithAuthorities(User user, List<Tuple2<User, Optional<String>>> tuples) {

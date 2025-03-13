@@ -20,6 +20,7 @@ import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 
+@EqualsAndHashCode(callSuper = true)
 @Table("app_user")
 @Data
 public class User extends AbstractAuditingEntity<Long> implements Serializable {
@@ -62,11 +63,6 @@ public class User extends AbstractAuditingEntity<Long> implements Serializable {
     @Size(max = 256)
     @Column("image_url")
     private String imageUrl;
-
-    @Size(max = 20)
-    @Column("activation_key")
-    @JsonIgnore
-    private String activationKey;
 
     @Size(max = 20)
     @Column("reset_key")

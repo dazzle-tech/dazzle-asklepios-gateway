@@ -71,6 +71,8 @@ asklepios:
         token-validity-in-seconds-for-remember-me: 2592000
   mail:
     base-url: http://127.0.0.1:8080
+    username: asktest281@gmail.com
+    password: xtsw vujm ouws frdw
   logging:
     use-json-format: false # By default, logs are not in Json format
     logstash: # Forward logs to logstash over a socket, used by LoggingConfiguration

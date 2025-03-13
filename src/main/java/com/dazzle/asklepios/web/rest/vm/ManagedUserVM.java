@@ -2,10 +2,14 @@ package com.dazzle.asklepios.web.rest.vm;
 
 import com.dazzle.asklepios.service.dto.AdminUserDTO;
 import jakarta.validation.constraints.Size;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * View Model extending the AdminUserDTO, which is meant to be used in the user management UI.
  */
+@EqualsAndHashCode(callSuper = true)
+@Data
 public class ManagedUserVM extends AdminUserDTO {
 
     public static final int PASSWORD_MIN_LENGTH = 4;
@@ -16,20 +20,5 @@ public class ManagedUserVM extends AdminUserDTO {
     private String password;
 
     public ManagedUserVM() {
-        // Empty constructor needed for Jackson.
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    // prettier-ignore
-    @Override
-    public String toString() {
-        return "ManagedUserVM{" + super.toString() + "} ";
     }
 }

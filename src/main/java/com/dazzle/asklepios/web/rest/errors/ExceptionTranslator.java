@@ -103,7 +103,6 @@ public class ExceptionTranslator extends ResponseEntityExceptionHandler implemen
         ) return (ProblemDetailWithCause) new InvalidPasswordException().getBody();
 
         if (ex instanceof AuthenticationException) {
-            // Ensure no information about existing users is revealed via failed authentication attempts
             return ProblemDetailWithCause.ProblemDetailWithCauseBuilder.instance()
                 .withStatus(toStatus(ex).value())
                 .withTitle("Unauthorized")
@@ -121,7 +120,6 @@ public class ExceptionTranslator extends ResponseEntityExceptionHandler implemen
 
         if (problem.getType() == null || problem.getType().equals(URI.create("about:blank"))) problem.setType(getMappedType(err));
 
-        // higher precedence to Custom/ResponseStatus types
         String title = extractTitle(err, problem.getStatus());
         String problemTitle = problem.getTitle();
         if (problemTitle == null || !problemTitle.equals(title)) {
@@ -129,7 +127,6 @@ public class ExceptionTranslator extends ResponseEntityExceptionHandler implemen
         }
 
         if (problem.getDetail() == null) {
-            // higher precedence to cause
             problem.setDetail(getCustomizedErrorDetails(err));
         }
 
@@ -176,7 +173,6 @@ public class ExceptionTranslator extends ResponseEntityExceptionHandler implemen
     }
 
     private HttpStatus toStatus(final Throwable throwable) {
-        // Let the ErrorResponse take this responsibility
         if (throwable instanceof ErrorResponse err) return HttpStatus.valueOf(err.getBody().getStatus());
 
         return Optional.ofNullable(getMappedStatus(throwable)).orElse(
@@ -225,7 +221,6 @@ public class ExceptionTranslator extends ResponseEntityExceptionHandler implemen
     }
 
     private HttpStatus getMappedStatus(Throwable err) {
-        // Where we disagree with Spring defaults
         if (err instanceof AccessDeniedException) return HttpStatus.FORBIDDEN;
         if (err instanceof ConcurrencyFailureException) return HttpStatus.CONFLICT;
         if (err instanceof BadCredentialsException) return HttpStatus.UNAUTHORIZED;
@@ -266,12 +261,10 @@ public class ExceptionTranslator extends ResponseEntityExceptionHandler implemen
     }
 
     private boolean isCasualChainEnabled() {
-        // Customize as per the needs
         return CASUAL_CHAIN_ENABLED;
     }
 
     private boolean containsPackageName(String message) {
-        // This list is for sure not complete
         return StringUtils.containsAny(
             message,
             "org.",

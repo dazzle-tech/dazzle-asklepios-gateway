@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConfigurationProperties(prefix = "boka.api-docs")
+@ConfigurationProperties(prefix = "asklepios.api-docs")
 @Data
 public class ApiDocs {
     private String title = "Application API";

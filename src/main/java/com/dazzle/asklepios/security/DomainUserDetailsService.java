@@ -42,15 +42,12 @@ public class DomainUserDetailsService implements ReactiveUserDetailsService {
                 .switchIfEmpty(Mono.error(new UsernameNotFoundException("User with email " + login + " was not found in the database")))
                 .map(user -> createSpringSecurityUser(login, user));
         }
-        else{
-            return Mono.error(new BadRequestAlertException("bad email", "dsda", "idexists"));
-        }
 
-//        String lowercaseLogin = login.toLowerCase(Locale.ENGLISH);
-//        return userRepository
-//            .findOneWithAuthoritiesByLogin(lowercaseLogin)
-//            .switchIfEmpty(Mono.error(new UsernameNotFoundException("User " + lowercaseLogin + " was not found in the database")))
-//            .map(user -> createSpringSecurityUser(lowercaseLogin, user));
+        String lowercaseLogin = login.toLowerCase(Locale.ENGLISH);
+        return userRepository
+            .findOneWithAuthoritiesByLogin(lowercaseLogin)
+            .switchIfEmpty(Mono.error(new UsernameNotFoundException("User " + lowercaseLogin + " was not found in the database")))
+            .map(user -> createSpringSecurityUser(lowercaseLogin, user));
     }
 
     private org.springframework.security.core.userdetails.User createSpringSecurityUser(String lowercaseLogin, User user) {

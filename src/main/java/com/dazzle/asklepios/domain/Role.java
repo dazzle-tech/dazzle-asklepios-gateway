@@ -26,9 +26,6 @@ public class Role implements Serializable {
     @Column("name")
     private String name;
 
-    @Column("type")
-    private String description;
-
     @Column("facility_id")
     private Long facilityId;
 
