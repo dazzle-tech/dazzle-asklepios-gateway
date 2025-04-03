@@ -18,6 +18,7 @@
         <constraints nullable="false"/>
       </column>
     </createTable>
+
     <createTable tableName="role">
       <column name="id" type="bigint" autoIncrement="true" startWith="1500">
         <constraints primaryKey="true" nullable="false"/>
@@ -32,6 +33,7 @@
         <constraints nullable="false"/>
       </column>
     </createTable>
+
     <addForeignKeyConstraint baseColumnNames="facility_id"
                              baseTableName="role"
                              constraintName="fk_role__facility_id"
@@ -73,6 +75,7 @@
         <constraints primaryKey="true" nullable="false"/>
       </column>
     </createTable>
+
     <createTable tableName="user_role">
       <column name="user_id" type="bigint">
         <constraints nullable="false"/>
@@ -81,6 +84,7 @@
         <constraints nullable="false"/>
       </column>
     </createTable>
+
     <addPrimaryKey columnNames="user_id, role_id" tableName="user_role"/>
     <addForeignKeyConstraint baseColumnNames="user_id"
                              baseTableName="user_role"
@@ -102,8 +106,8 @@
         <constraints nullable="false"/>
       </column>
     </createTable>
-    <addPrimaryKey columnNames="role_id, authority_name" tableName="role_authority"/>
 
+    <addPrimaryKey columnNames="role_id, authority_name" tableName="role_authority"/>
     <addForeignKeyConstraint baseColumnNames="role_id"
                              baseTableName="role_authority"
                              constraintName="fk_role_authority__role_id"
@@ -114,30 +118,6 @@
                              constraintName="fk_role_authority__authority_name"
                              referencedColumnNames="name"
                              referencedTableName="authority"/>
-
-<!--    <createTable tableName="user_authority">-->
-<!--      <column name="user_id" type="bigint">-->
-<!--        <constraints nullable="false"/>-->
-<!--      </column>-->
-
-<!--      <column name="authority_name" type="varchar(50)">-->
-<!--        <constraints nullable="false"/>-->
-<!--      </column>-->
-<!--    </createTable>-->
-
-<!--    <addPrimaryKey columnNames="user_id, authority_name" tableName="user_authority"/>-->
-
-<!--    <addForeignKeyConstraint baseColumnNames="authority_name"-->
-<!--                             baseTableName="user_authority"-->
-<!--                             constraintName="fk_authority_name"-->
-<!--                             referencedColumnNames="name"-->
-<!--                             referencedTableName="authority"/>-->
-
-<!--    <addForeignKeyConstraint baseColumnNames="user_id"-->
-<!--                             baseTableName="user_authority"-->
-<!--                             constraintName="fk_user_id"-->
-<!--                             referencedColumnNames="id"-->
-<!--                             referencedTableName="app_user"/>-->
 
     <addNotNullConstraint columnName="password_hash"
                           columnDataType="varchar(60)"
@@ -192,5 +172,4 @@
     </loadData>
     <dropDefaultValue tableName="app_user" columnName="created_date" columnDataType="${datetimeType}"/>
   </changeSet>
-
 </databaseChangeLog>

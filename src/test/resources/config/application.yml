@@ -1,0 +1,70 @@
+
+spring:
+  application:
+    name: Gateway
+  autoconfigure:
+    exclude:
+      - org.springframework.cloud.gateway.config.GatewayMetricsAutoConfiguration
+  liquibase:
+    contexts: test
+  jackson:
+    serialization:
+      write-durations-as-timestamps: false
+  mail:
+    host: localhost
+  main:
+    allow-bean-definition-overriding: true
+  messages:
+    basename: i18n/messages
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          authority-prefix: ''
+          authorities-claim-name: auth
+  task:
+    execution:
+      thread-name-prefix: asklepios-gateway-task-
+      pool:
+        core-size: 1
+        max-size: 50
+        queue-capacity: 10000
+    scheduling:
+      thread-name-prefix: asklepios-gateway-scheduling-
+      pool:
+        size: 20
+  thymeleaf:
+    mode: HTML
+
+server:
+  port: 10344
+  address: localhost
+
+asklepios:
+  cors:
+    allowed-origins: 'http://localhost:8100,https://localhost:8100'
+    allowed-origin-patterns: 'https://*.githubpreview.dev'
+    allowed-methods: '*'
+    allowed-headers: '*'
+    exposed-headers: 'Authorization,Link,X-Total-Count,X-${asklepios.clientApp.name}-alert,X-${asklepios.clientApp.name}-error,X-${asklepios.clientApp.name}-params'
+    allow-credentials: true
+    max-age: 1800
+  clientApp:
+    name: 'asklepiosGatewayApp'
+  mail:
+    from: asktest281@gmail.com
+    username: asktest281@gmail.com
+    password: xtsw vujm ouws frdw
+  security:
+    authentication:
+      jwt:
+        # This token must be encoded using Base64 (you can type `echo 'secret-key'|base64` on your command line)
+        base64-secret: ZmI5ZDBjMWZlNjlmMWIzZjljMzkwYTVhZTJmZGY1OWY3ZGVjMzBiMWQ5Y2E1NzNkY2Y3YjFlMDBkNmQxOGI3YTYzOWJkZmRkYjc2ZmM1MzNmOWQxZDEwOWI5YTRhNGE2Nzg5MzMyZGU3NTQ2MmE3Yzk5MGNmNjI3NWNhMzBiMTg=
+        # Token is valid 24 hours
+        token-validity-in-seconds: 86400
+        token-validity-in-seconds-for-remember-me: 86400
+
+management:
+  health:
+    mail:
+      enabled: false

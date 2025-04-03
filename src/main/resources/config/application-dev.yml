@@ -47,12 +47,6 @@ server:
   forward-headers-strategy: native
 
 asklepios:
-  gateway:
-    rate-limiting:
-      enabled: false
-      limit: 100000
-      duration-in-seconds: 3600
-  # CORS is only enabled by default with the "dev" profile
   cors:
     allowed-origins: 'http://localhost:8100,https://localhost:8100'
     allowed-origin-patterns: 'https://*.githubpreview.dev'
@@ -73,10 +67,3 @@ asklepios:
     base-url: http://127.0.0.1:8080
     username: asktest281@gmail.com
     password: xtsw vujm ouws frdw
-  logging:
-    use-json-format: false # By default, logs are not in Json format
-    logstash: # Forward logs to logstash over a socket, used by LoggingConfiguration
-      enabled: false
-      host: localhost
-      port: 5000
-      ring-buffer-size: 512

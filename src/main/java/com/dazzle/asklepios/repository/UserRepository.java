@@ -53,7 +53,9 @@ interface DeleteExtended<T> {
 interface UserRepositoryInternal extends DeleteExtended<User> {
     Mono<User> findOneWithAuthoritiesByLogin(String login);
 
-    Mono<User> findOneWithAuthoritiesByEmailIgnoreCase(String email);
+    Mono<User> findOneWithAuthoritiesByLoginAndFacilityId(String login, Long facilityId);
+
+    Mono<User> findOneWithAuthoritiesByEmailIgnoreCaseAndFacilityId(String email, Long facilityId);
 
     Flux<User> findAllWithAuthorities(Pageable pageable);
 }
@@ -77,8 +79,13 @@ class UserRepositoryInternalImpl implements UserRepositoryInternal {
     }
 
     @Override
-    public Mono<User> findOneWithAuthoritiesByEmailIgnoreCase(String email) {
-        return findOneWithAuthoritiesBy("email", email.toLowerCase());
+    public Mono<User> findOneWithAuthoritiesByLoginAndFacilityId(String login, Long facilityId) {
+        return findOneWithAuthoritiesBy("login", login, facilityId);
+    }
+
+    @Override
+    public Mono<User> findOneWithAuthoritiesByEmailIgnoreCaseAndFacilityId(String email, Long facilityId) {
+        return findOneWithAuthoritiesBy("email", email.toLowerCase(), facilityId);
     }
 
     @Override
@@ -147,6 +154,29 @@ class UserRepositoryInternalImpl implements UserRepositoryInternal {
             .map(l -> updateUserWithAuthorities(l.get(0).getT1(), l));
     }
 
+    public Mono<User> findOneWithAuthoritiesBy(String fieldName, Object fieldValue, Long facilityId) {
+        return db
+            .sql("""
+            SELECT *
+            FROM app_user u
+            LEFT JOIN user_role ur ON u.id = ur.user_id
+            LEFT JOIN role r ON ur.role_id = r.id
+            LEFT JOIN role_authority ra ON ur.role_id = ra.role_id
+            WHERE u.
+        """ + fieldName + " = :" + fieldName + " AND r.facility_id = :facilityId")
+            .bind(fieldName, fieldValue)
+            .bind("facilityId", facilityId)
+            .map((row, metadata) ->
+                Tuples.of(
+                    r2dbcConverter.read(User.class, row, metadata),
+                    Optional.ofNullable(row.get("authority_name", String.class))
+                )
+            )
+            .all()
+            .collectList()
+            .filter(l -> !l.isEmpty())
+            .map(l -> updateUserWithAuthorities(l.get(0).getT1(), l));
+    }
 
     private User updateUserWithAuthorities(User user, List<Tuple2<User, Optional<String>>> tuples) {
         user.setAuthorities(

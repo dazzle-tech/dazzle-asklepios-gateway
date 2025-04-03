@@ -17,6 +17,8 @@ public class LoginVM {
     @NotNull
     @Size(min = 4, max = 100)
     private String password;
+    @NotNull
+    private Long facilityId;
 
     private boolean rememberMe;
 }

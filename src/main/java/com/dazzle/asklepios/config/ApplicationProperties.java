@@ -2,6 +2,7 @@ package com.dazzle.asklepios.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -11,18 +12,20 @@ import java.util.Properties;
 
 
 @ConfigurationProperties(prefix = "application", ignoreUnknownFields = false)
+@EnableConfigurationProperties(CorsConfigProperties.class)
 public class ApplicationProperties {
     @Value("${asklepios.mail.username}")
     private String mailUsername;
 
     @Value("${asklepios.mail.password}")
     private String mailPassword;
+
     @Bean
     @Primary
     public JavaMailSender javaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost("smtp.gmail.com");
-        mailSender.setPort(587);  // Set your mail server port
+        mailSender.setPort(587);
         mailSender.setUsername(mailUsername);
         mailSender.setPassword(mailPassword);
 

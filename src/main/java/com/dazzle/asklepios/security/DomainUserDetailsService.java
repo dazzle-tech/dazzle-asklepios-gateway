@@ -5,23 +5,20 @@ import com.dazzle.asklepios.domain.User;
 import com.dazzle.asklepios.repository.UserRepository;
 import java.util.*;
 
-import com.dazzle.asklepios.web.rest.errors.BadRequestAlertException;
 import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 
 /**
  * Authenticate a user from the database.
  */
 @Component("userDetailsService")
-public class DomainUserDetailsService implements ReactiveUserDetailsService {
+public class DomainUserDetailsService  {
 
     private static final Logger LOG = LoggerFactory.getLogger(DomainUserDetailsService.class);
 
@@ -31,22 +28,20 @@ public class DomainUserDetailsService implements ReactiveUserDetailsService {
         this.userRepository = userRepository;
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public Mono<UserDetails> findByUsername(final String login) {
-        LOG.debug("Authenticating {}", login);
+    public Mono<UserDetails> findByUsernameAndFacility(String login, Long facilityId) {
+        LOG.debug("Authenticating {} for facility {}", login, facilityId);
 
         if (new EmailValidator().isValid(login, null)) {
             return userRepository
-                .findOneWithAuthoritiesByEmailIgnoreCase(login)
-                .switchIfEmpty(Mono.error(new UsernameNotFoundException("User with email " + login + " was not found in the database")))
+                .findOneWithAuthoritiesByEmailIgnoreCaseAndFacilityId(login, facilityId)
+                .switchIfEmpty(Mono.error(new UsernameNotFoundException("User with email " + login + " and facility " + facilityId + " was not found in the database")))
                 .map(user -> createSpringSecurityUser(login, user));
         }
 
         String lowercaseLogin = login.toLowerCase(Locale.ENGLISH);
         return userRepository
-            .findOneWithAuthoritiesByLogin(lowercaseLogin)
-            .switchIfEmpty(Mono.error(new UsernameNotFoundException("User " + lowercaseLogin + " was not found in the database")))
+            .findOneWithAuthoritiesByLoginAndFacilityId(lowercaseLogin, facilityId)
+            .switchIfEmpty(Mono.error(new UsernameNotFoundException("User " + lowercaseLogin + " with facility " + facilityId + " was not found in the database")))
             .map(user -> createSpringSecurityUser(lowercaseLogin, user));
     }
 

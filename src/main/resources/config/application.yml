@@ -83,30 +83,20 @@ spring:
   application:
     name: gateway
   cloud:
-    discovery:
-      client:
-        simple:
-          instances:
-            gateway:
-              - instanceId: gateway1
-                host: localhost
-                port: 8080
     gateway:
       default-filters:
         - JWTRelay
-      discovery:
-        locator:
-          enabled: true
-          lower-case-service-id: true
+      routes:
+        - id: dazzle-asklepios-general-service-route
+          uri: http://localhost:8081
           predicates:
-            - name: Path
-              args:
-                pattern: "'/services/'+serviceId.toLowerCase()+'/**'"
+            - Path=/utility/**
           filters:
-            - StripPrefix=2
+            - StripPrefix=0
       httpclient:
         pool:
           max-connections: 1000
+
 
   profiles:
     # The commented value for `active` can be replaced with valid Spring profiles to load.
@@ -169,14 +159,14 @@ info:
 asklepios:
   clientApp:
     name: 'gatewayApp'
-  # By default CORS is disabled. Uncomment to enable.
-  # cors:
-  #   allowed-origins: "http://localhost:8100,http://localhost:9000"
-  #   allowed-methods: "*"
-  #   allowed-headers: "*"
-  #   exposed-headers: "Authorization,Link,X-Total-Count,X-${asklepios.clientApp.name}-alert,X-${asklepios.clientApp.name}-error,X-${asklepios.clientApp.name}-params"
-  #   allow-credentials: true
-  #   max-age: 1800
+#   By default CORS is disabled. Uncomment to enable.
+#  cors:
+#    allowed-origins: "http://localhost:8100,http://localhost:9000"
+#    allowed-methods: "*"
+#    allowed-headers: "*"
+#    exposed-headers: "Authorization,Link,X-Total-Count,X-${asklepios.clientApp.name}-alert,X-${asklepios.clientApp.name}-error,X-${asklepios.clientApp.name}-params"
+#    allow-credentials: true
+#    max-age: 1800
   mail:
     from: gateway@localhost
   api-docs:

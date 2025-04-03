@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import com.dazzle.asklepios.config.Constants;
+import com.dazzle.asklepios.security.UserNotActivatedException;
 import com.dazzle.asklepios.web.rest.util.HeaderUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -225,6 +226,7 @@ public class ExceptionTranslator extends ResponseEntityExceptionHandler implemen
         if (err instanceof ConcurrencyFailureException) return HttpStatus.CONFLICT;
         if (err instanceof BadCredentialsException) return HttpStatus.UNAUTHORIZED;
         if (err instanceof UsernameNotFoundException) return HttpStatus.UNAUTHORIZED;
+        if (err instanceof UserNotActivatedException) return HttpStatus.UNAUTHORIZED;
         return null;
     }
 

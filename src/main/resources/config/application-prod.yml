@@ -66,9 +66,14 @@ server:
 
 
 asklepios:
-  http:
-    cache: # Used by the CachingHttpHeadersFilter
-      timeToLiveInDays: 1461
+  cors:
+    allowed-origins: 'http://localhost:8100,https://localhost:8100'
+    allowed-origin-patterns: 'https://*.asklepios.com'
+    allowed-methods: '*'
+    allowed-headers: '*'
+    exposed-headers: 'Authorization,Link,X-Total-Count,X-${asklepios.clientApp.name}-alert,X-${asklepios.clientApp.name}-error,X-${asklepios.clientApp.name}-params'
+    allow-credentials: true
+    max-age: 1800
   security:
     authentication:
       jwt:
@@ -77,10 +82,5 @@ asklepios:
         token-validity-in-seconds-for-remember-me: 2592000
   mail:
     base-url: http://my-server-url-to-change
-  logging:
-    use-json-format: false
-    logstash:
-      enabled: false
-      host: localhost
-      port: 5000
-      ring-buffer-size: 512
+    username: asktest281@gmail.com
+    password: xtsw vujm ouws frdw

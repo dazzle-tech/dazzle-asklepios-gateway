@@ -10,13 +10,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.data.web.ReactivePageableHandlerMethodArgumentResolver;
 import org.springframework.data.web.ReactiveSortHandlerMethodArgumentResolver;
-import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.reactive.CorsConfigurationSource;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 import org.springframework.web.reactive.config.WebFluxConfigurer;
 import org.springframework.web.reactive.result.method.HandlerMethodArgumentResolver;
 import org.springframework.web.server.WebExceptionHandler;
+
+import java.util.Arrays;
 
 /**
  * Configuration of web application with Servlet 3.0 APIs.
@@ -26,16 +28,29 @@ public class WebConfigurer implements WebFluxConfigurer {
 
     private static final Logger LOG = LoggerFactory.getLogger(WebConfigurer.class);
 
+    private final CorsConfigProperties corsConfigProperties;
 
-
-    public WebConfigurer() {
+    public WebConfigurer(CorsConfigProperties corsConfigProperties) {
+        this.corsConfigProperties = corsConfigProperties;
     }
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
-        if (!CollectionUtils.isEmpty(config.getAllowedOrigins()) || !CollectionUtils.isEmpty(config.getAllowedOriginPatterns())) {
+
+        if (StringUtils.hasText(corsConfigProperties.getAllowedOrigins()) ||
+            StringUtils.hasText(corsConfigProperties.getAllowedOriginPatterns())) {
+            // your logic here
+
+        config.setAllowedOrigins(Arrays.asList(corsConfigProperties.getAllowedOrigins().split(",")));
+            config.setAllowedOriginPatterns(Arrays.asList(corsConfigProperties.getAllowedOriginPatterns().split(",")));
+            config.setAllowedMethods(Arrays.asList(corsConfigProperties.getAllowedMethods().split(",")));
+            config.setAllowedHeaders(Arrays.asList(corsConfigProperties.getAllowedHeaders().split(",")));
+            config.setExposedHeaders(Arrays.asList(corsConfigProperties.getExposedHeaders().split(",")));
+            config.setAllowCredentials(corsConfigProperties.isAllowCredentials());
+            config.setMaxAge((long) corsConfigProperties.getMaxAge());
+
             LOG.debug("Registering CORS filter");
             source.registerCorsConfiguration("/api/**", config);
             source.registerCorsConfiguration("/management/**", config);
@@ -61,7 +76,7 @@ public class WebConfigurer implements WebFluxConfigurer {
     }
 
     @Bean
-    @Order(-2) // The handler must have precedence over WebFluxResponseStatusExceptionHandler and Spring Boot's ErrorWebExceptionHandler
+    @Order(-2)
     public WebExceptionHandler problemExceptionHandler(ObjectMapper mapper, ExceptionTranslator problemHandling) {
         return new ReactiveWebExceptionHandler(problemHandling, mapper);
     }

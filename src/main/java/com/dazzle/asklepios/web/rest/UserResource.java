@@ -4,6 +4,7 @@ import com.dazzle.asklepios.config.Constants;
 import com.dazzle.asklepios.domain.User;
 import com.dazzle.asklepios.repository.UserRepository;
 import com.dazzle.asklepios.security.AuthoritiesConstants;
+import com.dazzle.asklepios.security.SecurityUtils;
 import com.dazzle.asklepios.service.MailService;
 import com.dazzle.asklepios.service.UserService;
 import com.dazzle.asklepios.service.dto.AdminUserDTO;

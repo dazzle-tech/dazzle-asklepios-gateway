@@ -11,6 +11,7 @@ import java.time.Instant;
 
 import java.time.temporal.ChronoUnit;
 import java.util.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
@@ -84,7 +85,7 @@ public class UserService {
         }
         user.setImageUrl(userDTO.getImageUrl());
         if (userDTO.getLangKey() == null) {
-            user.setLangKey(Constants.DEFAULT_LANGUAGE); // default language
+            user.setLangKey(Constants.DEFAULT_LANGUAGE);
         } else {
             user.setLangKey(userDTO.getLangKey());
         }
@@ -217,9 +218,22 @@ public class UserService {
         return userRepository.findOneWithAuthoritiesByLogin(login);
     }
 
+//    @Transactional(readOnly = true)
+//    public Mono<User> getUserWithAuthorities() {
+//        return SecurityUtils.getCurrentUserLogin()
+//            .flatMap(user -> SecurityUtils.getCurrentUserFacility()
+//                .flatMap(facilityId -> userRepository.findOneWithAuthoritiesByLoginAndFacilityId(user, facilityId)));
+//    }
+
     @Transactional(readOnly = true)
     public Mono<User> getUserWithAuthorities() {
-        return SecurityUtils.getCurrentUserLogin().flatMap(userRepository::findOneWithAuthoritiesByLogin);
+        return SecurityUtils.getCurrentUserLogin()
+            .flatMap(user -> SecurityUtils.getCurrentUserFacility()
+                .flatMap(facilityId ->
+                    userRepository.findOneWithAuthoritiesByLoginAndFacilityId(user, facilityId)
+                        .switchIfEmpty(Mono.error(new NotValidTokenException("User could not be found for the provided login and facility"))))
+            )
+            .switchIfEmpty(Mono.error(new NotValidTokenException("User login or facility not found")));
     }
 
     /**
@@ -230,7 +244,6 @@ public class UserService {
     public Flux<String> getAuthorities() {
         return authorityRepository.findAll().map(Authority::getName);
     }
-
 
     public final class RandomUtil {
         private static final int DEF_COUNT = 20;

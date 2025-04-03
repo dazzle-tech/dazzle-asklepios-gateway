@@ -1,8 +1,6 @@
 package com.dazzle.asklepios.web.rest;
 
-import static com.dazzle.asklepios.security.SecurityUtils.AUTHORITIES_KEY;
-import static com.dazzle.asklepios.security.SecurityUtils.JWT_ALGORITHM;
-
+import com.dazzle.asklepios.security.CustomAuthenticationToken;
 import com.dazzle.asklepios.web.rest.vm.LoginVM;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.Valid;
@@ -12,6 +10,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -27,6 +26,8 @@ import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
+
+import static com.dazzle.asklepios.security.SecurityUtils.*;
 
 /**
  * Controller to authenticate users.
@@ -57,8 +58,8 @@ public class AuthenticateController {
         return loginVM
             .flatMap(login ->
                 authenticationManager
-                    .authenticate(new UsernamePasswordAuthenticationToken(login.getUsername(), login.getPassword()))
-                    .flatMap(auth -> Mono.fromCallable(() -> this.createToken(auth, login.isRememberMe())))
+                    .authenticate(new CustomAuthenticationToken(login.getUsername(), login.getPassword(), login.getFacilityId()))
+                    .flatMap(auth -> Mono.fromCallable(() -> this.createToken(auth, login.isRememberMe(), login.getFacilityId())))
             )
             .map(jwt -> {
                 HttpHeaders httpHeaders = new HttpHeaders();
@@ -79,7 +80,7 @@ public class AuthenticateController {
         return principal == null ? null : principal.getName();
     }
 
-    public String createToken(Authentication authentication, boolean rememberMe) {
+    public String createToken(Authentication authentication, boolean rememberMe, Long facilityId) {
         String authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(" "));
 
         Instant now = Instant.now();
@@ -96,6 +97,7 @@ public class AuthenticateController {
             .expiresAt(validity)
             .subject(authentication.getName())
             .claim(AUTHORITIES_KEY, authorities)
+            .claim(FACILITY_KEY, facilityId)
             .build();
 
         JwsHeader jwsHeader = JwsHeader.with(JWT_ALGORITHM).build();

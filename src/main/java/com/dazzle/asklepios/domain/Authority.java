@@ -6,6 +6,8 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.domain.Persistable;
 import org.springframework.data.relational.core.mapping.Column;
@@ -16,7 +18,8 @@ import org.springframework.data.relational.core.mapping.Table;
  */
 @Table("authority")
 @JsonIgnoreProperties(value = { "new", "id" })
-@Data
+@Setter
+@Getter
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class Authority implements Serializable, Persistable<String> {
 
@@ -46,4 +49,21 @@ public class Authority implements Serializable, Persistable<String> {
         this.isPersisted = true;
         return this;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Authority)) {
+            return false;
+        }
+        return getName() != null && getName().equals(((Authority) o).getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getName());
+    }
+
 }
