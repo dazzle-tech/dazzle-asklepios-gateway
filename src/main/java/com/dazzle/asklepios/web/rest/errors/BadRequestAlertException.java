@@ -1,8 +1,9 @@
 package com.dazzle.asklepios.web.rest.errors;
 
-import java.net.URI;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.ErrorResponseException;
+
+import java.net.URI;
 
 
 @SuppressWarnings("java:S110") // Inheritance tree of classes should not be too deep

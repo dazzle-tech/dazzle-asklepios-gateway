@@ -1,13 +1,12 @@
 package com.dazzle.asklepios.web.rest.errors;
 
 
+import org.springframework.http.ProblemDetail;
+
 import java.net.URI;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
-import org.springframework.http.ProblemDetail;
-import org.springframework.lang.Nullable;
 
 public class ProblemDetailWithCause extends ProblemDetail {
     private ProblemDetailWithCause cause;

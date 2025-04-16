@@ -1,13 +1,13 @@
 package com.dazzle.asklepios.security.jwt;
 
-import static org.springframework.http.HttpHeaders.AUTHORIZATION;
-
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.security.oauth2.jwt.ReactiveJwtDecoder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
+
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @Component
 public class JWTRelayGatewayFilterFactory extends AbstractGatewayFilterFactory<Object> {

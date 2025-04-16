@@ -1,12 +1,8 @@
 package com.dazzle.asklepios.config;
 
-import static com.dazzle.asklepios.security.SecurityUtils.JWT_ALGORITHM;
-
 import com.dazzle.asklepios.management.SecurityMetersService;
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
 import com.nimbusds.jose.util.Base64;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,6 +12,11 @@ import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusReactiveJwtDecoder;
 import org.springframework.security.oauth2.jwt.ReactiveJwtDecoder;
+
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+
+import static com.dazzle.asklepios.security.SecurityUtils.JWT_ALGORITHM;
 
 @Configuration
 public class SecurityJwtConfiguration {

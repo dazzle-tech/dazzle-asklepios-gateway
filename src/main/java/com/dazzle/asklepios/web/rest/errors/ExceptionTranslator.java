@@ -1,14 +1,5 @@
 package com.dazzle.asklepios.web.rest.errors;
 
-import static org.springframework.core.annotation.AnnotatedElementUtils.findMergedAnnotation;
-
-import java.net.URI;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
 import com.dazzle.asklepios.config.Constants;
 import com.dazzle.asklepios.security.UserNotActivatedException;
 import com.dazzle.asklepios.web.rest.util.HeaderUtil;
@@ -39,6 +30,15 @@ import org.springframework.web.bind.support.WebExchangeBindException;
 import org.springframework.web.reactive.result.method.annotation.ResponseEntityExceptionHandler;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
+
+import java.net.URI;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+import static org.springframework.core.annotation.AnnotatedElementUtils.findMergedAnnotation;
 
 
 /**

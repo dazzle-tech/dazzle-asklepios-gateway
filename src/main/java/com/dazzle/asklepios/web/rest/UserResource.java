@@ -4,8 +4,6 @@ import com.dazzle.asklepios.config.Constants;
 import com.dazzle.asklepios.domain.User;
 import com.dazzle.asklepios.repository.UserRepository;
 import com.dazzle.asklepios.security.AuthoritiesConstants;
-import com.dazzle.asklepios.security.SecurityUtils;
-import com.dazzle.asklepios.service.MailService;
 import com.dazzle.asklepios.service.UserService;
 import com.dazzle.asklepios.service.dto.AdminUserDTO;
 import com.dazzle.asklepios.web.rest.errors.BadRequestAlertException;
@@ -15,12 +13,6 @@ import com.dazzle.asklepios.web.rest.util.HeaderUtil;
 import com.dazzle.asklepios.web.rest.util.PaginationUtil;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,11 +23,25 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.ForwardedHeaderUtils;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * REST controller for managing users.

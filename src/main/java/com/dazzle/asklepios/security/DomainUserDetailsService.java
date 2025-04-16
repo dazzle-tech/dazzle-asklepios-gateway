@@ -3,8 +3,6 @@ package com.dazzle.asklepios.security;
 import com.dazzle.asklepios.domain.Authority;
 import com.dazzle.asklepios.domain.User;
 import com.dazzle.asklepios.repository.UserRepository;
-import java.util.*;
-
 import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +11,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
+
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Authenticate a user from the database.

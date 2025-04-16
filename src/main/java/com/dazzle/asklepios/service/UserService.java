@@ -7,11 +7,7 @@ import com.dazzle.asklepios.repository.AuthorityRepository;
 import com.dazzle.asklepios.repository.UserRepository;
 import com.dazzle.asklepios.security.SecurityUtils;
 import com.dazzle.asklepios.service.dto.AdminUserDTO;
-import java.time.Instant;
-
-import java.time.temporal.ChronoUnit;
-import java.util.*;
-
+import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
@@ -21,8 +17,11 @@ import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
+
 import java.security.SecureRandom;
-import org.apache.commons.lang3.RandomStringUtils;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.Set;
 
 /**
  * Service class for managing users.

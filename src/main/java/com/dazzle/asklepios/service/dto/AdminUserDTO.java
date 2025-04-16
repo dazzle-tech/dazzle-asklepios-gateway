@@ -3,7 +3,10 @@ package com.dazzle.asklepios.service.dto;
 import com.dazzle.asklepios.config.Constants;
 import com.dazzle.asklepios.domain.Authority;
 import com.dazzle.asklepios.domain.User;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.io.Serializable;

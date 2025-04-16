@@ -4,7 +4,6 @@ import com.dazzle.asklepios.domain.User;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 /**
  * A DTO representing a user, with only the public attributes.

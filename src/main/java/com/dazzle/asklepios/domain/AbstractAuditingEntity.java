@@ -2,13 +2,13 @@ package com.dazzle.asklepios.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Column;
-import java.io.Serializable;
-import java.time.Instant;
-
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+
+import java.io.Serializable;
+import java.time.Instant;
 
 /**
  * Base abstract class for entities which will hold definitions for created, last modified, created by,

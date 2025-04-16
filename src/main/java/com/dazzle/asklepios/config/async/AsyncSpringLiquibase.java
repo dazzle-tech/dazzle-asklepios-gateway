@@ -1,8 +1,5 @@
 package com.dazzle.asklepios.config.async;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.concurrent.Executor;
 import liquibase.exception.LiquibaseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +7,10 @@ import org.springframework.boot.autoconfigure.liquibase.DataSourceClosingSpringL
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.Profiles;
 import org.springframework.util.StopWatch;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.concurrent.Executor;
 
 public class AsyncSpringLiquibase extends DataSourceClosingSpringLiquibase {
     private final Logger logger = LoggerFactory.getLogger(AsyncSpringLiquibase.class);

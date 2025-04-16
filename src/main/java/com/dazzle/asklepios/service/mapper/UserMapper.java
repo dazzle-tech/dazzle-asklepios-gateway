@@ -4,12 +4,17 @@ import com.dazzle.asklepios.domain.Authority;
 import com.dazzle.asklepios.domain.User;
 import com.dazzle.asklepios.service.dto.AdminUserDTO;
 import com.dazzle.asklepios.service.dto.UserDTO;
-import java.util.*;
-import java.util.stream.Collectors;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Mapper for the entity {@link User} and its DTO called {@link UserDTO}.

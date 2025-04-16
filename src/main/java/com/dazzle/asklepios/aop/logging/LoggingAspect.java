@@ -1,7 +1,5 @@
 package com.dazzle.asklepios.aop.logging;
 
-import java.util.Arrays;
-
 import com.dazzle.asklepios.config.Constants;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -13,6 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.Profiles;
+
+import java.util.Arrays;
 
 /**
  * Aspect for logging execution of service and repository Spring components.
