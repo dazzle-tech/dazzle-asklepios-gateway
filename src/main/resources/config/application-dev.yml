@@ -48,8 +48,8 @@ server:
 
 asklepios:
   cors:
-    allowed-origins: 'http://localhost:8100,https://localhost:8100'
-    allowed-origin-patterns: 'https://*.githubpreview.dev'
+    allowed-origins: 'http://localhost:4200,https://localhost:4200,https://localhost:3100,https://localhost:3100'
+#    allowed-origin-patterns: 'https://*.githubpreview.dev'
     allowed-methods: '*'
     allowed-headers: '*'
     exposed-headers: 'Authorization,Link,X-Total-Count,X-${asklepios.clientApp.name}-alert,X-${asklepios.clientApp.name}-error,X-${asklepios.clientApp.name}-params'

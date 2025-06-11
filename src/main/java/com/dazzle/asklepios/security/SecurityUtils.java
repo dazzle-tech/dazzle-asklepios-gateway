@@ -67,7 +67,7 @@ public final class SecurityUtils {
     /**
      * Check if a user is authenticated.
      *
-     * @return true if the user is authenticated, false otherwise.
+     * @return TRUE if the user is authenticated, FALSE otherwise.
      */
     public static Mono<Boolean> isAuthenticated() {
         return ReactiveSecurityContextHolder.getContext()
@@ -80,7 +80,7 @@ public final class SecurityUtils {
      * Checks if the current user has any of the authorities.
      *
      * @param authorities the authorities to check.
-     * @return true if the current user has any of the authorities, false otherwise.
+     * @return TRUE if the current user has any of the authorities, FALSE otherwise.
      */
     public static Mono<Boolean> hasCurrentUserAnyOfAuthorities(String... authorities) {
         return ReactiveSecurityContextHolder.getContext()

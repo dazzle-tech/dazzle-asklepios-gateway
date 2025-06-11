@@ -127,7 +127,7 @@ public class UserService {
                 return user;
             })
             .flatMap(this::saveUser)
-            .doOnNext(user -> LOG.debug("Changed Information for User: {}", user))
+            .doOnNext(user -> LOG.debug("Update Information for User by admin: {}", user))
             .map(AdminUserDTO::new);
     }
 
@@ -164,7 +164,7 @@ public class UserService {
                 user.setImageUrl(imageUrl);
                 return saveUser(user);
             })
-            .doOnNext(user -> LOG.debug("Changed Information for User: {}", user))
+            .doOnNext(user -> LOG.debug("Update Information for User by user: {}", user))
             .then();
     }
 
@@ -217,13 +217,6 @@ public class UserService {
         return userRepository.findOneWithAuthoritiesByLogin(login);
     }
 
-//    @Transactional(readOnly = true)
-//    public Mono<User> getUserWithAuthorities() {
-//        return SecurityUtils.getCurrentUserLogin()
-//            .flatMap(user -> SecurityUtils.getCurrentUserFacility()
-//                .flatMap(facilityId -> userRepository.findOneWithAuthoritiesByLoginAndFacilityId(user, facilityId)));
-//    }
-
     @Transactional(readOnly = true)
     public Mono<User> getUserWithAuthorities() {
         return SecurityUtils.getCurrentUserLogin()
@@ -252,7 +245,7 @@ public class UserService {
         }
 
         public static String generateRandomAlphanumericString() {
-            return RandomStringUtils.random(20, 0, 0, true, true, (char[])null, SECURE_RANDOM);
+            return RandomStringUtils.random(20, 0, 0, true, true, null, SECURE_RANDOM);
         }
 
         public static String generatePassword() {

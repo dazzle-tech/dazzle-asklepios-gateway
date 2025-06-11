@@ -41,10 +41,15 @@ public class WebConfigurer implements WebFluxConfigurer {
 
         if (StringUtils.hasText(corsConfigProperties.getAllowedOrigins()) ||
             StringUtils.hasText(corsConfigProperties.getAllowedOriginPatterns())) {
-            // your logic here
 
-        config.setAllowedOrigins(Arrays.asList(corsConfigProperties.getAllowedOrigins().split(",")));
-            config.setAllowedOriginPatterns(Arrays.asList(corsConfigProperties.getAllowedOriginPatterns().split(",")));
+            if (StringUtils.hasText(corsConfigProperties.getAllowedOrigins())) {
+                config.setAllowedOrigins(Arrays.asList(corsConfigProperties.getAllowedOrigins().split(",")));
+            }
+
+            if (StringUtils.hasText(corsConfigProperties.getAllowedOriginPatterns())) {
+                config.setAllowedOriginPatterns(Arrays.asList(corsConfigProperties.getAllowedOriginPatterns().split(",")));
+            }
+
             config.setAllowedMethods(Arrays.asList(corsConfigProperties.getAllowedMethods().split(",")));
             config.setAllowedHeaders(Arrays.asList(corsConfigProperties.getAllowedHeaders().split(",")));
             config.setExposedHeaders(Arrays.asList(corsConfigProperties.getExposedHeaders().split(",")));
