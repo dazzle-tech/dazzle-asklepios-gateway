@@ -79,8 +79,8 @@ management:
       application: ${spring.application.name}
 
 services:
-  redirect-target-url: http://localhost:9090
-#   redirect-target-url: http://67.207.78.195:8081
+  asklepios-general-service-url: http://localhost:9090
+#   asklepios-general-service-url: http://67.207.78.195:8081
 
 spring:
   application:
@@ -90,99 +90,99 @@ spring:
       default-filters:
         - JWTRelay
       routes:
-        - id: utility
-          uri: ${services.redirect-target-url}
+        - id: reference-data
+          uri: ${services.asklepios-general-service-url}
           predicates:
-            - Path=/utility/**
+            - Path=/reference-data/**
           filters:
             - StripPrefix=0
 
         - id: appointment
-          uri: ${services.redirect-target-url}
+          uri: ${services.asklepios-general-service-url}
           predicates:
             - Path=/appointment/**
           filters:
             - StripPrefix=0
 
         - id: attachment
-          uri: ${services.redirect-target-url}
+          uri: ${services.asklepios-general-service-url}
           predicates:
             - Path=/attachment/**
           filters:
             - StripPrefix=0
 
         - id: dental
-          uri: ${services.redirect-target-url}
+          uri: ${services.asklepios-general-service-url}
           predicates:
             - Path=/dental/**
           filters:
             - StripPrefix=0
 
         - id: dvm
-          uri: ${services.redirect-target-url}
+          uri: ${services.asklepios-general-service-url}
           predicates:
             - Path=/dvm/**
           filters:
             - StripPrefix=0
 
         - id: encounter
-          uri: ${services.redirect-target-url}
+          uri: ${services.asklepios-general-service-url}
           predicates:
             - Path=/encounter/**
           filters:
             - StripPrefix=0
 
         - id: general
-          uri: ${services.redirect-target-url}
+          uri: ${services.asklepios-general-service-url}
           predicates:
             - Path=/general/**
           filters:
             - StripPrefix=0
 
         - id: lab
-          uri: ${services.redirect-target-url}
+          uri: ${services.asklepios-general-service-url}
           predicates:
             - Path=/lab/**
           filters:
             - StripPrefix=0
 
         - id: medications
-          uri: ${services.redirect-target-url}
+          uri: ${services.asklepios-general-service-url}
           predicates:
             - Path=/medications/**
           filters:
             - StripPrefix=0
 
         - id: observation
-          uri: ${services.redirect-target-url}
+          uri: ${services.asklepios-general-service-url}
           predicates:
             - Path=/observation/**
           filters:
             - StripPrefix=0
 
         - id: pas
-          uri: ${services.redirect-target-url}
+          uri: ${services.asklepios-general-service-url}
           predicates:
             - Path=/pas/**
           filters:
             - StripPrefix=0
 
         - id: rad
-          uri: ${services.redirect-target-url}
+          uri: ${services.asklepios-general-service-url}
           predicates:
             - Path=/rad/**
           filters:
             - StripPrefix=0
 
         - id: setup
-          uri: ${services.redirect-target-url}
+          uri: ${services.asklepios-general-service-url}
           predicates:
             - Path=/setup/**
           filters:
             - StripPrefix=0
 
         - id: auth
-          uri: ${services.redirect-target-url}
+          uri: ${services.asklepios-general-service-url}
           predicates:
             - Path=/auth/**
           filters:
