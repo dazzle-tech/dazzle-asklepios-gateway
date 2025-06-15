@@ -1,4 +1,3 @@
-
 spring:
   config:
     activate:
@@ -79,6 +78,10 @@ management:
     tags:
       application: ${spring.application.name}
 
+services:
+  asklepios-general-service-url: http://localhost:9090
+#   asklepios-general-service-url: http://67.207.78.195:8081
+
 spring:
   application:
     name: gateway
@@ -87,12 +90,104 @@ spring:
       default-filters:
         - JWTRelay
       routes:
-        - id: dazzle-asklepios-general-service-route
-          uri: http://localhost:8081
+        - id: reference-data
+          uri: ${services.asklepios-general-service-url}
           predicates:
-            - Path=/utility/**
+            - Path=/reference-data/**
           filters:
             - StripPrefix=0
+
+        - id: appointment
+          uri: ${services.asklepios-general-service-url}
+          predicates:
+            - Path=/appointment/**
+          filters:
+            - StripPrefix=0
+
+        - id: attachment
+          uri: ${services.asklepios-general-service-url}
+          predicates:
+            - Path=/attachment/**
+          filters:
+            - StripPrefix=0
+
+        - id: dental
+          uri: ${services.asklepios-general-service-url}
+          predicates:
+            - Path=/dental/**
+          filters:
+            - StripPrefix=0
+
+        - id: dvm
+          uri: ${services.asklepios-general-service-url}
+          predicates:
+            - Path=/dvm/**
+          filters:
+            - StripPrefix=0
+
+        - id: encounter
+          uri: ${services.asklepios-general-service-url}
+          predicates:
+            - Path=/encounter/**
+          filters:
+            - StripPrefix=0
+
+        - id: general
+          uri: ${services.asklepios-general-service-url}
+          predicates:
+            - Path=/general/**
+          filters:
+            - StripPrefix=0
+
+        - id: lab
+          uri: ${services.asklepios-general-service-url}
+          predicates:
+            - Path=/lab/**
+          filters:
+            - StripPrefix=0
+
+        - id: medications
+          uri: ${services.asklepios-general-service-url}
+          predicates:
+            - Path=/medications/**
+          filters:
+            - StripPrefix=0
+
+        - id: observation
+          uri: ${services.asklepios-general-service-url}
+          predicates:
+            - Path=/observation/**
+          filters:
+            - StripPrefix=0
+
+        - id: pas
+          uri: ${services.asklepios-general-service-url}
+          predicates:
+            - Path=/pas/**
+          filters:
+            - StripPrefix=0
+
+        - id: rad
+          uri: ${services.asklepios-general-service-url}
+          predicates:
+            - Path=/rad/**
+          filters:
+            - StripPrefix=0
+
+        - id: setup
+          uri: ${services.asklepios-general-service-url}
+          predicates:
+            - Path=/setup/**
+          filters:
+            - StripPrefix=0
+
+        - id: auth
+          uri: ${services.asklepios-general-service-url}
+          predicates:
+            - Path=/auth/**
+          filters:
+            - StripPrefix=0
+
       httpclient:
         pool:
           max-connections: 1000
@@ -160,13 +255,13 @@ asklepios:
   clientApp:
     name: 'gatewayApp'
 #   By default CORS is disabled. Uncomment to enable.
-#  cors:
-#    allowed-origins: "http://localhost:8100,http://localhost:9000"
-#    allowed-methods: "*"
-#    allowed-headers: "*"
-#    exposed-headers: "Authorization,Link,X-Total-Count,X-${asklepios.clientApp.name}-alert,X-${asklepios.clientApp.name}-error,X-${asklepios.clientApp.name}-params"
-#    allow-credentials: true
-#    max-age: 1800
+  cors:
+    allowed-origins: "http://localhost:8100,http://localhost:9000,http://localhost:3100"
+    allowed-methods: "*"
+    allowed-headers: "*"
+    exposed-headers: "Authorization,Link,X-Total-Count,X-${asklepios.clientApp.name}-alert,X-${asklepios.clientApp.name}-error,X-${asklepios.clientApp.name}-params"
+    allow-credentials: true
+    max-age: 1800
   mail:
     from: gateway@localhost
   api-docs:
