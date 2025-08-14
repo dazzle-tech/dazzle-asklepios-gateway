@@ -36,11 +36,12 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     private final AuthorityRepository authorityRepository;
-
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository) {
+    private final MailService mailService;
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository, MailService mailService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityRepository = authorityRepository;
+        this.mailService = mailService;
     }
 
     @Transactional
@@ -83,24 +84,27 @@ public class UserService {
             user.setEmail(userDTO.getEmail().toLowerCase());
         }
         user.setImageUrl(userDTO.getImageUrl());
-        if (userDTO.getLangKey() == null) {
-            user.setLangKey(Constants.DEFAULT_LANGUAGE);
-        } else {
-            user.setLangKey(userDTO.getLangKey());
-        }
-        return (Mono.just(user))
-            .publishOn(Schedulers.boundedElastic())
-            .map(newUser -> {
-                String encryptedPassword = passwordEncoder.encode(RandomUtil.generatePassword());
-                newUser.setPassword(encryptedPassword);
-                newUser.setResetKey(RandomUtil.generateResetKey());
-                newUser.setResetDate(Instant.now());
-                newUser.setActivated(true);
-                return newUser;
-            })
-            .flatMap(this::saveUser)
-            .doOnNext(user1 -> LOG.debug("Created Information for User: {}", user1));
+        user.setPhoneNumber(userDTO.getPhoneNumber());
+        user.setBirthDate(userDTO.getBirthDate());
+        user.setGenderLkey(userDTO.getGenderLkey());
+        user.setJobRoleLkey(userDTO.getJobRoleLkey());
+        user.setJobDescription(userDTO.getJobDescription());
+        user.setLangKey(userDTO.getLangKey() == null ? Constants.DEFAULT_LANGUAGE : userDTO.getLangKey());
+
+        String rawPassword = RandomUtil.generatePassword();
+        user.setPassword(passwordEncoder.encode(rawPassword));
+        user.setResetKey(RandomUtil.generateResetKey());
+        user.setResetDate(Instant.now());
+        user.setActivated(true);
+
+        return saveUser(user)
+            .doOnNext(savedUser -> {
+
+                mailService.sendNewUserPasswordMail(savedUser, rawPassword);
+                LOG.debug("Created user {} and sent password email", savedUser.getLogin());
+            });
     }
+
 
     /**
      * Update all information for a specific user, and return the modified user.
@@ -122,6 +126,11 @@ public class UserService {
                 user.setImageUrl(userDTO.getImageUrl());
                 user.setActivated(userDTO.isActivated());
                 user.setLangKey(userDTO.getLangKey());
+                user.setPhoneNumber(userDTO.getPhoneNumber());
+                user.setBirthDate(userDTO.getBirthDate());
+                user.setGenderLkey(userDTO.getGenderLkey());
+                user.setJobRoleLkey(userDTO.getJobRoleLkey());
+                user.setJobDescription(userDTO.getJobDescription());
                 Set<Authority> managedAuthorities = user.getAuthorities();
                 managedAuthorities.clear();
                 return user;
@@ -151,7 +160,18 @@ public class UserService {
      * @return a completed {@link Mono}.
      */
     @Transactional
-    public Mono<Void> updateUser(String firstName, String lastName, String email, String langKey, String imageUrl) {
+    public Mono<Void> updateUser(
+        String firstName,
+        String lastName,
+        String email,
+        String langKey,
+        String imageUrl,
+        String phoneNumber,
+        java.time.LocalDate birthDate,
+        Integer genderLkey,
+        Integer jobRoleLkey,
+        String jobDescription
+    ) {
         return SecurityUtils.getCurrentUserLogin()
             .flatMap(userRepository::findOneByLogin)
             .flatMap(user -> {
@@ -162,11 +182,19 @@ public class UserService {
                 }
                 user.setLangKey(langKey);
                 user.setImageUrl(imageUrl);
+
+                user.setPhoneNumber(phoneNumber);
+                user.setBirthDate(birthDate);
+                user.setGenderLkey(genderLkey);
+                user.setJobRoleLkey(jobRoleLkey);
+                user.setJobDescription(jobDescription);
+
                 return saveUser(user);
             })
             .doOnNext(user -> LOG.debug("Update Information for User by user: {}", user))
             .then();
     }
+
 
     @Transactional
     public Mono<User> saveUser(User user) {

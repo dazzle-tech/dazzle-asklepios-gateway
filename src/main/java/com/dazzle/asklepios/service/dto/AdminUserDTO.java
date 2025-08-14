@@ -57,6 +57,19 @@ public class AdminUserDTO implements Serializable {
 
     private Set<String> authorities;
 
+
+    @Size(max = 20)
+    private String phoneNumber;
+
+    private java.time.LocalDate birthDate;
+
+    private Integer genderLkey;
+
+    private Integer jobRoleLkey;
+
+    @Size(max = 255)
+    private String jobDescription;
+
     public AdminUserDTO() {
     }
 
@@ -74,7 +87,11 @@ public class AdminUserDTO implements Serializable {
         this.lastModifiedBy = user.getLastModifiedBy();
         this.lastModifiedDate = user.getLastModifiedDate();
         this.authorities = user.getAuthorities().stream().map(Authority::getName).collect(Collectors.toSet());
+
+        this.phoneNumber = user.getPhoneNumber();
+        this.birthDate = user.getBirthDate();
+        this.genderLkey = user.getGenderLkey();
+        this.jobRoleLkey = user.getJobRoleLkey();
+        this.jobDescription = user.getJobDescription();
     }
-
-
 }

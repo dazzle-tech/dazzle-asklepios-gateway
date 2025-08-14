@@ -70,6 +70,23 @@ public class User extends AbstractAuditingEntity<Long> implements Serializable {
     @Column("reset_date")
     private Instant resetDate = null;
 
+    @Size(max = 20)
+    @Column("phone_number")
+    private String phoneNumber;
+
+    @Column("birth_date")
+    private java.time.LocalDate birthDate;
+
+    @Column("gender_lkey")
+    private Integer genderLkey;
+
+    @Column("job_role_lkey")
+    private Integer jobRoleLkey;
+
+    @Size(max = 255)
+    @Column("job_description")
+    private String jobDescription;
+
     @JsonIgnore
     @org.springframework.data.annotation.Transient
     private Set<Authority> authorities = new HashSet<>();
