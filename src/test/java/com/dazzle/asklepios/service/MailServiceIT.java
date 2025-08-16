@@ -39,7 +39,7 @@ class MailServiceIT {
     private static final Pattern PATTERN_LOCALE_3 = Pattern.compile("([a-z]{2})-([a-zA-Z]{4})-([a-z]{2})");
     private static final Pattern PATTERN_LOCALE_2 = Pattern.compile("([a-z]{2})-([a-z]{2})");
 
-    @Value("${asklepios.mail.from}")
+    @Value("${asklepios.mail.username}")
     private String mailFrom;
 
     @MockitoBean

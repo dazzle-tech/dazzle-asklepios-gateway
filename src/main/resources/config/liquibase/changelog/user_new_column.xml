@@ -14,10 +14,10 @@
       <column name="birth_date" type="date">
         <constraints nullable="true"/>
       </column>
-      <column name="gender_lkey" type="int">
+      <column name="gender" type="int">
         <constraints nullable="true"/>
       </column>
-      <column name="job_role_lkey" type="int">
+      <column name="job_role" type="int">
         <constraints nullable="true"/>
       </column>
       <column name="job_description" type="varchar(255)">
