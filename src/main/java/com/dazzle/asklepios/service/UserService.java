@@ -21,6 +21,7 @@ import reactor.core.scheduler.Schedulers;
 import java.security.SecureRandom;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.AbstractMap;
 import java.util.Set;
 
 /**
@@ -86,24 +87,39 @@ public class UserService {
         user.setImageUrl(userDTO.getImageUrl());
         user.setPhoneNumber(userDTO.getPhoneNumber());
         user.setBirthDate(userDTO.getBirthDate());
-        user.setGenderLkey(userDTO.getGenderLkey());
-        user.setJobRoleLkey(userDTO.getJobRoleLkey());
+        user.setGender(userDTO.getGender());
+        user.setJobRole(userDTO.getJobRole());
         user.setJobDescription(userDTO.getJobDescription());
         user.setLangKey(userDTO.getLangKey() == null ? Constants.DEFAULT_LANGUAGE : userDTO.getLangKey());
 
-        String rawPassword = RandomUtil.generatePassword();
-        user.setPassword(passwordEncoder.encode(rawPassword));
-        user.setResetKey(RandomUtil.generateResetKey());
-        user.setResetDate(Instant.now());
-        user.setActivated(true);
+        return Mono.fromCallable(() -> {
 
-        return saveUser(user)
-            .doOnNext(savedUser -> {
-
-                mailService.sendNewUserPasswordMail(savedUser, rawPassword);
-                LOG.debug("Created user {} and sent password email", savedUser.getLogin());
-            });
+                String rawPassword = RandomUtil.generatePassword();
+                user.setPassword(passwordEncoder.encode(rawPassword));
+                user.setResetKey(RandomUtil.generateResetKey());
+                user.setResetDate(Instant.now());
+                user.setActivated(true);
+                return new AbstractMap.SimpleEntry<>(user, rawPassword);
+            })
+            .subscribeOn(Schedulers.boundedElastic())
+            .flatMap(entry -> saveUser(entry.getKey())
+                .flatMap(savedUser -> sendWelcomeEmail(savedUser, entry.getValue()).thenReturn(savedUser))
+            )
+            .doOnNext(savedUser -> LOG.debug("Created user {} and sent password email", savedUser.getLogin()));
     }
+
+    private Mono<Void> sendWelcomeEmail(User user, String rawPassword) {
+        if (user.getEmail() == null) {
+            return Mono.empty();
+        }
+        return Mono.fromRunnable(() -> {
+                mailService.sendNewUserPasswordMail(user, rawPassword);
+            })
+            .subscribeOn(Schedulers.boundedElastic())
+            .then();
+    }
+
+
 
 
     /**
@@ -128,8 +144,8 @@ public class UserService {
                 user.setLangKey(userDTO.getLangKey());
                 user.setPhoneNumber(userDTO.getPhoneNumber());
                 user.setBirthDate(userDTO.getBirthDate());
-                user.setGenderLkey(userDTO.getGenderLkey());
-                user.setJobRoleLkey(userDTO.getJobRoleLkey());
+                user.setGender(userDTO.getGender());
+                user.setJobRole(userDTO.getJobRole());
                 user.setJobDescription(userDTO.getJobDescription());
                 Set<Authority> managedAuthorities = user.getAuthorities();
                 managedAuthorities.clear();
@@ -168,8 +184,8 @@ public class UserService {
         String imageUrl,
         String phoneNumber,
         java.time.LocalDate birthDate,
-        Integer genderLkey,
-        Integer jobRoleLkey,
+        Integer gender,
+        Integer jobRole,
         String jobDescription
     ) {
         return SecurityUtils.getCurrentUserLogin()
@@ -185,8 +201,8 @@ public class UserService {
 
                 user.setPhoneNumber(phoneNumber);
                 user.setBirthDate(birthDate);
-                user.setGenderLkey(genderLkey);
-                user.setJobRoleLkey(jobRoleLkey);
+                user.setGender(gender);
+                user.setJobRole(jobRole);
                 user.setJobDescription(jobDescription);
 
                 return saveUser(user);

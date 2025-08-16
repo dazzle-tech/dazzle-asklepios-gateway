@@ -32,6 +32,10 @@ public class MailService {
     @Value("${asklepios.mail.password}")
     private static final String BASE_URL = "baseUrl";
 
+    @Value("${asklepios.mail.base-url}")
+    private String baseUrl;
+    @Value("${asklepios.mail.username}")
+    private String fromEmail;
 
     private final JavaMailSender javaMailSender;
 
@@ -72,7 +76,7 @@ public class MailService {
             MimeMessageHelper message = new MimeMessageHelper(mimeMessage, isMultipart, StandardCharsets.UTF_8.name());
             message.setTo(to);
             //TODO: add this to to yml file
-            message.setFrom(new InternetAddress("systemask73@gmail.com"));
+            message.setFrom(new InternetAddress(fromEmail));
             message.setSubject(subject);
             message.setText(content, isHtml);
             javaMailSender.send(mimeMessage);
@@ -98,7 +102,7 @@ public class MailService {
         Context context = new Context(locale);
         context.setVariable(USER, user);
         //TODO: move this to yml
-        context.setVariable(BASE_URL, "http://localhost:3100");
+        context.setVariable(BASE_URL, baseUrl);
         String content = templateEngine.process(templateName, context);
         String subject = messageSource.getMessage(titleKey, null, locale);
         sendEmailSync(user.getEmail(), subject, content, false, true);
@@ -123,7 +127,7 @@ public class MailService {
 
         context.setVariable(USER, user);
         context.setVariable("password", plainPassword);
-        context.setVariable(BASE_URL, "http://localhost:3100");
+        context.setVariable(BASE_URL, baseUrl);
 
 
         String content = templateEngine.process("mail/newUserPasswordEmail", context);

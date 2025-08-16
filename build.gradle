@@ -153,7 +153,10 @@ dependencies {
     implementation "org.springframework.cloud:spring-cloud-starter-circuitbreaker-reactor-resilience4j"
     implementation "org.springframework.data:spring-data-commons"
     implementation "org.springframework.retry:spring-retry"
-    testImplementation "org.springframework.security:spring-security-test"
+  implementation "org.hdrhistogram:HdrHistogram:2.1.12"
+
+
+  testImplementation "org.springframework.security:spring-security-test"
     implementation platform(libs.spring.cloud.dependencies)
     implementation platform(libs.feign.reactor.bom)
     implementation(libs.commons.beanutils) {

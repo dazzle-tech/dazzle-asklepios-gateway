@@ -77,11 +77,11 @@ public class User extends AbstractAuditingEntity<Long> implements Serializable {
     @Column("birth_date")
     private java.time.LocalDate birthDate;
 
-    @Column("gender_lkey")
-    private Integer genderLkey;
+    @Column("gender")
+    private Integer gender;
 
-    @Column("job_role_lkey")
-    private Integer jobRoleLkey;
+    @Column("job_role")
+    private Integer jobRole;
 
     @Size(max = 255)
     @Column("job_description")
