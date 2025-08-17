@@ -17,12 +17,6 @@
       <column name="gender" type="int">
         <constraints nullable="true"/>
       </column>
-      <column name="job_role" type="int">
-        <constraints nullable="true"/>
-      </column>
-      <column name="job_description" type="varchar(255)">
-        <constraints nullable="true"/>
-      </column>
     </addColumn>
   </changeSet>
 

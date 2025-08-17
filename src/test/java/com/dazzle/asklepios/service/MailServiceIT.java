@@ -142,4 +142,24 @@ class MailServiceIT {
         }
     }
 
+    @Test
+    void testSendNewUserPasswordMail() throws Exception {
+
+        User user = new User();
+        user.setLangKey(Constants.DEFAULT_LANGUAGE);
+        user.setLogin("john");
+        user.setEmail("john.doe@example.com");
+        String plainPassword = "MyNewPass123!";
+        mailService.sendNewUserPasswordMail(user, plainPassword);
+        verify(javaMailSender).send(messageCaptor.capture());
+        MimeMessage message = messageCaptor.getValue();
+        assertThat(message.getAllRecipients()[0]).hasToString(user.getEmail());
+        assertThat(message.getFrom()[0]).hasToString(mailFrom);
+        assertThat(message.getSubject()).isNotEmpty();
+        String content = (String) message.getContent();
+        assertThat(content).contains(plainPassword);
+        assertThat(message.getDataHandler().getContentType()).isEqualTo("text/html;charset=UTF-8");
+    }
+
+
 }

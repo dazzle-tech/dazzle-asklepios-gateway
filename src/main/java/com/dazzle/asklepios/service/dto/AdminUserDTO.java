@@ -64,11 +64,7 @@ public class AdminUserDTO implements Serializable {
     private java.time.LocalDate birthDate;
 
     private Integer gender;
-
-    private Integer jobRole;
-
-    @Size(max = 255)
-    private String jobDescription;
+    ;
 
     public AdminUserDTO() {
     }
@@ -91,7 +87,6 @@ public class AdminUserDTO implements Serializable {
         this.phoneNumber = user.getPhoneNumber();
         this.birthDate = user.getBirthDate();
         this.gender = user.getGender();
-        this.jobRole = user.getJobRole();
-        this.jobDescription = user.getJobDescription();
+
     }
 }

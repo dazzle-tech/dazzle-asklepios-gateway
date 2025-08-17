@@ -88,8 +88,6 @@ public class UserService {
         user.setPhoneNumber(userDTO.getPhoneNumber());
         user.setBirthDate(userDTO.getBirthDate());
         user.setGender(userDTO.getGender());
-        user.setJobRole(userDTO.getJobRole());
-        user.setJobDescription(userDTO.getJobDescription());
         user.setLangKey(userDTO.getLangKey() == null ? Constants.DEFAULT_LANGUAGE : userDTO.getLangKey());
 
         return Mono.fromCallable(() -> {
@@ -145,8 +143,6 @@ public class UserService {
                 user.setPhoneNumber(userDTO.getPhoneNumber());
                 user.setBirthDate(userDTO.getBirthDate());
                 user.setGender(userDTO.getGender());
-                user.setJobRole(userDTO.getJobRole());
-                user.setJobDescription(userDTO.getJobDescription());
                 Set<Authority> managedAuthorities = user.getAuthorities();
                 managedAuthorities.clear();
                 return user;
@@ -184,9 +180,8 @@ public class UserService {
         String imageUrl,
         String phoneNumber,
         java.time.LocalDate birthDate,
-        Integer gender,
-        Integer jobRole,
-        String jobDescription
+        Integer gender
+
     ) {
         return SecurityUtils.getCurrentUserLogin()
             .flatMap(userRepository::findOneByLogin)
@@ -202,8 +197,6 @@ public class UserService {
                 user.setPhoneNumber(phoneNumber);
                 user.setBirthDate(birthDate);
                 user.setGender(gender);
-                user.setJobRole(jobRole);
-                user.setJobDescription(jobDescription);
 
                 return saveUser(user);
             })

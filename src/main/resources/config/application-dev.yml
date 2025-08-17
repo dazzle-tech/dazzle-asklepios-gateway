@@ -30,7 +30,6 @@ spring:
     # Remove 'faker' if you do not want the sample data to be loaded automatically
     contexts: dev, faker
     url: jdbc:postgresql://localhost:5432/asklepios
-#    url: jdbc:postgresql://host.docker.internal:5432/asklepios
   mail:
     host: localhost
     port: 25
@@ -40,117 +39,10 @@ spring:
     cache-duration: PT1S # 1 second, see the ISO 8601 standard
   r2dbc:
     url: r2dbc:postgresql://localhost:5432/asklepios
-#    url: r2dbc:postgresql://host.docker.internal:5432/asklepios
     username: postgres
     password: 147741
   thymeleaf:
     cache: false
-  cloud:
-    gateway:
-      default-filters:
-        - JWTRelay
-      routes:
-        - id: reference-data
-          uri: ${services.asklepios-general-service-url}
-          predicates:
-            - Path=/reference-data/**
-          filters:
-            - StripPrefix=0
-
-        - id: appointment
-          uri: ${services.asklepios-general-service-url}
-          predicates:
-            - Path=/appointment/**
-          filters:
-            - StripPrefix=0
-
-        - id: attachment
-          uri: ${services.asklepios-general-service-url}
-          predicates:
-            - Path=/attachment/**
-          filters:
-            - StripPrefix=0
-
-        - id: dental
-          uri: ${services.asklepios-general-service-url}
-          predicates:
-            - Path=/dental/**
-          filters:
-            - StripPrefix=0
-
-        - id: dvm
-          uri: ${services.asklepios-general-service-url}
-          predicates:
-            - Path=/dvm/**
-          filters:
-            - StripPrefix=0
-
-        - id: encounter
-          uri: ${services.asklepios-general-service-url}
-          predicates:
-            - Path=/encounter/**
-          filters:
-            - StripPrefix=0
-
-        - id: general
-          uri: ${services.asklepios-general-service-url}
-          predicates:
-            - Path=/general/**
-          filters:
-            - StripPrefix=0
-
-        - id: lab
-          uri: ${services.asklepios-general-service-url}
-          predicates:
-            - Path=/lab/**
-          filters:
-            - StripPrefix=0
-
-        - id: medications
-          uri: ${services.asklepios-general-service-url}
-          predicates:
-            - Path=/medications/**
-          filters:
-            - StripPrefix=0
-
-        - id: observation
-          uri: ${services.asklepios-general-service-url}
-          predicates:
-            - Path=/observation/**
-          filters:
-            - StripPrefix=0
-
-        - id: pas
-          uri: ${services.asklepios-general-service-url}
-          predicates:
-            - Path=/pas/**
-          filters:
-            - StripPrefix=0
-
-        - id: rad
-          uri: ${services.asklepios-general-service-url}
-          predicates:
-            - Path=/rad/**
-          filters:
-            - StripPrefix=0
-
-        - id: setup
-          uri: ${services.asklepios-general-service-url}
-          predicates:
-            - Path=/setup/**
-          filters:
-            - StripPrefix=0
-
-        - id: auth
-          uri: ${services.asklepios-general-service-url}
-          predicates:
-            - Path=/auth/**
-          filters:
-            - StripPrefix=0
-
-      httpclient:
-        pool:
-          max-connections: 1000
 
 server:
   port: 8080

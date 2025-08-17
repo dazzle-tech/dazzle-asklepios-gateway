@@ -80,12 +80,6 @@ public class User extends AbstractAuditingEntity<Long> implements Serializable {
     @Column("gender")
     private Integer gender;
 
-    @Column("job_role")
-    private Integer jobRole;
-
-    @Size(max = 255)
-    @Column("job_description")
-    private String jobDescription;
 
     @JsonIgnore
     @org.springframework.data.annotation.Transient
