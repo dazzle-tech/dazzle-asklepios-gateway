@@ -50,6 +50,7 @@ spring:
             - Path=/reference-data/**
           filters:
             - StripPrefix=0
+            - AddRequestHeader=access_token,4994
 
         - id: appointment
           uri: ${services.asklepios-general-service-url}
@@ -57,6 +58,7 @@ spring:
             - Path=/appointment/**
           filters:
             - StripPrefix=0
+            - AddRequestHeader=access_token,4994
 
         - id: attachment
           uri: ${services.asklepios-general-service-url}
@@ -64,6 +66,7 @@ spring:
             - Path=/attachment/**
           filters:
             - StripPrefix=0
+            - AddRequestHeader=access_token,4994
 
         - id: dental
           uri: ${services.asklepios-general-service-url}
@@ -71,6 +74,7 @@ spring:
             - Path=/dental/**
           filters:
             - StripPrefix=0
+            - AddRequestHeader=access_token,4994
 
         - id: dvm
           uri: ${services.asklepios-general-service-url}
@@ -78,6 +82,7 @@ spring:
             - Path=/dvm/**
           filters:
             - StripPrefix=0
+            - AddRequestHeader=access_token,4994
 
         - id: encounter
           uri: ${services.asklepios-general-service-url}
@@ -85,6 +90,7 @@ spring:
             - Path=/encounter/**
           filters:
             - StripPrefix=0
+            - AddRequestHeader=access_token,4994
 
         - id: general
           uri: ${services.asklepios-general-service-url}
@@ -92,6 +98,7 @@ spring:
             - Path=/general/**
           filters:
             - StripPrefix=0
+            - AddRequestHeader=access_token,4994
 
         - id: lab
           uri: ${services.asklepios-general-service-url}
@@ -99,6 +106,7 @@ spring:
             - Path=/lab/**
           filters:
             - StripPrefix=0
+            - AddRequestHeader=access_token,4994
 
         - id: medications
           uri: ${services.asklepios-general-service-url}
@@ -106,6 +114,7 @@ spring:
             - Path=/medications/**
           filters:
             - StripPrefix=0
+            - AddRequestHeader=access_token,4994
 
         - id: observation
           uri: ${services.asklepios-general-service-url}
@@ -113,6 +122,7 @@ spring:
             - Path=/observation/**
           filters:
             - StripPrefix=0
+            - AddRequestHeader=access_token,4994
 
         - id: pas
           uri: ${services.asklepios-general-service-url}
@@ -120,6 +130,7 @@ spring:
             - Path=/pas/**
           filters:
             - StripPrefix=0
+            - AddRequestHeader=access_token,4994
 
         - id: rad
           uri: ${services.asklepios-general-service-url}
@@ -127,6 +138,7 @@ spring:
             - Path=/rad/**
           filters:
             - StripPrefix=0
+            - AddRequestHeader=access_token,4994
 
         - id: setup
           uri: ${services.asklepios-general-service-url}
@@ -134,6 +146,7 @@ spring:
             - Path=/setup/**
           filters:
             - StripPrefix=0
+            - AddRequestHeader=access_token,4994
 
         - id: auth
           uri: ${services.asklepios-general-service-url}
@@ -141,6 +154,7 @@ spring:
             - Path=/auth/**
           filters:
             - StripPrefix=0
+            - AddRequestHeader=access_token,4994
 
       httpclient:
         pool:
