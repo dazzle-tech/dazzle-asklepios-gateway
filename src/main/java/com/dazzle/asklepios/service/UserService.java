@@ -3,6 +3,7 @@ package com.dazzle.asklepios.service;
 import com.dazzle.asklepios.config.Constants;
 import com.dazzle.asklepios.domain.Authority;
 import com.dazzle.asklepios.domain.User;
+import com.dazzle.asklepios.domain.enumeration.Gender;
 import com.dazzle.asklepios.repository.AuthorityRepository;
 import com.dazzle.asklepios.repository.UserRepository;
 import com.dazzle.asklepios.security.SecurityUtils;
@@ -180,7 +181,7 @@ public class UserService {
         String imageUrl,
         String phoneNumber,
         java.time.LocalDate birthDate,
-        Integer gender
+        Gender gender
 
     ) {
         return SecurityUtils.getCurrentUserLogin()

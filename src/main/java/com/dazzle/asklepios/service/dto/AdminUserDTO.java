@@ -3,6 +3,7 @@ package com.dazzle.asklepios.service.dto;
 import com.dazzle.asklepios.config.Constants;
 import com.dazzle.asklepios.domain.Authority;
 import com.dazzle.asklepios.domain.User;
+import com.dazzle.asklepios.domain.enumeration.Gender;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -63,7 +64,7 @@ public class AdminUserDTO implements Serializable {
 
     private java.time.LocalDate birthDate;
 
-    private Integer gender;
+    private Gender gender;
     ;
 
     public AdminUserDTO() {
