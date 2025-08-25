@@ -17,6 +17,15 @@
       <column name="type" type="varchar(255)">
         <constraints nullable="false"/>
       </column>
+      <column name="phone_number" type="varchar(20)">
+        <constraints nullable="true"/>
+      </column>
+      <column name="birth_date" type="date">
+        <constraints nullable="true"/>
+      </column>
+      <column name="gender" type="varchar(255)">
+        <constraints nullable="true"/>
+      </column>
     </createTable>
 
     <createTable tableName="role">
