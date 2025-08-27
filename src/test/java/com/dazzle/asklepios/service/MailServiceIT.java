@@ -39,7 +39,7 @@ class MailServiceIT {
     private static final Pattern PATTERN_LOCALE_3 = Pattern.compile("([a-z]{2})-([a-zA-Z]{4})-([a-z]{2})");
     private static final Pattern PATTERN_LOCALE_2 = Pattern.compile("([a-z]{2})-([a-z]{2})");
 
-    @Value("${asklepios.mail.username}")
+    @Value("${asklepios.mail.from}")
     private String mailFrom;
 
     @MockitoBean
@@ -141,25 +141,5 @@ class MailServiceIT {
             fail("Exception shouldn't have been thrown");
         }
     }
-
-    @Test
-    void testSendNewUserPasswordMail() throws Exception {
-
-        User user = new User();
-        user.setLangKey(Constants.DEFAULT_LANGUAGE);
-        user.setLogin("john");
-        user.setEmail("john.doe@example.com");
-        String plainPassword = "MyNewPass123!";
-        mailService.sendNewUserPasswordMail(user, plainPassword);
-        verify(javaMailSender).send(messageCaptor.capture());
-        MimeMessage message = messageCaptor.getValue();
-        assertThat(message.getAllRecipients()[0]).hasToString(user.getEmail());
-        assertThat(message.getFrom()[0]).hasToString(mailFrom);
-        assertThat(message.getSubject()).isNotEmpty();
-        String content = (String) message.getContent();
-        assertThat(content).contains(plainPassword);
-        assertThat(message.getDataHandler().getContentType()).isEqualTo("text/html;charset=UTF-8");
-    }
-
 
 }

@@ -32,10 +32,6 @@ public class MailService {
     @Value("${asklepios.mail.password}")
     private static final String BASE_URL = "baseUrl";
 
-    @Value("${asklepios.mail.base-url}")
-    private String baseUrl;
-    @Value("${asklepios.mail.username}")
-    private String fromEmail;
 
     private final JavaMailSender javaMailSender;
 
@@ -76,7 +72,7 @@ public class MailService {
             MimeMessageHelper message = new MimeMessageHelper(mimeMessage, isMultipart, StandardCharsets.UTF_8.name());
             message.setTo(to);
             //TODO: add this to to yml file
-            message.setFrom(new InternetAddress(fromEmail));
+            message.setFrom(new InternetAddress("asktest281@gmail.com"));
             message.setSubject(subject);
             message.setText(content, isHtml);
             javaMailSender.send(mimeMessage);
@@ -102,7 +98,7 @@ public class MailService {
         Context context = new Context(locale);
         context.setVariable(USER, user);
         //TODO: move this to yml
-        context.setVariable(BASE_URL, baseUrl);
+        context.setVariable(BASE_URL, "http://127.0.0.1:8080");
         String content = templateEngine.process(templateName, context);
         String subject = messageSource.getMessage(titleKey, null, locale);
         sendEmailSync(user.getEmail(), subject, content, false, true);
@@ -112,28 +108,4 @@ public class MailService {
         LOG.debug("Sending password reset email to '{}'", user.getEmail());
         sendEmailFromTemplate(user, "mail/passwordResetEmail", "email.reset.title");
     }
-
-    public void sendNewUserPasswordMail(User user, String plainPassword) {
-        if (user.getEmail() == null) {
-            LOG.debug("Email doesn't exist for user '{}'", user.getLogin());
-            return;
-        }
-
-        LOG.debug("Sending new user password email to '{}'", user.getEmail());
-
-        Locale locale = Locale.forLanguageTag(user.getLangKey());
-        Context context = new Context(locale);
-
-
-        context.setVariable(USER, user);
-        context.setVariable("password", plainPassword);
-        context.setVariable(BASE_URL, baseUrl);
-
-
-        String content = templateEngine.process("mail/newUserPasswordEmail", context);
-        String subject = messageSource.getMessage("email.newuser.title", null, locale);
-
-        sendEmailSync(user.getEmail(), subject, content, false, true);
-    }
-
 }
