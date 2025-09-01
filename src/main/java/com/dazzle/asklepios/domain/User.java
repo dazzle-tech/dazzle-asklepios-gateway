@@ -1,10 +1,7 @@
 package com.dazzle.asklepios.domain;
 
 import com.dazzle.asklepios.config.Constants;
-import com.dazzle.asklepios.domain.enumeration.Gender;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -72,18 +69,6 @@ public class User extends AbstractAuditingEntity<Long> implements Serializable {
 
     @Column("reset_date")
     private Instant resetDate = null;
-
-    @Size(max = 20)
-    @Column("phone_number")
-    private String phoneNumber;
-
-    @Column("birth_date")
-    private java.time.LocalDate birthDate;
-
-
-    @Enumerated(EnumType.STRING)
-    private Gender gender;
-
 
     @JsonIgnore
     @org.springframework.data.annotation.Transient
