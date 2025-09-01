@@ -12,4 +12,9 @@
     <property name="timeType" value="time(6)" dbms="postgresql"/>
 
     <include file="/config/liquibase/changelog/v0.0.0_initial_schema.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/uom_group.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/uom_group_unit.xml" relativeToChangelogFile="false"/>
+<include file="/config/liquibase/changelog/uom_group_relation.xml" relativeToChangelogFile="false"/>
+
+
 </databaseChangeLog>
