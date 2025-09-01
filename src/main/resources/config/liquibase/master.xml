@@ -15,6 +15,8 @@
   <include file="/config/liquibase/changelog/uom_group.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/uom_group_unit.xml" relativeToChangelogFile="false"/>
 <include file="/config/liquibase/changelog/uom_group_relation.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/v3.0.0_allergens.xml" relativeToChangelogFile="false"/>
+
 
 
 </databaseChangeLog>
