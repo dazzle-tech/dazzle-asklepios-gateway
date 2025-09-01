@@ -3,6 +3,7 @@ package com.dazzle.asklepios.service.dto;
 import com.dazzle.asklepios.config.Constants;
 import com.dazzle.asklepios.domain.Authority;
 import com.dazzle.asklepios.domain.User;
+import com.dazzle.asklepios.domain.enumeration.Gender;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -57,6 +58,15 @@ public class AdminUserDTO implements Serializable {
 
     private Set<String> authorities;
 
+
+    @Size(max = 20)
+    private String phoneNumber;
+
+    private java.time.LocalDate birthDate;
+
+    private Gender gender;
+    ;
+
     public AdminUserDTO() {
     }
 
@@ -74,7 +84,10 @@ public class AdminUserDTO implements Serializable {
         this.lastModifiedBy = user.getLastModifiedBy();
         this.lastModifiedDate = user.getLastModifiedDate();
         this.authorities = user.getAuthorities().stream().map(Authority::getName).collect(Collectors.toSet());
+
+        this.phoneNumber = user.getPhoneNumber();
+        this.birthDate = user.getBirthDate();
+        this.gender = user.getGender();
+
     }
-
-
 }
