@@ -3,7 +3,6 @@ package com.dazzle.asklepios.service;
 import com.dazzle.asklepios.config.Constants;
 import com.dazzle.asklepios.domain.Authority;
 import com.dazzle.asklepios.domain.User;
-import com.dazzle.asklepios.domain.enumeration.Gender;
 import com.dazzle.asklepios.repository.AuthorityRepository;
 import com.dazzle.asklepios.repository.UserRepository;
 import com.dazzle.asklepios.security.SecurityUtils;
@@ -22,7 +21,6 @@ import reactor.core.scheduler.Schedulers;
 import java.security.SecureRandom;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.AbstractMap;
 import java.util.Set;
 
 /**
@@ -38,12 +36,11 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     private final AuthorityRepository authorityRepository;
-    private final MailService mailService;
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository, MailService mailService) {
+
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityRepository = authorityRepository;
-        this.mailService = mailService;
     }
 
     @Transactional
@@ -86,40 +83,24 @@ public class UserService {
             user.setEmail(userDTO.getEmail().toLowerCase());
         }
         user.setImageUrl(userDTO.getImageUrl());
-        user.setPhoneNumber(userDTO.getPhoneNumber());
-        user.setBirthDate(userDTO.getBirthDate());
-        user.setGender(userDTO.getGender());
-        user.setLangKey(userDTO.getLangKey() == null ? Constants.DEFAULT_LANGUAGE : userDTO.getLangKey());
-
-        return Mono.fromCallable(() -> {
-
-                String rawPassword = RandomUtil.generatePassword();
-                user.setPassword(passwordEncoder.encode(rawPassword));
-                user.setResetKey(RandomUtil.generateResetKey());
-                user.setResetDate(Instant.now());
-                user.setActivated(true);
-                return new AbstractMap.SimpleEntry<>(user, rawPassword);
-            })
-            .subscribeOn(Schedulers.boundedElastic())
-            .flatMap(entry -> saveUser(entry.getKey())
-                .flatMap(savedUser -> sendWelcomeEmail(savedUser, entry.getValue()).thenReturn(savedUser))
-            )
-            .doOnNext(savedUser -> LOG.debug("Created user {} and sent password email", savedUser.getLogin()));
-    }
-
-    private Mono<Void> sendWelcomeEmail(User user, String rawPassword) {
-        if (user.getEmail() == null) {
-            return Mono.empty();
+        if (userDTO.getLangKey() == null) {
+            user.setLangKey(Constants.DEFAULT_LANGUAGE);
+        } else {
+            user.setLangKey(userDTO.getLangKey());
         }
-        return Mono.fromRunnable(() -> {
-                mailService.sendNewUserPasswordMail(user, rawPassword);
+        return (Mono.just(user))
+            .publishOn(Schedulers.boundedElastic())
+            .map(newUser -> {
+                String encryptedPassword = passwordEncoder.encode(RandomUtil.generatePassword());
+                newUser.setPassword(encryptedPassword);
+                newUser.setResetKey(RandomUtil.generateResetKey());
+                newUser.setResetDate(Instant.now());
+                newUser.setActivated(true);
+                return newUser;
             })
-            .subscribeOn(Schedulers.boundedElastic())
-            .then();
+            .flatMap(this::saveUser)
+            .doOnNext(user1 -> LOG.debug("Created Information for User: {}", user1));
     }
-
-
-
 
     /**
      * Update all information for a specific user, and return the modified user.
@@ -141,9 +122,6 @@ public class UserService {
                 user.setImageUrl(userDTO.getImageUrl());
                 user.setActivated(userDTO.isActivated());
                 user.setLangKey(userDTO.getLangKey());
-                user.setPhoneNumber(userDTO.getPhoneNumber());
-                user.setBirthDate(userDTO.getBirthDate());
-                user.setGender(userDTO.getGender());
                 Set<Authority> managedAuthorities = user.getAuthorities();
                 managedAuthorities.clear();
                 return user;
@@ -173,17 +151,7 @@ public class UserService {
      * @return a completed {@link Mono}.
      */
     @Transactional
-    public Mono<Void> updateUser(
-        String firstName,
-        String lastName,
-        String email,
-        String langKey,
-        String imageUrl,
-        String phoneNumber,
-        java.time.LocalDate birthDate,
-        Gender gender
-
-    ) {
+    public Mono<Void> updateUser(String firstName, String lastName, String email, String langKey, String imageUrl) {
         return SecurityUtils.getCurrentUserLogin()
             .flatMap(userRepository::findOneByLogin)
             .flatMap(user -> {
@@ -194,17 +162,11 @@ public class UserService {
                 }
                 user.setLangKey(langKey);
                 user.setImageUrl(imageUrl);
-
-                user.setPhoneNumber(phoneNumber);
-                user.setBirthDate(birthDate);
-                user.setGender(gender);
-
                 return saveUser(user);
             })
             .doOnNext(user -> LOG.debug("Update Information for User by user: {}", user))
             .then();
     }
-
 
     @Transactional
     public Mono<User> saveUser(User user) {

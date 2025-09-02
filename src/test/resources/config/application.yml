@@ -52,9 +52,9 @@ asklepios:
   clientApp:
     name: 'asklepiosGatewayApp'
   mail:
-    base-url: http://localhost:3100
-    username: systemask73@gmail.com
-    password: ocdh hvae hhsz cyxc
+    from: asktest281@gmail.com
+    username: asktest281@gmail.com
+    password: xtsw vujm ouws frdw
   security:
     authentication:
       jwt:
