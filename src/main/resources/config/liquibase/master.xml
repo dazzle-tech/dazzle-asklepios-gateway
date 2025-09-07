@@ -15,7 +15,7 @@
 
 
 <!--    <include file="/config/liquibase/changelog/user_new_column.xml" relativeToChangelogFile="false"/>-->
-  <include file="/config/liquibase/changelog/screen_tables_H_9-7-2025-8AM.xml" relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/screen_authority_table_H_9-7-2025-8AM.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1746759050_screen_tables.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1746748250_screen_authority_table.xml" relativeToChangelogFile="false"/>
 
 </databaseChangeLog>
