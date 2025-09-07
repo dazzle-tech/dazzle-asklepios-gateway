@@ -13,10 +13,9 @@
 
     <include file="/config/liquibase/changelog/v0.0.0_initial_schema.xml" relativeToChangelogFile="false"/>
 
-  <include file="/config/liquibase/changelog/add_user_columns.xml" relativeToChangelogFile="false"/>
 
 <!--    <include file="/config/liquibase/changelog/user_new_column.xml" relativeToChangelogFile="false"/>-->
-  <include file="/config/liquibase/changelog/screen_tables.xml" relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/screen_authority_table.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/screen_tables_H_9-7-2025-8AM.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/screen_authority_table_H_9-7-2025-8AM.xml" relativeToChangelogFile="false"/>
 
 </databaseChangeLog>
