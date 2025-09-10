@@ -172,6 +172,6 @@ asklepios:
         token-validity-in-seconds: 86400
         token-validity-in-seconds-for-remember-me: 2592000
   mail:
-    base-url: http://my-server-url-to-change
+    base-url: http://asklepiosapi.nereuscloud.de
     username: systemask73@gmail.com
     password: ocdh hvae hhsz cyxc
