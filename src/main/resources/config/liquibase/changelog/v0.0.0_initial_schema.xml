@@ -11,30 +11,12 @@
       <column name="id" type="bigint" autoIncrement="true" startWith="1500">
         <constraints primaryKey="true" nullable="false"/>
       </column>
-
       <column name="name" type="varchar(255)">
         <constraints nullable="false"/>
       </column>
-
       <column name="type" type="varchar(255)">
         <constraints nullable="false"/>
       </column>
-
-      <column name="registration_date" type="date"/>
-
-      <column name="email_address" type="varchar(100)"/>
-
-      <column name="phone1" type="varchar(100)"/>
-
-      <column name="phone2" type="varchar(100)"/>
-
-      <column name="fax" type="varchar(100)"/>
-
-      <column name="address_id" type="varchar(100)"/>
-
-      <column name="default_currency" type="varchar(100)"/>
-
-      <column name="created_at" type="timestamp" defaultValueComputed="now()"/>
     </createTable>
 
     <createTable tableName="role">

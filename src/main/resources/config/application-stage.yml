@@ -18,7 +18,6 @@ management:
 
 services:
   asklepios-general-service-url: http://asklepios-service:8081
-  asklepios-setup-service-url: http://asklepios-service:8082
 
 spring:
   devtools:
@@ -130,7 +129,7 @@ spring:
             - StripPrefix=0
 
         - id: setup
-          uri: ${asklepios-setup-service-url}
+          uri: ${services.asklepios-general-service-url}
           predicates:
             - Path=/setup/**
           filters:

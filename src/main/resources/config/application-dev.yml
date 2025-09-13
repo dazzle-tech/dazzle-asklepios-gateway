@@ -14,8 +14,7 @@ management:
       probability: 1.0 # report 100% of traces
 
 services:
-  asklepios-general-service-url: http://localhost:8081
-  asklepios-setup-service-url: http://localhost:8082
+  asklepios-general-service-url: http://localhost:9090
 
 spring:
   devtools:
@@ -135,7 +134,7 @@ spring:
             - StripPrefix=0
 
         - id: setup
-          uri: ${services.asklepios-setup-service-url}
+          uri: ${services.asklepios-general-service-url}
           predicates:
             - Path=/setup/**
           filters:
