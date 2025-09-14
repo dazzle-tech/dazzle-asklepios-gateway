@@ -13,4 +13,5 @@
 
     <include file="/config/liquibase/changelog/v0.0.0_initial_schema.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/add_user_columns.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1726297332_AuthorityAndScreen.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>
