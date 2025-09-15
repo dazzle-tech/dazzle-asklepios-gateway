@@ -94,6 +94,7 @@ public class SecurityConfiguration {
                 .pathMatchers("/rad/**").permitAll()
                 .pathMatchers("/setup/**").permitAll()
                 .pathMatchers("/auth/**").permitAll()
+                .pathMatchers("/api/setup/**").permitAll()
                 .anyExchange().authenticated()
             )
             .httpBasic(basic -> basic.disable())
