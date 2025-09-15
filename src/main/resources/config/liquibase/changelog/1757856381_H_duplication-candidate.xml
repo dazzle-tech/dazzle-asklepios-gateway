@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+  <changeSet id="00000000000015" author="hanan253yahya">
+    <createTable tableName="duplication_candidate">
+
+      <column name="id" type="bigint" autoIncrement="true" startWith="1500">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="role" type="varchar(20)"/>
+
+      <column name="dob" type="boolean" defaultValueBoolean="false"/>
+      <column name="last_name" type="boolean" defaultValueBoolean="false"/>
+      <column name="document_no" type="boolean" defaultValueBoolean="false"/>
+      <column name="mobile_number" type="boolean" defaultValueBoolean="false"/>
+      <column name="gender" type="boolean" defaultValueBoolean="false"/>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+      <column name="active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+      <column name="facility_id" type="bigint"/>
+
+
+
+    </createTable>
+    <addForeignKeyConstraint
+      baseTableName="duplication_candidate"
+      baseColumnNames="facility_id"
+      referencedTableName="facility"
+      referencedColumnNames="id"
+      constraintName="fk_duplication_candidate_facility"/>
+    <dropDefaultValue tableName="duplication_candidate" columnName="created_date" columnDataType="${datetimeType}"/>
+  </changeSet>
+
+</databaseChangeLog>
