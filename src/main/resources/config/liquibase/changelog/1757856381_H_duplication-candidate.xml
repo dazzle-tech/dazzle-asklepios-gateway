@@ -31,7 +31,6 @@
 
 
 
-
     </createTable>
     <addForeignKeyConstraint
       baseTableName="facility"
