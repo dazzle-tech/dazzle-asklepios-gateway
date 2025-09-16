@@ -36,7 +36,6 @@
       <column name="last_modified_date" type="timestamp"/>
         <column name="rool_id" type="bigint"/>
 
-
     </createTable>
 
     <createTable tableName="role">
