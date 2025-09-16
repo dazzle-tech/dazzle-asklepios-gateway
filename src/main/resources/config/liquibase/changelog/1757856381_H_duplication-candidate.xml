@@ -28,17 +28,17 @@
       <column name="active" type="boolean" defaultValueBoolean="true">
         <constraints nullable="false"/>
       </column>
-      <column name="facility_id" type="bigint"/>
+
 
 
 
     </createTable>
     <addForeignKeyConstraint
-      baseTableName="duplication_candidate"
-      baseColumnNames="facility_id"
-      referencedTableName="facility"
+      baseTableName="facility"
+      baseColumnNames="rool_id"
+      referencedTableName="duplication_candidate"
       referencedColumnNames="id"
-      constraintName="fk_duplication_candidate_facility"/>
+      constraintName="fk_facility_duplication_candidate_role"/>
     <dropDefaultValue tableName="duplication_candidate" columnName="created_date" columnDataType="${datetimeType}"/>
   </changeSet>
 

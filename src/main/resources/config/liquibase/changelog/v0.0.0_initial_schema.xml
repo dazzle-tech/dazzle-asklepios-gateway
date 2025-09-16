@@ -34,6 +34,8 @@
       </column>
       <column name="last_modified_by" type="varchar(50)"/>
       <column name="last_modified_date" type="timestamp"/>
+        <column name="rool_id" type="bigint"/>
+
 
     </createTable>
 
