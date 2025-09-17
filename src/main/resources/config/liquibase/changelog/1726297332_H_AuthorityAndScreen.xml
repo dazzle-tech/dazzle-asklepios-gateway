@@ -31,7 +31,7 @@
                              referencedTableName="authority"
                              referencedColumnNames="name"
                              constraintName="fk_screen_auth_authority"
-                             onDelete="CASCADE"/>
+                             />
     <loadData
       file="config/liquibase/data/auth-screen.csv"
       separator=","
