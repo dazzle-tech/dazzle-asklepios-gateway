@@ -17,8 +17,7 @@ management:
       probability: 1.0
 
 services:
-  asklepios-general-service-url: http://localhost:9090
-  asklepios-setup-service-url: http://localhost:8082
+  asklepios-general-service-url: http://asklepios-service:8081
 
 spring:
   devtools:
@@ -135,12 +134,7 @@ spring:
             - Path=/setup/**
           filters:
             - StripPrefix=0
-        - id: newsetup
-          uri: ${services.asklepios-setup-service-url}
-          predicates:
-            - Path=/api/setup/**
-          filters:
-            - StripPrefix=0
+
         - id: auth
           uri: ${services.asklepios-general-service-url}
           predicates:
