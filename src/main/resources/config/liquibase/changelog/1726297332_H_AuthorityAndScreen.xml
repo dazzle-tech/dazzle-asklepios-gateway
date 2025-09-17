@@ -32,20 +32,20 @@
                              referencedColumnNames="name"
                              constraintName="fk_screen_auth_authority"
                              />
-    <loadData
-      file="config/liquibase/data/auth-screen.csv"
-      separator=","
-      tableName="screen_authority"
-      usePreparedStatements="true">
-      <column name="screen" type="varchar(100)"/>
+<!--    <loadData-->
+<!--      file="config/liquibase/data/auth-screen.csv"-->
+<!--      separator=","-->
+<!--      tableName="screen_authority"-->
+<!--      usePreparedStatements="true">-->
+<!--      <column name="screen" type="varchar(100)"/>-->
 
-      <column name="authority_name" type="varchar(50)" />
-
-
-      <column name="operation" type="varchar(50)" />
+<!--      <column name="authority_name" type="varchar(50)" />-->
 
 
-    </loadData>
+<!--      <column name="operation" type="varchar(50)" />-->
+
+
+<!--    </loadData>-->
 
 
   </changeSet>
