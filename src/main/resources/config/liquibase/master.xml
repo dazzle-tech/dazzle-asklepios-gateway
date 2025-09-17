@@ -13,4 +13,13 @@
 
     <include file="/config/liquibase/changelog/v0.0.0_initial_schema.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/add_user_columns.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1758005486_diagnostic_test_pathology.xml" relativeToChangelogFile="false"/>
+<!--  <include file="/config/liquibase/changelog/1758005531_diagnostic_test_radiology.xml" relativeToChangelogFile="false"/>-->
+<!--  <include file="/config/liquibase/changelog/1758010422_diagnostic_test_age_type.xml" relativeToChangelogFile="false"/>-->
+<!--  <include file="/config/liquibase/changelog/1758005507_diagnostic_test_profile.xml" relativeToChangelogFile="false"/>-->
+<!--  <include file="/config/liquibase/changelog/1758005368_diagnostic_test_eye_exam.xml" relativeToChangelogFile="false"/>-->
+<!--  <include file="/config/liquibase/changelog/1758005237_diagnostic_test_catalog_header.xml" relativeToChangelogFile="false"/>-->
+<!--  <include file="/config/liquibase/changelog/1758005198_diagnostic_test.xml" relativeToChangelogFile="false"/>-->
+<!--  <include file="/config/liquibase/changelog/1758006978_diagnostic_test_special_population.xml" relativeToChangelogFile="false"/>-->
+
 </databaseChangeLog>

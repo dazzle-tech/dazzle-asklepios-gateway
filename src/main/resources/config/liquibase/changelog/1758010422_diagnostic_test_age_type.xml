@@ -1,0 +1,31 @@
+<?xml version="1.1" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+      http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+      http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+  <changeSet id="BM000018" author="bushra.mashaiekh">
+    <createTable tableName="diagnostic_test_age_type">
+      <column name="id" type="bigint" autoIncrement="true" startWith="57689">
+      <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="test_id" type="text"/>
+      <column name="age_from" type="numeric(3)"/>
+      <column name="age_to" type="numeric(3)"/>
+      <column name="age_type" type="text"/>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp"/>
+      <column name="reset_date" type="timestamp">
+        <constraints nullable="true"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+  </changeSet>
+
+</databaseChangeLog>

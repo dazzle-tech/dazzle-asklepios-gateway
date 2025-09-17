@@ -1,0 +1,49 @@
+<?xml version="1.1" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+      http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+      http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+  <changeSet id="BM000016" author="bushra.mashaiekh">
+    <createTable tableName="diagnostic_test_radiology">
+      <column name="id" type="bigint" autoIncrement="true" startWith="45453">
+
+      <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="test_id" type="text"/>
+      <column name="international_coding_type" type="text"/>
+      <column name="child_code" type="text"/>
+      <column name="rad_category" type="text"/>
+      <column name="image_duration" type="text"/>
+      <column name="time_unit" type="text"/>
+      <column name="test_description" type="text"/>
+      <column name="medical_indications" type="text"/>
+      <column name="turnaround_time_unit" type="text"/>
+      <column name="turnaround_time" type="numeric"/>
+      <column name="associated_risks" type="text"/>
+      <column name="rad_catalog_id" type="text"/>
+      <column name="property" type="text"/>
+      <column name="system" type="text"/>
+      <column name="scale" type="text"/>
+      <column name="reagents" type="text"/>
+      <column name="method" type="text"/>
+      <column name="timing" type="text"/>
+      <column name="result_type" type="text"/>
+      <column name="result_unit" type="text"/>
+      <column name="lab_catalog" type="text"/>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp"/>
+      <column name="reset_date" type="timestamp">
+        <constraints nullable="true"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+  </changeSet>
+
+</databaseChangeLog>
