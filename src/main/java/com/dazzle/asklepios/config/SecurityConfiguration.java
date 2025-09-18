@@ -17,6 +17,7 @@ import org.springframework.security.web.server.header.XFrameOptionsServerHttpHea
 import org.springframework.security.web.server.util.matcher.NegatedServerWebExchangeMatcher;
 import org.springframework.security.web.server.util.matcher.OrServerWebExchangeMatcher;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.http.HttpMethod;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 import static org.springframework.security.web.server.util.matcher.ServerWebExchangeMatchers.pathMatchers;
@@ -64,6 +65,7 @@ public class SecurityConfiguration {
             )
             .authorizeExchange(authz -> authz
                 .pathMatchers("/api/authenticate").permitAll()
+                .pathMatchers( "/api/setup/facility").permitAll()
                 .pathMatchers("/api/register").permitAll()
                 .pathMatchers("/api/activate").permitAll()
                 .pathMatchers("/api/account/reset-password/init").permitAll()
