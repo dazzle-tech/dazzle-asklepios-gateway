@@ -16,5 +16,4 @@
   <include file="/config/liquibase/changelog/1758431905_H_RoleScreen.xml" relativeToChangelogFile="false" />
   <include file="/config/liquibase/changelog/1758455979_S_departments.xml" relativeToChangelogFile="false" />
 
-
 </databaseChangeLog>
