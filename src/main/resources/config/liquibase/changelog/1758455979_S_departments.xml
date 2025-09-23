@@ -16,6 +16,7 @@
         <constraints nullable="false"/>
       </column>
       <column name="name" type="varchar(100)">
+
         <constraints nullable="false"/>
       </column>
       <column name="created_by" type="varchar(50)">
@@ -23,6 +24,7 @@
       </column>
       <column name="created_date" type="timestamp"/>
       <column name="type" type="varchar(50)">
+
         <constraints nullable="false"/>
       </column>
       <column name="last_modified_by" type="varchar(50)"/>
@@ -34,6 +36,7 @@
       <column name="phone_number" type="varchar(50)"/>
       <column name="email" type="varchar(100)"/>
       <column name="encounter_type" type="varchar(50)"/>
+
       <column name="is_active" type="boolean"/>
     </createTable>
 
