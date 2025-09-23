@@ -34,6 +34,7 @@
       <column name="phone_number" type="varchar(50)"/>
       <column name="email" type="varchar(100)"/>
       <column name="encounter_type" type="varchar(50)"/>
+
       <column name="is_active" type="boolean"/>
     </createTable>
 
