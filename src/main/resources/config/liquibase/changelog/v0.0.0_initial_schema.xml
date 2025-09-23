@@ -1,11 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<databaseChangeLog
-  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-  xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
-                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
-
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
   <changeSet id="00000000000001" author="mohammad">
     <createTable tableName="facility">
       <column name="id" type="bigint" autoIncrement="true" startWith="1500">
@@ -17,8 +10,21 @@
       <column name="type" type="varchar(255)">
         <constraints nullable="false"/>
       </column>
+      <column name="code" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="registration_date" type="date"/>
+      <column name="email_address" type="varchar(100)"/>
+      <column name="phone1" type="varchar(100)"/>
+      <column name="phone2" type="varchar(100)"/>
+      <column name="fax" type="varchar(100)"/>
+      <column name="address_id" type="varchar(100)"/>
+      <column name="default_currency" type="varchar(100)"/>
+      <column name="is_active" type="boolean" defaultValueBoolean="true"/>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
     </createTable>
-
     <createTable tableName="role">
       <column name="id" type="bigint" autoIncrement="true" startWith="1500">
         <constraints primaryKey="true" nullable="false"/>
@@ -33,13 +39,7 @@
         <constraints nullable="false"/>
       </column>
     </createTable>
-
-    <addForeignKeyConstraint baseColumnNames="facility_id"
-                             baseTableName="role"
-                             constraintName="fk_role__facility_id"
-                             referencedColumnNames="id"
-                             referencedTableName="facility"
-    />
+    <addForeignKeyConstraint baseColumnNames="facility_id" baseTableName="role" constraintName="fk_role__facility_id" referencedColumnNames="id" referencedTableName="facility"/>
     <createTable tableName="app_user">
       <column name="id" type="bigint" autoIncrement="true" startWith="1050">
         <constraints primaryKey="true" nullable="false"/>
@@ -68,23 +68,12 @@
       </column>
       <column name="last_modified_by" type="varchar(50)"/>
       <column name="last_modified_date" type="timestamp"/>
-      <column name="phone_number" type="varchar(20)">
-        <constraints nullable="true"/>
-      </column>
-      <column name="birth_date" type="date">
-        <constraints nullable="true"/>
-      </column>
-      <column name="gender" type="varchar(255)">
-        <constraints nullable="true"/>
-      </column>
     </createTable>
-
     <createTable tableName="authority">
       <column name="name" type="varchar(50)">
         <constraints primaryKey="true" nullable="false"/>
       </column>
     </createTable>
-
     <createTable tableName="user_role">
       <column name="user_id" type="bigint">
         <constraints nullable="false"/>
@@ -93,20 +82,9 @@
         <constraints nullable="false"/>
       </column>
     </createTable>
-
     <addPrimaryKey columnNames="user_id, role_id" tableName="user_role"/>
-    <addForeignKeyConstraint baseColumnNames="user_id"
-                             baseTableName="user_role"
-                             constraintName="fk_user_role__user_id"
-                             referencedColumnNames="id"
-                             referencedTableName="app_user"/>
-
-    <addForeignKeyConstraint baseColumnNames="role_id"
-                             baseTableName="user_role"
-                             constraintName="fk_user_role__role_id"
-                             referencedColumnNames="id"
-                             referencedTableName="role"/>
-
+    <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="user_role" constraintName="fk_user_role__user_id" referencedColumnNames="id" referencedTableName="app_user"/>
+    <addForeignKeyConstraint baseColumnNames="role_id" baseTableName="user_role" constraintName="fk_user_role__role_id" referencedColumnNames="id" referencedTableName="role"/>
     <createTable tableName="role_authority">
       <column name="role_id" type="bigint">
         <constraints nullable="false"/>
@@ -115,70 +93,47 @@
         <constraints nullable="false"/>
       </column>
     </createTable>
-
     <addPrimaryKey columnNames="role_id, authority_name" tableName="role_authority"/>
-    <addForeignKeyConstraint baseColumnNames="role_id"
-                             baseTableName="role_authority"
-                             constraintName="fk_role_authority__role_id"
-                             referencedColumnNames="id"
-                             referencedTableName="role"/>
-    <addForeignKeyConstraint baseColumnNames="authority_name"
-                             baseTableName="role_authority"
-                             constraintName="fk_role_authority__authority_name"
-                             referencedColumnNames="name"
-                             referencedTableName="authority"/>
-
-    <addNotNullConstraint columnName="password_hash"
-                          columnDataType="varchar(60)"
-                          tableName="app_user"/>
-    <loadData
-      file="config/liquibase/data/authority.csv"
-      separator=";"
-      tableName="authority"
-      usePreparedStatements="true">
+    <addForeignKeyConstraint baseColumnNames="role_id" baseTableName="role_authority" constraintName="fk_role_authority__role_id" referencedColumnNames="id" referencedTableName="role"/>
+    <addForeignKeyConstraint baseColumnNames="authority_name" baseTableName="role_authority" constraintName="fk_role_authority__authority_name" referencedColumnNames="name" referencedTableName="authority"/>
+    <addNotNullConstraint columnName="password_hash" columnDataType="varchar(60)" tableName="app_user"/>
+    <loadData file="config/liquibase/data/authority.csv" separator=";" tableName="authority" usePreparedStatements="true">
       <column name="name" type="string"/>
     </loadData>
-    <loadData
-      file="config/liquibase/data/facility.csv"
-      separator=";"
-      tableName="facility"
-      usePreparedStatements="true">
+    <loadData file="config/liquibase/data/facility.csv" separator=";" tableName="facility" usePreparedStatements="true">
       <column name="name" type="string"/>
       <column name="type" type="string"/>
+      <column name="code" type="bigint"/>
+      <column name="registration_date" type="date"/>
+      <column name="email_address" type="varchar(100)"/>
+      <column name="phone1" type="varchar(100)"/>
+      <column name="phone2" type="varchar(100)"/>
+      <column name="fax" type="varchar(100)"/>
+      <column name="address_id" type="varchar(100)"/>
+      <column name="default_currency" type="varchar(100)"/>
+      <column name="is_active" type="boolean" />
+      <column name="created_date" type="timestamp" />
+      <column name="created_by" type="varchar(50)"/>
     </loadData>
-    <loadData
-      file="config/liquibase/data/role.csv"
-      separator=";"
-      tableName="role"
-      usePreparedStatements="true">
+    <loadData file="config/liquibase/data/role.csv" separator=";" tableName="role" usePreparedStatements="true">
       <column name="name" type="string"/>
       <column name="type" type="string"/>
       <column name="facility_id" type="numeric"/>
     </loadData>
-    <loadData
-      file="config/liquibase/data/user.csv"
-      separator=";"
-      tableName="app_user"
-      usePreparedStatements="true">
+    <loadData file="config/liquibase/data/user.csv" separator=";" tableName="app_user" usePreparedStatements="true">
       <column name="id" type="numeric"/>
       <column name="activated" type="boolean"/>
       <column name="created_date" type="timestamp"/>
     </loadData>
-    <loadData
-      file="config/liquibase/data/role_authority.csv"
-      separator=";"
-      tableName="role_authority"
-      usePreparedStatements="true">
+    <loadData file="config/liquibase/data/role_authority.csv" separator=";" tableName="role_authority" usePreparedStatements="true">
       <column name="role_id" type="numeric"/>
     </loadData>
-    <loadData
-      file="config/liquibase/data/user_role.csv"
-      separator=";"
-      tableName="user_role"
-      usePreparedStatements="true">
+    <loadData file="config/liquibase/data/user_role.csv" separator=";" tableName="user_role" usePreparedStatements="true">
       <column name="user_id" type="numeric"/>
       <column name="role_id" type="numeric"/>
     </loadData>
     <dropDefaultValue tableName="app_user" columnName="created_date" columnDataType="${datetimeType}"/>
+    <dropDefaultValue tableName="facility" columnName="created_date" columnDataType="${datetimeType}"/>
+
   </changeSet>
 </databaseChangeLog>
