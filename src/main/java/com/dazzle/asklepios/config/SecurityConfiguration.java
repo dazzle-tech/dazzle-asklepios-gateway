@@ -24,7 +24,7 @@ import static org.springframework.security.web.server.util.matcher.ServerWebExch
 
 @Configuration
 @EnableWebFluxSecurity
- @EnableReactiveMethodSecurity
+@EnableReactiveMethodSecurity
 public class SecurityConfiguration {
     //TODO: maybe move to properties
     private final String contentSecurityPolicy = "default-src 'self'; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:";
@@ -64,15 +64,15 @@ public class SecurityConfiguration {
                     )
             )
             .authorizeExchange(authz -> authz
-                .pathMatchers("/api/authenticate").permitAll()
-                .pathMatchers("/api/register").permitAll()
-                .pathMatchers( HttpMethod.GET,"/api/setup/facility").permitAll()
-                .pathMatchers("/api/activate").permitAll()
-                .pathMatchers("/api/account/reset-password/init").permitAll()
-                .pathMatchers("/api/account/reset-password/finish").permitAll()
-                .pathMatchers("/v3/api-docs").permitAll()
-                .pathMatchers("/api/admin/**").hasAuthority(AuthoritiesConstants.ADMIN)
-//                .pathMatchers("/api/**").authenticated()
+                    .pathMatchers("/api/authenticate").permitAll()
+                    .pathMatchers("/api/register").permitAll()
+                    .pathMatchers(HttpMethod.GET, "/api/setup/facility").permitAll()
+                    .pathMatchers("/api/setup/facility").permitAll()
+                    .pathMatchers("/api/activate").permitAll()
+                    .pathMatchers("/api/account/reset-password/init").permitAll()
+                    .pathMatchers("/api/account/reset-password/finish").permitAll()
+                    .pathMatchers("/v3/api-docs").permitAll()
+                    .pathMatchers("/api/admin/**").hasAuthority(AuthoritiesConstants.ADMIN)
                 .pathMatchers("/services/*/management/health/readiness").permitAll()
                 .pathMatchers("/services/*/v3/api-docs").hasAuthority(AuthoritiesConstants.ADMIN)
                 .pathMatchers("/services/**").authenticated()
@@ -102,6 +102,7 @@ public class SecurityConfiguration {
                 .pathMatchers("/operation/**").permitAll()
                 .pathMatchers("/procedures/**").permitAll()
                 .anyExchange().authenticated()
+                  
             )
             .httpBasic(basic -> basic.disable())
             .oauth2ResourceServer(oauth2 -> oauth2.jwt(withDefaults()));
