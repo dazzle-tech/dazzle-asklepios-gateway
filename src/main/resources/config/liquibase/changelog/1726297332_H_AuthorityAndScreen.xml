@@ -9,11 +9,15 @@
   <changeSet id="00000000000009" author="hanan">
 
     <createTable tableName="screen_authority">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
       <column name="screen" type="varchar(100)">
         <constraints nullable="false"/>
       </column>
 
-      <column name="authority_name" type="varchar(50)">
+      <column name="authority_name" type="varchar(100)">
         <constraints nullable="false"/>
       </column>
 
@@ -22,16 +26,12 @@
       </column>
     </createTable>
 
-    <addPrimaryKey tableName="screen_authority"
-                   columnNames="screen, authority_name, operation"
-                   constraintName="pk_screen_auth"/>
-
     <addForeignKeyConstraint baseTableName="screen_authority"
                              baseColumnNames="authority_name"
                              referencedTableName="authority"
                              referencedColumnNames="name"
                              constraintName="fk_screen_auth_authority"
-                             />
+    />
 
     <loadData
             file="config/liquibase/data/auth-screen.csv"
@@ -39,12 +39,11 @@
             tableName="screen_authority"
             usePreparedStatements="true">
       <column name="screen" type="varchar(100)"/>
-      <column name="authority_name" type="varchar(50)" />
+      <column name="authority_name" type="varchar(100)" />
       <column name="operation" type="varchar(50)" />
     </loadData>
 
-
-
   </changeSet>
+
 
 </databaseChangeLog>
