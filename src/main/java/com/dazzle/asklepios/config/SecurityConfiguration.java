@@ -66,7 +66,6 @@ public class SecurityConfiguration {
             .authorizeExchange(authz -> authz
                 .pathMatchers("/api/authenticate").permitAll()
                 .pathMatchers("/api/register").permitAll()
-                .pathMatchers( HttpMethod.GET,"/api/setup/facility").permitAll()
                 .pathMatchers("/api/activate").permitAll()
                 .pathMatchers("/api/account/reset-password/init").permitAll()
                 .pathMatchers("/api/account/reset-password/finish").permitAll()
