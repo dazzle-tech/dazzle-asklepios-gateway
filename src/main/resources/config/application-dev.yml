@@ -139,9 +139,9 @@ spring:
             - Path=/setup/**
           filters:
             - StripPrefix=0
+
         - id: newsetup
           uri: ${services.asklepios-setup-service-url}
-
           predicates:
             - Path=/api/setup/**
           filters:
