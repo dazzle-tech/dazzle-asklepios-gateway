@@ -2,3 +2,4 @@ id;name;type;code;registration_date;email_address;phone1;phone2;fax;address_id;d
 1;Health Organization;Hospital;1;;facility@test.ps;;;;;;true;system;system
 2;Asklepios Clinics;Clinic;2;;facility@test.ps;;;;;;true;system;system
 3;Dazzle Clinics;Clinic;3;;facility@test.ps;;;;;;true;system;system
+
