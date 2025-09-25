@@ -80,7 +80,7 @@ public class User extends AbstractAuditingEntity<Long> implements Serializable {
     private java.time.LocalDate birthDate;
 
 
-    @Enumerated(EnumType.STRING)
+    @Column("gender")
     private Gender gender;
     @JsonIgnore
     @org.springframework.data.annotation.Transient
