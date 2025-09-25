@@ -34,6 +34,9 @@ spec:
                 - name: asklepios-api-gateway
                   image: registry.digitalocean.com/asklepios/asklepios-api-gateway:d348c122fdc9feb0445db4489598974216efa6d5
                   imagePullPolicy: IfNotPresent
+                  env:
+                    - name: spring.profiles.active
+                      value: stage
                   ports:
                       - containerPort: 8080
                         name: asklepios-api

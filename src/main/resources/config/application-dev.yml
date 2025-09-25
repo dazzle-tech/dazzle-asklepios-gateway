@@ -1,3 +1,4 @@
+
 logging:
   level:
     ROOT: DEBUG
@@ -14,7 +15,7 @@ management:
 
 services:
   asklepios-general-service-url: http://localhost:9090
-  asklepios-setup-service-url: http://localhost:8082
+  asklepios-setup-service-url :  http://localhost:8082
 spring:
   devtools:
     restart:
@@ -138,9 +139,9 @@ spring:
             - Path=/setup/**
           filters:
             - StripPrefix=0
+
         - id: newsetup
           uri: ${services.asklepios-setup-service-url}
-
           predicates:
             - Path=/api/setup/**
           filters:
@@ -152,7 +153,6 @@ spring:
             - Path=/auth/**
           filters:
             - StripPrefix=0
-
         - id: inventory
           uri: ${services.asklepios-general-service-url}
           predicates:
@@ -165,7 +165,7 @@ spring:
           predicates:
             - Path=/operation/**
           filters:
-             - StripPrefix=0
+            - StripPrefix=0
 
         - id: procedures
           uri: ${services.asklepios-general-service-url}

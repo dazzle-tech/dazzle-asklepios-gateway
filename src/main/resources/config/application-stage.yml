@@ -18,6 +18,7 @@ management:
 
 services:
   asklepios-general-service-url: http://asklepios-service:8081
+  asklepios-setup-service-url :  http://asklepios-api-setup-service:8082
 
 spring:
   devtools:
@@ -139,6 +140,33 @@ spring:
           uri: ${services.asklepios-general-service-url}
           predicates:
             - Path=/auth/**
+          filters:
+            - StripPrefix=0
+        - id: inventory
+          uri: ${services.asklepios-general-service-url}
+          predicates:
+            - Path=/transaction/**
+          filters:
+            - StripPrefix=0
+
+        - id: operation
+          uri: ${services.asklepios-general-service-url}
+          predicates:
+            - Path=/operation/**
+          filters:
+            - StripPrefix=0
+
+        - id: procedures
+          uri: ${services.asklepios-general-service-url}
+          predicates:
+            - Path=/procedures/**
+          filters:
+            - StripPrefix=0
+
+        - id: newsetup
+          uri: ${services.asklepios-setup-service-url}
+          predicates:
+            - Path=/api/setup/**
           filters:
             - StripPrefix=0
 
