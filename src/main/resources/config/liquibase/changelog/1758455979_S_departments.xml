@@ -15,25 +15,25 @@
       <column name="facility_id" type="bigint">
         <constraints nullable="false"/>
       </column>
-      <column name="name" type="text">
+      <column name="name" type="varchar(100)">
         <constraints nullable="false"/>
       </column>
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
       <column name="created_date" type="timestamp"/>
-      <column name="department_type" type="text">
+      <column name="type" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
       <column name="last_modified_by" type="varchar(50)"/>
       <column name="last_modified_date" type="timestamp"/>
       <column name="appointable" type="boolean"/>
-      <column name="department_code" type="text">
+      <column name="department_code" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
-      <column name="phone_number" type="text"/>
-      <column name="email" type="text"/>
-      <column name="encounter_type" type="text"/>
+      <column name="phone_number" type="varchar(50)"/>
+      <column name="email" type="varchar(100)"/>
+      <column name="encounter_type" type="varchar(50)"/>
       <column name="is_active" type="boolean"/>
     </createTable>
 
