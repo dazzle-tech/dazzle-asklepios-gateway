@@ -75,6 +75,7 @@ public class SecurityConfiguration {
                 .pathMatchers("/services/*/v3/api-docs").hasAuthority(AuthoritiesConstants.ADMIN)
                 .pathMatchers("/services/**").authenticated()
                 .pathMatchers("/v3/api-docs/**").hasAuthority(AuthoritiesConstants.ADMIN)
+                .pathMatchers("/setup-service/v3/api-docs/**").hasAuthority(AuthoritiesConstants.ADMIN)
                 .pathMatchers("/management/health").permitAll()
                 .pathMatchers("/management/health/**").permitAll()
                 .pathMatchers("/management/info").permitAll()
