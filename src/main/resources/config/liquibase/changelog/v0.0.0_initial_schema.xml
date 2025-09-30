@@ -29,6 +29,12 @@
       <column name="default_currency" type="varchar(100)"/>
       <column name="is_active" type="boolean" defaultValueBoolean="true"/>
       <column name="created_date" type="timestamp"/>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+
     </createTable>
 
     <createTable tableName="role">

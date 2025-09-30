@@ -1,4 +1,4 @@
-id;name;type;code;registration_date;email_address;phone1;phone2;fax;address_id;default_currency;is_active
-1;Health Organization;Hospital;1;;facility@test.ps;;;;;;true
-2;Asklepios Clinics;Clinic;2;;facility@test.ps;;;;;;true
-3;Dazzle Clinics;Clinic;3;;facility@test.ps;;;;;;true
+id;name;type;code;registration_date;email_address;phone1;phone2;fax;address_id;default_currency;is_active;created_by;last_modified_by
+1;Health Organization;Hospital;1;;facility@test.ps;;;;;;true;system;system
+2;Asklepios Clinics;Clinic;2;;facility@test.ps;;;;;;true;system;system
+3;Dazzle Clinics;Clinic;3;;facility@test.ps;;;;;;true;system;system
