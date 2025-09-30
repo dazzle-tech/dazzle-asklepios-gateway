@@ -16,8 +16,7 @@ import org.springframework.security.web.server.header.ReferrerPolicyServerHttpHe
 import org.springframework.security.web.server.header.XFrameOptionsServerHttpHeadersWriter.Mode;
 import org.springframework.security.web.server.util.matcher.NegatedServerWebExchangeMatcher;
 import org.springframework.security.web.server.util.matcher.OrServerWebExchangeMatcher;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.http.HttpMethod;
+
 
 import static org.springframework.security.config.Customizer.withDefaults;
 import static org.springframework.security.web.server.util.matcher.ServerWebExchangeMatchers.pathMatchers;
