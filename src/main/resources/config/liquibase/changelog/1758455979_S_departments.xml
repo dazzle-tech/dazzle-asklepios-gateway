@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="00000000000018" author="Sondos">
+
+    <createTable tableName="department">
+      <column name="id" type="bigint" autoIncrement="true" startWith="5000">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+      <column name="facility_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="name" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp"/>
+      <column name="type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+      <column name="appointable" type="boolean"/>
+      <column name="department_code" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="phone_number" type="varchar(50)"/>
+      <column name="email" type="varchar(100)"/>
+      <column name="encounter_type" type="varchar(50)"/>
+      <column name="is_active" type="boolean"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="department"
+      baseColumnNames="facility_id"
+      referencedTableName="facility"
+      referencedColumnNames="id"
+      constraintName="fk_department_facility"/>
+    <dropDefaultValue tableName="department" columnName="created_date" columnDataType="${datetimeType}"/>
+
+  </changeSet>
+
+</databaseChangeLog>

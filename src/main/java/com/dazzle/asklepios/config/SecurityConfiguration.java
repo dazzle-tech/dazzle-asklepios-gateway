@@ -16,14 +16,12 @@ import org.springframework.security.web.server.header.ReferrerPolicyServerHttpHe
 import org.springframework.security.web.server.header.XFrameOptionsServerHttpHeadersWriter.Mode;
 import org.springframework.security.web.server.util.matcher.NegatedServerWebExchangeMatcher;
 import org.springframework.security.web.server.util.matcher.OrServerWebExchangeMatcher;
-import org.springframework.web.bind.annotation.CrossOrigin;
-
 import static org.springframework.security.config.Customizer.withDefaults;
 import static org.springframework.security.web.server.util.matcher.ServerWebExchangeMatchers.pathMatchers;
 
 @Configuration
 @EnableWebFluxSecurity
- @EnableReactiveMethodSecurity
+@EnableReactiveMethodSecurity
 public class SecurityConfiguration {
     //TODO: maybe move to properties
     private final String contentSecurityPolicy = "default-src 'self'; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:";
@@ -65,12 +63,12 @@ public class SecurityConfiguration {
             .authorizeExchange(authz -> authz
                 .pathMatchers("/api/authenticate").permitAll()
                 .pathMatchers("/api/register").permitAll()
+                .pathMatchers("/api/setup/**").permitAll()
                 .pathMatchers("/api/activate").permitAll()
                 .pathMatchers("/api/account/reset-password/init").permitAll()
                 .pathMatchers("/api/account/reset-password/finish").permitAll()
                 .pathMatchers("/v3/api-docs").permitAll()
                 .pathMatchers("/api/admin/**").hasAuthority(AuthoritiesConstants.ADMIN)
-                .pathMatchers("/api/**").authenticated()
                 .pathMatchers("/services/*/management/health/readiness").permitAll()
                 .pathMatchers("/services/*/v3/api-docs").hasAuthority(AuthoritiesConstants.ADMIN)
                 .pathMatchers("/services/**").authenticated()
@@ -95,7 +93,6 @@ public class SecurityConfiguration {
                 .pathMatchers("/rad/**").permitAll()
                 .pathMatchers("/setup/**").permitAll()
                 .pathMatchers("/auth/**").permitAll()
-                .pathMatchers("/api/setup/**").permitAll()
                 .pathMatchers("/transaction/**").permitAll()
                 .pathMatchers("/operation/**").permitAll()
                 .pathMatchers("/procedures/**").permitAll()

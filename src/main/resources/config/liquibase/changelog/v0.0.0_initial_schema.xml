@@ -17,6 +17,24 @@
       <column name="type" type="varchar(255)">
         <constraints nullable="false"/>
       </column>
+      <column name="code" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="registration_date" type="date"/>
+      <column name="email_address" type="varchar(100)"/>
+      <column name="phone1" type="varchar(100)"/>
+      <column name="phone2" type="varchar(100)"/>
+      <column name="fax" type="varchar(100)"/>
+      <column name="address_id" type="varchar(100)"/>
+      <column name="default_currency" type="varchar(100)"/>
+      <column name="is_active" type="boolean" defaultValueBoolean="true"/>
+      <column name="created_date" type="timestamp"/>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+
     </createTable>
 
     <createTable tableName="role">
@@ -145,6 +163,15 @@
       usePreparedStatements="true">
       <column name="name" type="string"/>
       <column name="type" type="string"/>
+      <column name="code" type="varchar(50)"/>
+      <column name="registration_date" type="date"/>
+      <column name="email_address" type="varchar(100)"/>
+      <column name="phone1" type="varchar(100)"/>
+      <column name="phone2" type="varchar(100)"/>
+      <column name="fax" type="varchar(100)"/>
+      <column name="address_id" type="varchar(100)"/>
+      <column name="default_currency" type="varchar(100)"/>
+      <column name="is_active" type="boolean" />
     </loadData>
     <loadData
       file="config/liquibase/data/role.csv"
