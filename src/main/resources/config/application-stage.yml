@@ -186,7 +186,7 @@ server:
 
 asklepios:
   cors:
-    allowed-origins: 'http://asklepios.nereuscloud.de,https://asklepios.nereuscloud.de'
+    allowed-origins: 'http://asklepios.nereuscloud.de,https://asklepios.nereuscloud.de,https://localhost:3100,http://localhost:3100'
     allowed-origin-patterns: 'https://*.asklepios.com'
     allowed-methods: '*'
     allowed-headers: '*'
