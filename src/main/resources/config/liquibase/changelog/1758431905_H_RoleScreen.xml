@@ -1,4 +1,5 @@
-<!-- db/changelog/xxxx_role_screen.xml -->
+<?xml version="1.0" encoding="UTF-8"?>
+
 <databaseChangeLog
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -7,46 +8,36 @@
     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
   <changeSet id="000000000000015" author="hanan253yahya">
-    <createTable tableName="role_screen">
-      <column name="id" type="bigint" autoIncrement="true">
-        <constraints primaryKey="true" nullable="false"/>
-      </column>
+  <createTable tableName="role_screen">
+    <column name="role_id" type="bigint">
+      <constraints nullable="false"/>
+    </column>
 
-      <column name="role_id" type="bigint">
-        <constraints nullable="false"/>
-      </column>
-
-      <column name="screen" type="varchar(100)">
-        <constraints nullable="false"/>
-      </column>
-
-      <column name="operation" type="varchar(50)">
-        <constraints nullable="false"/>
-      </column>
-    </createTable>
+    <column name="screen" type="varchar(100)">
+      <constraints nullable="false"/>
+    </column>
 
 
-    <addPrimaryKey tableName="role_screen"
-                   columnNames="role_id, screen"
-                   constraintName="pk_role_screen"/>
+    <column name="operation" type="varchar(50)">
+      <constraints nullable="false"/>
+    </column>
+  </createTable>
+
+  <addForeignKeyConstraint baseTableName="role_screen"
+                           baseColumnNames="role_id"
+                           referencedTableName="role"
+                           referencedColumnNames="id"
+                           constraintName="fk_role_screen_role"/>
 
 
+  <addPrimaryKey tableName="role_screen"
+                 columnNames="role_id, screen, operation"
+                 constraintName="pk_role_screen"/>
 
-    <addForeignKeyConstraint baseTableName="role_screen"
-                             baseColumnNames="role_id"
-                             referencedTableName="role"
-                             referencedColumnNames="id"
-                             constraintName="fk_role_screen_role"/>
-
-
-    <addUniqueConstraint tableName="role_screen"
-                         columnNames="role_id, screen, operation"
-                         constraintName="uq_role_screen"/>
+  <createIndex tableName="role_screen" indexName="idx_role_screen_role">
+    <column name="role_id"/>
+  </createIndex>
+</changeSet>
 
 
-    <createIndex tableName="role_screen" indexName="idx_role_screen_role">
-      <column name="role_id"/>
-    </createIndex>
-
-  </changeSet>
 </databaseChangeLog>

@@ -16,8 +16,6 @@ import org.springframework.security.web.server.header.ReferrerPolicyServerHttpHe
 import org.springframework.security.web.server.header.XFrameOptionsServerHttpHeadersWriter.Mode;
 import org.springframework.security.web.server.util.matcher.NegatedServerWebExchangeMatcher;
 import org.springframework.security.web.server.util.matcher.OrServerWebExchangeMatcher;
-
-
 import static org.springframework.security.config.Customizer.withDefaults;
 import static org.springframework.security.web.server.util.matcher.ServerWebExchangeMatchers.pathMatchers;
 
@@ -66,13 +64,11 @@ public class SecurityConfiguration {
                 .pathMatchers("/api/authenticate").permitAll()
                 .pathMatchers("/api/register").permitAll()
                 .pathMatchers("/api/setup/**").permitAll()
-                .pathMatchers("/api/setup/facility").permitAll()
                 .pathMatchers("/api/activate").permitAll()
                 .pathMatchers("/api/account/reset-password/init").permitAll()
                 .pathMatchers("/api/account/reset-password/finish").permitAll()
                 .pathMatchers("/v3/api-docs").permitAll()
                 .pathMatchers("/api/admin/**").hasAuthority(AuthoritiesConstants.ADMIN)
-                .pathMatchers("/api/**").authenticated()
                 .pathMatchers("/services/*/management/health/readiness").permitAll()
                 .pathMatchers("/services/*/v3/api-docs").hasAuthority(AuthoritiesConstants.ADMIN)
                 .pathMatchers("/services/**").authenticated()
@@ -101,7 +97,6 @@ public class SecurityConfiguration {
                 .pathMatchers("/operation/**").permitAll()
                 .pathMatchers("/procedures/**").permitAll()
                 .anyExchange().authenticated()
-
             )
             .httpBasic(basic -> basic.disable())
             .oauth2ResourceServer(oauth2 -> oauth2.jwt(withDefaults()));
