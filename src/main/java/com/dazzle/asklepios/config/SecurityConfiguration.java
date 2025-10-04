@@ -66,6 +66,7 @@ public class SecurityConfiguration {
                 .pathMatchers("/api/authenticate").permitAll()
                 .pathMatchers("/api/register").permitAll()
                 .pathMatchers("/api/setup/**").permitAll()
+                .pathMatchers("/api/setup/facility").permitAll()
                 .pathMatchers("/api/activate").permitAll()
                 .pathMatchers("/api/account/reset-password/init").permitAll()
                 .pathMatchers("/api/account/reset-password/finish").permitAll()
@@ -76,6 +77,7 @@ public class SecurityConfiguration {
                 .pathMatchers("/services/*/v3/api-docs").hasAuthority(AuthoritiesConstants.ADMIN)
                 .pathMatchers("/services/**").authenticated()
                 .pathMatchers("/v3/api-docs/**").hasAuthority(AuthoritiesConstants.ADMIN)
+                .pathMatchers("/setup-service/v3/api-docs/**").hasAuthority(AuthoritiesConstants.ADMIN)
                 .pathMatchers("/management/health").permitAll()
                 .pathMatchers("/management/health/**").permitAll()
                 .pathMatchers("/management/info").permitAll()
@@ -95,11 +97,11 @@ public class SecurityConfiguration {
                 .pathMatchers("/rad/**").permitAll()
                 .pathMatchers("/setup/**").permitAll()
                 .pathMatchers("/auth/**").permitAll()
-
                 .pathMatchers("/transaction/**").permitAll()
                 .pathMatchers("/operation/**").permitAll()
                 .pathMatchers("/procedures/**").permitAll()
                 .anyExchange().authenticated()
+
             )
             .httpBasic(basic -> basic.disable())
             .oauth2ResourceServer(oauth2 -> oauth2.jwt(withDefaults()));

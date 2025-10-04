@@ -26,14 +26,27 @@
     </createTable>
 
 
+    <addPrimaryKey tableName="role_screen"
+                   columnNames="role_id, screen"
+                   constraintName="pk_role_screen"/>
+
+
+
     <addForeignKeyConstraint baseTableName="role_screen"
                              baseColumnNames="role_id"
                              referencedTableName="role"
                              referencedColumnNames="id"
                              constraintName="fk_role_screen_role"/>
 
+
     <addUniqueConstraint tableName="role_screen"
                          columnNames="role_id, screen, operation"
                          constraintName="uq_role_screen"/>
+
+
+    <createIndex tableName="role_screen" indexName="idx_role_screen_role">
+      <column name="role_id"/>
+    </createIndex>
+
   </changeSet>
 </databaseChangeLog>
