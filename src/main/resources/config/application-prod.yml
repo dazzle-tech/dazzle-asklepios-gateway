@@ -142,6 +142,13 @@ spring:
           filters:
             - StripPrefix=0
 
+        - id: setup-docs
+          uri: ${services.asklepios-setup-service-url}
+          predicates:
+            - Path=/setup-service/v3/api-docs
+          filters:
+            - StripPrefix=1
+
       httpclient:
         pool:
           max-connections: 1000
