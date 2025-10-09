@@ -5,7 +5,7 @@
   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-  <changeSet id="00000000000015" author="hanan253yahya">
+  <changeSet id="00000000000016" author="hanan253yahya">
     <createTable tableName="duplication_candidate">
 
       <column name="id" type="bigint" autoIncrement="true" startWith="1500">
@@ -25,7 +25,7 @@
       <column name="created_date" type="timestamp"/>
       <column name="last_modified_by" type="varchar(50)"/>
       <column name="last_modified_date" type="timestamp"/>
-      <column name="active" type="boolean" defaultValueBoolean="true">
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
         <constraints nullable="false"/>
       </column>
 
