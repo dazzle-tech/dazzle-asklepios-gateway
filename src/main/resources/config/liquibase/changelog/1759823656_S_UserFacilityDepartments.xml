@@ -12,9 +12,6 @@
       <column name="id" type="bigint" autoIncrement="true" startWith="1" incrementBy="1">
         <constraints nullable="false" primaryKey="true"/>
       </column>
-      <column name="facility_id" type="bigint">
-        <constraints nullable="false"/>
-      </column>
       <column name="user_id" type="bigint">
         <constraints nullable="false"/>
       </column>
@@ -36,13 +33,6 @@
     <!-- Foreign Keys -->
     <addForeignKeyConstraint
       baseTableName="user_facility_departments"
-      baseColumnNames="facility_id"
-      referencedTableName="facility"
-      referencedColumnNames="id"
-      constraintName="fk_user_facility_departments_facility"/>
-
-    <addForeignKeyConstraint
-      baseTableName="user_facility_departments"
       baseColumnNames="user_id"
       referencedTableName="app_user"
       referencedColumnNames="id"
@@ -58,7 +48,7 @@
     <!-- Unique combination -->
     <addUniqueConstraint
       tableName="user_facility_departments"
-      columnNames="facility_id, user_id, department_id"
+      columnNames="user_id, department_id"
       constraintName="uq_user_facility_departments_combination"/>
 
     <!-- Indexes -->
