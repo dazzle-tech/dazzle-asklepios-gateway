@@ -6,9 +6,9 @@
     http://www.liquibase.org/xml/ns/dbchangelog
     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-  <changeSet id="10000000000019" author="Sondos">
+  <changeSet id="10000000000020" author="Sondos">
 
-    <createTable tableName="user_facility_departments">
+    <createTable tableName="user_departments">
       <column name="id" type="bigint" autoIncrement="true" startWith="1" incrementBy="1">
         <constraints nullable="false" primaryKey="true"/>
       </column>
@@ -32,27 +32,27 @@
 
     <!-- Foreign Keys -->
     <addForeignKeyConstraint
-      baseTableName="user_facility_departments"
+      baseTableName="user_departments"
       baseColumnNames="user_id"
       referencedTableName="app_user"
       referencedColumnNames="id"
-      constraintName="fk_user_facility_departments_user"/>
+      constraintName="fk_user_departments_user"/>
 
     <addForeignKeyConstraint
-      baseTableName="user_facility_departments"
+      baseTableName="user_departments"
       baseColumnNames="department_id"
       referencedTableName="department"
       referencedColumnNames="id"
-      constraintName="fk_user_facility_departments_department"/>
+      constraintName="fk_user_departments_department"/>
 
     <!-- Unique combination -->
     <addUniqueConstraint
-      tableName="user_facility_departments"
+      tableName="user_departments"
       columnNames="user_id, department_id"
-      constraintName="uq_user_facility_departments_combination"/>
+      constraintName="uq_user_departments_combination"/>
 
     <!-- Indexes -->
-    <createIndex indexName="idx_user_facility_departments_user_id" tableName="user_facility_departments">
+    <createIndex indexName="idx_user_departments_user_id" tableName="user_departments">
       <column name="user_id"/>
     </createIndex>
   </changeSet>
