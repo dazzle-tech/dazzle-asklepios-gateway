@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="00000000000019" author="hanan253yahya">
+
+    <createTable tableName="department_medical_sheets_visibility">
+      <column name="id" type="bigint" autoIncrement="true" startWith="5000">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+
+      <column name="department_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="medical_sheet" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="is_visible" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)"/>
+      <column name="created_date" type="timestamp"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="department_medical_sheets_visibility"
+      baseColumnNames="department_id"
+      referencedTableName="department"
+      referencedColumnNames="id"
+      constraintName="fk_dept_medical_visibility_department"/>
+
+    <dropDefaultValue tableName="department_medical_sheets_visibility" columnName="created_date" columnDataType="${datetimeType}"/>
+
+  </changeSet>
+
+</databaseChangeLog>
