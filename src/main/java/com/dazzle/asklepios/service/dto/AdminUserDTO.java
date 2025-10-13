@@ -6,6 +6,7 @@ import com.dazzle.asklepios.domain.User;
 import com.dazzle.asklepios.domain.enumeration.Gender;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -25,7 +26,7 @@ public class AdminUserDTO implements Serializable {
 
     private Long id;
 
-    @NotBlank
+
     @Pattern(regexp = Constants.LOGIN_REGEX)
     @Size(min = 1, max = 50)
     private String login;
@@ -36,6 +37,7 @@ public class AdminUserDTO implements Serializable {
     @Size(max = 50)
     private String lastName;
 
+    @NotBlank(message = "Email can not to be Null")
     @Email
     @Size(min = 5, max = 254)
     private String email;
