@@ -6,9 +6,9 @@
     http://www.liquibase.org/xml/ns/dbchangelog
     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-  <changeSet id="00000000000019" author="hanan253yahya">
+  <changeSet id="00000000000020" author="hanan253yahya">
 
-    <createTable tableName="department_medical_sheets_visibility">
+    <createTable tableName="department_medical_sheets_nurse_visibility">
       <column name="id" type="bigint" autoIncrement="true" startWith="5000">
         <constraints nullable="false" primaryKey="true"/>
       </column>
@@ -28,17 +28,17 @@
     </createTable>
 
     <addForeignKeyConstraint
-      baseTableName="department_medical_sheets_visibility"
+      baseTableName="department_medical_sheets_nurse_visibility"
       baseColumnNames="department_id"
       referencedTableName="department"
       referencedColumnNames="id"
-      constraintName="fk_dept_medical_visibility_department"/>
+      constraintName="fk_dept_medical-nurse_visibility_department"/>
     <addUniqueConstraint
-      tableName="department_medical_sheets_visibility"
+      tableName="department_medical_sheets_nurse_visibility"
       columnNames="department_id, medical_sheet"
-      constraintName="uk_department_medical_sheets_visibility_dept_sheet"/>
+      constraintName="uk_department_medical_sheets_nurse_visibility_dept_sheet"/>
 
-    <dropDefaultValue tableName="department_medical_sheets_visibility" columnName="created_date" columnDataType="${datetimeType}"/>
+    <dropDefaultValue tableName="department_medical_sheets_nurse_visibility" columnName="created_date" columnDataType="${datetimeType}"/>
 
   </changeSet>
 
