@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="00000000000028" author="Sondos">
+
+    <createTable tableName="encounter_attachments">
+      <column name="id" type="BIGINT">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="encounter_id" type="BIGINT">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="VARCHAR(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="space_key" type="TEXT">
+        <constraints nullable="false"/>
+      </column>
+      <column name="filename" type="TEXT">
+        <constraints nullable="false"/>
+      </column>
+      <column name="mime_type" type="TEXT">
+        <constraints nullable="false"/>
+      </column>
+      <column name="size_bytes" type="BIGINT">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_at" type="TIMESTAMPTZ" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="deleted_at" type="TIMESTAMPTZ"/>
+    </createTable>
+
+    <addUniqueConstraint tableName="encounter_attachments"
+                         columnNames="space_key"
+                         constraintName="uq_ea_space_key"/>
+    <!-- TODO: create foreign key with table encounter when add it:
+        <addForeignKeyConstraint
+          baseTableName="encounter_attachments"
+          baseColumnNames="encounter_id"
+          referencedTableName="encounters"
+          referencedColumnNames="id"
+          constraintName="fk_ea_encounter"
+          onDelete="CASCADE"/>
+    -->
+    <!-- CHECK constraint via SQL for max 50 MB -->
+    <sql>
+      ALTER TABLE encounter_attachments
+        ADD CONSTRAINT ck_ea_size_bytes_max_50mb
+          CHECK (size_bytes &lt;= 52428800);
+    </sql>
+
+    <!-- Indexes -->
+    <createIndex tableName="encounter_attachments" indexName="idx_ea_encounter">
+      <column name="encounter_id"/>
+    </createIndex>
+
+    <sql>
+      CREATE INDEX idx_ea_not_deleted
+        ON encounter_attachments (id) WHERE deleted_at IS NULL;
+    </sql>
+
+    <addUniqueConstraint tableName="encounter_attachments"
+                         columnNames="encounter_id, space_key"
+                         constraintName="uq_ea_encounter_space"/>
+  </changeSet>
+
+
+</databaseChangeLog>
