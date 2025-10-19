@@ -9,7 +9,7 @@
   <changeSet id="00000000000028" author="Sondos">
 
     <createTable tableName="encounter_attachments">
-      <column name="id" type="BIGINT">
+      <column name="id" type="BIGINT"  autoIncrement="true" startWith="5000">
         <constraints primaryKey="true" nullable="false"/>
       </column>
       <column name="encounter_id" type="BIGINT">
