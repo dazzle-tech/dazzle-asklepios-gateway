@@ -34,6 +34,10 @@
         <constraints nullable="false"/>
       </column>
       <column name="deleted_at" type="TIMESTAMPTZ"/>
+      <column name="type" type="nvarchar(100)">
+      </column>
+      <column name="details" type="TEXT">
+      </column>
     </createTable>
 
     <addUniqueConstraint
