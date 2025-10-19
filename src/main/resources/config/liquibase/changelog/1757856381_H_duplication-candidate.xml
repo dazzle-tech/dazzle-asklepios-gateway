@@ -14,11 +14,9 @@
 
       <column name="role" type="varchar(20)"/>
 
-      <column name="dob" type="boolean" defaultValueBoolean="false"/>
-      <column name="last_name" type="boolean" defaultValueBoolean="false"/>
-      <column name="document_no" type="boolean" defaultValueBoolean="false"/>
-      <column name="mobile_number" type="boolean" defaultValueBoolean="false"/>
-      <column name="gender" type="boolean" defaultValueBoolean="false"/>
+      <column name="fields" type="jsonb">
+        <constraints nullable="false"/>
+      </column>
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
