@@ -15,8 +15,9 @@
   <include file="/config/liquibase/changelog/1726297332_H_AuthorityAndScreen.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1758431905_H_RoleScreen.xml" relativeToChangelogFile="false" />
   <include file="/config/liquibase/changelog/1758455979_S_departments.xml" relativeToChangelogFile="false" />
+  <include file="/config/liquibase/changelog/1760438060_BM_Language.xml" relativeToChangelogFile="false" />
+  <include file="/config/liquibase/changelog/1760550923_BM_Language_Translation.xml" relativeToChangelogFile="false" />
   <include file="/config/liquibase/changelog/1760537415_H_medicalSheet.xml" relativeToChangelogFile="false" />
   <include file="/config/liquibase/changelog/1760537462 _H_medicalSheetsNurseStation.xml" relativeToChangelogFile="false" />
-
 
 </databaseChangeLog>

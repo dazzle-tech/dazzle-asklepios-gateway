@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="BM0000000000010" author="bushra.mashaiekh">
+
+    <createTable tableName="language">
+      <column name="id" type="bigint" autoIncrement="true" startWith="1">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="lang_key" type="varchar(50)">
+        <constraints nullable="false" unique="true"/>
+      </column>
+
+      <column name="lang_name" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="direction" type="varchar(10)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="details" type="varchar(255)">
+        <constraints nullable="true"/>
+      </column>
+    </createTable>
+
+    <loadData
+      file="config/liquibase/data/language.csv"
+      separator=";"
+      tableName="language"
+      usePreparedStatements="true">
+      <column name="lang_key" type="varchar(50)" />
+      <column name="lang_name" type="varchar(100)" />
+      <column name="direction" type="varchar(10)" />
+      <column name="details" type="varchar(255)" />
+    </loadData>
+
+  </changeSet>
+
+</databaseChangeLog>
