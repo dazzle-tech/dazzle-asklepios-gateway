@@ -21,7 +21,5 @@
   <include file="/config/liquibase/changelog/1760537462 _H_medicalSheetsNurseStation.xml" relativeToChangelogFile="false" />
   <include file="/config/liquibase/changelog/1760993322_B_service.xml" relativeToChangelogFile="false" />
   <include file="/config/liquibase/changelog/1760993358_B_serviceItems.xml" relativeToChangelogFile="false" />
-  <include file="/config/liquibase/changelog/1760993322_B_service.xml" relativeToChangelogFile="false" />
-  <include file="/config/liquibase/changelog/1760993358_B_serviceItems.xml" relativeToChangelogFile="false" />
 
 </databaseChangeLog>
