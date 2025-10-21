@@ -18,7 +18,7 @@
       <column name="created_by" type="VARCHAR(50)">
         <constraints nullable="false"/>
       </column>
-      <column name="space_key" type="TEXT">
+      <column name="space_key" type="varchar(max)">
         <constraints nullable="false"/>
       </column>
       <column name="filename" type="TEXT">
