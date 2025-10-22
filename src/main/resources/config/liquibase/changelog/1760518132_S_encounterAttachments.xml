@@ -30,13 +30,14 @@
       <column name="size_bytes" type="BIGINT">
         <constraints nullable="false"/>
       </column>
-      <column name="created_at" type="TIMESTAMPTZ" defaultValueComputed="now()">
+      <column name="created_date" type="TIMESTAMPTZ" defaultValueComputed="now()">
         <constraints nullable="false"/>
       </column>
       <column name="deleted_at" type="TIMESTAMPTZ"/>
       <column name="source" type="nvarchar(50)">
-
       </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
     </createTable>
 
     <addUniqueConstraint tableName="encounter_attachments"
