@@ -1,0 +1,5 @@
+code;description;version;is_active
+A000;Cholera;ICD-10;true
+A001;Typhoid fever;ICD-10;true
+A002;Salmonella infection;ICD-10;true
+A003;Newly added condition;ICD-11;true
