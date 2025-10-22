@@ -43,6 +43,11 @@
     </createTable>
 
     <dropDefaultValue tableName="service" columnName="created_date" columnDataType="timestamp"/>
+
+    <addUniqueConstraint
+      tableName="service"
+      columnNames="facility_id, name"
+      constraintName="uk_service_facility_name"/>
   </changeSet>
 
 </databaseChangeLog>
