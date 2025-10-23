@@ -1,10 +1,7 @@
 id;login;password_hash;first_name;last_name;email;image_url;activated;lang_key;created_by;last_modified_by
 1;admin;$2a$10$X1cALlZG6JYFT3xi71eOTuA0zu67gz6e.aYht.XLI9ZgiTkVxes12;Administrator;Administrator;wnairat.92@gmail.com;;true;en;system;system
-2;user;$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K;User;User;user@localhost;;true;en;system;system
-3;lab;$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K;User;User;lab@localhost;;true;en;system;system
-4;appointments;$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K;User;User;appointment@localhost;;true;en;system;system
-5;allmodules;$2a$10$9ABEYHeJHownEC8CMWlgNuVQ9ChkMiCpx7/QgNjdcgA5p/VFLlg6K;All;Modules;bushramashaie5@gmail.com;;true;en;system;system
-6;appointment;$2a$10$X1cALlZG6JYFT3xi71eOTuA0zu67gz6e.aYht.XLI9ZgiTkVxes12;Desk;office;office@gmail.com;;true;en;system;system
-7;lab.tech;$2a$10$X1cALlZG6JYFT3xi71eOTuA0zu67gz6e.aYht.XLI9ZgiTkVxes12;lab;Technician;lab@gmail.com;;true;en;system;system
-8;nurse;$2a$10$X1cALlZG6JYFT3xi71eOTuA0zu67gz6e.aYht.XLI9ZgiTkVxes12;nurse;Technician;test@gmail.com;;true;en;system;system
-9;physician;$2a$10$X1cALlZG6JYFT3xi71eOTuA0zu67gz6e.aYht.XLI9ZgiTkVxes12;Physician;User;bushra@gmail.com;;true;en;system;system
+2;nurse;$2a$10$X1cALlZG6JYFT3xi71eOTuA0zu67gz6e.aYht.XLI9ZgiTkVxes12;nurse;Technician;nurse@gmail.com;;true;en;system;system
+3;lab.tech;$2a$10$X1cALlZG6JYFT3xi71eOTuA0zu67gz6e.aYht.XLI9ZgiTkVxes12;lab;Technician;lab@gmail.com;;true;en;system;system
+4;appointment;$2a$10$X1cALlZG6JYFT3xi71eOTuA0zu67gz6e.aYht.XLI9ZgiTkVxes12;Desk;office;office@gmail.com;;true;en;system;system
+5;allmodules;$2a$10$X1cALlZG6JYFT3xi71eOTuA0zu67gz6e.aYht.XLI9ZgiTkVxes12;All;Modules;bushramashaie5@gmail.com;;true;en;system;system
+6;physician;$2a$10$X1cALlZG6JYFT3xi71eOTuA0zu67gz6e.aYht.XLI9ZgiTkVxes12;Physician;User;Physician@gmail.com;;true;en;system;system
