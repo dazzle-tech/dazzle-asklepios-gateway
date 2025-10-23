@@ -5,4 +5,3 @@ id;login;password_hash;first_name;last_name;email;image_url;activated;lang_key;c
 4;appointment;$2a$10$X1cALlZG6JYFT3xi71eOTuA0zu67gz6e.aYht.XLI9ZgiTkVxes12;Desk;office;office@gmail.com;;true;en;system;system
 5;allmodules;$2a$10$X1cALlZG6JYFT3xi71eOTuA0zu67gz6e.aYht.XLI9ZgiTkVxes12;All;Modules;bushramashaie5@gmail.com;;true;en;system;system
 6;physician;$2a$10$X1cALlZG6JYFT3xi71eOTuA0zu67gz6e.aYht.XLI9ZgiTkVxes12;Physician;User;Physician@gmail.com;;true;en;system;system
-
