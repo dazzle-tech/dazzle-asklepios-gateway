@@ -3,3 +3,5 @@ id;name;type;facility_id
 2;Lab Supervisor;type2;1
 3;Encounter Admin;type1;2
 4;Appointment Admin;type1;3
+5;Physician;;1
+6;All;;1
