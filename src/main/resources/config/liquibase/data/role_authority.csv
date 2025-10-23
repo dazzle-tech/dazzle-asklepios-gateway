@@ -4,3 +4,5 @@ role_id;authority_name
 2;ROLE_LAB
 3;ROLE_ENCOUNTER
 4;ROLE_APPOINTMENT
+6;ROLE_ADMIN
+
