@@ -12,7 +12,6 @@
     <property name="timeType" value="time(6)" dbms="postgresql"/>
 
     <include file="/config/liquibase/changelog/v0.0.0_initial_schema.xml" relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/1761035006_B_allergens.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1726297332_H_AuthorityAndScreen.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1758431905_H_RoleScreen.xml" relativeToChangelogFile="false" />
   <include file="/config/liquibase/changelog/1758455979_S_departments.xml" relativeToChangelogFile="false" />
@@ -22,4 +21,5 @@
   <include file="/config/liquibase/changelog/1760537415_H_medicalSheet.xml" relativeToChangelogFile="false" />
   <include file="/config/liquibase/changelog/1760537462 _H_medicalSheetsNurseStation.xml" relativeToChangelogFile="false" />
   <include file="/config/liquibase/changelog/1746352745_H_Practitioner.xml" />
+  <include file="/config/liquibase/changelog/1761035006_B_allergens.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>
