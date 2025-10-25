@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="00000000000023" author="hanan253yahya">
+
+    <createTable tableName="practitioner">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="true" primaryKey="true"/>
+      </column>
+
+      <column name="facility_id" type="bigint">
+
+      </column>
+
+      <column name="first_name" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_name" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="email" type="varchar(100)"/>
+      <column name="phone_number" type="varchar(100)"/>
+
+      <column name="specialty" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="sub_specialty" type="varchar(100)"/>
+      <column name="default_medical_license" type="varchar(100)"/>
+      <column name="secondary_medical_license" type="varchar(100)"/>
+      <column name="educational_level" type="varchar(100)"/>
+      <column name="appointable" type="boolean"/>
+      <column name="user_id" type="bigint"/>
+      <column name="default_license_valid_until" type="date"/>
+      <column name="secondary_license_valid_until" type="date"/>
+      <column name="dob" type="date"/>
+      <column name="job_role" type="varchar(100)"/>
+      <column name="gender" type="varchar(255)">
+        <constraints nullable="true"/>
+      </column>
+      <column name="is_active" type="boolean" defaultValueBoolean="true"/>
+      <column name="created_date" type="timestamp"/>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+
+    <addForeignKeyConstraint
+      baseTableName="practitioner"
+      baseColumnNames="facility_id"
+      referencedTableName="facility"
+      referencedColumnNames="id"
+      constraintName="fk_practitioner_facility"/>
+    <addForeignKeyConstraint
+      baseTableName="practitioner"
+      baseColumnNames="user_id"
+      referencedTableName="app_user"
+      referencedColumnNames="id"
+      constraintName="fk_practitioner_user"/>
+
+    <dropDefaultValue
+      tableName="practitioner"
+      columnName="created_date"
+      columnDataType="${datetimeType}"/>
+
+
+    <createTable tableName="practitioner_department">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="true" primaryKey="true"/>
+      </column>
+      <column name="practitioner_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="department_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+
+
+    <addForeignKeyConstraint
+      baseTableName="practitioner_department"
+      baseColumnNames="practitioner_id"
+      referencedTableName="practitioner"
+      referencedColumnNames="id"
+      constraintName="fk_practitioner_department_practitioner"/>
+
+    <addForeignKeyConstraint
+      baseTableName="practitioner_department"
+      baseColumnNames="department_id"
+      referencedTableName="department"
+      referencedColumnNames="id"
+      constraintName="fk_practitioner_department_department"/>
+
+    <addUniqueConstraint
+      tableName="practitioner_department"
+      columnNames="practitioner_id, department_id"
+      constraintName="uk_practitioner_department_unique_link"/>
+
+  </changeSet>
+
+</databaseChangeLog>
