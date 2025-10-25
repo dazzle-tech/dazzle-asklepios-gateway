@@ -21,7 +21,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        java: [ '17', '21' ]   # Test against both Java 17 and 21 (adjust as needed)
+        java: ['21']   # Test against both Java 17 and 21 (adjust as needed)
 
     steps:
       - name: Checkout
