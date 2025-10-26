@@ -12,7 +12,7 @@
         <constraints primaryKey="true" nullable="false"/>
       </column>
 
-      <column name="role" type="varchar(20)"/>
+      <column name="rule" type="varchar(20)"/>
 
       <column name="fields" type="jsonb">
         <constraints nullable="false"/>
@@ -26,13 +26,13 @@
       <column name="is_active" type="boolean" defaultValueBoolean="true">
         <constraints nullable="false"/>
       </column>
-
-
-
     </createTable>
+    <addColumn tableName="facility">
+      <column name="rule_id" type="bigint"/>
+    </addColumn>
     <addForeignKeyConstraint
       baseTableName="facility"
-      baseColumnNames="rool_id"
+      baseColumnNames="rule_id"
       referencedTableName="duplication_candidate"
       referencedColumnNames="id"
       constraintName="fk_facility_duplication_candidate_role"/>
