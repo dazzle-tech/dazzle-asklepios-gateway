@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                      http://www.liquibase.org/xml/ns/dbchangelog-ext
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+  <changeSet id="bs000000000002" author="batool">
+
+    <createTable tableName="service_items">
+      <column name="id" type="bigint" autoIncrement="true" startWith="2000">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="source_id" type="bigint"/>
+
+      <column name="service_id" type="bigint">
+        <constraints nullable="false" foreignKeyName="fk_item_service"
+                     references="service(id)"/>
+      </column>
+
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <dropDefaultValue tableName="service_items" columnName="created_date" columnDataType="timestamp"/>
+
+    <addUniqueConstraint
+      tableName="service_items"
+      columnNames="service_id, type, source_id"
+      constraintName="uk_service_items_service_type_source"/>
+
+  </changeSet>
+
+</databaseChangeLog>
