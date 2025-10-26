@@ -5,6 +5,7 @@ import com.dazzle.asklepios.security.CustomAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
@@ -63,11 +64,12 @@ public class SecurityConfiguration {
             .authorizeExchange(authz -> authz
                 .pathMatchers("/api/authenticate").permitAll()
                 .pathMatchers("/api/register").permitAll()
-                .pathMatchers("/api/setup/**").permitAll()
+                .pathMatchers(HttpMethod.GET, "/api/setup/facility").permitAll()
+                .pathMatchers("/api/setup/**").authenticated()
                 .pathMatchers("/api/activate").permitAll()
                 .pathMatchers("/api/account/reset-password/init").permitAll()
                 .pathMatchers("/api/account/reset-password/finish").permitAll()
-                .pathMatchers("/v3/api-docs").permitAll()
+                .pathMatchers("/v3/api-docs").authenticated()
                 .pathMatchers("/api/admin/**").hasAuthority(AuthoritiesConstants.ADMIN)
                 .pathMatchers("/services/*/management/health/readiness").permitAll()
                 .pathMatchers("/setup-service/v3/api-docs/**").authenticated()
@@ -79,6 +81,7 @@ public class SecurityConfiguration {
                 .pathMatchers("/management/info").permitAll()
                 .pathMatchers("/management/prometheus").permitAll()
                 .pathMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN)
+                //TODO change the permitAll to authenticated (there is no token in old backend)
                 .pathMatchers("/reference-data/**").permitAll()
                 .pathMatchers("/appointment/**").permitAll()
                 .pathMatchers("/attachment/**").permitAll()
