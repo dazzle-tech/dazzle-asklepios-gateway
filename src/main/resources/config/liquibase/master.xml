@@ -23,4 +23,6 @@
   <include file="/config/liquibase/changelog/1760993322_B_service.xml" relativeToChangelogFile="false" />
   <include file="/config/liquibase/changelog/1760993358_B_serviceItems.xml" relativeToChangelogFile="false" />
   <include file="/config/liquibase/changelog/1746352745_H_Practitioner.xml" />
+  <include file="/config/liquibase/changelog/1761464072_B_ageGroup.xml" relativeToChangelogFile="false" />
+
 </databaseChangeLog>
