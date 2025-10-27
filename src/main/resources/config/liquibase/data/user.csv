@@ -4,5 +4,5 @@ id;login;password_hash;first_name;last_name;email;image_url;activated;lang_key;c
 3;lab.tech;$2a$10$X1cALlZG6JYFT3xi71eOTuA0zu67gz6e.aYht.XLI9ZgiTkVxes12;lab;Technician;lab@gmail.com;;true;en;system;system
 4;appointment;$2a$10$X1cALlZG6JYFT3xi71eOTuA0zu67gz6e.aYht.XLI9ZgiTkVxes12;Desk;office;office@gmail.com;;true;en;system;system
 5;allmodules;$2a$10$X1cALlZG6JYFT3xi71eOTuA0zu67gz6e.aYht.XLI9ZgiTkVxes12;All;Modules;bushramashaie5@gmail.com;;true;en;system;system
-6;physician;$2a$10$X1cALlZG6JYFT3xi71eOTuA0zu67gz6e.aYht.XLI9ZgiTkVxes12;Physician;User;Physician@gmail.com;;true;en;system;
+6;physician;$2a$10$X1cALlZG6JYFT3xi71eOTuA0zu67gz6e.aYht.XLI9ZgiTkVxes12;Physician;User;Physician@gmail.com;;true;en;system;system
 7;admin;$2a$10$gSAhZrxMllrbgj/kkK9UceBPpChGWJA7SYIb1Mqo.n5aNLq1/oRrC;Administrator;Administrator;admin@localhost;;true;en;system;system
