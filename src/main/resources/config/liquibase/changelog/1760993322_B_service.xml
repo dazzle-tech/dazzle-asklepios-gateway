@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                      http://www.liquibase.org/xml/ns/dbchangelog-ext
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+  <changeSet id="bs000000000001" author="batool">
+    <createTable tableName="service">
+      <column name="id" type="bigint" autoIncrement="true" startWith="1500">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="abbreviation" type="varchar(255)"/>
+      <column name="code" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="category" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="price" type="numeric"/>
+      <column name="currency" type="varchar(255)"/>
+      <column name="is_active" type="boolean" valueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="facility_id" type="bigint">
+        <constraints nullable="false" foreignKeyName="fk_service_facility"
+                     references="facility(id)"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <dropDefaultValue tableName="service" columnName="created_date" columnDataType="timestamp"/>
+
+    <addUniqueConstraint
+      tableName="service"
+      columnNames="facility_id, name"
+      constraintName="uk_service_facility_name"/>
+  </changeSet>
+
+</databaseChangeLog>
