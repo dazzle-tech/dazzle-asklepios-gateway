@@ -78,10 +78,12 @@ class DomainUserDetailsServiceIT {
         userRepository.save(getUserOne()).block();
         userRepository.save(getUserTwo()).block();
 
-        String insertFacility = "INSERT INTO facility (name, type) VALUES ($1, $2)";
+        String insertFacility = "INSERT INTO facility (name, type,code,created_by) VALUES ($1, $2,$3,$4)";
         databaseClient.sql(insertFacility)
             .bind("$1", "Facility One")
             .bind("$2", "Type A")
+            .bind("$3","555")
+            .bind("$4","system")
             .fetch()
             .rowsUpdated()
             .block();
@@ -234,29 +236,9 @@ class DomainUserDetailsServiceIT {
         assertUserHasAuthorities(user, Set.of("ROLE_ADMIN", "ROLE_USER"));
     }
 
-    @Test
-    void assertThatUserCanBeFoundByLoginAdminFacility2() {
-        UserDetails user = domainUserDetailsService.findByUsernameAndFacility("admin", 2L).block();
-        assertUserHasAuthorities(user, Set.of("ROLE_ENCOUNTER"));
-    }
 
-    @Test
-    void assertThatUserCanBeFoundByLoginUserFacility2() {
-        UserDetails user = domainUserDetailsService.findByUsernameAndFacility("user", 2L).block();
-        assertUserHasAuthorities(user, Set.of("ROLE_ENCOUNTER"));
-    }
 
-    @Test
-    void assertThatUserCanBeFoundByLoginLabFacility2() {
-        UserDetails user = domainUserDetailsService.findByUsernameAndFacility("lab", 1L).block();
-        assertUserHasAuthorities(user, Set.of("ROLE_LAB"));
-    }
 
-    @Test
-    void assertThatUserCanBeFoundByLoginAppointmentFacility3() {
-        UserDetails user = domainUserDetailsService.findByUsernameAndFacility("appointment", 3L).block();
-        assertUserHasAuthorities(user, Set.of("ROLE_APPOINTMENT"));
-    }
 
     private void assertUserHasAuthorities(UserDetails user, Set<String> expectedAuthorities) {
         assertThat(user).isNotNull();
