@@ -6,7 +6,7 @@
           http://www.liquibase.org/xml/ns/dbchangelog
           http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-  <changeSet id="2025-10-22-create-icd10-table" author="hanan">
+  <changeSet id="H0000000000024" author="hanan253yahya">
 
     <createTable tableName="icd10_code">
       <column name="id" type="bigint" autoIncrement="true">
@@ -35,10 +35,10 @@
       </column>
     </createTable>
 
-    <!-- Optional: index for fast lookups -->
-    <createIndex indexName="idx_icd10_code_code" tableName="icd10_code">
-      <column name="code"/>
-    </createIndex>
+    <addUniqueConstraint
+      tableName="icd10_code"
+      columnNames="code"
+      constraintName="uk_icd_code_unique_link"/>
 
   </changeSet>
 
