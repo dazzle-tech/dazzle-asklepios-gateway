@@ -24,9 +24,10 @@
   <include file="/config/liquibase/changelog/1760993322_B_service.xml" relativeToChangelogFile="false" />
   <include file="/config/liquibase/changelog/1760993358_B_serviceItems.xml" relativeToChangelogFile="false" />
   <include file="/config/liquibase/changelog/1746352745_H_Practitioner.xml" />
+  <include file="/config/liquibase/changelog/1761035006_B_allergens.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1757856381_H_duplication-candidate.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1760505952_S_patientAttachments.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1760518132_S_encounterAttachments.xml" relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/2025_10_22_create_icd10_table.xml" relativeToChangelogFile="false"/>
-
+  <include file="/config/liquibase/changelog/1761464072_B_ageGroup.xml" relativeToChangelogFile="false" />
+  <include file="config/liquibase/changelog/1761567165_create_icd10_table.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>
