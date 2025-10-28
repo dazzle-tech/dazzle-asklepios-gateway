@@ -237,6 +237,19 @@ class DomainUserDetailsServiceIT {
     }
 
 
+    @Test
+    void assertThatUserCanBeFoundByLoginLabFacility1() {
+        UserDetails user = domainUserDetailsService.findByUsernameAndFacility("lab.tech", 1L).block();
+        assertUserHasAuthorities(user, Set.of("ROLE_LAB"));
+    }
+
+    @Test
+    void assertThatUserCanBeFoundByLoginLabFacility2() {
+        UserDetails user = domainUserDetailsService.findByUsernameAndFacility("lab.tech", 2L).block();
+        assertUserHasAuthorities(user, Set.of("ROLE_USER"));
+    }
+
+
 
 
 
