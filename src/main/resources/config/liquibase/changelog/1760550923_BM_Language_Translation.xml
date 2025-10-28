@@ -21,10 +21,6 @@
         <constraints nullable="false"/>
       </column>
 
-      <column name="original_text" type="text">
-        <constraints nullable="false"/>
-      </column>
-
       <column name="translation_text" type="text"/>
 
       <column name="verified" type="boolean" defaultValueBoolean="false">
