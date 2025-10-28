@@ -5,4 +5,5 @@ role_id;authority_name
 3;ROLE_ENCOUNTER
 4;ROLE_APPOINTMENT
 6;ROLE_ADMIN
+7;ROLE_USER
 
