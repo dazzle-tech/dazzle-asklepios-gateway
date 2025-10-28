@@ -65,6 +65,7 @@ public class SecurityConfiguration {
                 .pathMatchers("/api/authenticate").permitAll()
                 .pathMatchers("/api/register").permitAll()
                 .pathMatchers(HttpMethod.GET, "/api/setup/facility").permitAll()
+                .pathMatchers(HttpMethod.GET, "/api/setup/languages").permitAll()
                 .pathMatchers("/api/setup/**").authenticated()
                 .pathMatchers("/api/activate").permitAll()
                 .pathMatchers("/api/account/reset-password/init").permitAll()
