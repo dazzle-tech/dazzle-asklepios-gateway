@@ -45,5 +45,16 @@
       referencedColumnNames="lang_key"
       constraintName="fk_translation_language"/>
 
+    <loadData
+      file="config/liquibase/data/language_translation.csv"
+      separator=";"
+      tableName="language_translation"
+      usePreparedStatements="true">
+      <column name="lang_key" type="varchar(50)" />
+      <column name="translation_key" type="varchar(50)" />
+      <column name="translation_text" type="varchar(150)" />
+      <column name="verified" type="boolean" />
+      <column name="translated" type="boolean" />
+    </loadData>
   </changeSet>
 </databaseChangeLog>
