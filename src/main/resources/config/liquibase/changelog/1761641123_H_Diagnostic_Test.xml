@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="H00000000000025" author="hanan253yahya">
+
+    <createTable tableName="diagnostic_test">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+
+      <column name="type" type="varchar(255)" >
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="internal_code" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="age_specific" type="boolean"/>
+      <column name="age_group" type="text"/>
+      <column name="gender_specific" type="boolean"/>
+      <column name="gender" type="varchar(50)"/>
+      <column name="special_population" type="boolean" defaultValueBoolean="false"/>
+      <column name="special_population_values" type="text"/>
+      <column name="price" type="numeric(7,2)"/>
+      <column name="currency" type="varchar(10)"/>
+      <column name="special_notes" type="text"/>
+      <column name="is_active" type="boolean" defaultValueBoolean="true"/>
+      <column name="is_profile" type="boolean" />
+      <column name="appointable" type="boolean"/>
+      <column name="created_date" type="timestamp"/>
+      <column name="created_by" type="varchar(50)"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <dropDefaultValue
+      tableName="diagnostic_test"
+      columnName="created_date"
+      columnDataType="${datetimeType}"/>
+
+  </changeSet>
+
+</databaseChangeLog>
