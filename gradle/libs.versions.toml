@@ -1,0 +1,17 @@
+[versions]
+gatling-plugin = "3.13.3.2"
+gatling-highcharts = "3.13.3"
+jacoco = "0.8.12"
+checkstyle = "10.21.2"
+
+[libraries]
+spring-cloud-dependencies = { module = "org.springframework.cloud:spring-cloud-dependencies", version = "2024.0.0" }
+springdoc-openapi-starter-webflux-api = { module = "org.springdoc:springdoc-openapi-starter-webflux-api", version = "2.7.0" }
+feign-reactor-bom = { module = "com.playtika.reactivefeign:feign-reactor-bom", version = "4.2.1" }
+jackson-databind-nullable = { module = "org.openapitools:jackson-databind-nullable", version = "0.2.6" }
+cucumber-bom = { module = "io.cucumber:cucumber-bom", version = "7.21.1" }
+testng = { module = "org.testng:testng", version = "7.10.2" }
+commons-beanutils = { module = "commons-beanutils:commons-beanutils", version = "1.10.0" }
+
+[plugins]
+spring-boot = { id = "org.springframework.boot", version = "3.4.2" }
