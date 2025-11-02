@@ -4,6 +4,7 @@ import com.dazzle.asklepios.config.Constants;
 import com.dazzle.asklepios.domain.Authority;
 import com.dazzle.asklepios.domain.User;
 import com.dazzle.asklepios.domain.enumeration.Gender;
+import com.dazzle.asklepios.domain.enumeration.JobRole;
 import com.dazzle.asklepios.repository.AuthorityRepository;
 import com.dazzle.asklepios.repository.UserRepository;
 import com.dazzle.asklepios.security.SecurityUtils;
@@ -89,6 +90,7 @@ public class UserService {
         user.setPhoneNumber(userDTO.getPhoneNumber());
         user.setBirthDate(userDTO.getBirthDate());
         user.setGender(userDTO.getGender());
+        user.setJobRole(userDTO.getJobRole());
         user.setLangKey(userDTO.getLangKey() == null ? Constants.DEFAULT_LANGUAGE : userDTO.getLangKey());
 
         return Mono.fromCallable(() -> {
@@ -144,6 +146,7 @@ public class UserService {
                 user.setPhoneNumber(userDTO.getPhoneNumber());
                 user.setBirthDate(userDTO.getBirthDate());
                 user.setGender(userDTO.getGender());
+                user.setJobRole(userDTO.getJobRole());
                 Set<Authority> managedAuthorities = user.getAuthorities();
                 managedAuthorities.clear();
                 return user;
@@ -181,7 +184,8 @@ public class UserService {
         String imageUrl,
         String phoneNumber,
         java.time.LocalDate birthDate,
-        Gender gender
+        Gender gender,
+        JobRole jobRole
 
     ) {
         return SecurityUtils.getCurrentUserLogin()
@@ -198,6 +202,7 @@ public class UserService {
                 user.setPhoneNumber(phoneNumber);
                 user.setBirthDate(birthDate);
                 user.setGender(gender);
+                user.setJobRole(jobRole);
 
                 return saveUser(user);
             })
