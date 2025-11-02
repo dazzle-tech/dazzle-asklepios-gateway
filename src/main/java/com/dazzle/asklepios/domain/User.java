@@ -2,6 +2,7 @@ package com.dazzle.asklepios.domain;
 
 import com.dazzle.asklepios.config.Constants;
 import com.dazzle.asklepios.domain.enumeration.Gender;
+import com.dazzle.asklepios.domain.enumeration.JobRole;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -84,6 +85,11 @@ public class User extends AbstractAuditingEntity<Long> implements Serializable {
 
     @Column("gender")
     private Gender gender;
+
+    @Column("job_role")
+    private JobRole jobRole;
+
+
     @JsonIgnore
     @org.springframework.data.annotation.Transient
     private Set<Authority> authorities = new HashSet<>();
