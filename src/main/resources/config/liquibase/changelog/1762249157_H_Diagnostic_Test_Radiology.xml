@@ -21,7 +21,7 @@
       </column>
 
       <column name="image_duration" type="NUMERIC"/>
-      <column name="time_unit" type="varchar(200)"/>
+
       <column name="test_instructions" type="TEXT"/>
       <column name="medical_indications" type="TEXT"/>
       <column name="turnaround_time_unit" type="varchar(200)"/>
