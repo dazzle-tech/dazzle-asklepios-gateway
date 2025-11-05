@@ -86,10 +86,10 @@
       <column name="name"/>
    </createIndex>
    <createIndex tableName="active_ingredients" indexName="idx_ai_medical_category">
-      <column name="medical_category"/>
+      <column name="medical_category_id"/>
    </createIndex>
    <createIndex tableName="active_ingredients" indexName="idx_ai_drug_class">
-      <column name="drug_class"/>
+      <column name="drug_class_id"/>
    </createIndex>
     <createIndex tableName="active_ingredients" indexName="idx_ai_atc_code">
       <column name="atc_code"/>
