@@ -16,12 +16,8 @@
       <column name="name" type="nvarchar(500)" >
         <constraints nullable="false"/>
       </column>
-      <column name="medical_category" type="bigint" >
-        <constraints nullable="false"/>
-      </column>
-      <column name="drug_class" type="bigint" >
-        <constraints nullable="false"/>
-      </column>
+      <column name="medical_category" type="bigint" />
+      <column name="drug_class" type="bigint" />
       <column name="atc_code" type="varchar(100)"/>
       <column name="otc" type="boolean"/>
       <column name="has_synonyms" type="boolean"/>
