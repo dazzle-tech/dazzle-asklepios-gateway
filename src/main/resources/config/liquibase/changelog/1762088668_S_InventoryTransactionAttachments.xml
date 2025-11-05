@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="10000000000035" author="Sondos">
+
+    <createTable tableName="inventory_transaction_attachments">
+      <column name="id" type="BIGINT"  autoIncrement="true" startWith="5000">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="transaction_id" type="BIGINT">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="VARCHAR(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="space_key" type="varchar(500)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="filename" type="TEXT">
+        <constraints nullable="false"/>
+      </column>
+      <column name="mime_type" type="TEXT">
+        <constraints nullable="false"/>
+      </column>
+      <column name="size_bytes" type="BIGINT">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="TIMESTAMPTZ" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="deleted_at" type="TIMESTAMPTZ"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addUniqueConstraint tableName="inventory_transaction_attachments"
+                         columnNames="space_key"
+                         constraintName="uq_ita_space_key"/>
+    <!-- TODO: create foreign key with table inventory_transaction when add it:
+        <addForeignKeyConstraint
+          baseTableName="inventory_transaction_attachments"
+          baseColumnNames="transaction_id"
+          referencedTableName="inventory_transaction"
+          referencedColumnNames="id"
+          constraintName="fk_ita_transaction"
+          onDelete="CASCADE"/>
+    -->
+    <!-- CHECK constraint via SQL for max 50 MB -->
+    <sql>
+      ALTER TABLE inventory_transaction_attachments
+        ADD CONSTRAINT ck_ita_size_bytes_max_50mb
+          CHECK (size_bytes &lt;= 52428800);
+    </sql>
+
+    <!-- Indexes -->
+    <createIndex tableName="inventory_transaction_attachments" indexName="idx_ita_transaction">
+      <column name="transaction_id"/>
+    </createIndex>
+
+    <sql>
+      CREATE INDEX idx_ita_not_deleted
+        ON inventory_transaction_attachments (id) WHERE deleted_at IS NULL;
+    </sql>
+
+    <addUniqueConstraint tableName="inventory_transaction_attachments"
+                         columnNames="transaction_id, space_key"
+                         constraintName="uq_ita_transaction_space"/>
+  </changeSet>
+
+
+</databaseChangeLog>
