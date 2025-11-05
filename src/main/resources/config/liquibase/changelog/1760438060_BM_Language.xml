@@ -22,7 +22,7 @@
       </column>
 
       <column name="direction" type="varchar(10)">
-        <constraints nullable="false"/>
+        <constraints nullable="true"/>
       </column>
 
       <column name="details" type="varchar(255)">

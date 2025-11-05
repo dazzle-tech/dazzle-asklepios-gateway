@@ -98,7 +98,8 @@ public class AccountResource {
                     userDTO.getImageUrl(),
                     userDTO.getPhoneNumber(),
                     userDTO.getBirthDate(),
-                    userDTO.getGender()
+                    userDTO.getGender(),
+                    userDTO.getJobRole()
 
                 )
             );

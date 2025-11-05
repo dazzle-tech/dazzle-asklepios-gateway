@@ -87,6 +87,11 @@ class AuthorityResourceIT {
             authorityRepository.delete(insertedAuthority).block();
             insertedAuthority = null;
         }
+        String deleteScreenAuth = "DELETE FROM screen_authority";
+        databaseClient.sql(deleteScreenAuth)
+            .fetch()
+            .rowsUpdated()
+            .block();
         String deleteAuthRole = "DELETE FROM role_authority";
         databaseClient.sql(deleteAuthRole)
             .fetch()
