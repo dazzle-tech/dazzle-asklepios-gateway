@@ -35,4 +35,6 @@
   <include file="config/liquibase/changelog/1762088668_S_InventoryTransactionAttachments.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1761730358_B_CPT.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762148868_H_Diagnostic_Test_Laboratory.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762334623_H_Diagnostic_Test_Profile.xml" relativeToChangelogFile="false"/>
+
 </databaseChangeLog>
