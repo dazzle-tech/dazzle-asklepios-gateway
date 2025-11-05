@@ -95,6 +95,9 @@
    <createIndex tableName="active_ingredients" indexName="idx_ai_drug_class">
       <column name="drug_class"/>
    </createIndex>
+    <createIndex tableName="active_ingredients" indexName="idx_ai_atc_code">
+      <column name="atc_code"/>
+    </createIndex>
     <!-- TODO: Add foreign key  with medication categories table after create it:
       <addForeignKeyConstraint
        baseTableName="active_ingredients"
