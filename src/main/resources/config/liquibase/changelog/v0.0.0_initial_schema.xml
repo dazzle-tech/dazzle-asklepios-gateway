@@ -95,6 +95,9 @@
       <column name="gender" type="varchar(255)">
         <constraints nullable="true"/>
       </column>
+      <column name="job_role" type="varchar(255)">
+        <constraints nullable="true"/>
+      </column>
     </createTable>
 
     <createTable tableName="authority">

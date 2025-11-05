@@ -35,6 +35,8 @@
       <column name="email" type="varchar(100)"/>
       <column name="encounter_type" type="varchar(50)"/>
       <column name="is_active" type="boolean"/>
+      <column name="has_medical_sheets" type="boolean" defaultValueBoolean="false"/>
+      <column name="has_nurse_medical_sheets" type="boolean" defaultValueBoolean="false"/>
     </createTable>
 
     <addForeignKeyConstraint
