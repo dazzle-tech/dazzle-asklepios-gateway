@@ -32,5 +32,13 @@
   <include file="config/liquibase/changelog/1761567165_create_icd10_table.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1761641123_H_Diagnostic_Test.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762148868_H_Diagnostic_Test_Laboratory.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762219295_S_ActiveIngredients.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762268784_S_ActiveIngredientIndications.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762271024_S_ActiveIngredientAdverseEffects.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762270340_S_ActiveIngredientContraindications.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762271843_S_ActiveIngredientDrugInteractions.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762272390_S_ActiveIngredientFoodInteractions.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762272940_S_ActiveIngredientSynonyms.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762273188_S_ActiveIngredientPreRequestedTests.xml" relativeToChangelogFile="false"/>
 
 </databaseChangeLog>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="100000000000040" author="Sondos">
+    <createTable tableName="active_ingredient_adverse_effects">
+      <column name="id" type="bigint" autoIncrement="true" startWith="5000">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="adverse_effect" type="varchar(50)" >
+        <constraints nullable="false"/>
+      </column>
+      <column name="active_ingredient" type="bigint" >
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+    <addForeignKeyConstraint
+      baseTableName="active_ingredient_adverse_effects"
+      baseColumnNames="active_ingredient"
+      referencedTableName="active_ingredients"
+      referencedColumnNames="id"
+      constraintName="fk_aiae_active_ingredient"
+      onDelete="CASCADE"/>
+
+
+ </changeSet>
+
+</databaseChangeLog>
