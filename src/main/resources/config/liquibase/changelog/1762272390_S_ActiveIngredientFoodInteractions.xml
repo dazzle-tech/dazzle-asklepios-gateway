@@ -14,7 +14,7 @@
       <column name="food" type="nvarchar(200)" >
         <constraints nullable="false"/>
       </column>
-      <column name="active_ingredient" type="bigint" >
+      <column name="active_ingredient_id" type="bigint" >
         <constraints nullable="false"/>
       </column>
       <column name="severity" type="varchar(50)" >
@@ -34,7 +34,7 @@
     </createTable>
     <addForeignKeyConstraint
       baseTableName="active_ingredient_food_interactions"
-      baseColumnNames="active_ingredient"
+      baseColumnNames="active_ingredient_id"
       referencedTableName="active_ingredients"
       referencedColumnNames="id"
       constraintName="fk_aif_active_ingredient"

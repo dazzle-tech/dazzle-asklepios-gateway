@@ -11,13 +11,13 @@
       <column name="id" type="bigint" autoIncrement="true" startWith="5000">
         <constraints primaryKey="true" nullable="false"/>
       </column>
-      <column name="icd_code" type="bigint" >
+      <column name="icd_code_id" type="bigint" >
         <constraints nullable="false"/>
       </column>
       <column name="dosage" type="DECIMAL(10,3)"/>
       <column name="unit" type="varchar(50)"/>
       <column name="is_off_label" type="boolean"/>
-      <column name="active_ingredient" type="bigint" >
+      <column name="active_ingredient_id" type="bigint" >
         <constraints nullable="false"/>
       </column>
       <column name="created_by" type="varchar(50)">
@@ -31,14 +31,14 @@
     </createTable>
     <addForeignKeyConstraint
       baseTableName="active_ingredient_indications"
-      baseColumnNames="active_ingredient"
+      baseColumnNames="active_ingredient_id"
       referencedTableName="active_ingredients"
       referencedColumnNames="id"
       constraintName="fk_aii_active_ingredient"
       onDelete="CASCADE"/>
     <addForeignKeyConstraint
       baseTableName="active_ingredient_indications"
-      baseColumnNames="icd_code"
+      baseColumnNames="icd_code_id"
       referencedTableName="icd10_code"
       referencedColumnNames="id"
       constraintName="fk_aiicd_icd_code"

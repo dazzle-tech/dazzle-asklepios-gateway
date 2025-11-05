@@ -11,10 +11,10 @@
       <column name="id" type="bigint" autoIncrement="true" startWith="5000">
         <constraints primaryKey="true" nullable="false"/>
       </column>
-      <column name="test" type="bigint" >
+      <column name="test_id" type="bigint" >
         <constraints nullable="false"/>
       </column>
-      <column name="active_ingredient" type="bigint" >
+      <column name="active_ingredient_id" type="bigint" >
         <constraints nullable="false"/>
       </column>
       <column name="created_by" type="varchar(50)">
@@ -28,7 +28,7 @@
     </createTable>
     <addForeignKeyConstraint
       baseTableName="active_ingredient_pre_requested_test"
-      baseColumnNames="active_ingredient"
+      baseColumnNames="active_ingredient_id"
       referencedTableName="active_ingredients"
       referencedColumnNames="id"
       constraintName="fk_ais_active_ingredient"
@@ -36,7 +36,7 @@
 
      <addForeignKeyConstraint
       baseTableName="active_ingredient_pre_requested_test"
-      baseColumnNames="test"
+      baseColumnNames="test_id"
       referencedTableName="diagnostic_test"
       referencedColumnNames="id"
       constraintName="fk_ait_test"

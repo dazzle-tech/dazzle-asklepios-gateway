@@ -94,24 +94,20 @@
     <createIndex tableName="active_ingredients" indexName="idx_ai_atc_code">
       <column name="atc_code"/>
     </createIndex>
-    <!-- TODO: Add foreign key  with medication categories table after create it:
       <addForeignKeyConstraint
        baseTableName="active_ingredients"
-       baseColumnNames="medical_category"
+       baseColumnNames="medical_category_id"
        referencedTableName="medication_categories"
        referencedColumnNames="id"
        constraintName="fk_ai_medication_category"
        onDelete="CASCADE"/>
-     -->
-    <!-- TODO: Add foreign key  with medication categories class table after create it:
      <addForeignKeyConstraint
       baseTableName="active_ingredients"
-      baseColumnNames="drug_class"
+      baseColumnNames="drug_class_id"
       referencedTableName="medication_categories_class"
       referencedColumnNames="id"
       constraintName="fk_ai_drug_class"
       onDelete="CASCADE"/>
-    -->
  </changeSet>
 
 </databaseChangeLog>
