@@ -28,9 +28,14 @@
   <include file="/config/liquibase/changelog/1757856381_H_duplication-candidate.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1760505952_S_patientAttachments.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1760518132_S_encounterAttachments.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762334049_R_medication_categories.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762334530_R_medication_categories_class.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1761464072_B_ageGroup.xml" relativeToChangelogFile="false" />
   <include file="config/liquibase/changelog/1761567165_create_icd10_table.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1761641123_H_Diagnostic_Test.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762066546_B_LOINC_Code.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762088668_S_InventoryTransactionAttachments.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1761730358_B_CPT.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762148868_H_Diagnostic_Test_Laboratory.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762219295_S_ActiveIngredients.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762268784_S_ActiveIngredientIndications.xml" relativeToChangelogFile="false"/>
