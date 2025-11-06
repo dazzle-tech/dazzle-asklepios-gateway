@@ -16,7 +16,6 @@
       <column name="name" type="nvarchar(500)" >
         <constraints nullable="false"/>
       </column>
-      <column name="medical_category_id" type="bigint" />
       <column name="drug_class_id" type="bigint" />
       <column name="atc_code" type="varchar(100)"/>
       <column name="otc" type="boolean"/>
@@ -85,22 +84,12 @@
    <createIndex tableName="active_ingredients" indexName="idx_ai_name">
       <column name="name"/>
    </createIndex>
-   <createIndex tableName="active_ingredients" indexName="idx_ai_medical_category">
-      <column name="medical_category_id"/>
-   </createIndex>
    <createIndex tableName="active_ingredients" indexName="idx_ai_drug_class">
       <column name="drug_class_id"/>
    </createIndex>
     <createIndex tableName="active_ingredients" indexName="idx_ai_atc_code">
       <column name="atc_code"/>
     </createIndex>
-      <addForeignKeyConstraint
-       baseTableName="active_ingredients"
-       baseColumnNames="medical_category_id"
-       referencedTableName="medication_categories"
-       referencedColumnNames="id"
-       constraintName="fk_ai_medication_category"
-       onDelete="CASCADE"/>
      <addForeignKeyConstraint
       baseTableName="active_ingredients"
       baseColumnNames="drug_class_id"
