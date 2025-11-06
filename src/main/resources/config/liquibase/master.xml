@@ -13,7 +13,6 @@
 
   <include file="/config/liquibase/changelog/v0.0.0_initial_schema.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1726297332_H_AuthorityAndScreen.xml" relativeToChangelogFile="false"/>
-
   <include file="/config/liquibase/changelog/1758431905_H_RoleScreen.xml" relativeToChangelogFile="false" />
   <include file="/config/liquibase/changelog/1758455979_S_departments.xml" relativeToChangelogFile="false" />
   <include file="/config/liquibase/changelog/1759823656_S_UserDepartments.xml" relativeToChangelogFile="false" />
@@ -31,4 +30,7 @@
   <include file="/config/liquibase/changelog/1761464072_B_ageGroup.xml" relativeToChangelogFile="false" />
   <include file="config/liquibase/changelog/1761567165_create_icd10_table.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1761641123_H_Diagnostic_Test.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762162244_B_CdtCodes.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762238454_B_CDT_Service.xml" relativeToChangelogFile="false"/>
+
 </databaseChangeLog>
