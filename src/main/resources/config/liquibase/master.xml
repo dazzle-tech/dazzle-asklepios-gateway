@@ -45,5 +45,6 @@
   <include file="config/liquibase/changelog/1762272390_S_ActiveIngredientFoodInteractions.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762272940_S_ActiveIngredientSynonyms.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762273188_S_ActiveIngredientPreRequestedTests.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762442944_S_ActiveIngredientSpecialPopulations.xml" relativeToChangelogFile="false"/>
 
 </databaseChangeLog>
