@@ -11,11 +11,33 @@
       <column name="id" type="bigint" autoIncrement="true" startWith="1">
         <constraints primaryKey="true" nullable="false"/>
       </column>
-      <column name="uom_unit_from" type="text"/>
-      <column name="uom_unit_to" type="text"/>
+      <column name="uom_unit_from_id" type="bigint"/>
+      <column name="uom_unit_to_id" type="bigint"/>
       <column name="relation" type="numeric"/>
-      <column name="uom_group_id" type="text"/>
+      <column name="uom_group_id" type="bigint"/>
     </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="uom_groups_relation"
+      baseColumnNames="uom_group_id"
+      referencedTableName="uom_group"
+      referencedColumnNames="id"
+      constraintName="fk_uom_group_relation_uom"/>
+
+    <addForeignKeyConstraint
+      baseTableName="uom_groups_relation"
+      baseColumnNames="uom_unit_from_id"
+      referencedTableName="uom_group_unit"
+      referencedColumnNames="id"
+      constraintName="fk_uom_unit_from"/>
+
+    <addForeignKeyConstraint
+      baseTableName="uom_groups_relation"
+      baseColumnNames="uom_unit_to_id"
+      referencedTableName="uom_group_unit"
+      referencedColumnNames="id"
+      constraintName="fk_uom_unit_to"/>
+
   </changeSet>
 
 </databaseChangeLog>
