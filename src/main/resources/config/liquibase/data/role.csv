@@ -5,3 +5,4 @@ id;name;type;facility_id
 4;Appointment Admin;type1;1
 5;Physician;;1
 6;All;;1
+7;Test;type2;2
