@@ -8,7 +8,7 @@
                       http://www.liquibase.org/xml/ns/dbchangelog-ext
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-  <changeSet id="bs000000000005" author="batool">
+  <changeSet id="bs000000000009" author="batool">
     <createTable tableName="procedure">
       <column name="id" type="bigint" autoIncrement="true" startWith="2000">
         <constraints primaryKey="true" nullable="false"/>
@@ -30,16 +30,15 @@
         <constraints nullable="false"/>
       </column>
 
-      <column name="indications" type="clob"/>
-      <column name="contraindications" type="clob"/>
-      <column name="preparation_instructions" type="clob"/>
-      <column name="recovery_notes" type="clob"/>
+      <column name="indications" type="text"/>
+      <column name="contraindications" type="text"/>
+      <column name="preparation_instructions" type="text"/>
+      <column name="recovery_notes" type="text"/>
 
       <column name="is_active" type="boolean" valueBoolean="true">
         <constraints nullable="false"/>
       </column>
 
-      <!-- Facility foreign key -->
       <column name="facility_id" type="bigint">
         <constraints nullable="false" foreignKeyName="fk_procedure_facility"
                      references="facility(id)"/>
