@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="H00000000000028" author="hanan253yahya">
+    <createTable tableName="diagnostic_test_pathology">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+
+      <column name="test_id" type="bigint">
+        <constraints nullable="false" unique="true"/>
+      </column>
+
+      <column name="category" type="varchar(200)" >
+        <constraints nullable="false" />
+
+      </column>
+      <column name="specimen_type" type="varchar(200)"/>
+      <column name="analysis_procedure" type="varchar(200)"/>
+      <column name="turnaround_time" type="numeric"/>
+      <column name="time_unit" type="varchar(200)"/>
+      <column name="test_description" type="TEXT"/>
+      <column name="sample_handling" type="TEXT"/>
+      <column name="medical_indications" type="TEXT"/>
+      <column name="critical_values" type="TEXT"/>
+      <column name="preparation_requirements" type="TEXT"/>
+      <column name="associated_risks" type="TEXT"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="diagnostic_test_pathology"
+      baseColumnNames="test_id"
+      referencedTableName="diagnostic_test"
+      referencedColumnNames="id"
+      constraintName="fk_test_id_pathology"/>
+  </changeSet>
+
+</databaseChangeLog>
