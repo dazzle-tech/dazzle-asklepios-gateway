@@ -40,5 +40,7 @@
   <include file="config/liquibase/changelog/1762334623_H_Diagnostic_Test_Profile.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762287980_H_Diagnostic_Test_Pathology.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762249157_H_Diagnostic_Test_Radiology.xml" relativeToChangelogFile="false"/>
-
+  <include file="config/liquibase/changelog/1761549180_B_procedure.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1762616614_B_procedureCoding.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1762635097_B_procedurePriceList.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>
