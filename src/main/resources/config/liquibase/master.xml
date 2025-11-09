@@ -46,5 +46,7 @@
   <include file="config/liquibase/changelog/1762272940_S_ActiveIngredientSynonyms.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762273188_S_ActiveIngredientPreRequestedTests.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762442944_S_ActiveIngredientSpecialPopulations.xml" relativeToChangelogFile="false"/>
-
+  <include file="config/liquibase/changelog/1762334623_H_Diagnostic_Test_Profile.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762287980_H_Diagnostic_Test_Pathology.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762249157_H_Diagnostic_Test_Radiology.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>

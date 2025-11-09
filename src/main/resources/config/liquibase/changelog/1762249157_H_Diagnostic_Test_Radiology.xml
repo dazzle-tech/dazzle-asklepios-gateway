@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="H00000000000027" author="hanan253yahya">
+    <createTable tableName="diagnostic_test_radiology">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+
+      <column name="test_id" type="bigint">
+        <constraints nullable="false" unique="true"/>
+      </column>
+
+      <column name="category" type="varchar(200)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="image_duration" type="NUMERIC"/>
+
+      <column name="test_instructions" type="TEXT"/>
+      <column name="medical_indications" type="TEXT"/>
+      <column name="turnaround_time_unit" type="varchar(200)"/>
+      <column name="turnaround_time" type="NUMERIC"/>
+      <column name="associated_risks" type="TEXT"/>
+
+
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="diagnostic_test_radiology"
+      baseColumnNames="test_id"
+      referencedTableName="diagnostic_test"
+      referencedColumnNames="id"
+      constraintName="fk_test_id_radiology"/>
+  </changeSet>
+
+</databaseChangeLog>

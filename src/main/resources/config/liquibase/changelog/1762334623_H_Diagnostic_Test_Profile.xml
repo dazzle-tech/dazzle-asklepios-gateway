@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="H00000000000029" author="hanan253yahya">
+    <createTable tableName="diagnostic_test_profile">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+
+      <column name="test_id" type="bigint">
+        <constraints nullable="false" />
+      </column>
+
+      <column name="name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="result_unit" type="varchar(200)"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="diagnostic_test_profile"
+      baseColumnNames="test_id"
+      referencedTableName="diagnostic_test"
+      referencedColumnNames="id"
+      constraintName="fk_test_id_profile"/>
+  </changeSet>
+
+</databaseChangeLog>
