@@ -40,7 +40,7 @@
 
     <addUniqueConstraint tableName="inventory_transfer_attachments"
                          columnNames="space_key"
-                         constraintName="uq_ita_space_key"/>
+                         constraintName="uq_itatt_space_key"/>
     <!-- TODO: create foreign key with table inventory_transfer when add it:
         <addForeignKeyConstraint
           baseTableName="inventory_transfer_attachments"
@@ -58,18 +58,18 @@
     </sql>
 
     <!-- Indexes -->
-    <createIndex tableName="inventory_transfer_attachments" indexName="idx_ita_transaction">
+    <createIndex tableName="inventory_transfer_attachments" indexName="idx_itatt_transaction">
       <column name="transaction_id"/>
     </createIndex>
 
     <sql>
-      CREATE INDEX idx_ita_not_deleted
+      CREATE INDEX idx_itatt_not_deleted
         ON inventory_transfer_attachments (id) WHERE deleted_at IS NULL;
     </sql>
 
     <addUniqueConstraint tableName="inventory_transfer_attachments"
                          columnNames="transaction_id, space_key"
-                         constraintName="uq_ita_transaction_space"/>
+                         constraintName="uq_itatt_transaction_space"/>
   </changeSet>
 
 
