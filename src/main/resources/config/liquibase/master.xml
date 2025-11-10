@@ -13,7 +13,6 @@
 
   <include file="/config/liquibase/changelog/v0.0.0_initial_schema.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1726297332_H_AuthorityAndScreen.xml" relativeToChangelogFile="false"/>
-
   <include file="/config/liquibase/changelog/1758431905_H_RoleScreen.xml" relativeToChangelogFile="false" />
   <include file="/config/liquibase/changelog/1758455979_S_departments.xml" relativeToChangelogFile="false" />
   <include file="/config/liquibase/changelog/1759823656_S_UserDepartments.xml" relativeToChangelogFile="false" />
@@ -28,8 +27,39 @@
   <include file="/config/liquibase/changelog/1757856381_H_duplication-candidate.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1760505952_S_patientAttachments.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1760518132_S_encounterAttachments.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762334049_R_medication_categories.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762334530_R_medication_categories_class.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1761464072_B_ageGroup.xml" relativeToChangelogFile="false" />
   <include file="config/liquibase/changelog/1761567165_create_icd10_table.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1761641123_H_Diagnostic_Test.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762159584_S_InventoryTransferAttachments.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762066546_B_LOINC_Code.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762088668_S_InventoryTransactionAttachments.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1761730358_B_CPT.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762148868_H_Diagnostic_Test_Laboratory.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762219295_S_ActiveIngredients.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762268784_S_ActiveIngredientIndications.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762271024_S_ActiveIngredientAdverseEffects.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762270340_S_ActiveIngredientContraindications.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762271843_S_ActiveIngredientDrugInteractions.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762272390_S_ActiveIngredientFoodInteractions.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762272940_S_ActiveIngredientSynonyms.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762273188_S_ActiveIngredientPreRequestedTests.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762442944_S_ActiveIngredientSpecialPopulations.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762334623_H_Diagnostic_Test_Profile.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762287980_H_Diagnostic_Test_Pathology.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762249157_H_Diagnostic_Test_Radiology.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762422091_H_Diagnostic_Test_Normal_Range.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762698784_BM_PrescriptionInstructions.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762676555_H_Dental_Actions.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1761567029_BM_UOM_Group.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1761569160_BM_UOM_Group_Units.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1761569269_UOM_Group_Relation.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762162244_B_CdtCodes.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762238454_B_CDT_Service.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1761549180_B_procedure.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1762616614_B_procedureCoding.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1762635097_B_procedurePriceList.xml" relativeToChangelogFile="false"/>
+
+
 </databaseChangeLog>

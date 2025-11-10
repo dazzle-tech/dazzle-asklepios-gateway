@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+
+  <changeSet id="H00000000000026" author="hanan253yahya">
+    <createTable tableName="diagnostic_test_laboratory">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+
+      <column name="test_id" type="bigint">
+        <constraints nullable="false" unique="true"/>
+      </column>
+      <column name="property" type="varchar(200)"/>
+      <column name="system" type="varchar(200)"/>
+      <column name="scale" type="varchar(200)"/>
+      <column name="reagents" type="varchar(100)"/>
+      <column name="method" type="varchar(200)"/>
+      <column name="timing" type="varchar(200)"/>
+      <column name="test_duration_time" type="NUMERIC"/>
+      <column name="time_unit" type="varchar(200)"/>
+      <column name="result_unit" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="is_profile" type="BOOLEAN" defaultValueBoolean="false"/>
+      <column name="sample_container" type="varchar(200)"/>
+      <column name="sample_volume" type="NUMERIC"/>
+      <column name="sample_volume_unit" type="varchar(200)"/>
+      <column name="tube_color" type="varchar(200)"/>
+      <column name="test_description" type="TEXT"/>
+      <column name="sample_handling" type="TEXT"/>
+      <column name="turnaround_time" type="NUMERIC"/>
+      <column name="turnaround_time_unit" type="varchar(200)"/>
+      <column name="preparation_requirements" type="TEXT"/>
+      <column name="medical_indications" type="TEXT"/>
+      <column name="associated_risks" type="TEXT"/>
+      <column name="test_instructions" type="TEXT"/>
+      <column name="category" type="varchar(200)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="tube_type" type="varchar(200)"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="diagnostic_test_laboratory"
+      baseColumnNames="test_id"
+      referencedTableName="diagnostic_test"
+      referencedColumnNames="id"
+      constraintName="fk_test_id_laboratory"/>
+  </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                      http://www.liquibase.org/xml/ns/dbchangelog-ext
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+  <changeSet id="bs000000000010" author="batool">
+    <createTable tableName="procedure_coding">
+      <column name="id" type="bigint" autoIncrement="true" startWith="2000">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="procedure_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_procedurecoding_procedure"
+                     references="procedure(id)"/>
+      </column>
+      <column name="code_type" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="code_id" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <dropDefaultValue tableName="procedure_coding"
+                      columnName="created_date"
+                      columnDataType="timestamp"/>
+
+    <addUniqueConstraint
+      tableName="procedure_coding"
+      columnNames="procedure_id, code_type, code_id"
+      constraintName="uk_procedurecoding_procedureid_codetype_codeid"/>
+
+    <createIndex tableName="procedure_coding" indexName="idx_procedurecoding_procedure">
+      <column name="procedure_id"/>
+    </createIndex>
+
+  </changeSet>
+
+</databaseChangeLog>
