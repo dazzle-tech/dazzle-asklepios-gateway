@@ -23,6 +23,15 @@
       <column name="image_name" type="varchar(255)"/>
       <column name="is_active" type="boolean" defaultValue="true"/>
     </createTable>
+    <loadData
+      file="config/liquibase/data/dental_actions.csv"
+      tableName="dental_action"
+      separator=","
+      encoding="UTF-8">
+      <column name="description" type="STRING"/>
+      <column name="type" type="STRING"/>
+      <column name="image_name" type="STRING"/>
+    </loadData>
   </changeSet>
 
 </databaseChangeLog>
