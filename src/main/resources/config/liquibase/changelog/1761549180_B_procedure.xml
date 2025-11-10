@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                      http://www.liquibase.org/xml/ns/dbchangelog-ext
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+  <changeSet id="bs000000000009" author="batool">
+    <createTable tableName="procedure">
+      <column name="id" type="bigint" autoIncrement="true" startWith="2000">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="code" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="category_type" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="is_appointable" type="boolean" valueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="indications" type="text"/>
+      <column name="contraindications" type="text"/>
+      <column name="preparation_instructions" type="text"/>
+      <column name="recovery_notes" type="text"/>
+
+      <column name="is_active" type="boolean" valueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="facility_id" type="bigint">
+        <constraints nullable="false" foreignKeyName="fk_procedure_facility"
+                     references="facility(id)"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <dropDefaultValue tableName="procedure" columnName="created_date" columnDataType="timestamp"/>
+
+    <addUniqueConstraint
+      tableName="procedure"
+      columnNames="facility_id, name, code, category_type"
+      constraintName="uk_procedure_facility_name_code_categorytype"/>
+
+  </changeSet>
+
+</databaseChangeLog>

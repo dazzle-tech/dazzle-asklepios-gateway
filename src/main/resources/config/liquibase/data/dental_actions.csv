@@ -1,0 +1,81 @@
+description,type,image_name
+Gingival Inflammation,CONDITION,Gingival_Recession_Bleeding_Inflammation
+Gingival recession,CONDITION,Gingival_Recession_Bleeding_Inflammation
+Impacted tooth,CONDITION,Impacted_Tooth
+Gingival Bleeding,CONDITION,Gingival_Recession_Bleeding_Inflammation
+Bridge,TREATMENT,missing
+Implant,TREATMENT,Implant
+Partial Denture,TREATMENT,missing
+Occlusal Caries,CONDITION,Occlusal_Caries
+Generalized abrasion of tooth,CONDITION,Erosion_Abrasion
+Diastema of teeth,CONDITION,Diastema_of_Teeth
+Full Denture,TREATMENT,missing
+Caries of Cervical Margin of Tooth,CONDITION,Cervical_Margin_Caries
+Fissure Seal,TREATMENT,Fissure_Seal
+Fracture of tooth (distal),CONDITION,Distal_Fracture
+Erosion of teeth,CONDITION,Erosion_Abrasion
+Crown,TREATMENT,Crown
+Post,TREATMENT,Post
+Rotation of teeth,CONDITION,missing
+Occlusal Direct Metallic restoration,TREATMENT,Occlusal_Direct_Restoration
+Distal Caries,CONDITION,Distal_Caries
+Mesial Caries,CONDITION,Mesial_Caries
+Distal Direct Adhesive restoration,TREATMENT,Distal_Direct_Restoration
+Mesial Direct Metallic restoration,TREATMENT,Mesial_Direct_Restoration
+Occlusal Direct Adhesive restoration,TREATMENT,Occlusal_Direct_Restoration
+Watch tooth,CONDITION,Watch
+Distal Direct Metallic restoration,TREATMENT,Distal_Direct_Restoration
+Mesial Direct Adhesive restoration,TREATMENT,Mesial_Direct_Restoration
+Whitening,TREATMENT,missing
+Cracked tooth (distal),CONDITION,Distal_Fracture
+Pulpal regeneration,TREATMENT,
+Cracked tooth (mesial),CONDITION,Mesial_Fracture
+Caries of Smooth Surface of tooth,CONDITION,Cementum_Caries
+Asymptomatic reversible pulpitis,CONDITION,Pulpitis
+Asymptomatic irreversible pulpitis,CONDITION,Pulpitis
+Periapical abscess,CONDITION,Abscess
+Chronic apical abscess,CONDITION,Abscess
+Fracture of tooth (occlusal),CONDITION,Occlusal_Fracture
+Fracture of tooth (mesial),CONDITION,Mesial_Fracture
+Excessive attrition of teeth,CONDITION,Erosion_Abrasion
+Pontic,TREATMENT,
+Apicectomy,TREATMENT,Apicectomy
+Root Canal TREATMENT,TREATMENT,Root_Canal
+Retainer,TREATMENT,
+Mesial Indirect Metallic Restoration,TREATMENT,Mesial_Indirect_Restoration
+Cementum Caries,CONDITION,Cementum_Caries
+Extraction,TREATMENT,Extraction
+Veneer,TREATMENT,missing
+Orthodontic Surgery,TREATMENT,missing
+Scaling (deep gums cleaning),TREATMENT,missing
+Cracked tooth (occlusal),CONDITION,Occlusal_Fracture
+Onlay,TREATMENT,
+Extrinsic staining of tooth,CONDITION,Extrinsic_Staining
+Lack of interproximal tooth contact,CONDITION,Diastema_of_Teeth
+Inlay,TREATMENT,
+Space Maintainer,TREATMENT,
+Pulpotomy,TREATMENT,
+Apexification/recalcification,TREATMENT,
+Pin,TREATMENT,Pin
+Mesial Indirect Colored Restoration,TREATMENT,Mesial_Indirect_Restoration
+Pulp Capping,TREATMENT,
+Distal Indirect Colored Restoration,TREATMENT,Distal_Indirect_Restoration
+Distal Indirect Metallic Restoration,TREATMENT,Distal_Indirect_Restoration
+Occlusal Indirect Colored Restoration,TREATMENT,Occlusal_Indirect_Restoration
+Occlusal Indirect Metallic Restoration,TREATMENT,Occlusal_Indirect_Restoration
+Tooth Unerupted,CONDITION,Unerupted
+Gold Foil Restoration,TREATMENT,
+Abnormalities,CONDITION,missing
+Retained dental root,CONDITION,Retained_Root
+Occlusal wear of teeth,CONDITION,Occlusal_wear
+Sensitive dentin,CONDITION,Sensitive_Dentin
+Space Maintainer,TREATMENT,
+Gold Foil Restoration,TREATMENT,
+Inlay,TREATMENT,
+Onlay,TREATMENT,
+Pulp Capping,TREATMENT,
+Pulpotomy,TREATMENT,
+Apexification/recalcification,TREATMENT,
+Pulpal regeneration,TREATMENT,
+Retainer,TREATMENT,
+Pontic,TREATMENT,
