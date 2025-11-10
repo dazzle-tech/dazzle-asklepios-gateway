@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="BM0000000000012" author="BushraMashaiekh">
+    <createTable tableName="uom_group">
+      <column name="id" type="bigint" autoIncrement="true" startWith="1">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="description" type="varchar(50)"/>
+      <column name="name" type="varchar(50)"/>
+      <column name="code" type="varchar(50)"/>
+
+
+    </createTable>
+
+    <addUniqueConstraint
+      tableName="uom_group"
+      columnNames="code"
+      constraintName="uq_code"/>
+  </changeSet>
+
+</databaseChangeLog>
