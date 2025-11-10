@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="bs000000000008" author="batool">
+
+    <createTable tableName="cdt_service">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="cdt_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_cdt_service_cdt"
+                     references="cdt_code(id)"/>
+      </column>
+
+      <column name="service_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_cdt_service_service"
+                     references="service(id)"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+
+    <addUniqueConstraint
+      tableName="cdt_service"
+      columnNames="cdt_id, service_id"
+      constraintName="uk_cdt_service_unique"/>
+
+    <dropDefaultValue tableName="cdt_service"
+                      columnName="created_date"
+                      columnDataType="timestamp"/>
+
+  </changeSet>
+
+</databaseChangeLog>
