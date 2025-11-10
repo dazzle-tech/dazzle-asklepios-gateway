@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="100000000000037" author="Sondos">
+    <createTable tableName="active_ingredients">
+      <column name="id" type="bigint" autoIncrement="true" startWith="5000">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <!--Basic Information -->
+      <column name="name" type="nvarchar(500)" >
+        <constraints nullable="false"/>
+      </column>
+      <column name="drug_class_id" type="bigint" />
+      <column name="atc_code" type="varchar(100)"/>
+      <column name="otc" type="boolean"/>
+      <column name="has_synonyms" type="boolean"/>
+      <column name="antimicrobial" type="boolean"/>
+      <column name="high_risk_med" type="boolean"/>
+      <column name="abortive_medication" type="boolean"/>
+      <column name="labor_inducing_med" type="boolean"/>
+      <column name="is_controlled" type="boolean"/>
+      <column name="controlled" type="varchar(50)"/>
+      <column name="has_black_box_warning" type="boolean"/>
+      <column name="black_box_warning" type="nvarchar(200)"/>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+      <column name="is_active" type="BOOLEAN"/>
+
+      <!--Toxicity -->
+      <column name="toxicity_maximum_dose" type="nvarchar(100)"/>
+      <column name="toxicity_maximum_dose_per_unit" type="varchar(50)"/>
+      <column name="toxicity_details" type="TEXT"/>
+
+      <!--MOA -->
+      <column name="mechanism_of_action" type="TEXT"/>
+
+      <!--Pharmacokinetics-->
+      <column name="pharma_absorption" type="TEXT"/>
+      <column name="pharma_route_of_elimination" type="varchar(50)"/>
+      <column name="pharma_volume_of_distribution" type="TEXT"/>
+      <column name="pharma_half_life" type="TEXT"/>
+      <column name="pharma_protein_binding" type="TEXT"/>
+      <column name="pharma_clearance" type="TEXT"/>
+      <column name="pharma_metabolism" type="TEXT"/>
+
+      <!--Pregnancy-->
+      <column name="pregnancy_category" type="varchar(50)"/>
+      <column name="pregnancy_notes" type="TEXT"/>
+
+      <!--Lactation-->
+      <column name="lactation_risk" type="varchar(50)"/>
+      <column name="lactation_risk_notes" type="TEXT"/>
+
+      <!-- Dose Adjustment Renal-->
+      <column name="dose_adjustment_renal" type="boolean"/>
+      <column name="dose_adj_renal_one" type="nvarchar(100)"/>
+      <column name="dose_adj_renal_two" type="nvarchar(100)"/>
+      <column name="dose_adj_renal_three" type="nvarchar(100)"/>
+      <column name="dose_adj_renal_four" type="nvarchar(100)"/>
+
+      <!-- Dose Adjustment Hepatic-->
+      <column name="dose_adjustment_hepatic" type="boolean"/>
+      <column name="dose_adj_pug_a" type="nvarchar(100)"/>
+      <column name="dose_adj_pug_b" type="nvarchar(100)"/>
+      <column name="dose_adj_pug_c" type="nvarchar(100)"/>
+   </createTable>
+   <addUniqueConstraint
+      tableName="active_ingredients"
+      columnNames="name"
+      constraintName="uq_ai_name"/>
+   <createIndex tableName="active_ingredients" indexName="idx_ai_name">
+      <column name="name"/>
+   </createIndex>
+   <createIndex tableName="active_ingredients" indexName="idx_ai_drug_class">
+      <column name="drug_class_id"/>
+   </createIndex>
+    <createIndex tableName="active_ingredients" indexName="idx_ai_atc_code">
+      <column name="atc_code"/>
+    </createIndex>
+     <addForeignKeyConstraint
+      baseTableName="active_ingredients"
+      baseColumnNames="drug_class_id"
+      referencedTableName="medication_categories_class"
+      referencedColumnNames="id"
+      constraintName="fk_ai_drug_class"
+      onDelete="CASCADE"/>
+ </changeSet>
+
+</databaseChangeLog>

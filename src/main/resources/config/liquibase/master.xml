@@ -36,6 +36,15 @@
   <include file="config/liquibase/changelog/1762088668_S_InventoryTransactionAttachments.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1761730358_B_CPT.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762148868_H_Diagnostic_Test_Laboratory.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762219295_S_ActiveIngredients.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762268784_S_ActiveIngredientIndications.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762271024_S_ActiveIngredientAdverseEffects.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762270340_S_ActiveIngredientContraindications.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762271843_S_ActiveIngredientDrugInteractions.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762272390_S_ActiveIngredientFoodInteractions.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762272940_S_ActiveIngredientSynonyms.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762273188_S_ActiveIngredientPreRequestedTests.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762442944_S_ActiveIngredientSpecialPopulations.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762334623_H_Diagnostic_Test_Profile.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762287980_H_Diagnostic_Test_Pathology.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762249157_H_Diagnostic_Test_Radiology.xml" relativeToChangelogFile="false"/>
@@ -50,5 +59,6 @@
   <include file="config/liquibase/changelog/1761549180_B_procedure.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1762616614_B_procedureCoding.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1762635097_B_procedurePriceList.xml" relativeToChangelogFile="false"/>
+
 
 </databaseChangeLog>
