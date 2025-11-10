@@ -46,4 +46,7 @@
   <include file="/config/liquibase/changelog/1761567029_BM_UOM_Group.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1761569160_BM_UOM_Group_Units.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1761569269_UOM_Group_Relation.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762679707_B_vaccine.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762689221_B_vaccineBrands.xml" relativeToChangelogFile="false"/>
+
 </databaseChangeLog>
