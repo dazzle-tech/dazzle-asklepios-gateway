@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="100000000000046" author="Sondos">
+    <createTable tableName="brand_medication">
+      <column name="id" type="bigint" autoIncrement="true" startWith="5000">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="name" type="nvarchar(100)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="manufacturer" type="varchar(50)">
+      </column>
+      <column name="dosage_form" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="usage_instructions" type="text">
+      </column>
+      <column name="storage_requirements" type="text">
+      </column>
+      <column name="expires_after_opening" type="BOOLEAN"/>
+      <column name="expires_after_opening_value" type="decimal(10, 3)"/>
+      <column name="expires_after_opening_unit" type="varchar(50)"/>
+      <column name="single_patient_use" type="BOOLEAN"/>
+      <column name="high_cost_medication" type="BOOLEAN"/>
+      <column name="cost_category" type="varchar(50)"/>
+      <column name="roa" type="varchar(200)"/>
+      <column name="is_active" type="BOOLEAN"/>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+  </changeSet>
+
+</databaseChangeLog>

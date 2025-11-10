@@ -44,5 +44,6 @@
   <include file="config/liquibase/changelog/1762249157_H_Diagnostic_Test_Radiology.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762422091_H_Diagnostic_Test_Normal_Range.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762698784_BM_PrescriptionInstructions.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762701643_S_BrandMedication.xml" relativeToChangelogFile="false"/>
 
 </databaseChangeLog>
