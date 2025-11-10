@@ -49,7 +49,7 @@
 
       <!--Pharmacokinetics-->
       <column name="pharma_absorption" type="TEXT"/>
-      <column name="pharma_route_of_elimination" type="varchar(50)"/>
+      <column name="pharma_route_of_elimination" type="varchar(500)"/>
       <column name="pharma_volume_of_distribution" type="TEXT"/>
       <column name="pharma_half_life" type="TEXT"/>
       <column name="pharma_protein_binding" type="TEXT"/>
