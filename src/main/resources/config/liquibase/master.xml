@@ -13,9 +13,7 @@
 
   <include file="/config/liquibase/changelog/v0.0.0_initial_schema.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1726297332_H_AuthorityAndScreen.xml" relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/1761567029_BM_UOM_Group.xml" relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/1761569160_BM_UOM_Group_Units.xml" relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/1761569269_UOM_Group_Relation.xml" relativeToChangelogFile="false"/>
+
   <include file="/config/liquibase/changelog/1758431905_H_RoleScreen.xml" relativeToChangelogFile="false" />
   <include file="/config/liquibase/changelog/1758455979_S_departments.xml" relativeToChangelogFile="false" />
   <include file="/config/liquibase/changelog/1759823656_S_UserDepartments.xml" relativeToChangelogFile="false" />
@@ -44,5 +42,8 @@
   <include file="config/liquibase/changelog/1762249157_H_Diagnostic_Test_Radiology.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762422091_H_Diagnostic_Test_Normal_Range.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762698784_BM_PrescriptionInstructions.xml" relativeToChangelogFile="false"/>
-
+  <include file="config/liquibase/changelog/1762676555_H_Dental_Actions.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1761567029_BM_UOM_Group.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1761569160_BM_UOM_Group_Units.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1761569269_UOM_Group_Relation.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>
