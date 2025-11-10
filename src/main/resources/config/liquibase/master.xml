@@ -39,6 +39,12 @@
   <include file="config/liquibase/changelog/1762334623_H_Diagnostic_Test_Profile.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762287980_H_Diagnostic_Test_Pathology.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762249157_H_Diagnostic_Test_Radiology.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762422091_H_Diagnostic_Test_Normal_Range.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762698784_BM_PrescriptionInstructions.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762676555_H_Dental_Actions.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1761567029_BM_UOM_Group.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1761569160_BM_UOM_Group_Units.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1761569269_UOM_Group_Relation.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762162244_B_CdtCodes.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762238454_B_CDT_Service.xml" relativeToChangelogFile="false"/>
 
