@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext
+        http://www.liquibase.org/xml/ns/dbchangelog-ext.xsd">
+
+  <changeSet id="bs000000000015" author="batool">
+    <createTable tableName="vaccine_doses_interval">
+      <column name="id" type="bigint" autoIncrement="true" startWith="4000">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <!-- FK to vaccine(id) -->
+      <column name="vaccine_id" type="bigint">
+        <constraints
+          nullable="false"
+          foreignKeyName="fk_vdi_vaccine"
+          referencedTableName="vaccine"
+          referencedColumnNames="id"/>
+      </column>
+
+      <column name="from_dose_id" type="bigint">
+        <constraints
+          nullable="false"
+          foreignKeyName="fk_vdi_from_dose"
+          referencedTableName="vaccine_doses"
+          referencedColumnNames="id"/>
+      </column>
+
+      <column name="to_dose_id" type="bigint">
+        <constraints
+          nullable="false"
+          foreignKeyName="fk_vdi_to_dose"
+          referencedTableName="vaccine_doses"
+          referencedColumnNames="id"/>
+      </column>
+
+      <!-- Interval details -->
+      <column name="interval_between_doses" type="numeric">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="unit" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <createIndex indexName="ix_vdi_vaccine_id" tableName="vaccine_doses_interval">
+      <column name="vaccine_id"/>
+    </createIndex>
+    <createIndex indexName="ix_vdi_from_dose_id" tableName="vaccine_doses_interval">
+      <column name="from_dose_id"/>
+    </createIndex>
+    <createIndex indexName="ix_vdi_to_dose_id" tableName="vaccine_doses_interval">
+      <column name="to_dose_id"/>
+    </createIndex>
+
+    <addUniqueConstraint
+      tableName="vaccine_doses_interval"
+      columnNames="vaccine_id, from_dose_id, to_dose_id, interval_between_doses, unit"
+      constraintName="ux_vdi_vaccine_from_to_interval_unit"/>
+
+  </changeSet>
+
+</databaseChangeLog>
