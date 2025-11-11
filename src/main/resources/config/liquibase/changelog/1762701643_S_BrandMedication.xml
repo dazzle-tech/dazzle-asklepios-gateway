@@ -30,6 +30,12 @@
       <column name="high_cost_medication" type="BOOLEAN"/>
       <column name="cost_category" type="varchar(50)"/>
       <column name="roa" type="varchar(200)"/>
+      <column name="uom_group_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="uom_group_unit_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
       <column name="is_active" type="BOOLEAN"/>
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>
@@ -40,6 +46,20 @@
       <column name="last_modified_by" type="varchar(50)"/>
       <column name="last_modified_date" type="timestamp"/>
     </createTable>
+    <addForeignKeyConstraint
+      baseTableName="brand_medication"
+      baseColumnNames="uom_group_id"
+      referencedTableName="uom_group"
+      referencedColumnNames="id"
+      constraintName="fk_bm_uom_group_id"
+      onDelete="CASCADE"/>
+    <addForeignKeyConstraint
+      baseTableName="brand_medication"
+      baseColumnNames="uom_group_unit_id"
+      referencedTableName="uom_group_unit"
+      referencedColumnNames="id"
+      constraintName="fk_bm_uom_group_unit_id"
+      onDelete="CASCADE"/>
   </changeSet>
 
 </databaseChangeLog>
