@@ -16,6 +16,8 @@ management:
 services:
   asklepios-general-service-url: http://localhost:9090
   asklepios-setup-service-url :  http://localhost:8082
+  asklepios-patient-service-url :  http://localhost:8083
+  asklepios-inventory-service-url :  http://localhost:8084
 spring:
   devtools:
     restart:
@@ -180,6 +182,21 @@ spring:
             - Path=/setup-service/v3/api-docs
           filters:
             - StripPrefix=1
+
+
+        - id: patient
+          uri: ${services.asklepios-patient-service-url}
+          predicates:
+            - Path=/api/patient/**
+          filters:
+            - StripPrefix=0
+
+        - id: inventory
+          uri: ${services.asklepios-inventory-service-url}
+          predicates:
+            - Path=/api/inventory
+          filters:
+            - StripPrefix=0
 
       httpclient:
         pool:
