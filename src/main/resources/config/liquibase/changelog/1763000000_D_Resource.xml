@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="D00000000000001" author="Dali">
+
+    <createTable tableName="resource">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="true" primaryKey="true"/>
+      </column>
+
+      <column name="facility_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="resource_type" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="resource_key" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="is_allow_parallel" type="boolean" defaultValueBoolean="false"/>
+
+      <column name="is_active" type="boolean" defaultValueBoolean="true"/>
+      <column name="created_date" type="timestamp"/>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="resource"
+      baseColumnNames="facility_id"
+      referencedTableName="facility"
+      referencedColumnNames="id"
+      constraintName="fk_resource_facility"/>
+
+    <dropDefaultValue
+      tableName="resource"
+      columnName="created_date"
+      columnDataType="${datetimeType}"/>
+
+    <createIndex indexName="idx_resource_facility_id" tableName="resource">
+      <column name="facility_id"/>
+    </createIndex>
+
+    <createIndex indexName="idx_resource_resource_type" tableName="resource">
+      <column name="resource_type"/>
+    </createIndex>
+
+    <addUniqueConstraint
+      tableName="resource"
+      columnNames="facility_id, resource_type, resource_key"
+      constraintName="uk_resource_facility_type_key"/>
+
+  </changeSet>
+
+</databaseChangeLog>
+

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="D00000000000002" author="Dali">
+    <comment>Drop facility_id column from resource table as facility will be connected via availability later</comment>
+    
+    <dropForeignKeyConstraint 
+      baseTableName="resource" 
+      constraintName="fk_resource_facility"/>
+    
+    <dropIndex 
+      indexName="idx_resource_facility_id" 
+      tableName="resource"/>
+    
+    <dropUniqueConstraint 
+      tableName="resource" 
+      constraintName="uk_resource_facility_type_key"/>
+    
+    <dropColumn tableName="resource" columnName="facility_id"/>
+    
+    <addUniqueConstraint
+      tableName="resource"
+      columnNames="resource_type, resource_key"
+      constraintName="uk_resource_type_key"/>
+  </changeSet>
+
+</databaseChangeLog>
+
