@@ -61,21 +61,10 @@
       <column name="last_modified_date" type="timestamp"/>
     </createTable>
 
-    <createIndex indexName="ix_vdi_vaccine_id" tableName="vaccine_doses_interval">
-      <column name="vaccine_id"/>
-    </createIndex>
-    <createIndex indexName="ix_vdi_from_dose_id" tableName="vaccine_doses_interval">
-      <column name="from_dose_id"/>
-    </createIndex>
-    <createIndex indexName="ix_vdi_to_dose_id" tableName="vaccine_doses_interval">
-      <column name="to_dose_id"/>
-    </createIndex>
-
     <addUniqueConstraint
       tableName="vaccine_doses_interval"
-      columnNames="vaccine_id, from_dose_id, to_dose_id, interval_between_doses, unit"
-      constraintName="ux_vdi_vaccine_from_to_interval_unit"/>
-
+      columnNames="vaccine_id, from_dose_id, to_dose_id"
+      constraintName="ux_vdi_vaccine_from_to"/>
   </changeSet>
 
 </databaseChangeLog>
