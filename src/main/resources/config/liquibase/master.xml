@@ -60,6 +60,6 @@
   <include file="config/liquibase/changelog/1761549180_B_procedure.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1762616614_B_procedureCoding.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1762635097_B_procedurePriceList.xml" relativeToChangelogFile="false"/>
-
+  <include file="/config/liquibase/changelog/1763211374_H_CDT_Dental_Actions.xml" relativeToChangelogFile="false"/>
 
 </databaseChangeLog>
