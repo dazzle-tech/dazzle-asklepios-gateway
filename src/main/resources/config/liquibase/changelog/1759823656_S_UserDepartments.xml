@@ -18,7 +18,9 @@
       <column name="department_id" type="bigint">
         <constraints nullable="false"/>
       </column>
-      <column name="is_default" type="boolean"/>
+      <column name="is_default" type="boolean">
+        <constraints nullable="false"/>
+      </column>
       <column name="created_by" type="varchar(50)"/>
       <column name="created_date" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP">
         <constraints nullable="false"/>
