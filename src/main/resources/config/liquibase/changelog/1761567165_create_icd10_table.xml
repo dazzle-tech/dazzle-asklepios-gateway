@@ -31,7 +31,7 @@
 
 
       <column name="last_updated" type="timestamp" defaultValueDate="CURRENT_TIMESTAMP">
-        <constraints nullable="false"/>
+        <constraints nullable="true"/>
       </column>
     </createTable>
 
