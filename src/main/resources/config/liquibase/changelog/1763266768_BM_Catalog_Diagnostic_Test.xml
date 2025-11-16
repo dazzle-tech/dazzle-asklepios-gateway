@@ -14,7 +14,7 @@
         <column name="catalog_id" type="bigint">
           <constraints nullable="false" foreignKeyName="fk_cdt_catalog" referencedTableName="catalog" referencedColumnNames="id"/>
         </column>
-        <column name="test_id" type="bigint">
+        <column name="test_id" type="bigint" autoIncrement="true" startWith="1">
           <constraints nullable="false" foreignKeyName="fk_cdt_test" referencedTableName="diagnostic_test" referencedColumnNames="id"/>
         </column>
       </createTable>
