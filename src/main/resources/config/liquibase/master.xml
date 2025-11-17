@@ -60,6 +60,10 @@
   <include file="config/liquibase/changelog/1761549180_B_procedure.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1762616614_B_procedureCoding.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1762635097_B_procedurePriceList.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762679707_B_vaccine.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762689221_B_vaccineBrands.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762770090_B_vaccineDoses.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762846530_B_vaccineDosesInterval.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762701643_S_BrandMedication.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762850672_S_BrandMedicationSubstitute.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1763293500_S_BrandMedicationActiveIngredient.xml" relativeToChangelogFile="false"/>
