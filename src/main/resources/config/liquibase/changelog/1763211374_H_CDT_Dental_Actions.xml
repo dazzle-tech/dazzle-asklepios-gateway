@@ -12,7 +12,7 @@
         <constraints primaryKey="true" nullable="false"/>
       </column>
 
-      <column name="cdt_code" type="varchar(100)"/>
+      <column name="cdt_id" type="bigint"/>
 
       <column name="dental_action_id" type="bigint"/>
 
@@ -25,9 +25,9 @@
       constraintName="fk_cdt_dental_action"/>
     <addForeignKeyConstraint
       baseTableName="cdt_dental_action"
-      baseColumnNames="cdt_code"
+      baseColumnNames="cdt_id"
       referencedTableName="cdt_code"
-      referencedColumnNames="code"
+      referencedColumnNames="id"
       constraintName="fk_cdt_dental_action_code"/>
 
   </changeSet>
