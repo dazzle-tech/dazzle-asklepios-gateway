@@ -54,7 +54,7 @@
   <include file="config/liquibase/changelog/1762676555_H_Dental_Actions.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1761567029_BM_UOM_Group.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1761569160_BM_UOM_Group_Units.xml" relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/1761569269_UOM_Group_Relation.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1761569269_BM_UOM_Group_Relation.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762162244_B_CdtCodes.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762238454_B_CDT_Service.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1761549180_B_procedure.xml" relativeToChangelogFile="false"/>
@@ -64,5 +64,7 @@
   <include file="config/liquibase/changelog/1762689221_B_vaccineBrands.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762770090_B_vaccineDoses.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762846530_B_vaccineDosesInterval.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762701643_S_BrandMedication.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762850672_S_BrandMedicationSubstitute.xml" relativeToChangelogFile="false"/>
 
 </databaseChangeLog>
