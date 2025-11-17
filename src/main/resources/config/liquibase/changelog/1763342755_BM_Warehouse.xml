@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.24.xsd">
+
+
+  <changeSet id="BM0000000000017" author="BushraMashaiekh">
+    <createTable tableName="warehouse">
+      <column name="id" type="bigint" autoIncrement="true" startWith="1">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="department_id" type="bigint" >
+        <constraints nullable="true"/>
+      </column>
+      <column name="warehouse_name" type="varchar(150)"/>
+      <column name="warehouse_code" type="varchar(150)"/>
+      <column name="is_default" type="boolean"/>
+      <column name="close_warehouse" type="boolean"/>
+      <column name="location_key" type="varchar(150)"/>
+      <column name="capacity" type="varchar(150)"/>
+      <column name="working_hours_from_time" type="numeric(16)"/>
+      <column name="working_hours_to_time" type="numeric(16)"/>
+      <column name="is_active" type="boolean"/>
+    </createTable>
+
+
+    <addForeignKeyConstraint
+      baseTableName="warehouse"
+      baseColumnNames="department_id"
+      referencedTableName="department"
+      referencedColumnNames="id"
+      constraintName="fk_warehouse_department"
+      deferrable="false" initiallyDeferred="false"/>
+
+
+    <createIndex tableName="warehouse" indexName="idx_warehouse_department_id">
+      <column name="department_id"/>
+    </createIndex>
+    <createIndex tableName="warehouse" indexName="idx_warehouse_name">
+      <column name="warehouse_name"/>
+    </createIndex>
+    <createIndex tableName="warehouse" indexName="idx_warehouse_code">
+      <column name="warehouse_code"/>
+    </createIndex>
+    <createIndex tableName="warehouse" indexName="idx_warehouse_is_active">
+      <column name="is_active"/>
+    </createIndex>
+  </changeSet>
+</databaseChangeLog>
