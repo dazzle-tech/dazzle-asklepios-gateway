@@ -8,13 +8,13 @@
 
   <changeSet id="BM0000000000016" author="BushraMashaiekh">
       <createTable tableName="catalog_diagnostic_test">
-        <column name="id" type="bigint">
+        <column name="id" type="bigint" autoIncrement="true" startWith="1">
           <constraints primaryKey="true" nullable="false" primaryKeyName="pk_catalog_diagnostic_test"/>
         </column>
         <column name="catalog_id" type="bigint">
           <constraints nullable="false" foreignKeyName="fk_cdt_catalog" referencedTableName="catalog" referencedColumnNames="id"/>
         </column>
-        <column name="test_id" type="bigint" autoIncrement="true" startWith="1">
+        <column name="test_id" type="bigint" >
           <constraints nullable="false" foreignKeyName="fk_cdt_test" referencedTableName="diagnostic_test" referencedColumnNames="id"/>
         </column>
       </createTable>
