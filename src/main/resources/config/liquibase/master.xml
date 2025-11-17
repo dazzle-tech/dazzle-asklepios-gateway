@@ -67,5 +67,6 @@
   <include file="config/liquibase/changelog/1762846530_B_vaccineDosesInterval.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762701643_S_BrandMedication.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762850672_S_BrandMedicationSubstitute.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1763378801_S_InventoryProducts.xml" relativeToChangelogFile="false"/>
 
 </databaseChangeLog>
