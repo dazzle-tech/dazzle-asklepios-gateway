@@ -18,7 +18,7 @@ http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.24.xsd">
       <column name="warehouse_code" type="varchar(150)"/>
       <column name="is_default" type="boolean"/>
       <column name="close_warehouse" type="boolean"/>
-      <column name="location_key" type="varchar(150)"/>
+      <column name="location_id" type="varchar(150)"/>
       <column name="capacity" type="varchar(150)"/>
       <column name="working_hours_from_time" type="numeric(16)"/>
       <column name="working_hours_to_time" type="numeric(16)"/>
@@ -34,18 +34,5 @@ http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.24.xsd">
       constraintName="fk_warehouse_department"
       deferrable="false" initiallyDeferred="false"/>
 
-
-    <createIndex tableName="warehouse" indexName="idx_warehouse_department_id">
-      <column name="department_id"/>
-    </createIndex>
-    <createIndex tableName="warehouse" indexName="idx_warehouse_name">
-      <column name="warehouse_name"/>
-    </createIndex>
-    <createIndex tableName="warehouse" indexName="idx_warehouse_code">
-      <column name="warehouse_code"/>
-    </createIndex>
-    <createIndex tableName="warehouse" indexName="idx_warehouse_is_active">
-      <column name="is_active"/>
-    </createIndex>
   </changeSet>
 </databaseChangeLog>
