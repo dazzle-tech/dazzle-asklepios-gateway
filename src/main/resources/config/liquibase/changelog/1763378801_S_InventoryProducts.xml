@@ -46,7 +46,9 @@
       <column name="reusable" type="boolean"/>
       <column name="inventory_type" type="nvarchar(50)"/>
       <column name="shelf_life" type="int"/>
+      <column name="shelf_life_unit" type="nvarchar(50)"/>
       <column name="lead_time" type="int"/>
+      <column name="lead_time_unit" type="nvarchar(50)"/>
       <column name="erp_integration_id" type="nvarchar(50)"/>
 
       <column name="is_active" type="boolean"/>
