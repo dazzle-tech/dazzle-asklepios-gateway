@@ -191,7 +191,7 @@ spring:
           filters:
             - StripPrefix=0
 
-        - id: inventory
+        - id: inventoryManagement
           uri: ${services.asklepios-inventory-service-url}
           predicates:
             - Path=/api/inventory/**
