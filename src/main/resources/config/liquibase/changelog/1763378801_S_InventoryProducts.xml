@@ -76,9 +76,10 @@
     />
     <createIndex
       tableName="inventory_products"
-      indexName="idx_inventory_products_name_unique"
+      indexName="idx_inventory_products_name_type_unique"
       unique="true">
       <column name="name"/>
+      <column name="type"/>
     </createIndex>
 
     <createIndex
