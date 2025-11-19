@@ -6,6 +6,7 @@ import com.dazzle.asklepios.repository.UserRepository;
 import com.dazzle.asklepios.security.AuthoritiesConstants;
 import com.dazzle.asklepios.service.UserService;
 import com.dazzle.asklepios.service.dto.AdminUserDTO;
+import com.dazzle.asklepios.service.dto.SimpleUserDTO;
 import com.dazzle.asklepios.web.rest.errors.BadRequestAlertException;
 import com.dazzle.asklepios.web.rest.errors.EmailAlreadyUsedException;
 import com.dazzle.asklepios.web.rest.errors.LoginAlreadyUsedException;
@@ -15,10 +16,12 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -30,6 +33,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.ForwardedHeaderUtils;
@@ -83,7 +87,10 @@ public class UserResource {
             "createdBy",
             "createdDate",
             "lastModifiedBy",
-            "lastModifiedDate"
+            "lastModifiedDate",
+            "jobRole",
+            "gender"
+
         )
     );
 
@@ -218,6 +225,46 @@ public class UserResource {
 
     private boolean onlyContainsAllowedProperties(Pageable pageable) {
         return pageable.getSort().stream().map(Sort.Order::getProperty).allMatch(ALLOWED_ORDERED_PROPERTIES::contains);
+    }
+
+    @GetMapping("/users-basic")
+    public Mono<ResponseEntity<Flux<SimpleUserDTO>>> getUsersBasic(
+        @org.springdoc.core.annotations.ParameterObject ServerHttpRequest request,
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable,
+        @RequestParam(required = false) String login,
+        @RequestParam(required = false) String email,
+        @RequestParam(required = false) String name
+    ) {
+
+
+        Mono<Long> total = userRepository.countBasicUsers(login, email, name);
+
+        Flux<SimpleUserDTO> users =
+            userRepository.findBasicUsers(login, email, name, pageable)
+                .map(SimpleUserDTO::new);
+
+
+        return total.map(t -> {
+
+            PageImpl<SimpleUserDTO> page = new PageImpl<>(
+                new ArrayList<>(),
+                pageable,
+                t
+            );
+
+            HttpHeaders headers =
+                PaginationUtil.generatePaginationHttpHeaders(
+                    ForwardedHeaderUtils.adaptFromForwardedHeaders(request.getURI(), request.getHeaders()),
+                    page
+                );
+
+            return ResponseEntity.ok().headers(headers).body(users);
+        });
+    }
+
+
+    private boolean isEmpty(String v) {
+        return v == null || v.trim().isEmpty();
     }
 
     /**

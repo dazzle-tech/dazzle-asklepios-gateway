@@ -43,6 +43,9 @@ public interface UserRepository extends R2dbcRepository<User, Long>, UserReposit
 
     @Query("DELETE FROM user_role WHERE user_id = :userId AND role_id = :roleId")
     Mono<Void> deleteUserRole(Long userId, Long roleId);
+
+
+
 }
 
 interface DeleteExtended<T> {
@@ -57,6 +60,10 @@ interface UserRepositoryInternal extends DeleteExtended<User> {
     Mono<User> findOneWithAuthoritiesByEmailIgnoreCaseAndFacilityId(String email, Long facilityId);
 
     Flux<User> findAllWithAuthorities(Pageable pageable);
+
+    Flux<User> findBasicUsers(String login, String email, String name, Pageable pageable);
+
+    Mono<Long> countBasicUsers(String login, String email, String name);
 }
 
 @Slf4j
@@ -129,6 +136,73 @@ class UserRepositoryInternalImpl implements UserRepositoryInternal {
             .bind("userId", user.getId())
             .then()
             .then(r2dbcEntityTemplate.delete(User.class).matching(query(where("id").is(user.getId()))).all().then());
+    }
+
+
+    @Override
+    public Flux<User> findBasicUsers(String login, String email, String name, Pageable pageable) {
+
+        StringBuilder sql = new StringBuilder("""
+        SELECT *
+        FROM app_user
+        WHERE 1 = 1
+    """);
+
+        // Filtering
+        if (login != null && !login.isBlank()) {
+            sql.append(" AND LOWER(login) LIKE LOWER('%").append(login).append("%') ");
+        }
+
+        if (email != null && !email.isBlank()) {
+            sql.append(" AND LOWER(email) LIKE LOWER('%").append(email).append("%') ");
+        }
+
+        if (name != null && !name.isBlank()) {
+            sql.append(" AND (LOWER(first_name) LIKE LOWER('%").append(name).append("%') ")
+                .append(" OR LOWER(last_name) LIKE LOWER('%").append(name).append("%')) ");
+        }
+
+        // Sorting
+        if (!pageable.getSort().isEmpty()) {
+            Sort.Order order = pageable.getSort().iterator().next();
+            sql.append(" ORDER BY ").append(order.getProperty()).append(" ").append(order.getDirection());
+        } else {
+            sql.append(" ORDER BY id ASC");
+        }
+
+        // Pagination
+        sql.append(" LIMIT ").append(pageable.getPageSize());
+        sql.append(" OFFSET ").append(pageable.getOffset());
+
+        return db.sql(sql.toString())
+            .map((row, meta) -> r2dbcConverter.read(User.class, row, meta))
+            .all();
+    }
+    @Override
+    public Mono<Long> countBasicUsers(String login, String email, String name) {
+
+        StringBuilder sql = new StringBuilder("""
+        SELECT COUNT(*) AS cnt
+        FROM app_user
+        WHERE 1 = 1
+    """);
+
+        if (login != null && !login.isBlank()) {
+            sql.append(" AND LOWER(login) LIKE LOWER('%").append(login).append("%') ");
+        }
+
+        if (email != null && !email.isBlank()) {
+            sql.append(" AND LOWER(email) LIKE LOWER('%").append(email).append("%') ");
+        }
+
+        if (name != null && !name.isBlank()) {
+            sql.append(" AND (LOWER(first_name) LIKE LOWER('%").append(name).append("%') ")
+                .append(" OR LOWER(last_name) LIKE LOWER('%").append(name).append("%')) ");
+        }
+
+        return db.sql(sql.toString())
+            .map((row, meta) -> row.get("cnt", Long.class))
+            .one();
     }
 
     private Mono<User> findOneWithAuthoritiesBy(String fieldName, Object fieldValue) {
