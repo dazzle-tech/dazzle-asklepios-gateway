@@ -41,9 +41,11 @@
       tableName="diagnostic_test_coding"
       columnNames="diagnostic_test_id, code_type, code_id"
       constraintName="uk_diagnosticcoding_testid_codetype_codeid"/>
-
-
-
+    
+    <createIndex indexName="idx_diagnostic_test_coding_test_id"
+                 tableName="diagnostic_test_coding">
+      <column name="diagnostic_test_id"/>
+    </createIndex>
   </changeSet>
 
 </databaseChangeLog>
