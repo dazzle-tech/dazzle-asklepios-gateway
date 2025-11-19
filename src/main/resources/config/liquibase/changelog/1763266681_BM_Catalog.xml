@@ -17,19 +17,19 @@
       <column name="type" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
+      <column name="facility_id" type="bigint">
+        <constraints foreignKeyName="fk_catalog_facility" referencedTableName="facility" referencedColumnNames="id"/>
+      </column>
       <column name="department_id" type="bigint">
-        <constraints nullable="false" foreignKeyName="fk_catalog_department" referencedTableName="department" referencedColumnNames="id"/>
+        <constraints  foreignKeyName="fk_catalog_department" referencedTableName="department" referencedColumnNames="id"/>
       </column>
     </createTable>
 
     <createIndex indexName="idx_catalog_department" tableName="catalog">
       <column name="department_id"/>
     </createIndex>
-    <createIndex indexName="idx_catalog_name_ci" tableName="catalog">
-      <column name="name"/>
-    </createIndex>
-    <createIndex indexName="idx_catalog_type" tableName="catalog">
-      <column name="type"/>
+    <createIndex indexName="idx_catalog_facility" tableName="catalog">
+      <column name="facility_id"/>
     </createIndex>
   </changeSet>
   </databaseChangeLog>
