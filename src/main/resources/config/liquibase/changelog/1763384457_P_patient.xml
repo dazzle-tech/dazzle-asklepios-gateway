@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="QA00000000000005" author="qais">
+    <createTable tableName="patients">
+      <column name="id" type="bigint" autoIncrement="true" startWith="1000">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="mrn" type="varchar(50)">
+        <constraints nullable="false" unique="true"/>
+      </column>
+      <column name="first_name" type="nvarchar(100)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="second_name" type="nvarchar(100)"/>
+      <column name="third_name" type="nvarchar(100)"/>
+      <column name="last_name" type="nvarchar(100)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="sex_at_birth" type="varchar(20)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="date_of_birth" type="date">
+        <constraints nullable="false"/>
+      </column>
+      <column name="patient_classes" type="varchar(50)"/>
+
+      <column name="is_private_patient" type="boolean"/>
+
+      <column name="first_name_secondary_lang" type="nvarchar(100)"/>
+      <column name="second_name_secondary_lang" type="nvarchar(100)"/>
+      <column name="third_name_secondary_lang" type="nvarchar(100)"/>
+      <column name="last_name_secondary_lang" type="nvarchar(100)"/>
+
+      <column name="primary_mobile_number" type="varchar(20)"/>
+      <column name="receive_sms" type="boolean"/>
+      <column name="second_mobile_number" type="varchar(20)"/>
+      <column name="home_phone" type="varchar(20)"/>
+      <column name="work_phone" type="varchar(20)"/>
+      <column name="email" type="varchar(150)"/>
+      <column name="receive_email" type="boolean"/>
+      <column name="preferred_way_of_contact" type="varchar(50)"/>
+
+      <column name="native_language" type="nvarchar(100)"/>
+      <column name="emergency_contact_name" type="nvarchar(150)"/>
+      <column name="emergency_contact_relation" type="nvarchar(100)"/>
+      <column name="emergency_contact_phone" type="varchar(20)"/>
+
+      <column name="role" type="varchar(50)"/>
+      <column name="marital_status" type="varchar(50)"/>
+      <column name="nationality" type="nvarchar(100)"/>
+      <column name="religion" type="nvarchar(100)"/>
+      <column name="ethnicity" type="nvarchar(100)"/>
+      <column name="occupation" type="nvarchar(150)"/>
+      <column name="responsible_party" type="nvarchar(150)"/>
+      <column name="educational_level" type="nvarchar(100)"/>
+
+      <column name="previous_id" type="varchar(50)"/>
+      <column name="archiving_number" type="varchar(50)"/>
+
+      <column name="details" type="nvarchar(1000)"/>
+      <column name="is_unknown" type="boolean"/>
+      <column name="is_verified" type="boolean">
+        <constraints nullable="false" />
+      </column>
+
+      <column name="is_completed_patient" type="boolean">
+        <constraints nullable="false" />
+      </column>
+      <column name="security_access_level"  type="varchar(50)"/>
+
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+
+  </changeSet>
+
+</databaseChangeLog>
