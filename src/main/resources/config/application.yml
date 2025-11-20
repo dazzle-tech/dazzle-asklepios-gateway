@@ -126,6 +126,10 @@ spring:
   output:
     ansi:
       console-available: true
+twilio:
+  accountSid: AC5ef970add12c4129b6bbb4509ebaf221
+  authToken: 560a08944dd79ee813c750ff921fd480
+  senderNumber: YOUR_TWILIO_PHONE
 
 server:
   servlet:
