@@ -69,5 +69,6 @@
   <include file="config/liquibase/changelog/1762850672_S_BrandMedicationSubstitute.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1763384457_P_patient.xml" relativeToChangelogFile="false"/>
     <include file="/config/liquibase/changelog/1763381810_Q_Patient_Address.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1763628284_H_Patient_Hippa.xml" relativeToChangelogFile="false"/>
 
 </databaseChangeLog>
