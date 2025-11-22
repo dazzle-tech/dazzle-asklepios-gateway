@@ -1,4 +1,3 @@
-
 logging:
   level:
     ROOT: INFO
@@ -17,8 +16,8 @@ management:
       probability: 1.0
 
 services:
-  asklepios-general-service-url: http://asklepios-service:8081
-  asklepios-setup-service-url :  http://asklepios-api-setup-service:8082
+  asklepios-general-service-url: http://asklepiosdemo-service:8081
+  asklepios-setup-service-url :  http://asklepiosdemo-api-setup-service:8082
 
 spring:
   devtools:
@@ -28,14 +27,14 @@ spring:
       enabled: false
   liquibase:
     contexts: stage
-    url: jdbc:postgresql://db-postgresql-nyc3-94186-do-user-10936078-0.j.db.ondigitalocean.com:25060/asklepios?sslmode=require
+    url: jdbc:postgresql://db-postgresql-nyc3-94186-do-user-10936078-0.j.db.ondigitalocean.com:25060/asklepios-demo?sslmode=require
   mail:
     host: localhost
     port: 25
     username:
     password:
   r2dbc:
-    url: r2dbc:postgresql://db-postgresql-nyc3-94186-do-user-10936078-0.j.db.ondigitalocean.com:25060/asklepios?sslmode=require
+    url: r2dbc:postgresql://db-postgresql-nyc3-94186-do-user-10936078-0.j.db.ondigitalocean.com:25060/asklepios-demo?sslmode=require
     username: asklepios
     password: AVNS_Dw0mJXT6mnivz3bN70_
   thymeleaf:
@@ -193,8 +192,8 @@ server:
 
 asklepios:
   cors:
-    allowed-origins: 'http://asklepios.nereuscloud.de,https://asklepios.nereuscloud.de,https://localhost:3100,http://localhost:3100'
-    allowed-origin-patterns: 'https://*.asklepios.com'
+    allowed-origins: 'http://asklepiosdemo.nereuscloud.de,https://asklepiosdemo.nereuscloud.de,https://localhost:3100,http://localhost:3100'
+    allowed-origin-patterns: 'https://*.asklepios.com,https://asklepiosdemoapi.nereuscloud.de,https://*.nereuscloud.de'
     allowed-methods: '*'
     allowed-headers: '*'
     exposed-headers: 'Authorization,Link,X-Total-Count,X-${asklepios.clientApp.name}-alert,X-${asklepios.clientApp.name}-error,X-${asklepios.clientApp.name}-params,access_token'
@@ -207,6 +206,6 @@ asklepios:
         token-validity-in-seconds: 86400
         token-validity-in-seconds-for-remember-me: 2592000
   mail:
-    base-url: http://asklepios.nereuscloud.de/
+    base-url: http://asklepiosdemo.nereuscloud.de/
     username: systemask73@gmail.com
     password: ocdh hvae hhsz cyxc

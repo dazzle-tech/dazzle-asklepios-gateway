@@ -1,0 +1,45 @@
+---
+# Service
+apiVersion: v1
+kind: Service
+metadata:
+    name: asklepiosdemo-api-gateway
+    namespace: asklepios-sandbox
+spec:
+    type: ClusterIP
+    selector:
+        app: asklepiosdemo-api-gateway
+    ports:
+        - protocol: TCP
+          port: 80
+          targetPort: 8080
+---
+# Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: asklepiosdemo-api-gateway
+    namespace: asklepios-sandbox
+spec:
+    selector:
+        matchLabels:
+            app: asklepiosdemo-api-gateway
+    replicas: 1
+    template:
+        metadata:
+            labels:
+                app: asklepiosdemo-api-gateway
+        spec:
+            containers:
+                - name: asklepiosdemo-api-gateway
+                  image: registry.digitalocean.com/asklepios/asklepios-api-gateway:demo.d191e03cc364d7bbe0aa8d740550f380270c5ab9
+                  imagePullPolicy: IfNotPresent
+                  env:
+                    - name: spring.profiles.active
+                      value: stage
+                  ports:
+                      - containerPort: 8080
+                        name: asklepios-api
+            imagePullSecrets:
+                - name: asklepios
+
