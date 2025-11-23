@@ -23,8 +23,8 @@
       <column name="brand_id" type="bigint"/>
 
       <column name="uom_group_id" type="bigint"/>
-      <column name="base_uom" type="nvarchar(50)"/>
-      <column name="dispense_uom" type="nvarchar(50)"/>
+      <column name="base_uom" type="varchar(50)"/>
+      <column name="dispense_uom" type="varchar(50)"/>
 
       <column name="controlled_substance" type="boolean"/>
       <column name="hazardous_biohazardous_tag" type="bigint"/>
@@ -36,7 +36,7 @@
       <column name="warranty_start_date" type="timestamp"/>
       <column name="warranty_end_date" type="timestamp"/>
       <column name="maintenance_schedule" type="decimal(10,3)"/>
-      <column name="maintenance_schedule_type" type="nvarchar(50)"/>
+      <column name="maintenance_schedule_type" type="varchar(50)"/>
       <column name="critical_equipment" type="boolean"/>
       <column name="calibration_required" type="boolean"/>
       <column name="training_required" type="boolean"/>
@@ -44,14 +44,16 @@
       <column name="batch_managed" type="boolean"/>
       <column name="expiry_date_mandatory" type="boolean"/>
       <column name="reusable" type="boolean"/>
-      <column name="inventory_type" type="nvarchar(50)"/>
+      <column name="inventory_type" type="varchar(50)"/>
       <column name="shelf_life" type="int"/>
-      <column name="shelf_life_unit" type="nvarchar(50)"/>
+      <column name="shelf_life_unit" type="varchar(50)"/>
       <column name="lead_time" type="int"/>
-      <column name="lead_time_unit" type="nvarchar(50)"/>
-      <column name="erp_integration_id" type="nvarchar(50)"/>
+      <column name="lead_time_unit" type="varchar(50)"/>
+      <column name="erp_integration_id" type="varchar(50)"/>
 
-      <column name="is_active" type="boolean"/>
+      <column name="is_active" type="boolean">
+        <constraints nullable="false"/>
+      </column>
 
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>
