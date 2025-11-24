@@ -23,7 +23,9 @@
       <column name="brand_id" type="bigint"/>
 
       <column name="uom_group_id" type="bigint"/>
-      <column name="base_uom" type="varchar(50)"/>
+      <column name="base_uom" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
       <column name="dispense_uom" type="varchar(50)"/>
 
       <column name="controlled_substance" type="boolean"/>
