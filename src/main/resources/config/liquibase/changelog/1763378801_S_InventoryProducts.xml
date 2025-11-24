@@ -27,7 +27,7 @@
       <column name="dispense_uom" type="varchar(50)"/>
 
       <column name="controlled_substance" type="boolean"/>
-      <column name="hazardous_biohazardous_tag" type="bigint"/>
+      <column name="hazardous_biohazardous_tag" type="varchar(50)"/>
       <column name="allergy_risk" type="boolean"/>
 
       <column name="item_average_cost" type="decimal(10,3)"/>
