@@ -70,5 +70,6 @@
   <include file="config/liquibase/changelog/1762850672_S_BrandMedicationSubstitute.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1763378801_S_InventoryProducts.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1763293500_S_BrandMedicationActiveIngredient.xml" relativeToChangelogFile="false"/>
+   <include file="config/liquibase/changelog/1763980448_S_AdminstrativeWarnings.xml" relativeToChangelogFile="false"/>
 
 </databaseChangeLog>
