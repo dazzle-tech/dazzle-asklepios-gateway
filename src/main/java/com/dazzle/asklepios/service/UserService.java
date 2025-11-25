@@ -5,6 +5,7 @@ import com.dazzle.asklepios.domain.Authority;
 import com.dazzle.asklepios.domain.User;
 import com.dazzle.asklepios.domain.enumeration.Gender;
 import com.dazzle.asklepios.domain.enumeration.JobRole;
+import com.dazzle.asklepios.domain.enumeration.SecurityLevel;
 import com.dazzle.asklepios.repository.AuthorityRepository;
 import com.dazzle.asklepios.repository.UserRepository;
 import com.dazzle.asklepios.security.SecurityUtils;
@@ -91,6 +92,9 @@ public class UserService {
         user.setBirthDate(userDTO.getBirthDate());
         user.setGender(userDTO.getGender());
         user.setJobRole(userDTO.getJobRole());
+        if(userDTO.getSecurityAccessLeve() ==null){
+            user.setSecurityAccessLeve(SecurityLevel.NORMAL_1);
+        }
         user.setLangKey(userDTO.getLangKey() == null ? Constants.DEFAULT_LANGUAGE : userDTO.getLangKey());
 
         return Mono.fromCallable(() -> {
@@ -147,6 +151,9 @@ public class UserService {
                 user.setBirthDate(userDTO.getBirthDate());
                 user.setGender(userDTO.getGender());
                 user.setJobRole(userDTO.getJobRole());
+                if(userDTO.getSecurityAccessLeve() ==null){
+                    user.setSecurityAccessLeve(SecurityLevel.NORMAL_1);
+                }
                 Set<Authority> managedAuthorities = user.getAuthorities();
                 managedAuthorities.clear();
                 return user;
