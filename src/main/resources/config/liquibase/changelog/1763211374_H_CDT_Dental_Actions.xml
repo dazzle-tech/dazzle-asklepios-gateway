@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+  <changeSet id="H00000000000033" author="hanan253yahya">
+    <createTable tableName="cdt_dental_action">
+
+      <column name="id" type="bigint" autoIncrement="true" >
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="cdt_id" type="bigint"/>
+
+      <column name="dental_action_id" type="bigint"/>
+
+    </createTable>
+    <addForeignKeyConstraint
+      baseTableName="cdt_dental_action"
+      baseColumnNames="dental_action_id"
+      referencedTableName="dental_action"
+      referencedColumnNames="id"
+      constraintName="fk_cdt_dental_action"/>
+    <addForeignKeyConstraint
+      baseTableName="cdt_dental_action"
+      baseColumnNames="cdt_id"
+      referencedTableName="cdt_code"
+      referencedColumnNames="id"
+      constraintName="fk_cdt_dental_action_code"/>
+
+  </changeSet>
+
+</databaseChangeLog>
