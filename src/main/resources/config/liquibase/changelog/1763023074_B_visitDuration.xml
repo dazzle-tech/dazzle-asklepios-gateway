@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+          http://www.liquibase.org/xml/ns/dbchangelog
+          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.23.xsd">
+
+  <changeSet id="bs000000000016-a" author="batool">
+
+    <createTable tableName="visit_duration">
+      <column name="id" type="bigint" autoIncrement="true" startWith="2000">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="visit_type" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="duration_in_minutes" type="integer">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="resource_specific" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <dropDefaultValue
+      tableName="visit_duration"
+      columnName="created_date"
+      columnDataType="timestamp"/>
+
+  </changeSet>
+
+  <changeSet id="bs000000000016-b" author="batool">
+
+    <createIndex
+      tableName="visit_duration"
+      indexName="ux_visit_duration_type_duration_global"
+      unique="true">
+      <column name="visit_type"/>
+      <column name="duration_in_minutes"/>
+    </createIndex>
+
+    <modifySql dbms="postgresql">
+      <append value=" WHERE resource_specific = false"/>
+    </modifySql>
+
+  </changeSet>
+
+</databaseChangeLog>

@@ -233,7 +233,7 @@ class DomainUserDetailsServiceIT {
     @Test
     void assertThatUserCanBeFoundByLoginAdminFacility1() {
         UserDetails user = domainUserDetailsService.findByUsernameAndFacility("admin", 1L).block();
-        assertUserHasAuthorities(user, Set.of("ROLE_ADMIN", "ROLE_USER"));
+        assertUserHasAuthorities(user, Set.of("ROLE_ADMIN", "ROLE_USER" ,"SETUP_EDIT", "USER_VIEW" ));
     }
 
 

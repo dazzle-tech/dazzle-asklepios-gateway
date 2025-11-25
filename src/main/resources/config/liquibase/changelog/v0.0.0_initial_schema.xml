@@ -98,6 +98,10 @@
       <column name="job_role" type="varchar(255)">
         <constraints nullable="true"/>
       </column>
+      <column name="security_access_leve" type="varchar(255)">
+        <constraints nullable="true"/>
+      </column>
+
     </createTable>
 
     <createTable tableName="authority">

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+  <changeSet id="bs000000000012" author="batool">
+    <createTable tableName="vaccine">
+      <column name="id" type="bigint" autoIncrement="true" startWith="2000">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="atc_code" type="varchar(50)"/>
+      <column name="type" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="roa" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="site_of_administration" type="varchar(255)"/>
+
+      <column name="post_opening_duration" type="numeric"/>
+      <column name="duration_unit" type="varchar(50)"/>
+
+      <column name="number_of_doses" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="indications" type="text"/>
+      <column name="possible_reactions" type="text"/>
+      <column name="contraindications_and_precautions" type="text"/>
+      <column name="storage_and_handling" type="text"/>
+
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addUniqueConstraint
+      tableName="vaccine"
+      columnNames="name, type, roa"
+      constraintName="ux_vaccines_name_type_roa"/>
+  </changeSet>
+
+</databaseChangeLog>

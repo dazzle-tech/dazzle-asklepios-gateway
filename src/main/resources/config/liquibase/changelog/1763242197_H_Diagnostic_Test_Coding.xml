@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                      http://www.liquibase.org/xml/ns/dbchangelog-ext
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+  <changeSet id="H0000000000034" author="hanan253yahya">
+    <createTable tableName="diagnostic_test_coding">
+      <column name="id" type="bigint" autoIncrement="true" >
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="diagnostic_test_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_diagnostic_test_coding"
+                     references="diagnostic_test(id)"/>
+      </column>
+      <column name="code_type" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="code_id" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <dropDefaultValue tableName="diagnostic_test_coding"
+                      columnName="created_date"
+                      columnDataType="timestamp"/>
+
+    <addUniqueConstraint
+      tableName="diagnostic_test_coding"
+      columnNames="diagnostic_test_id, code_type, code_id"
+      constraintName="uk_diagnosticcoding_testid_codetype_codeid"/>
+    
+    <createIndex indexName="idx_diagnostic_test_coding_test_id"
+                 tableName="diagnostic_test_coding">
+      <column name="diagnostic_test_id"/>
+    </createIndex>
+  </changeSet>
+
+</databaseChangeLog>

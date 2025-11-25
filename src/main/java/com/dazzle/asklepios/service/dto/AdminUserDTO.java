@@ -5,6 +5,7 @@ import com.dazzle.asklepios.domain.Authority;
 import com.dazzle.asklepios.domain.User;
 import com.dazzle.asklepios.domain.enumeration.Gender;
 import com.dazzle.asklepios.domain.enumeration.JobRole;
+import com.dazzle.asklepios.domain.enumeration.SecurityLevel;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -69,6 +70,7 @@ public class AdminUserDTO implements Serializable {
 
     private Gender gender;
     private JobRole jobRole;
+    private SecurityLevel securityAccessLeve;
 
 
     public AdminUserDTO() {
@@ -93,6 +95,7 @@ public class AdminUserDTO implements Serializable {
         this.birthDate = user.getBirthDate();
         this.gender = user.getGender();
         this.jobRole=user.getJobRole();
+        this.securityAccessLeve=user.getSecurityAccessLeve();
 
     }
 }
