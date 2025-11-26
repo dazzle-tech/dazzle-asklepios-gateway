@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!-- ========================================================= -->
+  <!-- 1) relations_matrix                                       -->
+  <!-- ========================================================= -->
+  <changeSet id="H00000000000037" author="hanan253yahya">
+    <createTable tableName="relations_matrix">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+
+      <column name="first_patient_gender" type="varchar(20)"/>
+      <column name="second_patient_gender" type="varchar(20)"/>
+
+      <!-- Enum name RelationType -->
+      <column name="first_relation_code" type="varchar(50)"/>
+      <column name="second_relation_code" type="varchar(50)"/>
+    </createTable>
+
+    <createIndex tableName="relations_matrix" indexName="idx_rel_matrix_first_rel">
+      <column name="first_relation_code"/>
+    </createIndex>
+
+    <createIndex tableName="relations_matrix" indexName="idx_rel_matrix_second_rel">
+      <column name="second_relation_code"/>
+    </createIndex>
+
+    <loadData
+      tableName="relations_matrix"
+      file="config/liquibase/data/relation-matrix.csv"
+      separator=","
+      quotchar="&quot;"
+      encoding="UTF-8">
+      <column name="first_patient_gender" type="STRING"/>
+      <column name="second_patient_gender" type="STRING"/>
+      <column name="first_relation_code" type="STRING"/>
+      <column name="second_relation_code" type="STRING"/>
+    </loadData>
+  </changeSet>
+
+  <!-- ========================================================= -->
+  <!-- 2) patient_relation                                       -->
+  <!-- ========================================================= -->
+  <changeSet id="H00000000000038" author="hanan253yahya">
+    <createTable tableName="patient_relation">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="relative_patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <!-- Enum name RelationType -->
+      <column name="relation_type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="is_active" type="boolean" defaultValue="true"/>
+
+      <!-- Enum name FamilyMemberCategory -->
+      <column name="category_type" type="varchar(20)"/>
+
+      <!-- Auditing standard -->
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <!-- ================= FK CONSTRAINTS ================= -->
+
+    <!-- patient_id -> ap_patient.id -->
+    <addForeignKeyConstraint
+      baseTableName="patient_relation"
+      baseColumnNames="patient_id"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+      constraintName="fk_patient_relation_patient"
+      onDelete="CASCADE"/>
+
+    <!-- relative_patient_id -> ap_patient.id -->
+    <addForeignKeyConstraint
+      baseTableName="patient_relation"
+      baseColumnNames="relative_patient_id"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+      constraintName="fk_patient_relation_relative"
+      onDelete="CASCADE"/>
+
+    <!-- =================================================== -->
+
+    <createIndex tableName="patient_relation" indexName="idx_patient_relation_patient">
+      <column name="patient_id"/>
+    </createIndex>
+
+    <createIndex tableName="patient_relation" indexName="idx_patient_relation_relative">
+      <column name="relative_patient_id"/>
+    </createIndex>
+
+    <createIndex tableName="patient_relation" indexName="idx_patient_relation_type">
+      <column name="relation_type"/>
+    </createIndex>
+
+    <!-- Remove default after insert (same standard) -->
+    <dropDefaultValue
+      tableName="patient_relation"
+      columnName="created_date"
+      columnDataType="${datetimeType}"/>
+    <addUniqueConstraint
+      tableName="patient_relation"
+      columnNames="patient_id, relative_patient_id, relation_type"
+      constraintName="uq_patient_relation_unique"/>
+
+  </changeSet>
+
+</databaseChangeLog>
