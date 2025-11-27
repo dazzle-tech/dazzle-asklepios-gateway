@@ -23,6 +23,14 @@ http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.24.xsd">
       <column name="working_hours_from_time" type="numeric(16)"/>
       <column name="working_hours_to_time" type="numeric(16)"/>
       <column name="is_active" type="boolean"/>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
     </createTable>
 
 
