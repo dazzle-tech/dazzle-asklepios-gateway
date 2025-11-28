@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="100000000000051" author="Sondos">
+    <createTable tableName="inventory_transactions">
+      <column name="id" type="bigint" autoIncrement="true" startWith="5000">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="warehouse_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="reason" type="varchar(50)"/>
+      <column name="remarks" type="text"/>
+      <column name="is_active" type="boolean">
+        <constraints nullable="false"/>
+      </column>
+      <column name="document_number" type="numeric"/>
+      <column name="vendor" type="varchar(100)"/>
+      <column name="serial_number" type="varchar(50)"/>
+      <column name="invoice_number" type="varchar(50)"/>
+      <column name="approved_by" type="varchar(50)"/>
+      <column name="approval_status" type="varchar(200)"/>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+    <addForeignKeyConstraint
+      baseTableName="inventory_transactions"
+      baseColumnNames="warehouse_id"
+      referencedTableName="warehouse"
+      referencedColumnNames="id"
+      constraintName="fk_itw_warehouse_id"
+      onDelete="CASCADE"/>
+
+  </changeSet>
+
+</databaseChangeLog>
