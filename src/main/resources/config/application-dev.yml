@@ -18,6 +18,7 @@ services:
   asklepios-setup-service-url :  http://localhost:8082
   asklepios-patient-service-url :  http://localhost:8083
   asklepios-inventory-service-url :  http://localhost:8084
+
 spring:
   devtools:
     restart:
