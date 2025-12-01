@@ -19,6 +19,7 @@ services:
   asklepios-patient-service-url :  http://localhost:8083
   asklepios-inventory-service-url :  http://localhost:8084
   asklepios-billing-service-url :  http://localhost:8085
+
 spring:
   devtools:
     restart:
