@@ -20,7 +20,7 @@ services:
   asklepios-general-service-url: http://asklepios-service:8081
   asklepios-setup-service-url :  http://asklepios-api-setup-service:8082
   asklepios-patient-service-url :  http://asklepios-patient-service:8080
-  asklepios-inventory-service-url :  http://asklepios-inventory-service:8084
+  asklepios-inventory-service-url :  http://asklepios-inventory-service:8080
 
 spring:
   devtools:
