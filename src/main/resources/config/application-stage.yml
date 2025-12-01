@@ -19,6 +19,8 @@ management:
 services:
   asklepios-general-service-url: http://asklepios-service:8081
   asklepios-setup-service-url :  http://asklepios-api-setup-service:8082
+  asklepios-patient-service-url :  http://asklepios-patient-service:8080
+  asklepios-inventory-service-url :  http://asklepios-inventory-service:8080
 
 spring:
   devtools:
@@ -38,6 +40,17 @@ spring:
     url: r2dbc:postgresql://db-postgresql-nyc3-94186-do-user-10936078-0.j.db.ondigitalocean.com:25060/asklepios?sslmode=require
     username: asklepios
     password: AVNS_Dw0mJXT6mnivz3bN70_
+    pool:
+      # Enable pooling explicitly (optional, often enabled by default if the pool dependency is present)
+      enabled: true 
+      # Initial number of connections created when the pool starts (default: 10)
+      initial-size: 3 
+      # Maximum number of active connections the pool can have (default: 10)
+      max-size: 6
+      # Maximum time a connection can remain idle in the pool before being closed (default: 30m)
+      max-idle-time: 30m
+      # Minimum number of idle connections to maintain (default: 0)
+      min-idle: 1
   thymeleaf:
     cache: true
   cloud:
@@ -176,6 +189,20 @@ spring:
             - Path=/setup-service/v3/api-docs
           filters:
             - StripPrefix=1
+
+        - id: patient
+          uri: ${services.asklepios-patient-service-url}
+          predicates:
+            - Path=/api/patient/**
+          filters:
+            - StripPrefix=0
+
+        - id: inventoryManagement
+          uri: ${services.asklepios-inventory-service-url}
+          predicates:
+            - Path=/api/inventory/**
+          filters:
+            - StripPrefix=0
 
       httpclient:
         pool:
