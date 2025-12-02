@@ -77,10 +77,11 @@
   <include file="config/liquibase/changelog/1763620160_B_communityAreas.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1763378801_S_InventoryProducts.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1763293500_S_BrandMedicationActiveIngredient.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1764337880_H_Price_List.xml" relativeToChangelogFile="false"/>
  <include file="config/liquibase/changelog/1764196005_Report_Template.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1764192615_H_Diagnostic_Test_Report_Template.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1763300000_D_resource.xml" relativeToChangelogFile="false"/>
 
-
+<include file="config/liquibase/changelog/1764601808_H_PriceList_Item.xml" relativeToChangelogFile="false"/>
 
 </databaseChangeLog>

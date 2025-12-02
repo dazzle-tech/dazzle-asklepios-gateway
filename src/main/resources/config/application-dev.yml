@@ -18,6 +18,7 @@ services:
   asklepios-setup-service-url :  http://localhost:8082
   asklepios-patient-service-url :  http://localhost:8083
   asklepios-inventory-service-url :  http://localhost:8084
+  asklepios-billing-service-url :  http://localhost:8085
 
 spring:
   devtools:
@@ -196,6 +197,13 @@ spring:
           uri: ${services.asklepios-inventory-service-url}
           predicates:
             - Path=/api/inventory/**
+          filters:
+            - StripPrefix=0
+
+        - id: billing
+          uri: ${services.asklepios-billing-service-url}
+          predicates:
+            - Path=/api/billing/**
           filters:
             - StripPrefix=0
 
