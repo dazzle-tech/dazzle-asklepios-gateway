@@ -11,7 +11,10 @@
         <constraints primaryKey="true" nullable="false"/>
       </column>
 
-      <column name="facility_id" type="bigint"/> <!-- nullable -->
+      <column name="facility_id" type="bigint">
+        <constraints  nullable="false"/>
+      </column>
+
 
       <column name="name" type="varchar(255)">
         <constraints nullable="false"/>
@@ -32,7 +35,7 @@
       <column name="effective_to" type="date"/>
 
       <column name="description" type="text"/>
-      <column name="is_active" type="boolean" defaultValueBoolean="true"/>
+      <column name="is_active" type="boolean" defaultValueBoolean="false"/>
 
       <column name="created_date" type="timestamp"/>
       <column name="created_by" type="varchar(50)"/>

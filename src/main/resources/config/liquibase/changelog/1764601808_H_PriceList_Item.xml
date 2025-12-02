@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!-- Price List Items (no read-only columns stored) -->
+  <changeSet id="H000000000000Billing2" author="hanan253yahya">
+
+    <createTable tableName="price_list_item">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="price_list_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <!-- SERVICE or PRODUCT -->
+      <column name="item_type" type="varchar(20)">
+        <constraints nullable="false"/>
+      </column>
+
+      <!-- only when item_type = PRODUCT -->
+      <column name="product_type" type="varchar(50)"/>
+
+      <!-- polymorphic target:
+           if item_type=SERVICE => service_id filled
+           if item_type=PRODUCT => product_id filled
+      -->
+      <column name="service_id" type="bigint"/>
+      <column name="product_id" type="bigint"/>
+
+
+      <!-- calculated in UI/service, can be stored as final price -->
+      <column name="price" type="decimal(19,4)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="discount_allowed" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <!-- Deactivate only -->
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <!-- auditing -->
+      <column name="created_date" type="timestamp"/>
+      <column name="created_by" type="varchar(50)"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <!-- FK: price_list -->
+    <addForeignKeyConstraint baseTableName="price_list_item"
+                             baseColumnNames="price_list_id"
+                             referencedTableName="price_list"
+                             referencedColumnNames="id"
+                             constraintName="fk_price_list_item_price_list"/>
+
+
+
+    <!-- FK: service (nullable) -->
+    <addForeignKeyConstraint baseTableName="price_list_item"
+                             baseColumnNames="service_id"
+                             referencedTableName="service"
+                             referencedColumnNames="id"
+                             constraintName="fk_pl_item_service"
+                             />
+
+    <!-- FK: product (nullable) -->
+    <addForeignKeyConstraint baseTableName="price_list_item"
+                             baseColumnNames="product_id"
+                             referencedTableName="inventory_products"
+                             referencedColumnNames="id"
+                             constraintName="fk_pl_item_product"
+                            />
+
+    <!-- indexes -->
+    <createIndex tableName="price_list_item" indexName="idx_pl_item_price_list">
+      <column name="price_list_id"/>
+    </createIndex>
+
+    <createIndex tableName="price_list_item" indexName="idx_pl_item_type">
+      <column name="item_type"/>
+    </createIndex>
+
+    <createIndex tableName="price_list_item" indexName="idx_pl_item_product">
+      <column name="product_id"/>
+    </createIndex>
+
+    <createIndex tableName="price_list_item" indexName="idx_pl_item_service">
+      <column name="service_id"/>
+    </createIndex>
+
+
+
+
+  </changeSet>
+
+</databaseChangeLog>
