@@ -83,5 +83,5 @@
   <include file="config/liquibase/changelog/1763300000_D_resource.xml" relativeToChangelogFile="false"/>
 
 <include file="config/liquibase/changelog/1764601808_H_PriceList_Item.xml" relativeToChangelogFile="false"/>
-
+  <include file="config/liquibase/changelog/1764754649_H_Referral_Request.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>
