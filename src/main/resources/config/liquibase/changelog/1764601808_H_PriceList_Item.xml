@@ -97,7 +97,10 @@
       <column name="service_id"/>
     </createIndex>
 
-
+    <dropDefaultValue
+      tableName="resource"
+      columnName="created_date"
+      columnDataType="${datetimeType}"/>
 
 
   </changeSet>

@@ -23,7 +23,9 @@
       <column name="referral_type" type="varchar(20)" defaultValue="INTERNAL">
         <constraints nullable="false"/>
       </column>
-      <column name="facility_id" type="bigint"/>
+      <column name="facility_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
       <column name="department_id" type="bigint">
         <constraints nullable="false"/>
       </column>
@@ -56,7 +58,10 @@
     <createIndex tableName="referral_request" indexName="idx_referral_request_type">
       <column name="referral_type"/>
     </createIndex>
-
+    <dropDefaultValue
+      tableName="resource"
+      columnName="created_date"
+      columnDataType="${datetimeType}"/>
 
   </changeSet>
 

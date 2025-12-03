@@ -52,6 +52,10 @@
     <createIndex tableName="price_list" indexName="idx_price_list_facility">
       <column name="facility_id"/>
     </createIndex>
+    <dropDefaultValue
+      tableName="resource"
+      columnName="created_date"
+      columnDataType="${datetimeType}"/>
   </changeSet>
 
 
