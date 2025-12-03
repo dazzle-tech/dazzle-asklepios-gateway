@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="H000000000000SetupReferralRequest1" author="hanan253yahya">
+
+    <createTable tableName="referral_request">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <!-- linkage (no FK) -->
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="encounter_id" type="bigint"/>
+
+      <!-- main fields -->
+      <column name="referral_type" type="varchar(20)" defaultValue="INTERNAL">
+        <constraints nullable="false"/>
+      </column>
+      <column name="facility_id" type="bigint"/>
+      <column name="department_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="referral_reason" type="varchar(1000)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="priority" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <!-- auditing -->
+      <column name="created_date" type="timestamp"/>
+      <column name="created_by" type="varchar(50)"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <createIndex tableName="referral_request" indexName="idx_referral_request_patient">
+      <column name="patient_id"/>
+    </createIndex>
+    <createIndex tableName="referral_request" indexName="idx_referral_request_encounter">
+      <column name="encounter_id"/>
+    </createIndex>
+    <createIndex tableName="referral_request" indexName="idx_referral_request_type">
+      <column name="referral_type"/>
+    </createIndex>
+
+
+  </changeSet>
+
+</databaseChangeLog>
