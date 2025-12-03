@@ -53,7 +53,7 @@
       <column name="facility_id"/>
     </createIndex>
     <dropDefaultValue
-      tableName="resource"
+      tableName="price_list"
       columnName="created_date"
       columnDataType="${datetimeType}"/>
   </changeSet>
