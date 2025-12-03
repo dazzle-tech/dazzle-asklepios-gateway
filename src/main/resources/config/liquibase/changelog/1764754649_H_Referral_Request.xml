@@ -59,7 +59,7 @@
       <column name="referral_type"/>
     </createIndex>
     <dropDefaultValue
-      tableName="resource"
+      tableName="referral_request"
       columnName="created_date"
       columnDataType="${datetimeType}"/>
 
