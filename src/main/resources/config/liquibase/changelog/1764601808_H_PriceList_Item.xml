@@ -98,7 +98,7 @@
     </createIndex>
 
     <dropDefaultValue
-      tableName="resource"
+      tableName="price_list_item"
       columnName="created_date"
       columnDataType="${datetimeType}"/>
 
