@@ -40,8 +40,8 @@
       <column name="pending_investigations" type="boolean" defaultValueBoolean="false">
         <constraints nullable="false"/>
       </column>
-      <column name="mobility_adl_status" type="varchar(50)"/>
-
+      <column name="mobility_adl_status" type="boolean" defaultValueBoolean="false">
+      </column>
       <!-- Diagnosis (ICD-10) -->
       <column name="diagnosis_code" type="varchar(20)">
         <constraints nullable="false"/>
