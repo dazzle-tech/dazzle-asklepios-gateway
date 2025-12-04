@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="H000000000000DischargePlanning1" author="hanan253yahya">
+
+    <createTable tableName="discharge_planning">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <!-- linkage (no FK) -->
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="false" unique="true"/>
+      </column>
+
+      <!-- Planned Discharge Readiness -->
+      <column name="expected_discharge_date" type="date">
+        <constraints nullable="false"/>
+      </column>
+      <column name="estimated_los" type="varchar(50)"/>
+      <column name="readiness_status" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <!-- Clinical Clearance -->
+      <column name="medical_condition_stable" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="vitals_stable" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="pending_investigations" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="mobility_adl_status" type="varchar(50)"/>
+
+      <!-- Diagnosis (ICD-10) -->
+      <column name="diagnosis_code" type="varchar(20)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="diagnosis_name" type="varchar(255)"/>
+
+      <!-- Discharge Checklist -->
+      <column name="final_med_reconciliation_completed" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="discharge_summary_prepared" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="discharge_orders_signed" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="nursing_discharge_report_done" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="patient_family_informed" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="transport_arranged" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <!-- Post-Discharge Needs -->
+      <column name="medical_equipment" type="varchar(1000)"/>
+      <column name="home_care_needed" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="post_discharge_dietary_plan" type="varchar(2000)"/>
+      <column name="post_discharge_social_needs" type="varchar(2000)"/>
+
+      <!-- Patient Education -->
+      <column name="topics_covered" type="varchar(2000)"/>
+      <column name="education_dietary_plan" type="varchar(2000)"/>
+      <column name="education_social_needs" type="varchar(2000)"/>
+
+      <column name="material_leaflet" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="material_verbal" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="material_video" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="education_provided" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="patient_understanding" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <!-- status -->
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <!-- auditing -->
+      <column name="created_date" type="timestamp"/>
+      <column name="created_by" type="varchar(50)"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <createIndex tableName="discharge_planning" indexName="idx_discharge_planning_patient">
+      <column name="patient_id"/>
+    </createIndex>
+
+    <createIndex tableName="discharge_planning" indexName="idx_discharge_planning_encounter">
+      <column name="encounter_id"/>
+    </createIndex>
+
+  </changeSet>
+
+</databaseChangeLog>
