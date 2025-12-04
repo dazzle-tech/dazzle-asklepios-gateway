@@ -38,7 +38,7 @@
       </column>
 
       <column name="is_active" type="boolean" defaultValueBoolean="true">
-        <constraints nullable="false"/>
+
       </column>
 
       <!-- auditing -->
