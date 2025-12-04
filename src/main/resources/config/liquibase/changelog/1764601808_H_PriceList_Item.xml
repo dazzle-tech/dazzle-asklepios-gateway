@@ -97,7 +97,10 @@
       <column name="service_id"/>
     </createIndex>
 
-
+    <dropDefaultValue
+      tableName="price_list_item"
+      columnName="created_date"
+      columnDataType="${datetimeType}"/>
 
 
   </changeSet>
