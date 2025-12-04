@@ -21,6 +21,7 @@ services:
   asklepios-setup-service-url :  http://asklepios-api-setup-service:8082
   asklepios-patient-service-url :  http://asklepios-patient-service:8080
   asklepios-inventory-service-url :  http://asklepios-inventory-service:8080
+  asklepios-billing-service-url :  http://asklepios-billing-service:8080
 
 spring:
   devtools:
@@ -204,6 +205,13 @@ spring:
           filters:
             - StripPrefix=0
 
+        - id: billing
+          uri: ${services.asklepios-billing-service-url}
+          predicates:
+            - Path=/api/billing/**
+          filters:
+            - StripPrefix=0
+            
       httpclient:
         pool:
           max-connections: 1000
