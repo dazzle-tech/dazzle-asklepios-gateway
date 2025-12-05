@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="BM0000000000021" author="BushraMashaiekh">
+    <createTable tableName="patient_payment">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="patient_key" type="varchar(50)"/>
+
+      <column name="facility_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_patient_payment_facility"
+                     references="facility(id)"/>
+      </column>
+
+      <!-- PAYMENT / DEPOSIT / REFUND -->
+      <column name="payment_type" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+
+      <!-- CASH / CARD / TRANSFER / MIXED ... -->
+      <column name="payment_method" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="payment_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="amount" type="numeric(18,2)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="currency" type="varchar(50)"/>
+
+      <column name="reference" type="varchar(100)"/>
+      <column name="notes" type="varchar(255)"/>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <dropDefaultValue tableName="patient_payment"
+                      columnName="created_date"
+                      columnDataType="timestamp"/>
+  </changeSet>
+
+</databaseChangeLog>

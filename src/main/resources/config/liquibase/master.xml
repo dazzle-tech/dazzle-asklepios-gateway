@@ -77,6 +77,10 @@
   <include file="config/liquibase/changelog/1763620160_B_communityAreas.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1763378801_S_InventoryProducts.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1763293500_S_BrandMedicationActiveIngredient.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1764762354_BM_Billing_Invoice.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1764765924_BM_Billing_Invoice_Item.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1764767706_BM_Patient_Payment.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1764823037_BM_Payment_Allocation.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1764337880_H_Price_List.xml" relativeToChangelogFile="false"/>
  <include file="config/liquibase/changelog/1764196005_Report_Template.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1764192615_H_Diagnostic_Test_Report_Template.xml" relativeToChangelogFile="false"/>
@@ -87,4 +91,5 @@
 <include file="config/liquibase/changelog/1764662181_H_Payor_Setup.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1764826849_H_Discharge_Planning.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1764776884_H_Payor_Plan.xml" relativeToChangelogFile="false"/>
+
 </databaseChangeLog>
