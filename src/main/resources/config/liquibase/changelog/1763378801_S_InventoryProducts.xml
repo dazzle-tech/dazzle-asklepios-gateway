@@ -23,10 +23,10 @@
       <column name="brand_id" type="bigint"/>
 
       <column name="uom_group_id" type="bigint"/>
-      <column name="base_uom" type="varchar(50)">
+      <column name="base_uom" type="bigint">
         <constraints nullable="false"/>
       </column>
-      <column name="dispense_uom" type="varchar(50)"/>
+      <column name="dispense_uom" type="bigint"/>
 
       <column name="controlled_substance" type="boolean"/>
       <column name="hazardous_biohazardous_tag" type="varchar(50)"/>
@@ -79,6 +79,20 @@
       referencedTableName="uom_group"
       referencedColumnNames="id"
       constraintName="fk_ip_uom_group_id"
+    />
+    <addForeignKeyConstraint
+      baseTableName="inventory_products"
+      baseColumnNames="base_uom"
+      referencedTableName="uom_group_unit"
+      referencedColumnNames="id"
+      constraintName="fk_ip_base_uom"
+    />
+    <addForeignKeyConstraint
+      baseTableName="inventory_products"
+      baseColumnNames="dispense_uom"
+      referencedTableName="uom_group_unit"
+      referencedColumnNames="id"
+      constraintName="fk_ip_dispense_uom"
     />
     <createIndex
       tableName="inventory_products"
