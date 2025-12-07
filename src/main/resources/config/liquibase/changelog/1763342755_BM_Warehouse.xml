@@ -11,6 +11,9 @@ http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.24.xsd">
       <column name="id" type="bigint" autoIncrement="true" startWith="1">
         <constraints primaryKey="true" nullable="false"/>
       </column>
+      <column name="facility_id" type="bigint" >
+        <constraints nullable="false"/>
+      </column>
       <column name="department_id" type="bigint" >
         <constraints nullable="true"/>
       </column>
@@ -46,6 +49,14 @@ http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.24.xsd">
       <column name="code"/>
       <column name="name"/>
     </createIndex>
+
+    <addForeignKeyConstraint
+      baseTableName="warehouse"
+      baseColumnNames="facility_id"
+      referencedTableName="facility"
+      referencedColumnNames="id"
+      constraintName="fk_warehouse_facility"
+      deferrable="false" initiallyDeferred="false"/>
 
     <addForeignKeyConstraint
       baseTableName="warehouse"

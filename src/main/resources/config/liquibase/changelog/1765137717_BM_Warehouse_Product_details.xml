@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+           http://www.liquibase.org/xml/ns/dbchangelog
+           http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.15.xsd">
+
+  <changeSet id="BM0000000000025" author="BushraMashaiekh">
+    <createTable tableName="warehouse_product_details" >
+      <column name="id" type="bigint">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="warehouse_product_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="lot_serial_num" type="text"/>
+
+      <column name="quantity" type="numeric"/>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+
+      <column name="is_active" type="boolean">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="expiry_date" type="date"/>
+    </createTable>
+
+    <createIndex
+      tableName="warehouse_product_details"
+      indexName="idx_warehouse_product_details_wh_product">
+      <column name="warehouse_product_id"/>
+    </createIndex>
+
+    <addForeignKeyConstraint
+      baseTableName="warehouse_product_details"
+      baseColumnNames="warehouse_product_id"
+      referencedTableName="warehouse_product"
+      referencedColumnNames="id"
+      constraintName="fk_warehouse_product_details_wh_product"
+      deferrable="false"
+      initiallyDeferred="false"/>
+
+    <rollback>
+      <dropTable tableName="warehouse_product_details" />
+    </rollback>
+  </changeSet>
+
+</databaseChangeLog>
