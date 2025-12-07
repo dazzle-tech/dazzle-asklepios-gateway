@@ -91,5 +91,6 @@
 <include file="config/liquibase/changelog/1764662181_H_Payor_Setup.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1764826849_H_Discharge_Planning.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1764776884_H_Payor_Plan.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1764953608_BM_Patient_Follow_Up.xml" relativeToChangelogFile="false"/>
 
 </databaseChangeLog>
