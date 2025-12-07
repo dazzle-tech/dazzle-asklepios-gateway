@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="100000000000049" author="Sondos">
+    <createTable tableName="inventory_products">
+      <column name="id" type="bigint" autoIncrement="true" startWith="5000">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="name" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="code" type="varchar(50)"/>
+      <column name="barcode" type="varchar(100)"/>
+      <column name="brand_id" type="bigint"/>
+
+      <column name="uom_group_id" type="bigint"/>
+      <column name="base_uom" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="dispense_uom" type="bigint"/>
+
+      <column name="controlled_substance" type="boolean"/>
+      <column name="hazardous_biohazardous_tag" type="varchar(50)"/>
+      <column name="allergy_risk" type="boolean"/>
+
+      <column name="item_average_cost" type="decimal(10,3)"/>
+      <column name="price_per_base_uom" type="decimal(10,3)"/>
+
+      <column name="warranty_start_date" type="timestamp"/>
+      <column name="warranty_end_date" type="timestamp"/>
+      <column name="maintenance_schedule" type="decimal(10,3)"/>
+      <column name="maintenance_schedule_type" type="varchar(50)"/>
+      <column name="critical_equipment" type="boolean"/>
+      <column name="calibration_required" type="boolean"/>
+      <column name="training_required" type="boolean"/>
+
+      <column name="batch_managed" type="boolean"/>
+      <column name="expiry_date_mandatory" type="boolean"/>
+      <column name="reusable" type="boolean"/>
+      <column name="inventory_type" type="varchar(50)"/>
+      <column name="shelf_life" type="int"/>
+      <column name="shelf_life_unit" type="varchar(50)"/>
+      <column name="lead_time" type="int"/>
+      <column name="lead_time_unit" type="varchar(50)"/>
+      <column name="erp_integration_id" type="varchar(50)"/>
+
+      <column name="is_active" type="boolean">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+    <addForeignKeyConstraint
+      baseTableName="inventory_products"
+      baseColumnNames="brand_id"
+      referencedTableName="brand_medication"
+      referencedColumnNames="id"
+      constraintName="fk_ip_brand_id"
+    />
+    <addForeignKeyConstraint
+      baseTableName="inventory_products"
+      baseColumnNames="uom_group_id"
+      referencedTableName="uom_group"
+      referencedColumnNames="id"
+      constraintName="fk_ip_uom_group_id"
+    />
+    <addForeignKeyConstraint
+      baseTableName="inventory_products"
+      baseColumnNames="base_uom"
+      referencedTableName="uom_group_unit"
+      referencedColumnNames="id"
+      constraintName="fk_ip_base_uom"
+    />
+    <addForeignKeyConstraint
+      baseTableName="inventory_products"
+      baseColumnNames="dispense_uom"
+      referencedTableName="uom_group_unit"
+      referencedColumnNames="id"
+      constraintName="fk_ip_dispense_uom"
+    />
+    <createIndex
+      tableName="inventory_products"
+      indexName="idx_inventory_products_name_type_unique"
+      unique="true">
+      <column name="name"/>
+      <column name="type"/>
+    </createIndex>
+
+    <createIndex
+      tableName="inventory_products"
+      indexName="idx_inventory_products_code_type_unique"
+      unique="true">
+      <column name="code"/>
+      <column name="type"/>
+    </createIndex>
+
+    <createIndex
+      tableName="inventory_products"
+      indexName="idx_inventory_products_id">
+      <column name="id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="inventory_products"
+      indexName="idx_inventory_products_type">
+      <column name="type"/>
+    </createIndex>
+
+    <createIndex
+      tableName="inventory_products"
+      indexName="idx_inventory_products_name">
+      <column name="name"/>
+    </createIndex>
+
+    <createIndex
+      tableName="inventory_products"
+      indexName="idx_inventory_products_base_uom">
+      <column name="base_uom"/>
+    </createIndex>
+
+    <createIndex
+      tableName="inventory_products"
+      indexName="idx_inventory_products_inventory_type">
+      <column name="inventory_type"/>
+    </createIndex>
+  </changeSet>
+
+</databaseChangeLog>
