@@ -201,7 +201,7 @@ public class UserResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body all users.
      */
     @GetMapping("/users")
-    @PreAuthorize("hasAnyAuthority('" + AuthoritiesConstants.ADMIN + "', '" + AuthoritiesConstants.PRACTITIONERS + "')")
+    @PreAuthorize("hasAnyAuthority('" + AuthoritiesConstants.ADMIN + "', '" + AuthoritiesConstants.USERVIEW + "')")
     public Mono<ResponseEntity<Flux<AdminUserDTO>>> getAllUsers(
         @org.springdoc.core.annotations.ParameterObject ServerHttpRequest request,
         @org.springdoc.core.annotations.ParameterObject Pageable pageable
