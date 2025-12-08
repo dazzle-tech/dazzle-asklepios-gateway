@@ -25,7 +25,6 @@ http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.24.xsd">
       </column>
       <column name="is_default" type="boolean"/>
       <column name="close_warehouse" type="boolean"/>
-      <column name="location_id" type="bigint"/>
       <column name="capacity" type="varchar(150)"/>
       <column name="working_hours_from_time" type="numeric(16)"/>
       <column name="working_hours_to_time" type="numeric(16)"/>
