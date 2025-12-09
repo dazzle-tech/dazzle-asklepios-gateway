@@ -12,11 +12,9 @@
         <constraints primaryKey="true" nullable="false" primaryKeyName="pk_warehouse_user"/>
       </column>
       <column name="warehouse_id" type="bigint">
-        <constraints nullable="false" foreignKeyName="fk_warehouse" referencedTableName="catalog" referencedColumnNames="id"/>
       </column>
       <column name="user_id" type="bigint">
-        <constraints nullable="false" foreignKeyName="fk_user_warehouse" referencedTableName="catalog" referencedColumnNames="id"/>
-      </column>
+       </column>
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
@@ -38,6 +36,14 @@
       referencedTableName="warehouse"
       referencedColumnNames="id"
       constraintName="fk_warehouse_warehouse_user"
+      deferrable="false" initiallyDeferred="false"/>
+
+    <addForeignKeyConstraint
+      baseTableName="warehouse_user"
+      baseColumnNames="user_id"
+      referencedTableName="app_user"
+      referencedColumnNames="id"
+      constraintName="fk_user_warehouse_user"
       deferrable="false" initiallyDeferred="false"/>
 
   </changeSet>
