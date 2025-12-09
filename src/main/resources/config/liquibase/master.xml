@@ -70,5 +70,16 @@
   <include file="config/liquibase/changelog/1763384457_P_patient.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1763381810_Q_Patient_Address.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1763382042_Q_PatientPreferredHealthProfessional.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1763540965_B_country.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1763555389_B_countryDistricts.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1763619622_B_districtCommunities.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1763620160_B_communityAreas.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1764081062_B_PatientDocuments.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1763395002_Q_RelaxConstraintsForUnknownPatients.xml" relativeToChangelogFile="false"/>
+
+
+
+
+
 
 </databaseChangeLog>

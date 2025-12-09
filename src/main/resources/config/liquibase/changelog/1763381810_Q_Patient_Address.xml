@@ -17,35 +17,58 @@
                      foreignKeyName="fk_address_patient"
                      references="patients(id)"/>
       </column>
-      <column name="country" type="varchar(255)"/>
-      <column name="state_province" type="varchar(255)"/>
-      <column name="city" type="varchar(255)"/>
-      <column name="street_name" type="varchar(255)"/>
+
+      <column name="country_name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="district_name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="community_name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="area_name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="street_name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+
       <column name="house_apartment_number" type="varchar(50)"/>
       <column name="postal_zip_code" type="varchar(20)"/>
       <column name="additional_address_line" type="varchar(255)"/>
 
-      <column name="country_id" type="varchar(50)">
-        <constraints unique="true" uniqueConstraintName="uk_address_country_id"/>
+      <column name="is_current" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
       </column>
 
-      <column name="is_current" type="boolean" defaultValueBoolean="true">
+      <column name="country_id" type="bigint">
         <constraints nullable="false"/>
       </column>
 
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
+
       <column name="created_date" type="timestamp"/>
       <column name="last_modified_by" type="varchar(50)"/>
       <column name="last_modified_date" type="timestamp"/>
     </createTable>
 
+    <addUniqueConstraint
+      tableName="address"
+      columnNames="patient_id,country_name,district_name,community_name,area_name,street_name,house_apartment_number,postal_zip_code,additional_address_line"
+      constraintName="uk_address_patient_full_address"
+    />
+
     <dropDefaultValue tableName="address"
                       columnName="created_date"
                       columnDataType="timestamp"
     />
-
   </changeSet>
 
 </databaseChangeLog>

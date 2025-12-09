@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+          http://www.liquibase.org/xml/ns/dbchangelog
+          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.23.xsd">
+
+  <changeSet id="bs0000000000021" author="batool">
+
+    <createTable tableName="patient_documents">
+      <column name="id" type="bigint" autoIncrement="true" startWith="1500">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_patient_documents_patient"
+                     referencedTableName="patients"
+                     referencedColumnNames="id"/>
+      </column>
+
+      <column name="country_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_patient_documents_country"
+                     referencedTableName="country"
+                     referencedColumnNames="id"/>
+      </column>
+
+      <column name="is_primary" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="type" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="number" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addUniqueConstraint
+      tableName="patient_documents"
+      columnNames="number, type, country_id"
+      constraintName="ux_patient_documents_number_type_country"/>
+
+    <addUniqueConstraint
+      tableName="patient_documents"
+      columnNames="patient_id, type, country_id"
+      constraintName="ux_patient_documents_patient_type_country"/>
+
+  </changeSet>
+
+
+  <changeSet id="bs0000000000022" author="batool">
+
+    <preConditions onFail="MARK_RAN">
+      <tableExists tableName="patient_documents"/>
+    </preConditions>
+
+    <dropNotNullConstraint
+      tableName="patient_documents"
+      columnName="country_id"
+      columnDataType="bigint"/>
+
+    <dropNotNullConstraint
+      tableName="patient_documents"
+      columnName="number"
+      columnDataType="varchar(255)"/>
+
+  </changeSet>
+
+
+  <changeSet id="bs0000000000021-primary" author="batool">
+
+    <preConditions onFail="MARK_RAN">
+      <tableExists tableName="patient_documents"/>
+    </preConditions>
+
+    <createIndex
+      tableName="patient_documents"
+      indexName="ux_patient_documents_primary_per_patient"
+      unique="true">
+      <column name="patient_id"/>
+    </createIndex>
+
+    <modifySql dbms="postgresql">
+      <append value=" WHERE is_primary = true"/>
+    </modifySql>
+
+  </changeSet>
+
+
+  <changeSet id="bs0000000000023" author="batool">
+
+    <preConditions onFail="MARK_RAN">
+      <tableExists tableName="patient_documents"/>
+    </preConditions>
+
+    <addUniqueConstraint
+      tableName="patient_documents"
+      columnNames="patient_id, type"
+      constraintName="ux_patient_documents_no_document_per_patient"/>
+
+  </changeSet>
+
+</databaseChangeLog>
