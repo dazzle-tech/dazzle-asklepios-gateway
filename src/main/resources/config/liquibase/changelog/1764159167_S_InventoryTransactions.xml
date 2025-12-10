@@ -17,17 +17,19 @@
       <column name="type" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
-      <column name="reason" type="varchar(50)"/>
+      <column name="reason" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
       <column name="remarks" type="text"/>
       <column name="is_active" type="boolean">
         <constraints nullable="false"/>
       </column>
       <column name="document_number" type="numeric"/>
-      <column name="vendor" type="varchar(100)"/>
+      <column name="vendor" type="varchar(50)"/>
       <column name="serial_number" type="varchar(50)"/>
       <column name="invoice_number" type="varchar(50)"/>
       <column name="approved_by" type="varchar(50)"/>
-      <column name="approval_status" type="varchar(200)"/>
+      <column name="approval_status" type="varchar(50)"/>
 
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>
@@ -44,7 +46,7 @@
       referencedTableName="warehouse"
       referencedColumnNames="id"
       constraintName="fk_itw_warehouse_id"
-      onDelete="CASCADE"/>
+     />
 
   </changeSet>
 
