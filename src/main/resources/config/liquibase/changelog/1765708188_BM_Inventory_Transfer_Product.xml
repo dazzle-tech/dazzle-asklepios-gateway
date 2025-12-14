@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="BM0000000000028" author="BushraMashaiekh">
+
+    <createTable tableName="inventory_transfer_product">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false" />
+      </column>
+
+      <column name="transfer_id" type="bigint"/>
+
+      <column name="product_id" type="bigint"/>
+
+      <column name="quantity_requested" type="decimal(15,5)"/>
+      <column name="quantity_approved" type="decimal(15,5)"/>
+
+      <column name="lot_serial_number" type="varchar(50)"/>
+
+      <column name="is_effected_warehouse" type="boolean"/>
+
+      <column name="notes" type="text"/>
+
+      <column name="trans_uom_id" type="bigint"/>
+
+      <column name="quantity_requested_base_uom" type="decimal(15,5)"/>
+      <column name="quantity_approved_base_uom" type="decimal(15,5)"/>
+
+      <column name="status" type="varchar(50)"/>
+      <column name="rejected_reason" type="text"/>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="inventory_transfer_product"
+      baseColumnNames="transfer_id"
+      referencedTableName="inventory_transfer"
+      referencedColumnNames="id"
+      constraintName="fk_transfer_product_transfer"
+      deferrable="false"
+      initiallyDeferred="false"/>
+
+     <addForeignKeyConstraint
+      baseTableName="inventory_transfer_product"
+      baseColumnNames="product_id"
+      referencedTableName="warehouse_product"
+      referencedColumnNames="id"
+      constraintName="fk_transfer_product_product"
+      deferrable="false"
+      initiallyDeferred="false"/>
+
+    <rollback>
+      <dropTable tableName="inventory_transfer_product"/>
+    </rollback>
+
+  </changeSet>
+
+</databaseChangeLog>

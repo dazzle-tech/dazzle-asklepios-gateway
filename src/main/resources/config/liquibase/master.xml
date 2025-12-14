@@ -91,5 +91,7 @@
 <include file="config/liquibase/changelog/1764662181_H_Payor_Setup.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1764826849_H_Discharge_Planning.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1764776884_H_Payor_Plan.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1765281767_BM_Inventory_Transfer.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1765708188_BM_Inventory_Transfer_Product.xml" relativeToChangelogFile="false"/>
 
 </databaseChangeLog>

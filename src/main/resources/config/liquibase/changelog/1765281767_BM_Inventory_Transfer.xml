@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="BM0000000000027" author="BushraMashaiekh">
+    <createTable tableName="inventory_transfer">
+      <column name="id" type="bigint" autoIncrement="true" startWith="1">
+        <constraints primaryKey="true" nullable="false" />
+      </column>
+
+      <column name="trans_no" type="varchar(50)"/>
+      <column name="reason" type="varchar(50)"/>
+
+      <column name="from_warehouse_id" type="bigint"/>
+      <column name="to_warehouse_id" type="bigint"/>
+
+      <column name="note" type="text"/>
+      <column name="status" type="text"/>
+
+      <column name="created_by" type="bigint"/>
+      <column name="created_date" type="timestamp"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <createIndex
+      tableName="inventory_transfer"
+      indexName="idx_inventory_transfer_trans_no_unique"
+      unique="true">
+      <column name="trans_no"/>
+    </createIndex>
+
+    <addForeignKeyConstraint
+      baseTableName="inventory_transfer"
+      baseColumnNames="from_warehouse_id"
+      referencedTableName="warehouse"
+      referencedColumnNames="id"
+      constraintName="fk_inventory_transfer_from_warehouse"
+      deferrable="false"
+      initiallyDeferred="false"/>
+
+    <addForeignKeyConstraint
+      baseTableName="inventory_transfer"
+      baseColumnNames="to_warehouse_id"
+      referencedTableName="warehouse"
+      referencedColumnNames="id"
+      constraintName="fk_inventory_transfer_to_warehouse"
+      deferrable="false"
+      initiallyDeferred="false"/>
+
+    <rollback>
+      <dropTable tableName="inventory_transfer" />
+    </rollback>
+  </changeSet>
+
+</databaseChangeLog>
