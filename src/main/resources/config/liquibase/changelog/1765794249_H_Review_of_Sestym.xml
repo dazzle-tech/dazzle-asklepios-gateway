@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="H000000000000MD1" author="hanan253yahya">
+
+    <createTable tableName="review_of_system">
+      <column name="id" type="bigint" autoIncrement="true" startWith="1500">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="body_system" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="system_detail" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="note" type="text"/>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addUniqueConstraint
+      tableName="review_of_system"
+      columnNames="encounter_id, body_system, system_detail"
+      constraintName="uk_ros_encounter_system_detail"/>
+
+    <dropDefaultValue
+      tableName="review_of_system"
+      columnName="created_date"
+      columnDataType="${datetimeType}"/>
+
+  </changeSet>
+
+</databaseChangeLog>
