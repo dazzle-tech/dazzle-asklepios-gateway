@@ -3,7 +3,7 @@
   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
-                            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
   <changeSet id="QA00000000000006" author="qais">
 
@@ -13,24 +13,13 @@
       </column>
 
       <column name="patient_id" type="bigint">
-        <constraints nullable="false"
-                     foreignKeyName="fk_address_patient"
-                     references="patients(id)"/>
+        <constraints
+          nullable="false"
+          foreignKeyName="fk_address_patient"
+          references="patients(id)"/>
       </column>
 
-      <column name="country_name" type="varchar(255)">
-        <constraints nullable="false"/>
-      </column>
-
-      <column name="district_name" type="varchar(255)">
-        <constraints nullable="false"/>
-      </column>
-
-      <column name="community_name" type="varchar(255)">
-        <constraints nullable="false"/>
-      </column>
-
-      <column name="area_name" type="varchar(255)">
+      <column name="location_json" type="jsonb">
         <constraints nullable="false"/>
       </column>
 
@@ -46,10 +35,6 @@
         <constraints nullable="false"/>
       </column>
 
-      <column name="country_id" type="bigint">
-        <constraints nullable="false"/>
-      </column>
-
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
@@ -61,14 +46,16 @@
 
     <addUniqueConstraint
       tableName="address"
-      columnNames="patient_id,country_name,district_name,community_name,area_name,street_name,house_apartment_number,postal_zip_code,additional_address_line"
+      columnNames="patient_id,location_json,street_name,house_apartment_number,postal_zip_code,additional_address_line"
       constraintName="uk_address_patient_full_address"
     />
 
-    <dropDefaultValue tableName="address"
-                      columnName="created_date"
-                      columnDataType="timestamp"
+    <dropDefaultValue
+      tableName="address"
+      columnName="created_date"
+      columnDataType="timestamp"
     />
+
   </changeSet>
 
 </databaseChangeLog>

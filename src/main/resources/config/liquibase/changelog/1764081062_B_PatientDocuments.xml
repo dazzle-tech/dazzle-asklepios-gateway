@@ -60,31 +60,7 @@
 
   </changeSet>
 
-
-  <changeSet id="bs0000000000022" author="batool">
-
-    <preConditions onFail="MARK_RAN">
-      <tableExists tableName="patient_documents"/>
-    </preConditions>
-
-    <dropNotNullConstraint
-      tableName="patient_documents"
-      columnName="country_id"
-      columnDataType="bigint"/>
-
-    <dropNotNullConstraint
-      tableName="patient_documents"
-      columnName="number"
-      columnDataType="varchar(255)"/>
-
-  </changeSet>
-
-
   <changeSet id="bs0000000000021-primary" author="batool">
-
-    <preConditions onFail="MARK_RAN">
-      <tableExists tableName="patient_documents"/>
-    </preConditions>
 
     <createIndex
       tableName="patient_documents"
@@ -99,17 +75,17 @@
 
   </changeSet>
 
+  <changeSet id="bs0000000000022" author="batool">
 
-  <changeSet id="bs0000000000023" author="batool">
-
-    <preConditions onFail="MARK_RAN">
-      <tableExists tableName="patient_documents"/>
-    </preConditions>
-
-    <addUniqueConstraint
+    <dropNotNullConstraint
       tableName="patient_documents"
-      columnNames="patient_id, type"
-      constraintName="ux_patient_documents_no_document_per_patient"/>
+      columnName="country_id"
+      columnDataType="bigint"/>
+
+    <dropNotNullConstraint
+      tableName="patient_documents"
+      columnName="number"
+      columnDataType="varchar(255)"/>
 
   </changeSet>
 
