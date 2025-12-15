@@ -33,19 +33,19 @@ spring:
   liquibase:
     # Remove 'faker' if you do not want the sample data to be loaded automatically
     contexts: dev, faker
-    url: jdbc:postgresql://localhost:5432/ask
+    url: jdbc:postgresql://localhost:5432/asklepios
   mail:
     host: localhost
     port: 25
     username:
-    password: 123
+    password:
   messages:
     cache-duration: PT1S # 1 second, see the ISO 8601 standard
   r2dbc:
-    url: r2dbc:postgresql://localhost:5432/ask
+    url: r2dbc:postgresql://localhost:5432/asklepios
     #    url: r2dbc:postgresql://host.docker.internal:5432/asklepios
     username: postgres
-    password: 123
+    password: 147741
   thymeleaf:
     cache: false
   cloud:
