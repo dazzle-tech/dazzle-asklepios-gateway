@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="H000000000000SetupPayor1" author="hanan253yahya">
+
+    <createTable tableName="payor">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="code" type="varchar(50)">
+        <constraints nullable="false" unique="true"/>
+      </column>
+
+      <column name="name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="category" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <!-- Contact -->
+      <column name="address" type="varchar(500)"/>
+      <column name="phone" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="email" type="varchar(255)"/>
+      <column name="contract_manager_contact" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+
+      <!-- Contract Period -->
+      <column name="start_date" type="date">
+        <constraints nullable="false"/>
+      </column>
+      <column name="expiry_date" type="date"/>
+      <column name="renewable" type="boolean" defaultValueBoolean="false">
+
+      </column>
+
+      <!-- Rules -->
+      <column name="allow_partial_coverage" type="boolean" defaultValueBoolean="false">
+
+      </column>
+      <column name="accept_copay" type="boolean" defaultValueBoolean="false">
+
+      </column>
+      <column name="accept_deductibles" type="boolean" defaultValueBoolean="false">
+
+      </column>
+      <column name="allow_package_pricing" type="boolean" defaultValueBoolean="false">
+
+      </column>
+      <column name="allow_drg_billing" type="boolean" defaultValueBoolean="false">
+
+      </column>
+      <column name="force_preapproval" type="boolean" defaultValueBoolean="false">
+
+      </column>
+
+      <!-- Deactivate only -->
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
+
+      </column>
+
+      <!-- auditing -->
+      <column name="created_date" type="timestamp"/>
+      <column name="created_by" type="varchar(50)"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <!-- indexes -->
+    <createIndex tableName="payor" indexName="idx_payor_category">
+      <column name="category"/>
+    </createIndex>
+
+    <createIndex tableName="payor" indexName="idx_payor_name">
+      <column name="name"/>
+    </createIndex>
+
+    <createIndex tableName="payor" indexName="idx_payor_code">
+      <column name="code"/>
+    </createIndex>
+
+  </changeSet>
+
+</databaseChangeLog>
