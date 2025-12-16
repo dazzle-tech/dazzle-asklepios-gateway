@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="100000000000052" author="Sondos">
+    <createTable tableName="inventory_transaction_products">
+      <column name="id" type="bigint" autoIncrement="true" startWith="5000">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="transaction_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="product_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="new_quantity" type="decimal(15,5)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="new_quantity_base_uom" type="decimal(15,5)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="lot_serial_number" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="new_cost" type="decimal(15,5)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="is_effected_warehouse" type="boolean"/>
+      <column name="expiry_date" type="timestamp" >
+        <constraints nullable="false"/>
+      </column>
+      <column name="notes" type="text"/>
+      <column name="uom_group_unit_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="total_cost" type="decimal(15,5)">
+      </column>
+
+      <column name="new_avg_cost" type="decimal(15,5)">
+      </column>
+      <column name="old_avg_cost" type="decimal(15,5)">
+      </column>
+      <column name="status" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+    <addForeignKeyConstraint
+      baseTableName="inventory_transaction_products"
+      baseColumnNames="transaction_id"
+      referencedTableName="inventory_transactions"
+      referencedColumnNames="id"
+      constraintName="fk_itt_transaction_id"
+     />
+    <addForeignKeyConstraint
+      baseTableName="inventory_transaction_products"
+      baseColumnNames="product_id"
+      referencedTableName="warehouse_product"
+      referencedColumnNames="id"
+      constraintName="fk_itp_product_id"
+    />
+
+
+    <addForeignKeyConstraint
+      baseTableName="inventory_transaction_products"
+      baseColumnNames="uom_group_unit_id"
+      referencedTableName="uom_group_unit"
+      referencedColumnNames="id"
+      constraintName="fk_ituom_uom_group_unit_id"
+    />
+  </changeSet>
+
+</databaseChangeLog>
