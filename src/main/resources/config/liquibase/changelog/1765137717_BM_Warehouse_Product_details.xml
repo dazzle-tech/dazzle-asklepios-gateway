@@ -16,9 +16,12 @@
         <constraints nullable="false"/>
       </column>
 
-      <column name="lot_serial_num" type="text"/>
-
-      <column name="quantity" type="numeric"/>
+      <column name="lot_serial_num" type="text">
+      <constraints nullable="false"/>
+      </column>
+      <column name="quantity" type="numeric" defaultValueNumeric="0">
+      <constraints nullable="false"/>
+      </column>
 
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>

@@ -14,22 +14,22 @@ http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.24.xsd">
       <column name="facility_id" type="bigint" >
         <constraints nullable="false"/>
       </column>
-      <column name="department_id" type="bigint" >
-        <constraints nullable="true"/>
-      </column>
+      <column name="department_id" type="bigint" />
       <column name="name" type="varchar(150)">
         <constraints nullable="false"/>
       </column>
       <column name="code" type="varchar(150)">
         <constraints nullable="false"/>
       </column>
-      <column name="is_default" type="boolean"/>
+      <column name="is_default" type="boolean">
+      <constraints nullable="true"/>
+      </column>
       <column name="close_warehouse" type="boolean"/>
       <column name="capacity" type="varchar(150)"/>
       <column name="working_hours_from_time" type="numeric(16)"/>
       <column name="working_hours_to_time" type="numeric(16)"/>
       <column name="is_active" type="boolean">
-        <constraints nullable="true"/>
+        <constraints nullable="false"/>
       </column>
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>

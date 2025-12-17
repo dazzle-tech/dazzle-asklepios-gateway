@@ -19,7 +19,9 @@
         <constraints nullable="false"/>
       </column>
 
-      <column name="quantity" type="numeric"/>
+      <column name="quantity" type="numeric" defaultValueNumeric="0">
+      <constraints nullable="false"/>
+      </column>
       <column name="re_order_quantity" type="numeric"/>
       <column name="mini_order" type="numeric"/>
       <column name="max_order" type="numeric"/>
@@ -39,7 +41,9 @@
 
       <column name="department_id" type="bigint"/>
 
-      <column name="avg_cost" type="numeric(12,4)"/>
+      <column name="avg_cost" type="numeric(12,4)" defaultValueNumeric="0">
+      <constraints nullable="false"/>
+      </column>
     </createTable>
 
     <createIndex
