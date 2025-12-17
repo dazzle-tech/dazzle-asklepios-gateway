@@ -27,7 +27,6 @@
         <constraints nullable="false"/>
       </column>
       <column name="new_cost" type="decimal(15,5)">
-        <constraints nullable="false"/>
       </column>
       <column name="is_effected_warehouse" type="boolean"/>
       <column name="expiry_date" type="timestamp" >

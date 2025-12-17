@@ -17,6 +17,7 @@
       <column name="source" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
+      <column name="source_id" type="bigint"/>
       <column name="type" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
