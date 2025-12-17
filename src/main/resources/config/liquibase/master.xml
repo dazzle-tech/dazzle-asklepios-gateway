@@ -94,4 +94,8 @@
   <include file="config/liquibase/changelog/1765281767_BM_Inventory_Transfer.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1765708188_BM_Inventory_Transfer_Product.xml" relativeToChangelogFile="false"/>
  <include file="config/liquibase/changelog/1765198918_H_Price_List_Attributes.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1763342755_BM_Warehouse.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1764079957_BM_Warehouse_User.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1765118987_BM_Warehouse_Product.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1765137717_BM_Warehouse_Product_details.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>
