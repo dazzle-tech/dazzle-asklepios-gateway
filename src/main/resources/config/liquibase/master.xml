@@ -34,7 +34,6 @@
   <include file="config/liquibase/changelog/1761641123_H_Diagnostic_Test.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762159584_S_InventoryTransferAttachments.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762066546_B_LOINC_Code.xml" relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/1762088668_S_InventoryTransactionAttachments.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1761730358_B_CPT.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762148868_H_Diagnostic_Test_Laboratory.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762219295_S_ActiveIngredients.xml" relativeToChangelogFile="false"/>
@@ -92,11 +91,12 @@
 <include file="config/liquibase/changelog/1764662181_H_Payor_Setup.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1764826849_H_Discharge_Planning.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1764776884_H_Payor_Plan.xml" relativeToChangelogFile="false"/>
-<include file="config/liquibase/changelog/1765384500_S_InventoryTransactionProducts.xml" relativeToChangelogFile="false"/>
  <include file="config/liquibase/changelog/1765198918_H_Price_List_Attributes.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1763342755_BM_Warehouse.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1764079957_BM_Warehouse_User.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1765118987_BM_Warehouse_Product.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1765137717_BM_Warehouse_Product_details.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1762088668_S_InventoryTransactionAttachments.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1765384500_S_InventoryTransactionProducts.xml" relativeToChangelogFile="false"/>
 
 </databaseChangeLog>
