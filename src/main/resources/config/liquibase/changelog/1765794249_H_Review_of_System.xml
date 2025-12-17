@@ -31,12 +31,7 @@
 
       <column name="note" type="text"/>
 
-      <column name="created_by" type="varchar(50)">
-        <constraints nullable="false"/>
-      </column>
-      <column name="created_date" type="timestamp"/>
-      <column name="last_modified_by" type="varchar(50)"/>
-      <column name="last_modified_date" type="timestamp"/>
+
     </createTable>
 
     <addUniqueConstraint
@@ -44,10 +39,7 @@
       columnNames="encounter_id, body_system, system_detail"
       constraintName="uk_ros_encounter_system_detail"/>
 
-    <dropDefaultValue
-      tableName="review_of_system"
-      columnName="created_date"
-      columnDataType="${datetimeType}"/>
+    
 
   </changeSet>
 
