@@ -46,6 +46,14 @@
 
     <addForeignKeyConstraint
       baseTableName="inventory_transfer_product"
+      baseColumnNames="trans_uom_id"
+      referencedTableName="uom_group_unit"
+      referencedColumnNames="id"
+      constraintName="fk_uom_trans_uom_id"
+    />
+
+    <addForeignKeyConstraint
+      baseTableName="inventory_transfer_product"
       baseColumnNames="transfer_id"
       referencedTableName="inventory_transfer"
       referencedColumnNames="id"
