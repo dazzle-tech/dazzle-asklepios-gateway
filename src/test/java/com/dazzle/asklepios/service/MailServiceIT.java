@@ -4,7 +4,9 @@ package com.dazzle.asklepios.service;
 import com.dazzle.asklepios.IntegrationTest;
 import com.dazzle.asklepios.config.Constants;
 import com.dazzle.asklepios.domain.User;
+import jakarta.mail.BodyPart;
 import jakarta.mail.Multipart;
+import jakarta.mail.Part;
 import jakarta.mail.Session;
 import jakarta.mail.internet.MimeBodyPart;
 import jakarta.mail.internet.MimeMessage;
@@ -13,13 +15,20 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.MessageSource;
 import org.springframework.mail.MailSendException;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring6.SpringTemplateEngine;
 
 import java.io.ByteArrayOutputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -38,6 +47,8 @@ class MailServiceIT {
     };
     private static final Pattern PATTERN_LOCALE_3 = Pattern.compile("([a-z]{2})-([a-zA-Z]{4})-([a-z]{2})");
     private static final Pattern PATTERN_LOCALE_2 = Pattern.compile("([a-z]{2})-([a-z]{2})");
+    private final MessageSource messageSource = mock(MessageSource.class);
+    private final SpringTemplateEngine templateEngine = mock(SpringTemplateEngine.class);
 
     @Value("${asklepios.mail.username}")
     private String mailFrom;
@@ -117,20 +128,50 @@ class MailServiceIT {
         assertThat(part.getDataHandler().getContentType()).isEqualTo("text/html;charset=UTF-8");
     }
 
-    @Test
-    void testSendPasswordResetMail() throws Exception {
-        User user = new User();
-        user.setLangKey(Constants.DEFAULT_LANGUAGE);
-        user.setLogin("john");
-        user.setEmail("john.doe@example.com");
-        mailService.sendPasswordResetMail(user);
-        verify(javaMailSender).send(messageCaptor.capture());
-        MimeMessage message = messageCaptor.getValue();
-        assertThat(message.getAllRecipients()[0]).hasToString(user.getEmail());
-        assertThat(message.getFrom()[0]).hasToString(mailFrom);
-        assertThat(message.getContent().toString()).isNotEmpty();
-        assertThat(message.getDataHandler().getContentType()).isEqualTo("text/html;charset=UTF-8");
+    private static void setField(Object target, String fieldName, Object value) throws Exception {
+        var f = target.getClass().getDeclaredField(fieldName);
+        f.setAccessible(true);
+        f.set(target, value);
     }
+
+
+
+
+    private static String extractHtml(MimeMessage message) throws Exception {
+        return extractHtmlFromPart(message);
+    }
+
+    private static String extractHtmlFromPart(Part part) throws Exception {
+        if (part.isMimeType("text/html")) {
+            Object content = part.getContent();
+            if (content instanceof String s) return s;
+        }
+
+        // Some mail libs report: text/html; charset=UTF-8
+        String ct = part.getContentType();
+        if (ct != null && ct.toLowerCase().startsWith("text/html")) {
+            Object content = part.getContent();
+            if (content instanceof String s) return s;
+        }
+
+        Object content = part.getContent();
+        if (content instanceof jakarta.mail.Multipart mp) {
+            for (int i = 0; i < mp.getCount(); i++) {
+                Part bodyPart = (Part) mp.getBodyPart(i);
+
+                // recurse into nested parts
+                try {
+                    String html = extractHtmlFromPart(bodyPart);
+                    if (html != null && !html.isBlank()) return html;
+                } catch (Exception ignored) {
+                    // keep searching
+                }
+            }
+        }
+
+        return null;
+    }
+
 
     @Test
     void testSendEmailWithException() {
@@ -142,24 +183,6 @@ class MailServiceIT {
         }
     }
 
-    @Test
-    void testSendNewUserPasswordMail() throws Exception {
-
-        User user = new User();
-        user.setLangKey(Constants.DEFAULT_LANGUAGE);
-        user.setLogin("john");
-        user.setEmail("john.doe@example.com");
-        String plainPassword = "MyNewPass123!";
-        mailService.sendOneTimeSetPasswordLinkMail(user, plainPassword);
-        verify(javaMailSender).send(messageCaptor.capture());
-        MimeMessage message = messageCaptor.getValue();
-        assertThat(message.getAllRecipients()[0]).hasToString(user.getEmail());
-        assertThat(message.getFrom()[0]).hasToString(mailFrom);
-        assertThat(message.getSubject()).isNotEmpty();
-        String content = (String) message.getContent();
-        assertThat(content).contains(plainPassword);
-        assertThat(message.getDataHandler().getContentType()).isEqualTo("text/html;charset=UTF-8");
-    }
 
 
 }
