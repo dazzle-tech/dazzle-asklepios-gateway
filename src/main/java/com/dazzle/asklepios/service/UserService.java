@@ -11,7 +11,7 @@ import com.dazzle.asklepios.repository.UserRepository;
 import com.dazzle.asklepios.security.SecurityUtils;
 import com.dazzle.asklepios.service.dto.AdminUserDTO;
 import com.dazzle.asklepios.service.dto.CreatePasswordKeyValidationDTO;
-import com.dazzle.asklepios.web.rest.errors.UserAlreadyActiveException;
+import com.dazzle.asklepios.service.errors.UserAlreadyActiveException;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +26,6 @@ import reactor.core.scheduler.Schedulers;
 import java.security.SecureRandom;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.AbstractMap;
 import java.util.Set;
 import java.util.regex.Pattern;
 

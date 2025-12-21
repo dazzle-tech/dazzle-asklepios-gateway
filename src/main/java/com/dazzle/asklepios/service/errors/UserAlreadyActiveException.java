@@ -1,5 +1,4 @@
-package com.dazzle.asklepios.web.rest.errors;
-
+package com.dazzle.asklepios.service.errors;
 
 public class UserAlreadyActiveException extends RuntimeException {
     public UserAlreadyActiveException() {

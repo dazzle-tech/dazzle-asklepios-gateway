@@ -1,6 +1,6 @@
 package com.dazzle.asklepios.web.rest.errors;
 
-import com.dazzle.asklepios.web.rest.errors.UserAlreadyActiveException;
+import com.dazzle.asklepios.service.errors.UserAlreadyActiveException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
