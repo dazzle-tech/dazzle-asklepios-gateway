@@ -81,7 +81,6 @@
   <include file="/config/liquibase/changelog/1763620160_B_communityAreas.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1764081062_B_PatientDocuments.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1763395002_Q_RelaxConstraintsForUnknownPatients.xml" relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/1763628284_H_Patient_Hippa.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1764762354_BM_Billing_Invoice.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1764765924_BM_Billing_Invoice_Item.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1764767706_BM_Patient_Payment.xml" relativeToChangelogFile="false"/>

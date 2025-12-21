@@ -1,4 +1,4 @@
-first_patient_gender,second_patient_gender,first_ion_code,second_ioncode
+first_patient_gender,second_patient_gender,first_relation_code,second_relation_code
 MALE,MALE,FATH,SON
 MALE,MALE,SON,FATH
 MALE,MALE,GRANDFATH,GRANDSON
