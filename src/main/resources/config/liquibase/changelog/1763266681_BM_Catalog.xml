@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+  <changeSet id="BM0000000000015" author="BushraMashaiekh">
+    <createTable tableName="catalog">
+      <column name="id" type="bigint" autoIncrement="true" startWith="100">
+        <constraints primaryKey="true" nullable="false" primaryKeyName="pk_catalog"/>
+      </column>
+      <column name="name" type="varchar(150)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="description" type="text"/>
+      <column name="type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="facility_id" type="bigint">
+        <constraints foreignKeyName="fk_catalog_facility" referencedTableName="facility" referencedColumnNames="id"/>
+      </column>
+      <column name="department_id" type="bigint">
+        <constraints  foreignKeyName="fk_catalog_department" referencedTableName="department" referencedColumnNames="id"/>
+      </column>
+    </createTable>
+
+    <createIndex indexName="idx_catalog_department" tableName="catalog">
+      <column name="department_id"/>
+    </createIndex>
+    <createIndex indexName="idx_catalog_facility" tableName="catalog">
+      <column name="facility_id"/>
+    </createIndex>
+  </changeSet>
+  </databaseChangeLog>
