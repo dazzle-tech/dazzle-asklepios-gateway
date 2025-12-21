@@ -91,7 +91,7 @@
       referencedTableName="patients"
       referencedColumnNames="id"
       constraintName="fk_patient_relation_patient"
-      onDelete="CASCADE"/>
+     />
 
     <!-- relative_patient_id -> ap_patient.id -->
     <addForeignKeyConstraint
@@ -100,21 +100,8 @@
       referencedTableName="patients"
       referencedColumnNames="id"
       constraintName="fk_patient_relation_relative"
-      onDelete="CASCADE"/>
+     />
 
-    <!-- =================================================== -->
-
-    <createIndex tableName="patient_relation" indexName="idx_patient_relation_patient">
-      <column name="patient_id"/>
-    </createIndex>
-
-    <createIndex tableName="patient_relation" indexName="idx_patient_relation_relative">
-      <column name="relative_patient_id"/>
-    </createIndex>
-
-    <createIndex tableName="patient_relation" indexName="idx_patient_relation_type">
-      <column name="relation_type"/>
-    </createIndex>
 
     <!-- Remove default after insert (same standard) -->
     <dropDefaultValue
