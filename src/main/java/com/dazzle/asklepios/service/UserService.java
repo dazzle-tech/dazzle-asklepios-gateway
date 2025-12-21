@@ -10,6 +10,8 @@ import com.dazzle.asklepios.repository.AuthorityRepository;
 import com.dazzle.asklepios.repository.UserRepository;
 import com.dazzle.asklepios.security.SecurityUtils;
 import com.dazzle.asklepios.service.dto.AdminUserDTO;
+import com.dazzle.asklepios.service.dto.CreatePasswordKeyValidationDTO;
+import com.dazzle.asklepios.web.rest.errors.UserAlreadyActiveException;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +28,7 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.AbstractMap;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 /**
  * Service class for managing users.
@@ -38,6 +41,7 @@ public class UserService {
     private final UserRepository userRepository;
 
     private final PasswordEncoder passwordEncoder;
+    private static final long CREATE_PASSWORD_KEY_EXPIRATION_HOURS = 24;
 
     private final AuthorityRepository authorityRepository;
     private final MailService mailService;
@@ -51,8 +55,14 @@ public class UserService {
     @Transactional
     public Mono<User> completePasswordReset(String newPassword, String key) {
         LOG.debug("Reset user password for reset key {}", key);
+
+        if (!isPasswordSecure(newPassword)) {
+            return Mono.error(new InvalidPasswordException());
+        }
+
         return userRepository
             .findOneByResetKey(key)
+            .filter(user -> user.getResetDate() != null)
             .filter(user -> user.getResetDate().isAfter(Instant.now().minus(1, ChronoUnit.DAYS)))
             .publishOn(Schedulers.boundedElastic())
             .map(user -> {
@@ -63,6 +73,7 @@ public class UserService {
             })
             .flatMap(this::saveUser);
     }
+
 
     @Transactional
     public Mono<User> requestPasswordReset(String mail) {
@@ -92,34 +103,38 @@ public class UserService {
         user.setBirthDate(userDTO.getBirthDate());
         user.setGender(userDTO.getGender());
         user.setJobRole(userDTO.getJobRole());
-        if(userDTO.getSecurityAccessLeve() ==null){
+        if (userDTO.getSecurityAccessLeve() == null) {
             user.setSecurityAccessLeve(SecurityLevel.NORMAL_1);
         }
         user.setLangKey(userDTO.getLangKey() == null ? Constants.DEFAULT_LANGUAGE : userDTO.getLangKey());
 
         return Mono.fromCallable(() -> {
+                // Do NOT generate or email a raw password
+                // Keep password unusable until user sets it
+                user.setPassword(passwordEncoder.encode(RandomUtil.generatePassword())); // placeholder
+                user.setActivated(false);
 
-                String rawPassword = RandomUtil.generatePassword();
-                user.setPassword(passwordEncoder.encode(rawPassword));
-                user.setResetKey(RandomUtil.generateResetKey());
+                // Token for one-time create-password link
+                String token = RandomUtil.generateResetKey();
+                user.setResetKey(token);
                 user.setResetDate(Instant.now());
-                user.setActivated(true);
-                return new AbstractMap.SimpleEntry<>(user, rawPassword);
+
+                return token;
             })
             .subscribeOn(Schedulers.boundedElastic())
-            .flatMap(entry -> saveUser(entry.getKey())
-                .flatMap(savedUser -> sendWelcomeEmail(savedUser, entry.getValue()).thenReturn(savedUser))
+            .flatMap(token ->
+                saveUser(user)
+                    .flatMap(savedUser -> sendWelcomeEmail(savedUser, token).thenReturn(savedUser))
             )
-            .doOnNext(savedUser -> LOG.debug("Created user {} and sent password email", savedUser.getLogin()));
+            .doOnNext(savedUser -> LOG.debug("Created user {} and sent create-password email", savedUser.getLogin()));
     }
 
-    private Mono<Void> sendWelcomeEmail(User user, String rawPassword) {
+
+    private Mono<Void> sendWelcomeEmail(User user, String token) {
         if (user.getEmail() == null) {
             return Mono.empty();
         }
-        return Mono.fromRunnable(() -> {
-                mailService.sendNewUserPasswordMail(user, rawPassword);
-            })
+        return Mono.fromRunnable(() -> mailService.sendOneTimeSetPasswordLinkMail(user, token))
             .subscribeOn(Schedulers.boundedElastic())
             .then();
     }
@@ -309,4 +324,70 @@ public class UserService {
             SECURE_RANDOM.nextBytes(new byte[64]);
         }
     }
+    public Mono<User> completeCreatePassword(String newPassword, String key) {
+        if (!isPasswordSecure(newPassword)) {
+            return Mono.error(new InvalidPasswordException());
+        }
+
+        return userRepository
+            .findOneByResetKey(key)
+            .filter(user -> user.getResetDate() != null)
+            .filter(user -> user.getResetDate().isAfter(
+                Instant.now().minus(CREATE_PASSWORD_KEY_EXPIRATION_HOURS, ChronoUnit.HOURS)
+            ))
+            .flatMap(user -> {
+                if (Boolean.TRUE.equals(user.isActivated())) {
+                    return Mono.error(new UserAlreadyActiveException());
+                }
+
+                user.setPassword(passwordEncoder.encode(newPassword));
+                user.setActivated(true);
+
+                // one-time use
+                user.setResetKey(null);
+                user.setResetDate(null);
+
+                return userRepository.save(user);
+            });
+    }
+
+
+
+    @Transactional(readOnly = true)
+    public Mono<CreatePasswordKeyValidationDTO> validateCreatePasswordKey(String key) {
+        return userRepository
+            .findOneByResetKey(key)
+            .map(user -> {
+                boolean activated = Boolean.TRUE.equals(user.isActivated());
+                boolean passwordAlreadySet = user.getPassword() != null;
+
+                boolean notExpired =
+                    user.getResetDate() != null &&
+                        user.getResetDate().isAfter(
+                            Instant.now().minus(CREATE_PASSWORD_KEY_EXPIRATION_HOURS, ChronoUnit.HOURS)
+                        );
+
+                boolean valid = notExpired && !activated;
+
+                String message;
+                if (!notExpired) message = "TOKEN_INVALID_OR_EXPIRED";
+                else if (activated) message = "USER_ALREADY_ACTIVE";
+                else message = "OK";
+
+                return new CreatePasswordKeyValidationDTO(valid, activated, passwordAlreadySet, message);
+            })
+            .switchIfEmpty(Mono.just(new CreatePasswordKeyValidationDTO(false, false, false, "TOKEN_NOT_FOUND")));
+    }
+
+
+
+    private static final Pattern STRONG_PASSWORD_PATTERN = Pattern.compile(
+        "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&#_.-])[A-Za-z\\d@$!%*?&#_.-]{8,}$"
+    );
+
+    private static boolean isPasswordSecure(String password) {
+        return password != null && STRONG_PASSWORD_PATTERN.matcher(password).matches();
+    }
+
+
 }

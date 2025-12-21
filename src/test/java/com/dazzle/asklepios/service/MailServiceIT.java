@@ -150,7 +150,7 @@ class MailServiceIT {
         user.setLogin("john");
         user.setEmail("john.doe@example.com");
         String plainPassword = "MyNewPass123!";
-        mailService.sendNewUserPasswordMail(user, plainPassword);
+        mailService.sendOneTimeSetPasswordLinkMail(user, plainPassword);
         verify(javaMailSender).send(messageCaptor.capture());
         MimeMessage message = messageCaptor.getValue();
         assertThat(message.getAllRecipients()[0]).hasToString(user.getEmail());
