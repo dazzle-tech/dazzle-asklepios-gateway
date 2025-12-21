@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+          http://www.liquibase.org/xml/ns/dbchangelog
+          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+
+  <changeSet id="QA00000000000008" author="qais">
+
+    <dropNotNullConstraint tableName="patients" columnName="first_name" columnDataType="nvarchar(100)"/>
+    <dropNotNullConstraint tableName="patients" columnName="last_name" columnDataType="nvarchar(100)"/>
+    <dropNotNullConstraint tableName="patients" columnName="sex_at_birth" columnDataType="varchar(20)"/>
+    <dropNotNullConstraint tableName="patients" columnName="date_of_birth" columnDataType="date"/>
+
+    <sql dbms="postgresql">
+      ALTER TABLE patients
+        ADD CONSTRAINT chk_patients_required_fields_when_not_unknown
+          CHECK (
+            is_unknown = true
+              OR (
+              first_name IS NOT NULL
+                AND last_name IS NOT NULL
+                AND sex_at_birth IS NOT NULL
+                AND date_of_birth IS NOT NULL
+              )
+            );
+    </sql>
+
+  </changeSet>
+
+</databaseChangeLog>
