@@ -92,4 +92,5 @@
   <include file="/config/liquibase/changelog/1764826849_H_Discharge_Planning.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1764776884_H_Payor_Plan.xml" relativeToChangelogFile="false"/>
  <include file="config/liquibase/changelog/1765198918_H_Price_List_Attributes.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1766317374_H_Diagnostic_Order_And_Test.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>
