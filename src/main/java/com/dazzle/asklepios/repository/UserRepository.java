@@ -43,6 +43,8 @@ public interface UserRepository extends R2dbcRepository<User, Long>, UserReposit
 
     @Query("DELETE FROM user_role WHERE user_id = :userId AND role_id = :roleId")
     Mono<Void> deleteUserRole(Long userId, Long roleId);
+
+    Flux<User> findAllByActivatedTrue();
 }
 
 interface DeleteExtended<T> {

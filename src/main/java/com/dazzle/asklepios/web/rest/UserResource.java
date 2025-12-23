@@ -254,4 +254,29 @@ public class UserResource {
                 )
             );
     }
+
+    /**
+     * {@code GET /admin/users/admins/active} : get all active admin users.
+     */
+    @GetMapping("/users/admins/active")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
+    public Mono<ResponseEntity<Flux<AdminUserDTO>>> getActiveAdmins(
+        @org.springdoc.core.annotations.ParameterObject ServerHttpRequest request,
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable
+    ) {
+        if (!onlyContainsAllowedProperties(pageable)) {
+            return Mono.just(ResponseEntity.badRequest().build());
+        }
+
+        return userService
+            .countManagedUsers()
+            .map(total -> new PageImpl<>(new ArrayList<>(), pageable, total))
+            .map(page -> PaginationUtil.generatePaginationHttpHeaders(
+                ForwardedHeaderUtils.adaptFromForwardedHeaders(request.getURI(), request.getHeaders()),
+                page
+            ))
+            .map(headers -> ResponseEntity.ok().headers(headers).body(userService.getActiveAdmins(pageable)));
+    }
+
+
 }
