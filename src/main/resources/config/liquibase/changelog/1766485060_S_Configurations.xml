@@ -19,12 +19,19 @@
       <column name="value" type="varchar(50)">
       <constraints nullable="false"/>
       </column>
+      <column name="valueType" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="referenceType" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
       <column name="description" type="text">
         <constraints nullable="false"/>
       </column>
-      <column name="is_integration" type="boolean">
+      <column name="is_active" type="boolean">
         <constraints nullable="false"/>
       </column>
+
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
