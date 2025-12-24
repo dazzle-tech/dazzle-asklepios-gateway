@@ -8,6 +8,7 @@ import com.dazzle.asklepios.domain.enumeration.JobRole;
 import com.dazzle.asklepios.domain.enumeration.SecurityLevel;
 import com.dazzle.asklepios.repository.AuthorityRepository;
 import com.dazzle.asklepios.repository.UserRepository;
+import com.dazzle.asklepios.security.AuthoritiesConstants;
 import com.dazzle.asklepios.security.SecurityUtils;
 import com.dazzle.asklepios.service.dto.AdminUserDTO;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -285,6 +286,14 @@ public class UserService {
     public Flux<String> getAuthorities() {
         return authorityRepository.findAll().map(Authority::getName);
     }
+
+    public Flux<AdminUserDTO> getActiveAdmins(Pageable pageable) {
+        return getAllManagedUsers(pageable)
+            .filter(AdminUserDTO::isActivated)
+            .filter(dto -> dto.getAuthorities() != null && dto.getAuthorities().contains(AuthoritiesConstants.ADMIN));
+    }
+
+
 
     public final class RandomUtil {
         private static final int DEF_COUNT = 20;
