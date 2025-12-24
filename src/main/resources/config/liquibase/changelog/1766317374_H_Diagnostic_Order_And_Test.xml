@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="H000000000000MD_DIAG_ORDERS" author="hanan253yahya">
+    <createSequence sequenceName="seq_diagnostic_order_number" startValue="1000"/>
+    <createTable tableName="diagnostic_orders">
+      <column name="id" type="bigint" autoIncrement="true" startWith="1500">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+
+      <column name="patient_id" type="bigint"/>
+      <column name="encounter_id" type="bigint"/>
+      <column name="status" type="text"/>
+
+      <column name="order_number" type="bigint" >
+        <constraints unique="true" nullable="false"/>
+
+      </column>
+      <column name="save_draft" type="boolean" defaultValueBoolean="true"/>
+      <column name="submitted_by" type="text"/>
+      <column name="submitted_date" type="timestamp"/>
+
+      <column name="is_urgent" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="lab_status" type="text"/>
+      <column name="rad_status" type="text"/>
+
+      <!-- auditing -->
+      <column name="created_date" type="timestamp"/>
+      <column name="created_by" type="varchar(50)"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+
+    <addDefaultValue
+      tableName="diagnostic_orders"
+      columnName="order_number"
+      defaultValueSequenceNext="seq_diagnostic_order_number"/>
+
+    <dropDefaultValue
+      tableName="diagnostic_orders"
+      columnName="created_date"
+      columnDataType="${datetimeType}"/>
+  </changeSet>
+
+  <changeSet id="H000000000000MD_DIAG_ORDER_TESTS" author="hanan253yahya">
+
+    <createTable tableName="diagnostic_order_tests">
+      <column name="id" type="bigint" autoIncrement="true" startWith="1500">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+
+      <column name="patient_id" type="bigint"/>
+      <column name="encounter_id" type="bigint"/>
+      <column name="status" type="text"/>
+
+      <column name="order_id" type="bigint"/>
+      <column name="test_id" type="bigint"/>
+
+      <column name="received_department_id" type="bigint"/>
+      <column name="reason" type="text"/>
+      <column name="notes" type="text"/>
+
+      <column name="processing_status" type="text"/>
+
+      <column name="submit_date" type="timestamp"/>
+      <column name="accepted_date" type="timestamp"/>
+      <column name="rejected_date" type="timestamp"/>
+      <column name="patient_arrived_date" type="timestamp"/>
+      <column name="ready_date" type="timestamp"/>
+      <column name="approved_date" type="timestamp"/>
+
+      <column name="order_type" type="text"/>
+      <column name="accepted_by" type="text"/>
+      <column name="rejected_by" type="text"/>
+      <column name="rejected_reason" type="text"/>
+      <column name="patient_arrived_note_rad" type="text"/>
+      <column name="cancellation_reason" type="text"/>
+
+      <column name="from_department_id" type="bigint"/>
+      <column name="from_facility_id" type="bigint"/>
+      <column name="to_facility_id" type="bigint"/>
+
+      <!-- status -->
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <!-- auditing -->
+      <column name="created_date" type="timestamp"/>
+      <column name="created_by" type="varchar(50)"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+
+    <!-- FK: received_department_id -> department(id) -->
+    <addForeignKeyConstraint
+      constraintName="fk_dot_received_department"
+      baseTableName="diagnostic_order_tests"
+      baseColumnNames="received_department_id"
+      referencedTableName="department"
+      referencedColumnNames="id"
+
+    />
+
+    <!-- FK: from_department_id -> department(id) -->
+    <addForeignKeyConstraint
+      constraintName="fk_dot_from_department"
+      baseTableName="diagnostic_order_tests"
+      baseColumnNames="from_department_id"
+      referencedTableName="department"
+      referencedColumnNames="id"
+
+    />
+
+    <!-- FK: from_facility_id -> facility(id) -->
+    <addForeignKeyConstraint
+      constraintName="fk_dot_from_facility"
+      baseTableName="diagnostic_order_tests"
+      baseColumnNames="from_facility_id"
+      referencedTableName="facility"
+      referencedColumnNames="id"
+
+    />
+
+    <!-- FK: to_facility_id -> facility(id) -->
+    <addForeignKeyConstraint
+      constraintName="fk_dot_to_facility"
+      baseTableName="diagnostic_order_tests"
+      baseColumnNames="to_facility_id"
+      referencedTableName="facility"
+      referencedColumnNames="id"
+
+    />
+
+    <!-- FK: order_id -> diagnostic_orders(id) -->
+    <addForeignKeyConstraint
+      constraintName="fk_dot_order_id_to_orders"
+      baseTableName="diagnostic_order_tests"
+      baseColumnNames="order_id"
+      referencedTableName="diagnostic_orders"
+      referencedColumnNames="id"
+
+    />
+
+    <!-- FK: test_id -> diagnostic_test(id) -->
+    <addForeignKeyConstraint
+      constraintName="fk_dot_test_id_to_diagnostic_test"
+      baseTableName="diagnostic_order_tests"
+      baseColumnNames="test_id"
+      referencedTableName="diagnostic_test"
+      referencedColumnNames="id"
+
+    />
+
+
+    <dropDefaultValue
+      tableName="diagnostic_order_tests"
+      columnName="created_date"
+      columnDataType="${datetimeType}"/>
+  </changeSet>
+
+</databaseChangeLog>
