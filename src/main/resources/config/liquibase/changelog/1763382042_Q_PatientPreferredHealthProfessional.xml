@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="QA00000000000007" author="qais">
+
+    <createTable tableName="patient_preferred_health_professional">
+      <column name="id" type="bigint" autoIncrement="true" startWith="2000">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_pphp_patient"
+                     references="patients(id)"/>
+      </column>
+
+      <column name="practitioner_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_pphp_practitioner"
+                     references="practitioner(id)"/>
+      </column>
+
+      <column name="facility_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_pphp_facility"
+                     references="facility(id)"/>
+      </column>
+
+      <column name="network_affiliation" type="varchar(255)"/>
+
+      <column name="related_with" type="varchar(255)"/>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+
+    <addUniqueConstraint tableName="patient_preferred_health_professional"
+                         columnNames="patient_id,practitioner_id,facility_id"
+                         constraintName="uk_pphp_patient_practitioner_facility"/>
+
+  </changeSet>
+
+</databaseChangeLog>

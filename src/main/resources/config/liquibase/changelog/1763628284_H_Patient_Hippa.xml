@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="H000000000000036" author="hanan253yahya">
+
+    <createTable tableName="patient_hippa">
+      <column name="id" type="bigint" autoIncrement="true" >
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_address_patient"
+                     references="patients(id)"
+                     unique="true"/>
+      </column>
+      <column name="notice_of_privacy_practice" type="boolean" defaultValueBoolean="false"/>
+      <column name="privacy_authorization" type="boolean" defaultValueBoolean="false"/>
+      <column name="notice_of_privacy_practice_date" type="date"/>
+      <column name="privacy_authorization_date" type="date"/>
+
+
+    </createTable>
+
+
+  </changeSet>
+
+</databaseChangeLog>
