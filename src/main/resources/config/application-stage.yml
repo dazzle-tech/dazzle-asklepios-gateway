@@ -31,14 +31,14 @@ spring:
       enabled: false
   liquibase:
     contexts: stage
-    url: jdbc:postgresql://db-postgresql-nyc3-94186-do-user-10936078-0.j.db.ondigitalocean.com:25060/asklepios?sslmode=require
+    url: jdbc:postgresql://161.35.195.29:5432/asklepios
   mail:
     host: localhost
     port: 25
     username:
     password:
   r2dbc:
-    url: r2dbc:postgresql://db-postgresql-nyc3-94186-do-user-10936078-0.j.db.ondigitalocean.com:25060/asklepios?sslmode=require
+    url: r2dbc:postgresql://161.35.195.29:5432/asklepios
     username: asklepios
     password: AVNS_Dw0mJXT6mnivz3bN70_
     pool:
