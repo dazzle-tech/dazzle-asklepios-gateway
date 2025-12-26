@@ -11,7 +11,8 @@ management:
         enabled: false
   zipkin:
     tracing:
-      endpoint: http://localhost:9411/api/v2/spans
+      endpoint:
+        http://localhost:9411/api/v2/spans
   tracing:
     sampling:
       probability: 1.0
@@ -22,6 +23,10 @@ services:
   asklepios-patient-service-url :  http://asklepios-patient-service:8080
   asklepios-inventory-service-url :  http://asklepios-inventory-service:8080
   asklepios-billing-service-url :  http://asklepios-billing-service:8080
+
+  medication-test-orders-validation-service-url: http://medication-test-orders-validation-service:8005
+  clinical-summary-service-url: http://clinical-summary-service:8003
+  clinical-recommendations-service-url: http://clinical-recommendations-service:8004
 
 spring:
   devtools:
@@ -211,7 +216,28 @@ spring:
             - Path=/api/billing/**
           filters:
             - StripPrefix=0
-            
+
+        - id: medication-test-orders-validation
+          uri: ${services.medication-test-orders-validation-service-url}
+          predicates:
+            - Path=/api/v1/medication-test-orders-validation/**
+          filters:
+            - RewritePath=/api/v1/medication-test-orders-validation/(?<segment>.*),/api/v1/${segment}
+
+        - id: clinical-summary
+          uri: ${services.clinical-summary-service-url}
+          predicates:
+            - Path=/api/v1/clinical-summary/**
+          filters:
+            - RewritePath=/api/v1/clinical-summary/(?<segment>.*),/api/v1/${segment}
+
+        - id: clinical-recommendations
+          uri: ${services.clinical-recommendations-service-url}
+          predicates:
+            - Path=/api/v1/clinical-recommendations/**
+          filters:
+            - RewritePath=/api/v1/clinical-recommendations/(?<segment>.*),/api/v1/${segment}
+
       httpclient:
         pool:
           max-connections: 1000
