@@ -5,6 +5,7 @@ import com.dazzle.asklepios.security.SecurityUtils;
 import com.dazzle.asklepios.service.MailService;
 import com.dazzle.asklepios.service.UserService;
 import com.dazzle.asklepios.service.dto.AdminUserDTO;
+import com.dazzle.asklepios.service.dto.CreatePasswordKeyValidationDTO;
 import com.dazzle.asklepios.service.dto.PasswordChangeDTO;
 import com.dazzle.asklepios.web.rest.errors.EmailAlreadyUsedException;
 import com.dazzle.asklepios.web.rest.errors.InvalidPasswordException;
@@ -14,10 +15,12 @@ import jakarta.validation.Valid;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
@@ -163,4 +166,20 @@ public class AccountResource {
             password.length() > ManagedUserVM.PASSWORD_MAX_LENGTH
         );
     }
+    @PostMapping(path = "/account/create-password/finish")
+    public Mono<Void> finishCreatePassword(@RequestBody KeyAndPasswordVM keyAndPassword) {
+        if (isPasswordLengthInvalid(keyAndPassword.getNewPassword())) {
+            throw new InvalidPasswordException();
+        }
+        return userService
+            .completeCreatePassword(keyAndPassword.getNewPassword(), keyAndPassword.getKey())
+            .switchIfEmpty(Mono.error(new AccountResourceException("No user was found for this create-password key")))
+            .then();
+    }
+
+    @GetMapping(value = "/account/create-password/validate", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Mono<CreatePasswordKeyValidationDTO> validate(@RequestParam("key") String key) {
+        return userService.validateCreatePasswordKey(key);
+    }
+
 }

@@ -62,6 +62,8 @@ public class SecurityConfiguration {
                     )
             )
             .authorizeExchange(authz -> authz
+                .pathMatchers("/api/account/create-password/finish").permitAll()
+                .pathMatchers(HttpMethod.GET, "/api/account/create-password/validate").permitAll()
                 .pathMatchers("/api/authenticate").permitAll()
                 .pathMatchers("/api/register").permitAll()
                 .pathMatchers(HttpMethod.GET, "/api/setup/facility").permitAll()
