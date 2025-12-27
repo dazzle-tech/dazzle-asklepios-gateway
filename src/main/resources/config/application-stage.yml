@@ -11,17 +11,22 @@ management:
         enabled: false
   zipkin:
     tracing:
-      endpoint: http://localhost:9411/api/v2/spans
+      endpoint:
+        http://localhost:9411/api/v2/spans
   tracing:
     sampling:
       probability: 1.0
 
 services:
-  asklepios-general-service-url: http://asklepiosdemo-service:8081
-  asklepios-setup-service-url :  http://asklepiosdemo-api-setup-service:8082
-  asklepios-patient-service-url :  http://asklepiosdemo-patient-service:8080
-  asklepios-inventory-service-url :  http://asklepiosdemo-inventory-service:8080
-  asklepios-billing-service-url :  http://asklepiosdemo-billing-service:8080
+  asklepios-general-service-url: http://asklepios-service:8081
+  asklepios-setup-service-url :  http://asklepios-api-setup-service:8082
+  asklepios-patient-service-url :  http://asklepios-patient-service:8080
+  asklepios-inventory-service-url :  http://asklepios-inventory-service:8080
+  asklepios-billing-service-url :  http://asklepios-billing-service:8080
+
+  medication-test-orders-validation-service-url: http://medication-test-orders-validation-service:8005
+  clinical-summary-service-url: http://clinical-summary-service:8003
+  clinical-recommendations-service-url: http://clinical-recommendations-service:8004
 
 spring:
   devtools:
@@ -31,23 +36,23 @@ spring:
       enabled: false
   liquibase:
     contexts: stage
-    url: jdbc:postgresql://161.35.195.29:5432/asklepios
+    url: jdbc:postgresql://db-postgresql-nyc3-94186-do-user-10936078-0.j.db.ondigitalocean.com:25060/asklepios?sslmode=require
   mail:
     host: localhost
     port: 25
     username:
     password:
   r2dbc:
-    url: r2dbc:postgresql://161.35.195.29:5432/asklepios
+    url: r2dbc:postgresql://db-postgresql-nyc3-94186-do-user-10936078-0.j.db.ondigitalocean.com:25060/asklepios?sslmode=require
     username: asklepios
-    password: asklepios
+    password: AVNS_Dw0mJXT6mnivz3bN70_
     pool:
       # Enable pooling explicitly (optional, often enabled by default if the pool dependency is present)
       enabled: true
       # Initial number of connections created when the pool starts (default: 10)
-      initial-size: 2
+      initial-size: 3
       # Maximum number of active connections the pool can have (default: 10)
-      max-size: 4
+      max-size: 6
       # Maximum time a connection can remain idle in the pool before being closed (default: 30m)
       max-idle-time: 30m
       # Minimum number of idle connections to maintain (default: 0)
@@ -211,7 +216,28 @@ spring:
             - Path=/api/billing/**
           filters:
             - StripPrefix=0
-            
+
+        - id: medication-test-orders-validation
+          uri: ${services.medication-test-orders-validation-service-url}
+          predicates:
+            - Path=/api/ai/v1/medication-test-orders-validation/**
+          filters:
+            - RewritePath=/api/ai/v1/medication-test-orders-validation/(?<segment>.*),/api/v1/${segment}
+
+        - id: clinical-summary
+          uri: ${services.clinical-summary-service-url}
+          predicates:
+            - Path=/api/ai/v1/clinical-summary/**
+          filters:
+            - RewritePath=/api/ai/v1/clinical-summary/(?<segment>.*),/api/v1/${segment}
+
+        - id: clinical-recommendations
+          uri: ${services.clinical-recommendations-service-url}
+          predicates:
+            - Path=/api/ai/v1/clinical-recommendations/**
+          filters:
+            - RewritePath=/api/ai/v1/clinical-recommendations/(?<segment>.*),/api/v1/${segment}
+
       httpclient:
         pool:
           max-connections: 1000
@@ -228,7 +254,7 @@ server:
 
 asklepios:
   cors:
-    allowed-origins: 'http://asklepiosdemo.nereuscloud.de,https://asklepiosdemo.nereuscloud.de,https://localhost:3100,http://localhost:3100'
+    allowed-origins: 'http://asklepios.nereuscloud.de,https://asklepios.nereuscloud.de,https://localhost:3100,http://localhost:3100'
     allowed-origin-patterns: 'https://*.asklepios.com'
     allowed-methods: '*'
     allowed-headers: '*'
