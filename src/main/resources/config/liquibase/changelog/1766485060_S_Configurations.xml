@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="100000000000061" author="Sondos">
+    <createTable tableName="configuration">
+      <column name="id" type="bigint" autoIncrement="true" startWith="5000">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="facility_id" type="bigint">
+      </column>
+      <column name="key" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="value" type="varchar(50)">
+      <constraints nullable="false"/>
+      </column>
+      <column name="valueType" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="referenceType" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="description" type="text">
+        <constraints nullable="false"/>
+      </column>
+      <column name="is_active" type="boolean">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+    <addForeignKeyConstraint
+      baseTableName="configuration"
+      baseColumnNames="facility_id"
+      referencedTableName="facility"
+      referencedColumnNames="id"
+      constraintName="fk_config_facility_id"/>
+    <sql>
+      CREATE UNIQUE INDEX uq_configuration_key_org
+        ON configuration ("key")
+        WHERE facility_id IS NULL;
+    </sql>
+
+    <sql>
+      CREATE UNIQUE INDEX uq_configuration_key_facility
+        ON configuration (facility_id, "key")
+        WHERE facility_id IS NOT NULL;
+    </sql>
+  </changeSet>
+
+</databaseChangeLog>
