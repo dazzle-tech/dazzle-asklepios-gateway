@@ -215,23 +215,23 @@ spring:
         - id: medication-test-orders-validation
           uri: ${services.medication-test-orders-validation-service-url}
           predicates:
-            - Path=/api/v1/medication-test-orders/**
+            - Path=/api/ai/v1/medication-test-orders/**
           filters:
-            - RewritePath=/api/v1/medication-test-orders/(?<segment>.*),/api/v1/${segment}
+            - RewritePath=/api/ai/v1/medication-test-orders/(?<segment>.*),/api/v1/${segment}
 
         - id: clinical-summary
           uri: ${services.clinical-summary-service-url}
           predicates:
-            - Path=/api/v1/clinical-summary/**
+            - Path=/api/ai/v1/clinical-summary/**
           filters:
-            - RewritePath=/api/v1/clinical-summary/(?<segment>.*),/api/v1/${segment}
+            - RewritePath=/api/ai/v1/clinical-summary/(?<segment>.*),/api/v1/${segment}
 
         - id: clinical-recommendations
           uri: ${services.clinical-recommendations-service-url}
           predicates:
-            - Path=/api/v1/clinical-recommendations/**
+            - Path=/api/ai/v1/clinical-recommendations/**
           filters:
-            - RewritePath=/api/v1/clinical-recommendations/(?<segment>.*),/api/v1/${segment}
+            - RewritePath=/api/ai/v1/clinical-recommendations/(?<segment>.*),/api/v1/${segment}
 
 
       httpclient:
