@@ -19,10 +19,10 @@
       <column name="value" type="varchar(50)">
       <constraints nullable="false"/>
       </column>
-      <column name="valueType" type="varchar(50)">
+      <column name="value_type" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
-      <column name="referenceType" type="varchar(50)">
+      <column name="reference_type" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
       <column name="description" type="text">
