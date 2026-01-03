@@ -36,16 +36,16 @@ spring:
       enabled: false
   liquibase:
     contexts: stage
-    url: jdbc:postgresql://161.35.195.29:5432/asklepios
+    url: jdbc:postgresql://161.35.195.29:5432/asklepios-demo
   mail:
     host: localhost
     port: 25
     username:
     password:
   r2dbc:
-    url: r2dbc:postgresql://161.35.195.29:5432/asklepios
-    username: asklepios
-    password: AVNS_Dw0mJXT6mnivz3bN70_
+    url: r2dbc:postgresql://161.35.195.29:5432/asklepios-demo
+    username: asklepios-demo
+    password: AVNS_EaHgYpgw9RzeKHnRRvU
     pool:
       # Enable pooling explicitly (optional, often enabled by default if the pool dependency is present)
       enabled: true
