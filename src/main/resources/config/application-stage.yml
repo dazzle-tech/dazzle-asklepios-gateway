@@ -18,11 +18,11 @@ management:
       probability: 1.0
 
 services:
-  asklepios-general-service-url: http://asklepios-service:8081
-  asklepios-setup-service-url :  http://asklepios-api-setup-service:8082
-  asklepios-patient-service-url :  http://asklepios-patient-service:8080
-  asklepios-inventory-service-url :  http://asklepios-inventory-service:8080
-  asklepios-billing-service-url :  http://asklepios-billing-service:8080
+  asklepios-general-service-url: http://asklepiosdemo-service:8081
+  asklepios-setup-service-url :  http://asklepiosdemo-api-setup-service:8082
+  asklepios-patient-service-url :  http://asklepiosdemo-patient-service:8080
+  asklepios-inventory-service-url :  http://asklepiosdemo-inventory-service:8080
+  asklepios-billing-service-url :  http://asklepiosdemo-billing-service:8080
 
   medication-test-orders-validation-service-url: http://medication-test-orders-validation-service:8005
   clinical-summary-service-url: http://clinical-summary-service:8003
@@ -254,7 +254,7 @@ server:
 
 asklepios:
   cors:
-    allowed-origins: 'http://asklepios.nereuscloud.de,https://asklepios.nereuscloud.de,https://localhost:3100,http://localhost:3100'
+    allowed-origins: 'http://asklepiosdemo.nereuscloud.de,https://asklepiosdemo.nereuscloud.de,https://localhost:3100,http://localhost:3100'
     allowed-origin-patterns: 'https://*.asklepios.com'
     allowed-methods: '*'
     allowed-headers: '*'
@@ -268,6 +268,6 @@ asklepios:
         token-validity-in-seconds: 86400
         token-validity-in-seconds-for-remember-me: 2592000
   mail:
-    base-url: http://asklepios.nereuscloud.de/
+    base-url: https://asklepiosdemo.nereuscloud.de/
     username: systemask73@gmail.com
     password: ocdh hvae hhsz cyxc
