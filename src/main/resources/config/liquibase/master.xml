@@ -95,5 +95,6 @@
   <include file="config/liquibase/changelog/1766367799_S_organization_definition.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1765794249_H_Review_of_System.xml" relativeToChangelogFile="false" />
   <include file="/config/liquibase/changelog/1763384457_P_patient.xml" relativeToChangelogFile="false" />
+  <include file="/config/liquibase/changelog/1763381810_Q_Patient_Address.xml" relativeToChangelogFile="false" />
 
 </databaseChangeLog>

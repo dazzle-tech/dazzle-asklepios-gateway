@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="QA00000000000006" author="qais">
+
+    <createTable tableName="address">
+      <column name="id" type="bigint" autoIncrement="true" startWith="2000">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints
+          nullable="false"
+          foreignKeyName="fk_address_patient"
+          references="patients(id)"/>
+      </column>
+
+      <column name="location_json" type="jsonb">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="street_name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="house_apartment_number" type="varchar(50)"/>
+      <column name="postal_zip_code" type="varchar(20)"/>
+      <column name="additional_address_line" type="varchar(255)"/>
+
+      <column name="is_current" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addUniqueConstraint
+      tableName="address"
+      columnNames="patient_id,location_json,street_name,house_apartment_number,postal_zip_code,additional_address_line"
+      constraintName="uk_address_patient_full_address"
+    />
+
+    <dropDefaultValue
+      tableName="address"
+      columnName="created_date"
+      columnDataType="timestamp"
+    />
+
+  </changeSet>
+
+</databaseChangeLog>
