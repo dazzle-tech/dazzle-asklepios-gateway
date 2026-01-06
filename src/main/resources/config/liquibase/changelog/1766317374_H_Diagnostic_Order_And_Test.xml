@@ -74,6 +74,8 @@
       <column name="submit_date" type="timestamp"/>
       <column name="accepted_date" type="timestamp"/>
       <column name="rejected_date" type="timestamp"/>
+      <column name="cancelled_date" type="timestamp"/>
+
       <column name="patient_arrived_date" type="timestamp"/>
       <column name="ready_date" type="timestamp"/>
       <column name="approved_date" type="timestamp"/>
@@ -81,18 +83,17 @@
       <column name="order_type" type="text"/>
       <column name="accepted_by" type="text"/>
       <column name="rejected_by" type="text"/>
+      <column name="cancelled_by" type="text"/>
+
       <column name="rejected_reason" type="text"/>
       <column name="patient_arrived_note_rad" type="text"/>
+
       <column name="cancellation_reason" type="text"/>
 
       <column name="from_department_id" type="bigint"/>
       <column name="from_facility_id" type="bigint"/>
       <column name="to_facility_id" type="bigint"/>
 
-      <!-- status -->
-      <column name="is_active" type="boolean" defaultValueBoolean="true">
-        <constraints nullable="false"/>
-      </column>
 
       <!-- auditing -->
       <column name="created_date" type="timestamp"/>
