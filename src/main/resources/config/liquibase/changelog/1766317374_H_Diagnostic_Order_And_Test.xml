@@ -162,7 +162,10 @@
       referencedColumnNames="id"
 
     />
-
+    <addUniqueConstraint
+      tableName="diagnostic_order_tests"
+      columnNames="order_id, test_id"
+      constraintName="uq_dot_order_id_test_id"/>
 
     <dropDefaultValue
       tableName="diagnostic_order_tests"
