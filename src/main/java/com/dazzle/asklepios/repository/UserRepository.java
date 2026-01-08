@@ -8,8 +8,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.r2dbc.convert.R2dbcConverter;
 import org.springframework.data.r2dbc.core.R2dbcEntityTemplate;
-import org.springframework.data.r2dbc.repository.Query;
+import org.springframework.data.r2dbc.repository.Query; 
 import org.springframework.data.r2dbc.repository.R2dbcRepository;
+import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.r2dbc.core.DatabaseClient;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
@@ -57,6 +58,10 @@ interface UserRepositoryInternal extends DeleteExtended<User> {
     Mono<User> findOneWithAuthoritiesByEmailIgnoreCaseAndFacilityId(String email, Long facilityId);
 
     Flux<User> findAllWithAuthorities(Pageable pageable);
+
+    Flux<User> findBasicUsers(String login, String email, String name, Pageable pageable);
+
+    Mono<Long> countBasicUsers(String login, String email, String name);
 }
 
 @Slf4j
@@ -66,7 +71,11 @@ class UserRepositoryInternalImpl implements UserRepositoryInternal {
     private final R2dbcEntityTemplate r2dbcEntityTemplate;
     private final R2dbcConverter r2dbcConverter;
 
-    public UserRepositoryInternalImpl(DatabaseClient db, R2dbcEntityTemplate r2dbcEntityTemplate, R2dbcConverter r2dbcConverter) {
+    public UserRepositoryInternalImpl(
+        DatabaseClient db,
+        R2dbcEntityTemplate r2dbcEntityTemplate,
+        R2dbcConverter r2dbcConverter
+    ) {
         this.db = db;
         this.r2dbcEntityTemplate = r2dbcEntityTemplate;
         this.r2dbcConverter = r2dbcConverter;
@@ -98,11 +107,11 @@ class UserRepositoryInternalImpl implements UserRepositoryInternal {
 
         return db
             .sql("""
-        SELECT u.*, ra.authority_name
-        FROM app_user u
-        LEFT JOIN user_role ur ON u.id = ur.user_id
-        LEFT JOIN role_authority ra ON ur.role_id = ra.role_id
-    """)
+                SELECT u.*, ra.authority_name
+                FROM app_user u
+                LEFT JOIN user_role ur ON u.id = ur.user_id
+                LEFT JOIN role_authority ra ON ur.role_id = ra.role_id
+                """)
             .map((row, metadata) ->
                 Tuples.of(
                     r2dbcConverter.read(User.class, row, metadata),
@@ -119,7 +128,6 @@ class UserRepositoryInternalImpl implements UserRepositoryInternal {
             )
             .skip(page * size)
             .take(size);
-
     }
 
     @Override
@@ -128,18 +136,97 @@ class UserRepositoryInternalImpl implements UserRepositoryInternal {
             .sql("DELETE FROM user_role WHERE user_id = :userId")
             .bind("userId", user.getId())
             .then()
-            .then(r2dbcEntityTemplate.delete(User.class).matching(query(where("id").is(user.getId()))).all().then());
+            .then(
+                r2dbcEntityTemplate
+                    .delete(User.class)
+                    .matching(query(where("id").is(user.getId())))
+                    .all()
+                    .then()
+            );
     }
+
+    // ======= FIXED METHODS (no manual SQL) =======
+
+    @Override
+    public Flux<User> findBasicUsers(String login, String email, String name, Pageable pageable) {
+
+        Criteria criteria = Criteria.empty();
+
+        if (login != null && !login.isBlank()) {
+            criteria = criteria.and(
+                where("login").like("%" + login + "%").ignoreCase(true)
+            );
+        }
+
+        if (email != null && !email.isBlank()) {
+            criteria = criteria.and(
+                where("email").like("%" + email + "%").ignoreCase(true)
+            );
+        }
+
+        if (name != null && !name.isBlank()) {
+            Criteria firstName = where("first_name").like("%" + name + "%").ignoreCase(true);
+            Criteria lastName  = where("last_name").like("%" + name + "%").ignoreCase(true);
+            criteria = criteria.and(firstName.or(lastName));
+        }
+
+        org.springframework.data.relational.core.query.Query q =
+            org.springframework.data.relational.core.query.Query.query(criteria);
+
+        // Sorting
+        if (pageable.getSort().isEmpty()) {
+            q = q.sort(Sort.by(Sort.Direction.ASC, "id"));
+        } else {
+            q = q.sort(pageable.getSort());
+        }
+
+        // Pagination
+        q = q.limit(pageable.getPageSize())
+            .offset(pageable.getOffset());
+
+        return r2dbcEntityTemplate.select(q, User.class);
+    }
+
+    @Override
+    public Mono<Long> countBasicUsers(String login, String email, String name) {
+
+        Criteria criteria = Criteria.empty();
+
+        if (login != null && !login.isBlank()) {
+            criteria = criteria.and(
+                where("login").like("%" + login + "%").ignoreCase(true)
+            );
+        }
+
+        if (email != null && !email.isBlank()) {
+            criteria = criteria.and(
+                where("email").like("%" + email + "%").ignoreCase(true)
+            );
+        }
+
+        if (name != null && !name.isBlank()) {
+            Criteria firstName = where("first_name").like("%" + name + "%").ignoreCase(true);
+            Criteria lastName  = where("last_name").like("%" + name + "%").ignoreCase(true);
+            criteria = criteria.and(firstName.or(lastName));
+        }
+
+        org.springframework.data.relational.core.query.Query q =
+            org.springframework.data.relational.core.query.Query.query(criteria);
+
+        return r2dbcEntityTemplate.count(q, User.class);
+    }
+
+    // ===========================================
 
     private Mono<User> findOneWithAuthoritiesBy(String fieldName, Object fieldValue) {
         return db
             .sql("""
-            SELECT *
-            FROM app_user u
-            LEFT JOIN user_role ur ON u.id = ur.user_id
-            LEFT JOIN role_authority ra ON ur.role_id = ra.role_id
-            WHERE u.
-        """ + fieldName + " = :" + fieldName)
+                SELECT *
+                FROM app_user u
+                LEFT JOIN user_role ur ON u.id = ur.user_id
+                LEFT JOIN role_authority ra ON ur.role_id = ra.role_id
+                WHERE u.
+                """ + fieldName + " = :" + fieldName)
             .bind(fieldName, fieldValue)
             .map((row, metadata) ->
                 Tuples.of(
@@ -156,13 +243,13 @@ class UserRepositoryInternalImpl implements UserRepositoryInternal {
     public Mono<User> findOneWithAuthoritiesBy(String fieldName, Object fieldValue, Long facilityId) {
         return db
             .sql("""
-            SELECT *
-            FROM app_user u
-            LEFT JOIN user_role ur ON u.id = ur.user_id
-            LEFT JOIN role r ON ur.role_id = r.id
-            LEFT JOIN role_authority ra ON ur.role_id = ra.role_id
-            WHERE u.
-        """ + fieldName + " = :" + fieldName + " AND r.facility_id = :facilityId")
+                SELECT *
+                FROM app_user u
+                LEFT JOIN user_role ur ON u.id = ur.user_id
+                LEFT JOIN role r ON ur.role_id = r.id
+                LEFT JOIN role_authority ra ON ur.role_id = ra.role_id
+                WHERE u.
+                """ + fieldName + " = :" + fieldName + " AND r.facility_id = :facilityId")
             .bind(fieldName, fieldValue)
             .bind("facilityId", facilityId)
             .map((row, metadata) ->
@@ -189,7 +276,6 @@ class UserRepositoryInternalImpl implements UserRepositoryInternal {
                 })
                 .collect(Collectors.toSet())
         );
-
         return user;
     }
 }
