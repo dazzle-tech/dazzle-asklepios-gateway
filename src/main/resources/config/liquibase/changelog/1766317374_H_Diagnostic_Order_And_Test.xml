@@ -15,22 +15,22 @@
 
       <column name="patient_id" type="bigint"/>
       <column name="encounter_id" type="bigint"/>
-      <column name="status" type="text"/>
+      <column name="status" type="varchar(50)"/>
 
       <column name="order_number" type="bigint" >
         <constraints unique="true" nullable="false"/>
 
       </column>
       <column name="save_draft" type="boolean" defaultValueBoolean="true"/>
-      <column name="submitted_by" type="text"/>
+      <column name="submitted_by" type="varchar(50)"/>
       <column name="submitted_date" type="timestamp"/>
 
       <column name="is_urgent" type="boolean" defaultValueBoolean="false">
         <constraints nullable="false"/>
       </column>
 
-      <column name="lab_status" type="text"/>
-      <column name="rad_status" type="text"/>
+      <column name="lab_status" type="varchar(50)"/>
+      <column name="rad_status" type="varchar(50)"/>
 
       <!-- auditing -->
       <column name="created_date" type="timestamp"/>
@@ -60,16 +60,16 @@
 
       <column name="patient_id" type="bigint"/>
       <column name="encounter_id" type="bigint"/>
-      <column name="status" type="text"/>
+      <column name="status" type="varchar(50)"/>
 
       <column name="order_id" type="bigint"/>
       <column name="test_id" type="bigint"/>
 
       <column name="received_department_id" type="bigint"/>
-      <column name="reason" type="text"/>
+      <column name="reason" type="varchar(50)"/>
       <column name="notes" type="text"/>
 
-      <column name="processing_status" type="text"/>
+      <column name="processing_status" type="varchar(50)"/>
 
       <column name="submit_date" type="timestamp"/>
       <column name="accepted_date" type="timestamp"/>
@@ -80,15 +80,15 @@
       <column name="ready_date" type="timestamp"/>
       <column name="approved_date" type="timestamp"/>
 
-      <column name="order_type" type="text"/>
-      <column name="accepted_by" type="text"/>
-      <column name="rejected_by" type="text"/>
-      <column name="cancelled_by" type="text"/>
+      <column name="order_type" type="varchar(50)"/>
+      <column name="accepted_by" type="varchar(50)"/>
+      <column name="rejected_by" type="varchar(50)"/>
+      <column name="cancelled_by" type="varchar(50)"/>
 
-      <column name="rejected_reason" type="text"/>
-      <column name="patient_arrived_note_rad" type="text"/>
+      <column name="rejected_reason" type="varchar(200)"/>
+      <column name="patient_arrived_note_rad" type="varchar(150)"/>
 
-      <column name="cancellation_reason" type="text"/>
+      <column name="cancellation_reason" type="varchar(250)"/>
 
       <column name="from_department_id" type="bigint"/>
       <column name="from_facility_id" type="bigint"/>
