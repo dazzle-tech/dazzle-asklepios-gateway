@@ -6,9 +6,6 @@
     http://www.liquibase.org/xml/ns/dbchangelog
     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-  <!-- ============================================================ -->
-  <!-- Table: diagnostic_test_normal_range                          -->
-  <!-- ============================================================ -->
   <changeSet id="H00000000000030" author="hanan253yahya">
 
     <createTable tableName="diagnostic_test_normal_range">
@@ -16,9 +13,13 @@
         <constraints nullable="false" primaryKey="true"/>
       </column>
 
-      <column name="test_id" type="bigint">
+      <!-- NEW: always required -->
+      <column name="profile_test_id" type="bigint">
         <constraints nullable="false"/>
       </column>
+
+      <!-- OPTIONAL: keep as reference only -->
+      <column name="test_id" type="bigint"/>
 
       <column name="gender" type="varchar(100)"/>
       <column name="age_from" type="numeric"/>
@@ -27,9 +28,7 @@
       <column name="age_to_unit" type="varchar(100)"/>
       <column name="condition" type="varchar(100)"/>
 
-      <column name="result_type" type="varchar(100)">
-        <constraints nullable="false"/>
-      </column>
+      <!-- REMOVED: result_type (now on profile) -->
 
       <column name="result_text" type="varchar(500)"/>
       <column name="result_lov" type="varchar(200)"/>
@@ -37,34 +36,36 @@
       <column name="range_from" type="numeric"/>
       <column name="range_to" type="numeric"/>
 
-      <column name="critical_value" type="boolean" defaultValue="false"/>
+      <column name="critical_value" type="boolean" defaultValueBoolean="false"/>
       <column name="critical_value_less_than" type="numeric"/>
       <column name="critical_value_more_than" type="numeric"/>
 
-      <column name="profile_test_id" type="bigint"/>
-      <column name="is_profile" type="boolean" defaultValue="false"/>
+      <!-- REMOVED: is_profile -->
     </createTable>
 
-
-    <addForeignKeyConstraint
-      baseTableName="diagnostic_test_normal_range"
-      baseColumnNames="test_id"
-      referencedTableName="diagnostic_test"
-      referencedColumnNames="id"
-      constraintName="fk_test_id_normal_range"/>
     <addForeignKeyConstraint
       baseTableName="diagnostic_test_normal_range"
       baseColumnNames="profile_test_id"
       referencedTableName="diagnostic_test_profile"
       referencedColumnNames="id"
       constraintName="fk_profile_test_id_normal_range"/>
+
+    <!-- Keep as reference FK (nullable) -->
+    <addForeignKeyConstraint
+      baseTableName="diagnostic_test_normal_range"
+      baseColumnNames="test_id"
+      referencedTableName="diagnostic_test"
+      referencedColumnNames="id"
+      constraintName="fk_test_id_normal_range"/>
+
   </changeSet>
 
 
   <!-- ============================================================ -->
-  <!-- Table: diagnostic_test_normal_range_lov                      -->
+  <!-- Table: diagnostic_test_normal_range_lov                       -->
   <!-- ============================================================ -->
   <changeSet id="H00000000000031" author="hanan253yahya">
+
     <createTable tableName="diagnostic_test_normal_range_lov">
       <column name="id" type="bigint" autoIncrement="true">
         <constraints nullable="false" primaryKey="true"/>
@@ -77,8 +78,6 @@
       <column name="lov" type="varchar(100)">
         <constraints nullable="false"/>
       </column>
-
-
     </createTable>
 
     <addForeignKeyConstraint
@@ -87,7 +86,7 @@
       referencedTableName="diagnostic_test_normal_range"
       referencedColumnNames="id"
       constraintName="fk_normal_range_lov_id"/>
-  </changeSet>
 
+  </changeSet>
 
 </databaseChangeLog>
