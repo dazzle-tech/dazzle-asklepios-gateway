@@ -29,6 +29,9 @@
 
       <!-- OPTIONAL: default profile for tests without profiles -->
       <column name="is_default" type="boolean" defaultValueBoolean="false"/>
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="true"/>
+      </column>
     </createTable>
 
     <addForeignKeyConstraint
