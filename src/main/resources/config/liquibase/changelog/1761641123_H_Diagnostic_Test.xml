@@ -39,7 +39,7 @@
 
       <column name="is_active" type="boolean" defaultValueBoolean="true"/>
 
-      <!-- يمكن إبقاؤه مؤقتاً لتعديل الأكواد لاحقاً -->
+     
       <column name="is_profile" type="boolean"/>
 
       <column name="appointable" type="boolean"/>
