@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.r2dbc.convert.R2dbcConverter;
 import org.springframework.data.r2dbc.core.R2dbcEntityTemplate;
-import org.springframework.data.r2dbc.repository.Query; 
+import org.springframework.data.r2dbc.repository.Query;
 import org.springframework.data.r2dbc.repository.R2dbcRepository;
 import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.r2dbc.core.DatabaseClient;
@@ -45,7 +45,6 @@ public interface UserRepository extends R2dbcRepository<User, Long>, UserReposit
     @Query("DELETE FROM user_role WHERE user_id = :userId AND role_id = :roleId")
     Mono<Void> deleteUserRole(Long userId, Long roleId);
 
-    Flux<User> findAllByActivatedTrue();
 }
 
 interface DeleteExtended<T> {
