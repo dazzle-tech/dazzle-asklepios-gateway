@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="QA000000000012" author="qais">
+
+    <createTable tableName="surgical_history">
+      <column name="id" type="bigint" autoIncrement="true" startWith="1">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints
+          nullable="false"
+          foreignKeyName="fk_surgical_history_patient"
+          references="patients(id)"/>
+      </column>
+
+      <column name="surgery" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="date_of_surgery" type="date">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="facility" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="anesthesia_type" type="varchar(100)">
+      <constraints nullable="false"/>
+      </column>
+
+      <column name="complications" type="varchar(255)"/>
+
+      <column name="adverse_reactions_to_anesthesia" type="varchar(1000)"/>
+
+      <column name="has_implants_or_devices" type="boolean"/>
+      <column name="implants_or_devices_description" type="varchar(1000)"/>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+
+    <addUniqueConstraint
+      tableName="surgical_history"
+      columnNames="patient_id,surgery,date_of_surgery,facility"
+      constraintName="ux_surgical_history_patient_surgery_date_facility"/>
+
+  </changeSet>
+
+</databaseChangeLog>
