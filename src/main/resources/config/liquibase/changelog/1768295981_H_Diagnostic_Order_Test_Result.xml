@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="H000000000000_DIAG_RESULT" author="hanan253yahya">
+
+    <createTable tableName="diagnostic_order_tests_result">
+
+      <column name="id" type="bigint" autoIncrement="true" startWith="1500">
+        <constraints nullable="false" primaryKey="true" />
+      </column>
+
+      <column name="order_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="order_test_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="profile_test_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="result_value_number" type="decimal(19,2)"/>
+      <column name="result_value_text" type="text"/>
+      <column name="marker" type="varchar(50)"/>
+
+      <column name="approved_by" type="varchar(50)"/>
+      <column name="approved_date" type="timestamp"/>
+      <column name="rejected_by" type="varchar(50)"/>
+      <column name="rejected_date" type="timestamp"/>
+      <column name="rejected_reason" type="varchar(500)"/>
+      <column name="review_by" type="varchar(50)"/>
+      <column name="review_date" type="timestamp"/>
+
+      <column name="processing_status" type="varchar(50)"/>
+      <column name="normal_range_value" type="varchar(150)"/>
+
+      <!-- auditing -->
+      <column name="created_date" type="timestamp"/>
+      <column name="created_by" type="varchar(50)"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+
+
+    <addUniqueConstraint
+      tableName="diagnostic_order_tests_result"
+      columnNames="order_id,order_test_id,profile_test_id"
+      constraintName="uk_diag_res_order_order_test_profile"/>
+
+
+    <addForeignKeyConstraint
+      baseTableName="diagnostic_order_tests_result"
+      baseColumnNames="order_id"
+      constraintName="fk_diag_res_order"
+      referencedTableName="diagnostic_orders"
+      referencedColumnNames="id"
+    />
+
+    <addForeignKeyConstraint
+      baseTableName="diagnostic_order_tests_result"
+      baseColumnNames="order_test_id"
+      constraintName="fk_diag_res_order_test"
+      referencedTableName="diagnostic_order_tests"
+      referencedColumnNames="id"
+   />
+
+    <addForeignKeyConstraint
+      baseTableName="diagnostic_order_tests_result"
+      baseColumnNames="profile_test_id"
+      constraintName="fk_diag_res_profile_test"
+      referencedTableName="diagnostic_test_profile"
+      referencedColumnNames="id"
+     />
+
+  </changeSet>
+
+</databaseChangeLog>
