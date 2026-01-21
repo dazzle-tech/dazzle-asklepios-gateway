@@ -128,7 +128,7 @@
       referencedColumnNames="id"
 
     />
-    
+
 
     <!-- FK: order_id -> diagnostic_orders(id) -->
     <addForeignKeyConstraint
@@ -149,10 +149,13 @@
       referencedColumnNames="id"
 
     />
-    <addUniqueConstraint
-      tableName="diagnostic_order_tests"
-      columnNames="order_id, test_id"
-      constraintName="uq_dot_order_id_test_id"/>
+
+    <sql>
+      CREATE UNIQUE INDEX uq_dot_order_test_not_cancelled
+        ON public.diagnostic_order_tests (order_id, test_id)
+        WHERE status IS DISTINCT FROM 'CANCELLED';
+    </sql>
+
 
     <dropDefaultValue
       tableName="diagnostic_order_tests"
