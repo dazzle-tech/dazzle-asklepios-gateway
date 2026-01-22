@@ -29,6 +29,8 @@
       <column name="created_date" type="timestamp" defaultValueComputed="now()">
         <constraints nullable="false"/>
       </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
     </createTable>
 
     <!-- FK: external_test.test_id -> diagnostic_test.id -->
@@ -36,7 +38,7 @@
       constraintName="fk_external_test_test_id"
       baseTableName="external_test"
       baseColumnNames="test_id"
-      referencedTableName="diagnostic_test"
+      referencedTableName="diagnostic_order_tests"
       referencedColumnNames="id"/>
 
     <!-- each test can be sent to ONE external facility only -->
@@ -61,86 +63,11 @@
       <column name="test_id" type="bigint"/>
       <column name="action" type="varchar(10)"/>
       <column name="created_by" type="varchar(50)"/>
-      <column name="created_date" type="timestamp" defaultValueComputed="now()">
-        <constraints nullable="false"/>
-      </column>
-
+      <column name="created_date" type="timestamp" />
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
       <column name="payload" type="jsonb"/>
     </createTable>
-
   </changeSet>
-
-  <!-- 3) Triggers:
-         - BEFORE INSERT: set created_by/created_date (if null)
-         - AFTER INSERT/DELETE: write audit log
-  -->
-  <changeSet id="H000000000000MD_EXTERNAL_TEST_TRIGGERS" author="hanan253yahya">
-    <sql>
-      CREATE OR REPLACE FUNCTION public.fn_external_test_set_defaults()
-      RETURNS trigger
-      LANGUAGE plpgsql
-      AS $$
-      DECLARE
-      v_user text;
-      BEGIN
-        v_user := current_setting('app.user', true);
-
-        IF NEW.created_date IS NULL THEN
-          NEW.created_date := now();
-      END IF;
-
-        IF NEW.created_by IS NULL THEN
-          NEW.created_by := v_user;
-      END IF;
-
-      RETURN NEW;
-      END;
-      $$;
-    </sql>
-
-    <sql>
-      CREATE OR REPLACE FUNCTION public.fn_external_test_audit_log()
-      RETURNS trigger
-      LANGUAGE plpgsql
-      AS $$
-      DECLARE
-      v_user text;
-      BEGIN
-        v_user := current_setting('app.user', true);
-
-        IF (TG_OP = 'INSERT') THEN
-          INSERT INTO public.external_test_log(external_test_id, test_id, action, created_by, created_date, payload)
-          VALUES (NEW.id, NEW.test_id, 'INSERT', COALESCE(NEW.created_by, v_user), now(), to_jsonb(NEW));
-      RETURN NEW;
-
-      ELSIF (TG_OP = 'DELETE') THEN
-          INSERT INTO public.external_test_log(external_test_id, test_id, action, created_by, created_date, payload)
-          VALUES (OLD.id, OLD.test_id, 'DELETE', COALESCE(v_user, OLD.created_by), now(), to_jsonb(OLD));
-      RETURN OLD;
-      END IF;
-
-      RETURN NULL;
-      END;
-      $$;
-    </sql>
-
-    <sql>
-      DROP TRIGGER IF EXISTS trg_external_test_set_defaults ON public.external_test;
-      CREATE TRIGGER trg_external_test_set_defaults
-        BEFORE INSERT
-        ON public.external_test
-        FOR EACH ROW
-        EXECUTE FUNCTION public.fn_external_test_set_defaults();
-    </sql>
-
-    <sql>
-      DROP TRIGGER IF EXISTS trg_external_test_audit_log ON public.external_test;
-      CREATE TRIGGER trg_external_test_audit_log
-        AFTER INSERT OR DELETE
-      ON public.external_test
-      FOR EACH ROW
-      EXECUTE FUNCTION public.fn_external_test_audit_log();
-    </sql>
-  </changeSet>
-
+  <include file="config/liquibase/changelog/sql/external_test_triggers.sql" relativeToChangelogFile="false"/>
 </databaseChangeLog>
