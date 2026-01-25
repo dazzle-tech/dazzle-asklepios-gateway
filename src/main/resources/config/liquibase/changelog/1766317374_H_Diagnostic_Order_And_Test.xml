@@ -31,7 +31,8 @@
 
       <column name="lab_status" type="varchar(50)"/>
       <column name="rad_status" type="varchar(50)"/>
-
+      <column name="from_department_id" type="bigint"/>
+      <column name="from_facility_id" type="bigint"/>
       <!-- auditing -->
       <column name="created_date" type="timestamp"/>
       <column name="created_by" type="varchar(50)"/>
@@ -49,6 +50,25 @@
       tableName="diagnostic_orders"
       columnName="created_date"
       columnDataType="${datetimeType}"/>
+
+
+    <!-- FK: from_department_id -> department(id) -->
+    <addForeignKeyConstraint
+      constraintName="fk_do_from_department"
+      baseTableName="diagnostic_orders"
+      baseColumnNames="from_department_id"
+      referencedTableName="department"
+      referencedColumnNames="id"
+
+    />
+    <addForeignKeyConstraint
+      constraintName="fk_do_from_facility"
+      baseTableName="diagnostic_orders"
+      baseColumnNames="from_facility_id"
+      referencedTableName="facility"
+      referencedColumnNames="id"
+
+    />
   </changeSet>
 
   <changeSet id="H000000000000MD_DIAG_ORDER_TESTS" author="hanan253yahya">
@@ -90,10 +110,6 @@
 
       <column name="cancellation_reason" type="varchar(250)"/>
 
-      <column name="from_department_id" type="bigint"/>
-      <column name="from_facility_id" type="bigint"/>
-      <column name="to_facility_id" type="bigint"/>
-
 
       <!-- auditing -->
       <column name="created_date" type="timestamp"/>
@@ -113,35 +129,6 @@
 
     />
 
-    <!-- FK: from_department_id -> department(id) -->
-    <addForeignKeyConstraint
-      constraintName="fk_dot_from_department"
-      baseTableName="diagnostic_order_tests"
-      baseColumnNames="from_department_id"
-      referencedTableName="department"
-      referencedColumnNames="id"
-
-    />
-
-    <!-- FK: from_facility_id -> facility(id) -->
-    <addForeignKeyConstraint
-      constraintName="fk_dot_from_facility"
-      baseTableName="diagnostic_order_tests"
-      baseColumnNames="from_facility_id"
-      referencedTableName="facility"
-      referencedColumnNames="id"
-
-    />
-
-    <!-- FK: to_facility_id -> facility(id) -->
-    <addForeignKeyConstraint
-      constraintName="fk_dot_to_facility"
-      baseTableName="diagnostic_order_tests"
-      baseColumnNames="to_facility_id"
-      referencedTableName="facility"
-      referencedColumnNames="id"
-
-    />
 
     <!-- FK: order_id -> diagnostic_orders(id) -->
     <addForeignKeyConstraint
@@ -162,10 +149,13 @@
       referencedColumnNames="id"
 
     />
-    <addUniqueConstraint
-      tableName="diagnostic_order_tests"
-      columnNames="order_id, test_id"
-      constraintName="uq_dot_order_id_test_id"/>
+
+    <sql>
+      CREATE UNIQUE INDEX uq_dot_order_test_not_cancelled
+        ON public.diagnostic_order_tests (order_id, test_id)
+        WHERE status IS DISTINCT FROM 'CANCELLED';
+    </sql>
+
 
     <dropDefaultValue
       tableName="diagnostic_order_tests"
