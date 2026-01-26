@@ -6,8 +6,8 @@
     http://www.liquibase.org/xml/ns/dbchangelog
     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-  <changeSet id="100000000000066_CHIEF_COMPLAIN" author="Sondos">
-    <createTable tableName="chief_complain">
+  <changeSet id="100000000000066_General_Assessment" author="Sondos">
+    <createTable tableName="general_assessment">
       <column name="id" type="bigint" startWith="1" autoIncrement="true">
         <constraints primaryKey="true" nullable="false"/>
       </column>
@@ -20,25 +20,46 @@
         <constraints nullable="false"/>
       </column>
 
-      <column name="chief_complaint" type="text">
+      <column name="position_status" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
-      <column name="provocation" type="varchar(200)"/>
-      <column name="palliation" type="varchar(200)"/>
-      <column name="quality" type="varchar(50)"/>
-      <column name="region" type="varchar(50)"/>
-      <column name="severity" type="varchar(50)">
+      <column name="body_movements" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="level_of_consciousness" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="facial_expression" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="speech" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="mood_behavior" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
 
-      <column name="onset_date_time" type="timestamp" >
+      <column name="memory_remote" type="boolean">
+      <constraints nullable="false"/>
+      </column>
+      <column name="memory_recent" type="boolean">
         <constraints nullable="false"/>
       </column>
-      <column name="case_understanding" type="varchar(500)">
+      <column name="signs_of_agitation" type="boolean">
         <constraints nullable="false"/>
       </column>
-      <column name="patient_condition" type="varchar(50)"/>
-
+      <column name="signs_of_depression" type="boolean">
+        <constraints nullable="false"/>
+      </column>
+      <column name="signs_of_suicidal_ideation" type="boolean">
+        <constraints nullable="false"/>
+      </column>
+      <column name="signs_of_substance_use" type="boolean">
+        <constraints nullable="false"/>
+      </column>
+      <column name="is_triage" type="boolean">
+        <constraints nullable="false"/>
+      </column>
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
@@ -49,30 +70,26 @@
       <column name="last_modified_date" type="timestamp"/>
     </createTable>
 
-    <createIndex indexName="idx_chief_complain_encounter_createddate_desc" tableName="chief_complain">
+    <createIndex indexName="idx_general_assessment_encounter_createddate_desc" tableName="general_assessment">
     <column name="encounter_id"/>
     <column name="created_date" descending="true"/>
     </createIndex>
-    <addUniqueConstraint
-      tableName="chief_complain"
-      columnNames="encounter_id"
-      constraintName="uk_chief_complain_encounter_id"/>
 
     <addForeignKeyConstraint
-      baseTableName="chief_complain"
+      baseTableName="general_assessment"
       baseColumnNames="patient_id"
       referencedTableName="patients"
       referencedColumnNames="id"
-      constraintName="fk_chief_complain_patient_id"/>
+      constraintName="fk_general_assessment_patient_id"/>
 
     <!-- TODO: add foreign key with encounter table when ready-->
     <!--
     <addForeignKeyConstraint
-      baseTableName="chief_complain"
+      baseTableName="general_assessment"
       baseColumnNames="encounter_id"
       referencedTableName="encounter"
       referencedColumnNames="id"
-      constraintName="fk_chief_complain_encounter_id"
+      constraintName="fk_general_assessment_encounter_id"
       onDelete="CASCADE"/>
     -->
   </changeSet>
