@@ -101,5 +101,9 @@
   <include file="/config/liquibase/changelog/1763382042_Q_PatientPreferredHealthProfessional.xml" relativeToChangelogFile="false" />
   <include file="/config/liquibase/changelog/1763381810_Q_Patient_Address.xml" relativeToChangelogFile="false" />
   <include file="/config/liquibase/changelog/1769002586_B_VitalSigns.xml" relativeToChangelogFile="false" />
+  <include file="/config/liquibase/changelog/1769005669_B_BodyMeasurements.xml" relativeToChangelogFile="false" />
+  <include file="/config/liquibase/changelog/1769004404_B_PatientObservation_Complaints.xml" relativeToChangelogFile="false" />
+  <include file="/config/liquibase/changelog/1769266434_B_painAssessment.xml" relativeToChangelogFile="false" />
+  <include file="/config/liquibase/changelog/1769277985_B_additionalMeasurements.xml" relativeToChangelogFile="false" />
 
 </databaseChangeLog>

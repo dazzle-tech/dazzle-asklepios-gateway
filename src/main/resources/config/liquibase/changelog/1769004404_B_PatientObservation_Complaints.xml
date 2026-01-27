@@ -9,64 +9,57 @@
         http://www.liquibase.org/xml/ns/dbchangelog-ext
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-  <changeSet id="bs000000000027" author="batool">
+  <changeSet id="bs000000000028" author="batool">
 
-    <createTable tableName="vital_signs">
+    <!-- Create table -->
+    <createTable tableName="patient_observations_complaints">
       <column name="id" type="bigint" autoIncrement="true">
         <constraints primaryKey="true" nullable="false"/>
       </column>
 
       <column name="patient_id" type="bigint">
-        <constraints nullable="false"
-                     foreignKeyName="fk_vital_signs_patient"
-                     referencedTableName="patients"
-                     referencedColumnNames="id"/>
+        <constraints nullable="false"/>
       </column>
 
       <column name="encounter_id" type="bigint">
         <constraints nullable="false"/>
       </column>
 
-      <column name="blood_pressure_systolic" type="integer"/>
-      <column name="blood_pressure_diastolic" type="integer"/>
-
-      <column name="measurement_site" type="varchar(255)"/>
-
-      <column name="heart_rate" type="integer"/>
-
-      <column name="temperature" type="numeric(5,2)">
-        <constraints nullable="true"/>
+      <column name="functional_status" type="text">
+        <constraints nullable="false"/>
       </column>
 
-      <column name="oxygen_saturation" type="integer"/>
+      <column name="reason_of_visit" type="text"/>
 
-      <column name="respiratory_rate" type="integer"/>
+      <column name="cognitive_check" type="text"/>
 
-      <column name="notes" type="text"/>
-
-      <column name="is_triage" type="boolean">
-        <constraints nullable="true"/>
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
       </column>
 
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
 
-      <column name="is_active" type="boolean" defaultValueBoolean="true">
-        <constraints nullable="false"/>
-      </column>
-
       <column name="created_date" type="timestamp"/>
       <column name="last_modified_by" type="varchar(50)"/>
       <column name="last_modified_date" type="timestamp"/>
-
     </createTable>
 
-    <createIndex indexName="ix_vital_signs_patient" tableName="vital_signs">
+    <addForeignKeyConstraint
+      baseTableName="patient_observations_complaints"
+      baseColumnNames="patient_id"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+      constraintName="fk_patient_obs_comp_patient"/>
+
+    <createIndex indexName="ix_patient_obs_comp_patient"
+                 tableName="patient_observations_complaints">
       <column name="patient_id"/>
     </createIndex>
 
-    <createIndex indexName="ix_vital_signs_encounter" tableName="vital_signs">
+    <createIndex indexName="ix_patient_obs_comp_encounter"
+                 tableName="patient_observations_complaints">
       <column name="encounter_id"/>
     </createIndex>
 
