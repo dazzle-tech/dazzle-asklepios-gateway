@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+  <changeSet id="bs000000000026" author="batool">
+
+    <createTable tableName="encounter_vaccination">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_encounter_vaccination_patient"
+                     referencedTableName="patients"
+                     referencedColumnNames="id"/>
+      </column>
+
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="vaccine_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_encounter_vaccination_vaccine"
+                     referencedTableName="vaccine"
+                     referencedColumnNames="id"/>
+      </column>
+
+      <column name="vaccine_brand_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_encounter_vaccination_vaccine_brand"
+                     referencedTableName="vaccine_brands"
+                     referencedColumnNames="id"/>
+      </column>
+
+      <column name="vaccine_dose_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_encounter_vaccination_vaccine_dose"
+                     referencedTableName="vaccine_doses"
+                     referencedColumnNames="id"/>
+      </column>
+
+      <column name="vaccine_lot_number" type="varchar(50)"/>
+
+      <column name="date_administered" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="status" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="cancellation_reason" type="varchar(255)"/>
+
+      <column name="cancelled_at" type="timestamp"/>
+      <column name="cancelled_by_id" type="bigint">
+        <constraints nullable="true"
+                     foreignKeyName="fk_encounter_vaccination_cancelled_by"
+                     referencedTableName="app_user"
+                     referencedColumnNames="id"/>
+      </column>
+
+      <column name="administered_location" type="varchar(255)"/>
+      <column name="administration_reactions" type="text"/>
+      <column name="external_facility_name" type="varchar(255)"/>
+      <column name="notes" type="text"/>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+
+      <column name="reviewed_at" type="timestamp"/>
+      <column name="reviewed_by_id" type="bigint">
+        <constraints nullable="true"
+                     foreignKeyName="fk_encounter_vaccination_reviewed_by"
+                     referencedTableName="app_user"
+                     referencedColumnNames="id"/>
+      </column>
+
+    </createTable>
+
+    <sql dbms="postgresql">
+      CREATE UNIQUE INDEX ux_encounter_vaccination_patient_vaccine_dose_active
+        ON encounter_vaccination (patient_id, vaccine_id, vaccine_dose_id)
+        WHERE status &lt;&gt; 'CANCELLED';
+    </sql>
+
+  </changeSet>
+
+</databaseChangeLog>
