@@ -97,7 +97,7 @@
 
       <column name="result_by" type="varchar(50)"/>
 
-      <column name="result_value" type="text">
+      <column name="result_value" type="varchar(500)">
         <constraints nullable="false"/>
       </column>
     </createTable>
