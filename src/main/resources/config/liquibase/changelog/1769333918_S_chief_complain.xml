@@ -38,6 +38,9 @@
         <constraints nullable="false"/>
       </column>
       <column name="patient_condition" type="varchar(50)"/>
+      <column name="is_triage" type="boolean">
+        <constraints nullable="false"/>
+      </column>
 
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>
@@ -55,8 +58,8 @@
     </createIndex>
     <addUniqueConstraint
       tableName="chief_complain"
-      columnNames="encounter_id"
-      constraintName="uk_chief_complain_encounter_id"/>
+      columnNames="encounter_id, is_triage"
+      constraintName="uk_chief_complain_encounter_id_is_triage"/>
 
     <addForeignKeyConstraint
       baseTableName="chief_complain"
