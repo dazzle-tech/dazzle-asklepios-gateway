@@ -81,5 +81,35 @@
      />
 
   </changeSet>
+  <changeSet id="H000000000001_RESULT_LOG" author="hanan253yahya">
+    <createTable tableName="lab_result_log">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
 
+      <column name="result_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="result_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="result_by" type="varchar(50)"/>
+
+      <column name="result_value" type="text">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="lab_result_log"
+      baseColumnNames="result_id"
+      constraintName="fk_result_log_result"
+      referencedTableName="diagnostic_order_tests_result"
+      referencedColumnNames="id"
+    />
+
+  </changeSet>
+<include file="config/liquibase/sql/Lab_Result_Log.sql" relativeToChangelogFile="false"/>
 </databaseChangeLog>
