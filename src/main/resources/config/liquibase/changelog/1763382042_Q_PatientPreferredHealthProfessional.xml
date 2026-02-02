@@ -24,12 +24,6 @@
                      references="practitioner(id)"/>
       </column>
 
-      <column name="facility_id" type="bigint">
-        <constraints nullable="false"
-                     foreignKeyName="fk_pphp_facility"
-                     references="facility(id)"/>
-      </column>
-
       <column name="network_affiliation" type="varchar(255)"/>
 
       <column name="related_with" type="varchar(255)"/>
@@ -44,8 +38,8 @@
     </createTable>
 
     <addUniqueConstraint tableName="patient_preferred_health_professional"
-                         columnNames="patient_id,practitioner_id,facility_id"
-                         constraintName="uk_pphp_patient_practitioner_facility"/>
+                         columnNames="patient_id,practitioner_id"
+                         constraintName="uk_pphp_patient_practitioner"/>
 
   </changeSet>
 
