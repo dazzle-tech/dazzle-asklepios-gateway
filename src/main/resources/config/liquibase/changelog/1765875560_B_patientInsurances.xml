@@ -34,7 +34,7 @@
 
       <column name="plan_id" type="bigint">
         <constraints
-          nullable="true"
+          nullable="false"
           foreignKeyName="fk_patient_insurance_plan"
           referencedTableName="payor_plan"
           referencedColumnNames="id"/>
