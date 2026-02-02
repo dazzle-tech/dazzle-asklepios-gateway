@@ -8,6 +8,9 @@
 
   <changeSet id="H000000000000SetupPayorPlan1" author="hanan253yahya">
 
+    <!-- =========================================================
+         PAYOR PLAN (Information)
+         ========================================================= -->
     <createTable tableName="payor_plan">
       <column name="id" type="bigint" autoIncrement="true">
         <constraints primaryKey="true" nullable="false"/>
@@ -26,7 +29,38 @@
         <constraints nullable="false"/>
       </column>
 
-      <!-- Coverage rule (single rule on the plan) -->
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <!-- auditing -->
+      <column name="created_date" type="timestamp"/>
+      <column name="created_by" type="varchar(50)"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+
+    <addForeignKeyConstraint baseTableName="payor_plan"
+                             baseColumnNames="payor_id"
+                             referencedTableName="payor"
+                             referencedColumnNames="id"
+                             constraintName="fk_payor_plan_payor" />
+
+
+    <!-- =========================================================
+         PAYOR PLAN ITEMS (Coverage Rules - multiple rows)
+         ========================================================= -->
+    <createTable tableName="payor_plan_item">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="plan_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <!-- Coverage Rules -->
       <column name="item_type" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
@@ -38,42 +72,25 @@
       </column>
 
       <column name="is_active" type="boolean" defaultValueBoolean="true">
-
+        <constraints nullable="false"/>
       </column>
 
-      <!-- auditing -->
-      <column name="created_date" type="timestamp"/>
-      <column name="created_by" type="varchar(50)"/>
-      <column name="last_modified_by" type="varchar(50)"/>
-      <column name="last_modified_date" type="timestamp"/>
+
     </createTable>
 
-    <createIndex tableName="payor_plan" indexName="idx_payor_plan_payor">
-      <column name="payor_id"/>
-    </createIndex>
 
-    <createIndex tableName="payor_plan" indexName="idx_payor_plan_name">
-      <column name="name"/>
-    </createIndex>
 
-    <createIndex tableName="payor_plan" indexName="idx_payor_plan_type">
-      <column name="plan_type"/>
-    </createIndex>
-
-    <createIndex tableName="payor_plan" indexName="idx_payor_plan_item_type">
-      <column name="item_type"/>
-    </createIndex>
-
-    <addForeignKeyConstraint baseTableName="payor_plan"
-                             baseColumnNames="payor_id"
-                             referencedTableName="payor"
+    <addForeignKeyConstraint baseTableName="payor_plan_item"
+                             baseColumnNames="plan_id"
+                             referencedTableName="payor_plan"
                              referencedColumnNames="id"
-                             constraintName="fk_payor_id_payor_plan"/>
+                             constraintName="fk_plan_item_plan"/>
 
     <dropDefaultValue
-      tableName="resource"
+      tableName="payor_plan"
       columnName="created_date"
       columnDataType="${datetimeType}"/>
 
   </changeSet>
+
 </databaseChangeLog>
