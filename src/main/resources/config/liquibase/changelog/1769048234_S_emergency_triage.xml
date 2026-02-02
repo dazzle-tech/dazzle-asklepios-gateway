@@ -45,7 +45,7 @@
       <column name="ecg_required" type="varchar(50)"/>
       <column name="consultation_required" type="varchar(50)"/>
       <column name="destination" type="varchar(50)"/>
-
+      <column name="completed_date" type="timestamp"/>
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
