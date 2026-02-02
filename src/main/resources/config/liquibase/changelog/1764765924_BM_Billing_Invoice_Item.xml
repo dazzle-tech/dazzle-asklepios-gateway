@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+<changeSet id="BM0000000000020" author="BushraMashaiekh">
+  <createTable tableName="billing_invoice_item">
+    <column name="id" type="bigint" autoIncrement="true">
+      <constraints primaryKey="true" nullable="false"/>
+    </column>
+
+    <column name="invoice_id" type="bigint">
+      <constraints nullable="false"
+                   foreignKeyName="fk_billing_item_invoice"
+                   references="billing_invoice(id)"/>
+    </column>
+    <column name="nurse_service_product_key" type="varchar(50)"/>
+    <column name="code" type="varchar(50)"/>
+    <column name="quantity" type="numeric(18,3)">
+      <constraints nullable="false"/>
+    </column>
+
+    <column name="unit_price" type="numeric(18,2)">
+      <constraints nullable="false"/>
+    </column>
+    <column name="total_price" type="numeric(18,2)">
+      <constraints nullable="false"/>
+    </column>
+    <column name="currency" type="varchar(10)"/>
+
+    <column name="created_by" type="varchar(50)">
+      <constraints nullable="false"/>
+    </column>
+    <column name="created_date" type="timestamp"/>
+
+    <column name="last_modified_by" type="varchar(50)"/>
+
+    <column name="last_modified_date" type="timestamp"/>
+  </createTable>
+
+  <dropDefaultValue tableName="billing_invoice_item"
+                    columnName="created_date"
+                    columnDataType="timestamp"/>
+</changeSet>
+
+</databaseChangeLog>

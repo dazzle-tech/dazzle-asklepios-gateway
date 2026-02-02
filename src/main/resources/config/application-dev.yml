@@ -15,9 +15,16 @@ management:
 
 services:
   asklepios-general-service-url: http://localhost:9090
-  asklepios-setup-service-url :  http://localhost:8082
-  asklepios-patient-service-url :  http://localhost:8083
-  asklepios-inventory-service-url :  http://localhost:8084
+  asklepios-setup-service-url: http://localhost:8082
+  asklepios-patient-service-url: http://localhost:8083
+  asklepios-inventory-service-url: http://localhost:8084
+  asklepios-billing-service-url: http://localhost:8085
+
+  medication-test-orders-validation-service-url: http://localhost:8005
+  clinical-summary-service-url: http://localhost:8003
+  clinical-recommendations-service-url: http://localhost:8004
+
+
 spring:
   devtools:
     restart:
@@ -59,7 +66,7 @@ spring:
             - StripPrefix=0
 
         - id: appointment
-          uri: ${services.asklepios-general-service-url}
+          uri: ${services.asklepios-patient-service-url}
           predicates:
             - Path=/appointment/**
           filters:
@@ -197,6 +204,35 @@ spring:
             - Path=/api/inventory/**
           filters:
             - StripPrefix=0
+
+        - id: billing
+          uri: ${services.asklepios-billing-service-url}
+          predicates:
+            - Path=/api/billing/**
+          filters:
+            - StripPrefix=0
+
+        - id: medication-test-orders-validation
+          uri: ${services.medication-test-orders-validation-service-url}
+          predicates:
+            - Path=/api/ai/v1/medication-test-orders/**
+          filters:
+            - RewritePath=/api/ai/v1/medication-test-orders/(?<segment>.*),/api/v1/${segment}
+
+        - id: clinical-summary
+          uri: ${services.clinical-summary-service-url}
+          predicates:
+            - Path=/api/ai/v1/clinical-summary/**
+          filters:
+            - RewritePath=/api/ai/v1/clinical-summary/(?<segment>.*),/api/v1/${segment}
+
+        - id: clinical-recommendations
+          uri: ${services.clinical-recommendations-service-url}
+          predicates:
+            - Path=/api/ai/v1/clinical-recommendations/**
+          filters:
+            - RewritePath=/api/ai/v1/clinical-recommendations/(?<segment>.*),/api/v1/${segment}
+
 
       httpclient:
         pool:

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="BM0000000000022" author="BushraMashaiekh">
+  <createTable tableName="payment_allocation">
+    <column name="id" type="bigint" autoIncrement="true">
+      <constraints primaryKey="true" nullable="false"/>
+    </column>
+
+    <column name="payment_id" type="bigint">
+      <constraints nullable="false"
+                   foreignKeyName="fk_allocation_payment"
+                   references="patient_payment(id)"/>
+    </column>
+
+    <column name="invoice_id" type="bigint">
+      <constraints nullable="false"
+                   foreignKeyName="fk_allocation_invoice"
+                   references="billing_invoice(id)"/>
+    </column>
+
+    <column name="allocated_amount" type="numeric(18,2)">
+      <constraints nullable="false"/>
+    </column>
+
+    <!-- لو حابة تخصّصي على level الـ item -->
+    <column name="invoice_item_id" type="bigint">
+      <constraints nullable="true"
+                   foreignKeyName="fk_allocation_invoice_item"
+                   references="billing_invoice_item(id)"/>
+    </column>
+
+    <column name="created_by" type="varchar(50)">
+      <constraints nullable="false"/>
+    </column>
+    <column name="created_date" type="timestamp"/>
+    <column name="last_modified_by" type="varchar(50)"/>
+    <column name="last_modified_date" type="timestamp"/>
+  </createTable>
+
+  <dropDefaultValue tableName="payment_allocation"
+                    columnName="created_date"
+                    columnDataType="timestamp"/>
+</changeSet>
+
+
+  </databaseChangeLog>

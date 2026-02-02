@@ -12,7 +12,9 @@
         <constraints primaryKey="true" nullable="false"/>
       </column>
       <column name="description" type="varchar(50)"/>
-      <column name="name" type="varchar(50)"/>
+      <column name="name" type="varchar(50)">
+      <constraints nullable="false"/>
+      </column>
       <column name="is_active" type="boolean" defaultValueBoolean="true">
         <constraints nullable="false"/>
       </column>

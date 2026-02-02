@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="H000000000000SetupPayorPlan1" author="hanan253yahya">
+
+    <!-- =========================================================
+         PAYOR PLAN (Information)
+         ========================================================= -->
+    <createTable tableName="payor_plan">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="payor_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <!-- Information -->
+      <column name="name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="plan_type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <!-- auditing -->
+      <column name="created_date" type="timestamp"/>
+      <column name="created_by" type="varchar(50)"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+
+    <addForeignKeyConstraint baseTableName="payor_plan"
+                             baseColumnNames="payor_id"
+                             referencedTableName="payor"
+                             referencedColumnNames="id"
+                             constraintName="fk_payor_plan_payor" />
+
+
+    <!-- =========================================================
+         PAYOR PLAN ITEMS (Coverage Rules - multiple rows)
+         ========================================================= -->
+    <createTable tableName="payor_plan_item">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="plan_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <!-- Coverage Rules -->
+      <column name="item_type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="amount" type="decimal"/>
+
+      <column name="coverage_type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+
+    </createTable>
+
+
+
+    <addForeignKeyConstraint baseTableName="payor_plan_item"
+                             baseColumnNames="plan_id"
+                             referencedTableName="payor_plan"
+                             referencedColumnNames="id"
+                             constraintName="fk_plan_item_plan"/>
+
+    <dropDefaultValue
+      tableName="payor_plan"
+      columnName="created_date"
+      columnDataType="${datetimeType}"/>
+
+  </changeSet>
+
+</databaseChangeLog>

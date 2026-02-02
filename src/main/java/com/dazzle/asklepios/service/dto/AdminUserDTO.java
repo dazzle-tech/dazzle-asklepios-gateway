@@ -6,6 +6,7 @@ import com.dazzle.asklepios.domain.User;
 import com.dazzle.asklepios.domain.enumeration.Gender;
 import com.dazzle.asklepios.domain.enumeration.JobRole;
 import com.dazzle.asklepios.domain.enumeration.SecurityLevel;
+import com.dazzle.asklepios.security.AuthoritiesConstants;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -71,6 +72,7 @@ public class AdminUserDTO implements Serializable {
     private Gender gender;
     private JobRole jobRole;
     private SecurityLevel securityAccessLeve;
+    private boolean isAdmin;
 
 
     public AdminUserDTO() {
@@ -89,13 +91,19 @@ public class AdminUserDTO implements Serializable {
         this.createdDate = user.getCreatedDate();
         this.lastModifiedBy = user.getLastModifiedBy();
         this.lastModifiedDate = user.getLastModifiedDate();
-        this.authorities = user.getAuthorities().stream().map(Authority::getName).collect(Collectors.toSet());
+
+        this.authorities = user.getAuthorities()
+            .stream()
+            .map(Authority::getName)
+            .collect(Collectors.toSet());
+
+        this.isAdmin = this.authorities.contains(AuthoritiesConstants.ADMIN);
 
         this.phoneNumber = user.getPhoneNumber();
         this.birthDate = user.getBirthDate();
         this.gender = user.getGender();
-        this.jobRole=user.getJobRole();
-        this.securityAccessLeve=user.getSecurityAccessLeve();
-
+        this.jobRole = user.getJobRole();
+        this.securityAccessLeve = user.getSecurityAccessLeve();
     }
+
 }

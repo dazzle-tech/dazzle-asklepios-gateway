@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="H000000000000Billing1" author="hanan253yahya">
+    <createTable tableName="price_list">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="facility_id" type="bigint">
+        <constraints  nullable="false"/>
+      </column>
+
+
+      <column name="name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="currency" type="varchar(10)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="effective_from" type="date">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="effective_to" type="date"/>
+
+      <column name="description" type="text"/>
+      <column name="is_active" type="boolean" defaultValueBoolean="false"/>
+
+      <column name="created_date" type="timestamp"/>
+      <column name="created_by" type="varchar(50)"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addForeignKeyConstraint baseTableName="price_list"
+                             baseColumnNames="facility_id"
+                             referencedTableName="facility"
+                             referencedColumnNames="id"
+                             constraintName="fk_price_list_facility"/>
+
+    <createIndex tableName="price_list" indexName="idx_price_list_facility">
+      <column name="facility_id"/>
+    </createIndex>
+    <dropDefaultValue
+      tableName="price_list"
+      columnName="created_date"
+      columnDataType="${datetimeType}"/>
+  </changeSet>
+
+
+</databaseChangeLog>
