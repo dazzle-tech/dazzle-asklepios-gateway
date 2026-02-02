@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="QA0000000000015" author="qais">
+
+    <createTable tableName="consultation">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_consultation_patient"
+                     referencedTableName="patients"
+                     referencedColumnNames="id"/>
+      </column>
+
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="from_facility_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_consultation_from_facility"
+                     referencedTableName="facility"
+                     referencedColumnNames="id"/>
+      </column>
+
+      <column name="to_facility_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_consultation_to_facility"
+                     referencedTableName="facility"
+                     referencedColumnNames="id"/>
+      </column>
+
+      <column name="from_department_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_consultation_from_department"
+                     referencedTableName="department"
+                     referencedColumnNames="id"/>
+      </column>
+
+      <column name="to_department_id" type="bigint">
+        <constraints nullable="true"
+                     foreignKeyName="fk_consultation_to_department"
+                     referencedTableName="department"
+                     referencedColumnNames="id"/>
+      </column>
+
+      <column name="consultation_number" type="bigint" autoIncrement="true" startWith="100">
+        <constraints nullable="false" unique="true" uniqueConstraintName="uk_consultation_consultation_number"/>
+      </column>
+
+
+      <column name="destination_type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="consultation_type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="consultant_speciality" type="varchar(50)"/>
+
+      <column name="consultation_method" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="practitioner_id" type="bigint">
+        <constraints nullable="true"
+                     foreignKeyName="fk_consultation_practitioner"
+                     referencedTableName="practitioner"
+                     referencedColumnNames="id"/>
+      </column>
+
+      <column name="consultation_level" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="consultation_content" type="text">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="notes" type="text"/>
+      <column name="extra_document" type="text"/>
+
+      <column name="approval_number" type="bigint"/>
+
+      <column name="status" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="cancelled_date" type="timestamp">
+        <constraints nullable="true"/>
+      </column>
+
+      <column name="cancelled_by" type="bigint">
+        <constraints
+          nullable="true"
+          foreignKeyName="fk_consultation_cancelled_by"
+          referencedTableName="app_user"
+          referencedColumnNames="id"/>
+      </column>
+
+      <column name="cancellation_reason" type="text"/>
+
+      <column name="response_date" type="timestamp"/>
+      <column name="response_by" type="bigint">
+        <constraints nullable="true"
+                     foreignKeyName="fk_consultation_response_by"
+                     referencedTableName="app_user"
+                     referencedColumnNames="id"/>
+      </column>
+
+      <column name="response_text" type="text"/>
+
+      <column name="rejected_date" type="timestamp"/>
+      <column name="rejected_by" type="bigint">
+        <constraints nullable="true"
+                     foreignKeyName="fk_consultation_rejected_by"
+                     referencedTableName="app_user"
+                     referencedColumnNames="id"/>
+      </column>
+
+      <column name="reject_reason" type="text"/>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+
+    <sql>
+      <![CDATA[
+      ALTER TABLE consultation
+        ADD CONSTRAINT ck_consultation_status
+          CHECK (status IN ('SUBMITTED', 'REJECTED', 'CONFIRMED', 'REQUESTED', 'COMPLETED', 'CANCELLED'));
+      ]]>
+    </sql>
+
+    <sql>
+      <![CDATA[
+      ALTER TABLE consultation
+        ADD CONSTRAINT ck_consultation_reject_reason
+          CHECK (status <> 'REJECTED' OR reject_reason IS NOT NULL);
+      ]]>
+    </sql>
+
+    <sql>
+      <![CDATA[
+      ALTER TABLE consultation
+        ADD CONSTRAINT ck_consultation_response_text
+          CHECK (status <> 'COMPLETED' OR response_text IS NOT NULL);
+      ]]>
+    </sql>
+
+    <sql>
+      <![CDATA[
+      ALTER TABLE consultation
+        ADD CONSTRAINT ck_consultation_level
+          CHECK (consultation_level IN ('REGULAR', 'CRITICAL'));
+      ]]>
+    </sql>
+
+    <sql>
+      <![CDATA[
+      ALTER TABLE consultation
+        ADD CONSTRAINT ck_destination_type_enum
+          CHECK (destination_type IN ('DEPARTMENT', 'CONSULTANT'));
+      ]]>
+    </sql>
+
+    <sql>
+      <![CDATA[
+      ALTER TABLE consultation
+        ADD CONSTRAINT ck_destination_department
+          CHECK (
+            destination_type <> 'DEPARTMENT'
+              OR to_department_id IS NOT NULL
+            );
+      ]]>
+    </sql>
+
+    <sql>
+      <![CDATA[
+      ALTER TABLE consultation
+        ADD CONSTRAINT ck_destination_consultant
+          CHECK (
+            destination_type <> 'CONSULTANT'
+              OR (
+              consultant_speciality IS NOT NULL
+                AND practitioner_id IS NOT NULL
+              )
+            );
+      ]]>
+    </sql>
+
+    <sql>
+      <![CDATA[
+          ALTER TABLE consultation
+            ADD CONSTRAINT ck_consultation_cancellation_reason
+              CHECK (
+                status <> 'CANCELLED'
+                  OR cancellation_reason IS NOT NULL
+                );
+      ]]>
+    </sql>
+
+
+  </changeSet>
+
+  <changeSet id="QA0000000000016_CONSULTATION_LOG_TABLE" author="qais">
+    <createTable tableName="consultation_log">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="consultation_id" type="bigint"/>
+      <column name="action" type="varchar(10)"/>
+      <column name="created_by" type="varchar(50)"/>
+      <column name="created_date" type="timestamp"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+      <column name="payload" type="jsonb"/>
+    </createTable>
+  </changeSet>
+
+  <include file="config/liquibase/sql/consultation_triggers.sql" relativeToChangelogFile="false"/>
+
+</databaseChangeLog>
