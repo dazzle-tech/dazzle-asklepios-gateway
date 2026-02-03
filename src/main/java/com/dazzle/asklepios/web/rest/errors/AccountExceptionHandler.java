@@ -4,7 +4,7 @@ import com.dazzle.asklepios.service.errors.UserAlreadyActiveException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
-
+@RestControllerAdvice
 public class AccountExceptionHandler {
 
     @ExceptionHandler(UserAlreadyActiveException.class)
