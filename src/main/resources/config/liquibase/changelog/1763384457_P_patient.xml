@@ -104,6 +104,8 @@
                                 AND last_name IS NOT NULL
                                 AND sex_at_birth IS NOT NULL
                                 AND date_of_birth IS NOT NULL
+                                AND primary_mobile_number IS NOT NULL
+
                                 AND email IS NOT NULL
                             )
                         );
