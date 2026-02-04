@@ -13,7 +13,7 @@
         <constraints primaryKey="true" nullable="false"/>
       </column>
 
-      <column name="facility_name" type="text">
+      <column name="facility_name" type="varchar(100)">
         <constraints nullable="false"/>
       </column>
 
