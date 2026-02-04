@@ -39,8 +39,6 @@
 
       <column name="is_active" type="boolean" defaultValueBoolean="true"/>
 
-     
-      <column name="is_profile" type="boolean"/>
 
       <column name="appointable" type="boolean"/>
       <column name="created_date" type="timestamp"/>
