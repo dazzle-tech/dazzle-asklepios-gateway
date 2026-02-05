@@ -25,7 +25,9 @@
         <constraints nullable="false"/>
       </column>
 
-      <column name="created_by" type="varchar(50)"/>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
       <column name="created_date" type="timestamp" defaultValueComputed="now()">
         <constraints nullable="false"/>
       </column>
@@ -52,22 +54,5 @@
     </createIndex>
   </changeSet>
 
-  <!-- 2) Log table -->
-  <changeSet id="H000000000000MD_EXTERNAL_TEST_LOG_TABLE" author="hanan253yahya">
-    <createTable tableName="external_test_log">
-      <column name="id" type="bigint" autoIncrement="true">
-        <constraints primaryKey="true" nullable="false"/>
-      </column>
 
-      <column name="external_test_id" type="bigint"/>
-      <column name="test_id" type="bigint"/>
-      <column name="action" type="varchar(10)"/>
-      <column name="created_by" type="varchar(50)"/>
-      <column name="created_date" type="timestamp" />
-      <column name="last_modified_by" type="varchar(50)"/>
-      <column name="last_modified_date" type="timestamp"/>
-      <column name="payload" type="jsonb"/>
-    </createTable>
-  </changeSet>
-  <include file="config/liquibase/changelog/sql/external_test_triggers.sql" relativeToChangelogFile="false"/>
 </databaseChangeLog>
