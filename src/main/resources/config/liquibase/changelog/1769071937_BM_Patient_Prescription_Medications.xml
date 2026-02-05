@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+          http://www.liquibase.org/xml/ns/dbchangelog
+          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.24.xsd">
+
+  <changeSet id="BM0000000000032" author="BushrMashaiekh">
+
+    <createTable tableName="patient_prescription_medications">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="prescription_header_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="medications_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="instructions_type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="instructions" type="text"/>
+      <column name="prescription_id" type="varchar(50)"/>
+      <column name="dose" type="bigint"/>
+      <column name="does_unit" type="varchar(100)"/>
+      <column name="rout" type="varchar(100)"/>
+      <column name="frequency" type="varchar(100)"/>
+      <column name="duration" type="bigint"/>
+      <column name="duration_type" type="varchar(50)"/>
+      <column name="chronic_medication" type="boolean"/>
+      <column name="maximum_dose" type="bigint"/>
+      <column name="valid_util" type="date"/>
+      <column name="allowed_substitute" type="boolean"/>
+      <column name="indication_manually" type="text"/>
+      <column name="indication_use" type="text">
+        <constraints nullable="false"/>
+      </column>
+      <column name="indication_icd" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="parameters_to_monitor" type="text"/>
+      <column name="number_of_refills" type="bigint"/>
+      <column name="refill_value" type="integer"/>
+      <column name="refill_unit" type="varchar(50)"/>
+      <column name="notes" type="text"/>
+      <column name="extra_documentation" type="text"/>
+      <column name="status" type="varchar(50)"/>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+    <addForeignKeyConstraint baseTableName="patient_prescription_medications" baseColumnNames="prescription_header_id"
+                             referencedTableName="patient_prescriptions" referencedColumnNames="id"
+                             constraintName="fk_ppm_prescription_header"/>
+
+  </changeSet>
+
+</databaseChangeLog>

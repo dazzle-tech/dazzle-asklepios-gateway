@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+          http://www.liquibase.org/xml/ns/dbchangelog
+          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.24.xsd">
+
+  <changeSet id="BM0000000000031" author="BushraMashaiekh">
+    <createSequence
+      sequenceName="seq_patient_prescription_num"
+      startValue="100"
+      incrementBy="1"/>
+    <createTable tableName="patient_prescriptions">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="prescription_num" type="bigint"  defaultValueSequenceNext="seq_patient_prescription_num">
+        <constraints nullable="false"/>
+      </column>
+      <column name="prescription_date" type="date">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="urgency_level" type="varchar(50)"/>
+
+      <column name="status" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="from_facility_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="from_department_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="to_facility_id" type="bigint"/>
+      <column name="to_department_id" type="bigint"/>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+      <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addForeignKeyConstraint baseTableName="patient_prescriptions" baseColumnNames="from_facility_id"
+                             referencedTableName="facility" referencedColumnNames="id"
+                             constraintName="fk_patient_prescriptions_from_facility"/>
+
+    <addForeignKeyConstraint baseTableName="patient_prescriptions" baseColumnNames="from_department_id"
+                             referencedTableName="department" referencedColumnNames="id"
+                             constraintName="fk_patient_prescriptions_from_department"/>
+
+    <addForeignKeyConstraint baseTableName="patient_prescriptions" baseColumnNames="to_facility_id"
+                             referencedTableName="facility" referencedColumnNames="id"
+                             constraintName="fk_patient_prescriptions_to_facility"/>
+
+    <addForeignKeyConstraint baseTableName="patient_prescriptions" baseColumnNames="to_department_id"
+                             referencedTableName="department" referencedColumnNames="id"
+                             constraintName="fk_patient_prescriptions_to_department"/>
+
+  </changeSet>
+
+</databaseChangeLog>
