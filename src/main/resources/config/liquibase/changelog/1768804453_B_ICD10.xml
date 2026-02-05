@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="bs0000000000ICD002" author="batool">
+    <createTable tableName="icd_category">
+
+      <column name="category_code" type="varchar(50)">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="icd_coding" type="varchar(10)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="category_name" type="varchar(500)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="category_description" type="text"/>
+
+      <column name="parent_category_code" type="varchar(50)">
+        <constraints nullable="true"
+                     foreignKeyName="fk_icd_category_parent"
+                     referencedTableName="icd_category"
+                     referencedColumnNames="category_code"/>
+      </column>
+
+    </createTable>
+
+    <createIndex indexName="ix_icd_category_parent_category_code"
+                 tableName="icd_category">
+      <column name="parent_category_code"/>
+    </createIndex>
+
+    <createIndex indexName="ix_icd_category_icd_coding"
+                 tableName="icd_category">
+      <column name="icd_coding"/>
+    </createIndex>
+
+    <createTable tableName="icd_diagnosis">
+
+      <column name="id" type="bigint">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="icd_diagnosis_uid" type="varchar(100)">
+        <constraints nullable="false" unique="true"/>
+      </column>
+
+      <column name="icd_code" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="icd_coding" type="varchar(10)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="category_code" type="varchar(50)">
+        <constraints nullable="false"
+                     foreignKeyName="fk_icd_diagnosis_category_code"
+                     referencedTableName="icd_category"
+                     referencedColumnNames="category_code"/>
+      </column>
+
+      <column name="icd_short_description" type="varchar(500)"/>
+
+      <column name="icd_full_description" type="text"/>
+
+    </createTable>
+
+    <createIndex indexName="ix_icd_diagnosis_category_code"
+                 tableName="icd_diagnosis">
+      <column name="category_code"/>
+    </createIndex>
+
+    <createIndex indexName="ix_icd_diagnosis_icd_coding_icd_code"
+                 tableName="icd_diagnosis">
+      <column name="icd_coding"/>
+      <column name="icd_code"/>
+    </createIndex>
+
+  </changeSet>
+
+</databaseChangeLog>
