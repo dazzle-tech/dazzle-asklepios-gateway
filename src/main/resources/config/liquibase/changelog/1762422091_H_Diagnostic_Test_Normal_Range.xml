@@ -19,7 +19,9 @@
       </column>
 
       <!-- OPTIONAL: keep as reference only -->
-      <column name="test_id" type="bigint"/>
+      <column name="test_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
 
       <column name="gender" type="varchar(100)"/>
       <column name="age_from" type="numeric"/>

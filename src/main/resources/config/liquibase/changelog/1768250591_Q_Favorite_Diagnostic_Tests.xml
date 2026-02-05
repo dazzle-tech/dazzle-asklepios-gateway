@@ -28,7 +28,9 @@
         <constraints nullable="false"/>
       </column>
 
-      <column name="created_date" type="timestamp"/>
+      <column name="created_date" type="timestamp" defaultValue="now()">
+        <constraints nullable="false"/>
+      </column>
       <column name="last_modified_by" type="varchar(50)"/>
       <column name="last_modified_date" type="timestamp"/>
     </createTable>
@@ -37,6 +39,10 @@
       tableName="favorite_diagnostic_test"
       columnNames="user_id,test_id"
       constraintName="uk_fav_diagtest_user_test"/>
+
+    <addForeignKeyConstraint baseTableName="favorite_diagnostic_test" baseColumnNames="user_id" constraintName="fk_ft_user_id"
+                             referencedTableName="app_user"
+                             referencedColumnNames="id" />
   </changeSet>
 
 </databaseChangeLog>

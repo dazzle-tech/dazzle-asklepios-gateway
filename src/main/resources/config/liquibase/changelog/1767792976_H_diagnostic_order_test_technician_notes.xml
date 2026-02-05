@@ -34,8 +34,12 @@
 
 
       <!-- auditing (optional - keep consistent with your project) -->
-      <column name="created_date" type="timestamp"/>
-      <column name="created_by" type="varchar(50)"/>
+      <column name="created_date" type="timestamp" defaultValue="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
       <column name="last_modified_by" type="varchar(50)"/>
       <column name="last_modified_date" type="timestamp"/>
     </createTable>
@@ -59,11 +63,6 @@
     />
 
 
-    <!-- Keep consistent with your auditing defaults handling -->
-    <dropDefaultValue
-      tableName="diagnostic_order_test_technician_notes"
-      columnName="created_date"
-      columnDataType="${datetimeType}"/>
   </changeSet>
 
 </databaseChangeLog>
