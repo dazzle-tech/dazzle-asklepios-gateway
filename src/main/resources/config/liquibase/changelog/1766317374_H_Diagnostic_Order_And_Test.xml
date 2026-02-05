@@ -93,8 +93,7 @@
         <constraints nullable="false" primaryKey="true"/>
       </column>
 
-      <column name="patient_id" type="bigint"/>
-      <column name="encounter_id" type="bigint"/>
+    
       <column name="status" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
