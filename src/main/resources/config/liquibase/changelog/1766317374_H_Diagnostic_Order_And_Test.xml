@@ -13,15 +13,23 @@
         <constraints nullable="false" primaryKey="true"/>
       </column>
 
-      <column name="patient_id" type="bigint"/>
-      <column name="encounter_id" type="bigint"/>
-      <column name="status" type="varchar(50)"/>
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="status" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
 
       <column name="order_number" type="bigint" >
         <constraints unique="true" nullable="false"/>
 
       </column>
-      <column name="save_draft" type="boolean" defaultValueBoolean="true"/>
+      <column name="save_draft" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
       <column name="submitted_by" type="varchar(50)"/>
       <column name="submitted_date" type="timestamp"/>
 
@@ -29,13 +37,24 @@
         <constraints nullable="false"/>
       </column>
 
-      <column name="lab_status" type="varchar(50)"/>
+      <column name="lab_status" type="varchar(50)" />
+
       <column name="rad_status" type="varchar(50)"/>
-      <column name="from_department_id" type="bigint"/>
-      <column name="from_facility_id" type="bigint"/>
+
+      <column name="from_department_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="from_facility_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
       <!-- auditing -->
-      <column name="created_date" type="timestamp"/>
-      <column name="created_by" type="varchar(50)"/>
+      <column name="created_date" type="timestamp" defaultValue="now()">
+        <constraints nullable="false"/>
+
+      </column>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
       <column name="last_modified_by" type="varchar(50)"/>
       <column name="last_modified_date" type="timestamp"/>
     </createTable>
@@ -46,10 +65,6 @@
       columnName="order_number"
       defaultValueSequenceNext="seq_diagnostic_order_number"/>
 
-    <dropDefaultValue
-      tableName="diagnostic_orders"
-      columnName="created_date"
-      columnDataType="${datetimeType}"/>
 
 
     <!-- FK: from_department_id -> department(id) -->
@@ -78,18 +93,25 @@
         <constraints nullable="false" primaryKey="true"/>
       </column>
 
-      <column name="patient_id" type="bigint"/>
-      <column name="encounter_id" type="bigint"/>
-      <column name="status" type="varchar(50)"/>
+    
+      <column name="status" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
 
-      <column name="order_id" type="bigint"/>
-      <column name="test_id" type="bigint"/>
+      <column name="order_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="test_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
 
       <column name="received_department_id" type="bigint"/>
       <column name="reason" type="varchar(50)"/>
       <column name="notes" type="text"/>
 
-      <column name="processing_status" type="varchar(50)"/>
+      <column name="processing_status" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
 
       <column name="submit_date" type="timestamp"/>
       <column name="accepted_date" type="timestamp"/>
@@ -112,8 +134,12 @@
 
 
       <!-- auditing -->
-      <column name="created_date" type="timestamp"/>
-      <column name="created_by" type="varchar(50)"/>
+      <column name="created_date" type="timestamp" defaultValue="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
       <column name="last_modified_by" type="varchar(50)"/>
       <column name="last_modified_date" type="timestamp"/>
     </createTable>
@@ -156,11 +182,6 @@
         WHERE status IS DISTINCT FROM 'CANCELLED';
     </sql>
 
-
-    <dropDefaultValue
-      tableName="diagnostic_order_tests"
-      columnName="created_date"
-      columnDataType="${datetimeType}"/>
   </changeSet>
 
 </databaseChangeLog>

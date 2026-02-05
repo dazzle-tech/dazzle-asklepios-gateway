@@ -16,10 +16,18 @@
       </column>
 
 
-      <column name="status" type="varchar(50)"/>
-      <column name="type" type="varchar(50)"/>
-      <column name="name" type="varchar(50)"/>
-      <column name="indication" type="text"/>
+      <column name="status" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="name" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="indication" type="text">
+        <constraints nullable="false"/>
+      </column>
       <column name="rejected_date" type="timestamp"/>
       <column name="approved_date" type="timestamp"/>
 
@@ -29,11 +37,19 @@
       <column name="rejected_reason" type="varchar(200)"/>
 
 
-      <column name="from_department_id" type="bigint"/>
-      <column name="from_facility_id" type="bigint"/>
+      <column name="from_department_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="from_facility_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
       <!-- auditing -->
-      <column name="created_date" type="timestamp"/>
-      <column name="created_by" type="varchar(50)"/>
+      <column name="created_date" type="timestamp" defaultValue="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
       <column name="last_modified_by" type="varchar(50)"/>
       <column name="last_modified_date" type="timestamp"/>
     </createTable>
