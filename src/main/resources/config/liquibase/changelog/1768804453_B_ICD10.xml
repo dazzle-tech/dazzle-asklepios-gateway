@@ -44,7 +44,7 @@
 
     <createTable tableName="icd_diagnosis">
 
-      <column name="id" type="bigserial">
+      <column name="id" type="bigint">
         <constraints primaryKey="true" nullable="false"/>
       </column>
 
@@ -70,10 +70,6 @@
       <column name="icd_short_description" type="varchar(500)"/>
 
       <column name="icd_full_description" type="text"/>
-
-      <column name="icd_short_description_other_language" type="varchar(500)"/>
-
-      <column name="icd_full_description_other_language" type="text"/>
 
     </createTable>
 
