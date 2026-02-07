@@ -10,9 +10,6 @@
 
     <createTable tableName="patient_procedure">
 
-      <!-- ================= -->
-      <!-- Core Identifiers -->
-      <!-- ================= -->
       <column name="id" type="bigint" autoIncrement="true">
         <constraints primaryKey="true" nullable="false"/>
       </column>
@@ -32,9 +29,6 @@
         <constraints nullable="false"/>
       </column>
 
-      <!-- ================= -->
-      <!-- Facility / Dept -->
-      <!-- ================= -->
       <column name="from_facility_id" type="bigint">
         <constraints nullable="false"
                      foreignKeyName="fk_procedure_from_facility"
@@ -63,11 +57,8 @@
                      referencedColumnNames="id"/>
       </column>
 
-      <!-- ================= -->
-      <!-- Medical Info -->
-      <!-- ================= -->
       <column name="indication_id" type="bigint">
-        <constraints nullable="false"
+        <constraints nullable="true"
                      foreignKeyName="fk_procedure_indication_icd"
                      referencedTableName="icd_diagnosis"
                      referencedColumnNames="id"/>
@@ -90,22 +81,16 @@
       </column>
 
       <column name="scheduled_date_time" type="timestamp">
-        <constraints nullable="true"/>
+        <constraints nullable="false"/>
       </column>
 
       <column name="notes" type="text"/>
       <column name="extra_documentation" type="text"/>
 
-      <!-- ================= -->
-      <!-- Status -->
-      <!-- ================= -->
       <column name="status" type="varchar(30)">
         <constraints nullable="false"/>
       </column>
 
-      <!-- ================= -->
-      <!-- Cancellation -->
-      <!-- ================= -->
       <column name="cancelled_date" type="timestamp"/>
       <column name="cancelled_by" type="bigint">
         <constraints nullable="true"
@@ -115,9 +100,6 @@
       </column>
       <column name="cancellation_reason" type="text"/>
 
-      <!-- ================= -->
-      <!-- Audit -->
-      <!-- ================= -->
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
@@ -127,20 +109,15 @@
 
     </createTable>
 
-    <!-- ========================================= -->
-    <!-- Prevent duplicate procedure per context -->
-    <!-- ========================================= -->
     <sql>
-      <![CDATA[
-      ALTER TABLE patient_procedure
-        ADD CONSTRAINT uk_procedure_unique_context
-          UNIQUE (procedure_id, body_part, patient_id, encounter_id);
+  <![CDATA[
+      CREATE UNIQUE INDEX uk_procedure_unique_context_active
+        ON patient_procedure (procedure_id, body_part, patient_id, encounter_id)
+        WHERE status <> 'CANCELLED';
       ]]>
-    </sql>
+</sql>
 
-    <!-- ================= -->
-    <!-- ENUM Constraints -->
-    <!-- ================= -->
+
     <sql>
       <![CDATA[
       ALTER TABLE patient_procedure
@@ -168,9 +145,6 @@
       ]]>
     </sql>
 
-    <!-- ================= -->
-    <!-- Business Rules -->
-    <!-- ================= -->
     <sql>
       <![CDATA[
       ALTER TABLE patient_procedure
@@ -184,9 +158,6 @@
 
   </changeSet>
 
-  <!-- ================= -->
-  <!-- PROCEDURE LOG -->
-  <!-- ================= -->
   <changeSet id="QA0000000000019_PROCEDURE_LOG_TABLE" author="qais">
 
     <createTable tableName="patient_procedure_log">
