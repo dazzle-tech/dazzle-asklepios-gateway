@@ -1,8 +1,3 @@
--- ========================================
--- Patient Procedure Triggers and Functions
--- ========================================
-
--- Function: Set default values on insert
 CREATE OR REPLACE FUNCTION fn_patient_procedure_set_defaults()
 RETURNS trigger
 LANGUAGE plpgsql
@@ -20,7 +15,6 @@ END IF;
     NEW.created_by := v_user;
 END IF;
 
-  -- Set default status to REQUESTED (hidden from UI)
   IF NEW.status IS NULL THEN
     NEW.status := 'REQUESTED';
 END IF;
@@ -29,7 +23,6 @@ RETURN NEW;
 END;
 $$;
 
--- Function: Audit log for all operations
 CREATE OR REPLACE FUNCTION fn_patient_procedure_audit_log()
 RETURNS trigger
 LANGUAGE plpgsql
@@ -110,14 +103,12 @@ RETURN NULL;
 END;
 $$;
 
--- Trigger: Set defaults before insert
 DROP TRIGGER IF EXISTS trg_patient_procedure_set_defaults ON patient_procedure;
 CREATE TRIGGER trg_patient_procedure_set_defaults
   BEFORE INSERT ON patient_procedure
   FOR EACH ROW
   EXECUTE FUNCTION fn_patient_procedure_set_defaults();
 
--- Trigger: Audit log after any change
 DROP TRIGGER IF EXISTS trg_patient_procedure_audit_log ON patient_procedure;
 CREATE TRIGGER trg_patient_procedure_audit_log
   AFTER INSERT OR UPDATE OR DELETE ON patient_procedure
