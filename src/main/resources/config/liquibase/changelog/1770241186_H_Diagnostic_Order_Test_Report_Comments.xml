@@ -13,13 +13,16 @@
   <!-- ===================================================== -->
   <changeSet id="H000000000000MD_DIAG_REPORT_TECHNICIAN_NOTES" author="hanan253yahya">
 
-    <createTable tableName="diagnostic_order_test_report_technician_notes">
+    <createTable tableName="diagnostic_order_test_report_comments">
       <column name="id" type="bigint" autoIncrement="true" startWith="1500">
         <constraints nullable="false" primaryKey="true"/>
       </column>
 
       <!-- Parent references -->
       <column name="order_test_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="report_id" type="bigint">
         <constraints nullable="false"/>
       </column>
 
@@ -44,13 +47,19 @@
     <!-- FK: order_test_id -> diagnostic_order_tests(id) -->
     <addForeignKeyConstraint
       constraintName="fk_dotr_tn_order_test_id"
-      baseTableName="diagnostic_order_test_technician_notes"
+      baseTableName="diagnostic_order_test_report_comments"
       baseColumnNames="order_test_id"
       referencedTableName="diagnostic_order_tests"
       referencedColumnNames="id"
     />
 
-
+    <addForeignKeyConstraint
+      constraintName="fk_dotr_tn_report_id"
+      baseTableName="diagnostic_order_test_report_comments"
+      baseColumnNames="report_id"
+      referencedTableName="diagnostic_order_tests_report"
+      referencedColumnNames="id"
+    />
 
   </changeSet>
 

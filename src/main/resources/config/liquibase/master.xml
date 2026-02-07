@@ -113,5 +113,5 @@
   <include file="/config/liquibase/changelog/1769048234_S_emergency_triage.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1769331928_S_general_assessment.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1769333918_S_chief_complain.xml" relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/1770241186_H_Diagnostic_Order_Test_Report_Technician_notes.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1770241186_H_Diagnostic_Order_Test_Report_Comments.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>
