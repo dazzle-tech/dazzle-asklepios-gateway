@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!-- 1) Original table: external_test -->
+  <changeSet id="H000000000000MD_EXTERNAL_TEST_TABLE" author="hanan253yahya">
+    <createTable tableName="external_test">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="facility_name" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="test_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="reason" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <!-- FK: external_test.test_id -> diagnostic_test.id -->
+    <addForeignKeyConstraint
+      constraintName="fk_external_test_test_id"
+      baseTableName="external_test"
+      baseColumnNames="test_id"
+      referencedTableName="diagnostic_order_tests"
+      referencedColumnNames="id"/>
+
+    <!-- each test can be sent to ONE external facility only -->
+    <addUniqueConstraint
+      tableName="external_test"
+      columnNames="test_id"
+      constraintName="uq_external_test_test_id"/>
+
+    <createIndex tableName="external_test" indexName="idx_external_test_test_id">
+      <column name="test_id"/>
+    </createIndex>
+  </changeSet>
+
+
+</databaseChangeLog>
