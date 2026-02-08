@@ -37,6 +37,8 @@
 
       <column name="pain_description" type="text"/>
 
+      <column name="pain_pattern" type="varchar(255)"/>
+
       <column name="is_active" type="boolean" defaultValueBoolean="true">
         <constraints nullable="false"/>
       </column>
