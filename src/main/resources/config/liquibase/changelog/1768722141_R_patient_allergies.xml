@@ -35,9 +35,7 @@
 
       <column name="certainty" type="varchar(50)"/>
 
-      <column name="treatment_strategy" type="varchar(50)">
-        <constraints />
-      </column>
+      <column name="treatment_strategy" type="varchar(50)" />
 
       <column name="onset" type="varchar(50)"/>
 
@@ -71,7 +69,9 @@
         <constraints nullable="false"/>
       </column>
 
-      <column name="created_date" type="timestamp"/>
+      <column name="created_date" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false"/>
+      </column>
 
       <column name="last_modified_by" type="varchar(50)"/>
 
