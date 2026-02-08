@@ -110,3 +110,6 @@ CREATE TRIGGER trg_consultation_audit_log
   AFTER INSERT OR UPDATE OR DELETE ON consultation
   FOR EACH ROW
   EXECUTE FUNCTION fn_consultation_audit_log();
+
+
+

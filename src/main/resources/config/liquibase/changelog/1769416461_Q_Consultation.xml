@@ -237,3 +237,7 @@
   <include file="config/liquibase/sql/consultation_triggers.sql" relativeToChangelogFile="false"/>
 
 </databaseChangeLog>
+
+
+
+

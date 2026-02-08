@@ -106,3 +106,5 @@
   <include file="/config/liquibase/changelog/1765892720_B_patientInsuranceCoverages.xml" relativeToChangelogFile="false" />
 
 </databaseChangeLog>
+
+
