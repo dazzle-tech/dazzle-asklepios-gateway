@@ -29,7 +29,7 @@ BEGIN
   v_user := current_setting('app.user', true);
 
   IF (TG_OP = 'INSERT') THEN
-    INSERT INTO consultationlog(
+    INSERT INTO consultation_log(
       consultation_id,
       action,
       created_by,
@@ -50,7 +50,7 @@ BEGIN
 RETURN NEW;
 
 ELSIF (TG_OP = 'UPDATE') THEN
-    INSERT INTO consultationlog(
+    INSERT INTO consultation_log(
       consultation_id,
       action,
       created_by,
@@ -74,7 +74,7 @@ ELSIF (TG_OP = 'UPDATE') THEN
 RETURN NEW;
 
 ELSIF (TG_OP = 'DELETE') THEN
-    INSERT INTO consultationlog(
+    INSERT INTO consultation_log(
       consultation_id,
       action,
       created_by,
