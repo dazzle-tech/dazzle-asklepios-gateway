@@ -55,6 +55,10 @@
       <column name="last_modified_date" type="timestamp"/>
     </createTable>
 
+    <addForeignKeyConstraint baseTableName="patient_prescriptions" baseColumnNames="patient_id"
+                             referencedTableName="patients" referencedColumnNames="id"
+                             constraintName="fk_patient_prescriptions_patient_id"/>
+
     <addForeignKeyConstraint baseTableName="patient_prescriptions" baseColumnNames="from_facility_id"
                              referencedTableName="facility" referencedColumnNames="id"
                              constraintName="fk_patient_prescriptions_from_facility"/>

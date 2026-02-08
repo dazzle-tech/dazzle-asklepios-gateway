@@ -29,10 +29,14 @@
       <column name="frequency" type="varchar(100)"/>
       <column name="duration" type="bigint"/>
       <column name="duration_type" type="varchar(50)"/>
-      <column name="chronic_medication" type="boolean"/>
+      <column name="chronic_medication" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
       <column name="maximum_dose" type="bigint"/>
       <column name="valid_util" type="date"/>
-      <column name="allowed_substitute" type="boolean"/>
+      <column name="allowed_substitute" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
       <column name="indication_manually" type="text"/>
       <column name="indication_use" type="text">
         <constraints nullable="false"/>
@@ -46,6 +50,7 @@
       <column name="refill_unit" type="varchar(50)"/>
       <column name="notes" type="text"/>
       <column name="extra_documentation" type="text"/>
+      <column name="administration_Instructions" type="varchar(50)"/>
       <column name="status" type="varchar(50)"/>
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>
