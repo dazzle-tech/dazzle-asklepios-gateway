@@ -77,7 +77,10 @@
         <constraints nullable="false"/>
       </column>
 
-      <column name="created_date" type="timestamp"/>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+
       <column name="last_modified_by" type="varchar(50)"/>
       <column name="last_modified_date" type="timestamp"/>
 
@@ -88,13 +91,69 @@
                      referencedTableName="app_user"
                      referencedColumnNames="id"/>
       </column>
-
     </createTable>
 
+    <createIndex indexName="ix_encounter_vaccination_patient_vaccine_dose"
+                 tableName="encounter_vaccination"
+                 unique="true">
+      <column name="patient_id"/>
+      <column name="vaccine_id"/>
+      <column name="vaccine_dose_id"/>
+    </createIndex>
+
     <sql dbms="postgresql">
+      <![CDATA[
+      ALTER TABLE encounter_vaccination
+        ADD CONSTRAINT ck_encounter_vaccination_cancellation_reason
+          CHECK (status <> 'CANCELLED' OR cancellation_reason IS NOT NULL);
+      ]]>
+    </sql>
+
+    <sql dbms="postgresql">
+      <![CDATA[
+      ALTER TABLE encounter_vaccination
+        ADD CONSTRAINT ck_encounter_vaccination_cancelled_at
+          CHECK (status <> 'CANCELLED' OR cancelled_at IS NOT NULL);
+      ]]>
+    </sql>
+
+    <sql dbms="postgresql">
+      <![CDATA[
+      ALTER TABLE encounter_vaccination
+        ADD CONSTRAINT ck_encounter_vaccination_cancelled_by
+          CHECK (status <> 'CANCELLED' OR cancelled_by_id IS NOT NULL);
+      ]]>
+    </sql>
+
+    <sql dbms="postgresql">
+  <![CDATA[
+      ALTER TABLE encounter_vaccination
+        ADD CONSTRAINT ck_encounter_vaccination_reviewed_at
+          CHECK (
+            status <> 'REVIEW'
+              OR reviewed_at IS NOT NULL
+            );
+      ]]>
+</sql>
+
+    <sql dbms="postgresql">
+  <![CDATA[
+      ALTER TABLE encounter_vaccination
+        ADD CONSTRAINT ck_encounter_vaccination_reviewed_by
+          CHECK (
+            status <> 'REVIEW'
+              OR reviewed_by_id IS NOT NULL
+            );
+      ]]>
+</sql>
+
+
+    <sql dbms="postgresql">
+      <![CDATA[
       CREATE UNIQUE INDEX ux_encounter_vaccination_patient_vaccine_dose_active
         ON encounter_vaccination (patient_id, vaccine_id, vaccine_dose_id)
-        WHERE status &lt;&gt; 'CANCELLED';
+        WHERE status <> 'CANCELLED';
+      ]]>
     </sql>
 
   </changeSet>
