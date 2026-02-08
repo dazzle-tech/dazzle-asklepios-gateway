@@ -11,25 +11,30 @@
 
   <changeSet id="bs000000000028" author="batool">
 
-    <!-- Create table -->
     <createTable tableName="patient_observations_complaints">
       <column name="id" type="bigint" autoIncrement="true">
         <constraints primaryKey="true" nullable="false"/>
       </column>
 
       <column name="patient_id" type="bigint">
-        <constraints nullable="false"/>
+        <constraints
+          nullable="false"
+          foreignKeyName="fk_patient_obs_comp_patient"
+          referencedTableName="patients"
+          referencedColumnNames="id"/>
       </column>
 
       <column name="encounter_id" type="bigint">
         <constraints nullable="false"/>
       </column>
 
-      <column name="functional_status" type="text">
+      <column name="functional_status" type="text"/>
+
+      <column name="patient_conditions" type="text"/>
+
+      <column name="reason_of_visit" type="text">
         <constraints nullable="false"/>
       </column>
-
-      <column name="reason_of_visit" type="text"/>
 
       <column name="cognitive_check" type="text"/>
 
@@ -41,17 +46,13 @@
         <constraints nullable="false"/>
       </column>
 
-      <column name="created_date" type="timestamp"/>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+
       <column name="last_modified_by" type="varchar(50)"/>
       <column name="last_modified_date" type="timestamp"/>
     </createTable>
-
-    <addForeignKeyConstraint
-      baseTableName="patient_observations_complaints"
-      baseColumnNames="patient_id"
-      referencedTableName="patients"
-      referencedColumnNames="id"
-      constraintName="fk_patient_obs_comp_patient"/>
 
     <createIndex indexName="ix_patient_obs_comp_patient"
                  tableName="patient_observations_complaints">

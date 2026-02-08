@@ -28,11 +28,11 @@
       </column>
 
       <column name="weight" type="numeric(6,2)">
-        <constraints nullable="true"/>
+        <constraints nullable="false"/>
       </column>
 
       <column name="height" type="numeric(6,2)">
-        <constraints nullable="true"/>
+        <constraints nullable="false"/>
       </column>
 
       <column name="head_circumference" type="numeric(6,2)">
@@ -47,7 +47,10 @@
         <constraints nullable="false"/>
       </column>
 
-      <column name="created_date" type="timestamp"/>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+
       <column name="last_modified_by" type="varchar(50)"/>
       <column name="last_modified_date" type="timestamp"/>
 

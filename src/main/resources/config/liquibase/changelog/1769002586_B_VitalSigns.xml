@@ -27,15 +27,20 @@
         <constraints nullable="false"/>
       </column>
 
-      <column name="blood_pressure_systolic" type="integer"/>
-      <column name="blood_pressure_diastolic" type="integer"/>
+      <column name="blood_pressure_systolic" type="integer">
+       <constraints nullable="false"/>
+     </column>
+
+      <column name="blood_pressure_diastolic" type="integer">
+        <constraints nullable="false"/>
+      </column>
 
       <column name="measurement_site" type="varchar(255)"/>
 
       <column name="heart_rate" type="integer"/>
 
       <column name="temperature" type="numeric(5,2)">
-        <constraints nullable="true"/>
+        <constraints nullable="false"/>
       </column>
 
       <column name="oxygen_saturation" type="integer"/>
@@ -45,7 +50,7 @@
       <column name="notes" type="text"/>
 
       <column name="is_triage" type="boolean">
-        <constraints nullable="true"/>
+        <constraints nullable="false"/>
       </column>
 
       <column name="created_by" type="varchar(50)">
@@ -56,7 +61,10 @@
         <constraints nullable="false"/>
       </column>
 
-      <column name="created_date" type="timestamp"/>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+
       <column name="last_modified_by" type="varchar(50)"/>
       <column name="last_modified_date" type="timestamp"/>
 
