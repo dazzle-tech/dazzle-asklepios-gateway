@@ -31,13 +31,22 @@
       <column name="rejected_reason" type="varchar(500)"/>
       <column name="review_by" type="varchar(50)"/>
       <column name="review_date" type="timestamp"/>
+      <column name="second_approved_by" type="varchar(50)"/>
+      <column name="second_approved_date" type="timestamp"/>
+      <column name="processing_status" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="image_status" type="varchar(50)" >
+        <constraints nullable="false"/>
+      </column>
 
-      <column name="processing_status" type="varchar(50)"/>
-      <column name="image_status" type="varchar(50)"/>
+      <column name="created_date" type="timestamp" defaultValue="now()">
+        <constraints nullable="false"/>
+      </column>
 
-      <!-- auditing -->
-      <column name="created_date" type="timestamp"/>
-      <column name="created_by" type="varchar(50)"/>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
       <column name="last_modified_by" type="varchar(50)"/>
       <column name="last_modified_date" type="timestamp"/>
 
