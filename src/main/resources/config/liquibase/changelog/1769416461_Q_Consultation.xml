@@ -216,7 +216,6 @@
       ]]>
     </sql>
 
-
   </changeSet>
 
   <changeSet id="QA0000000000016_CONSULTATION_LOG_TABLE" author="qais">
@@ -237,7 +236,3 @@
   <include file="config/liquibase/sql/consultation_triggers.sql" relativeToChangelogFile="false"/>
 
 </databaseChangeLog>
-
-
-
-
