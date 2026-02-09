@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <databaseChangeLog
-  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
     http://www.liquibase.org/xml/ns/dbchangelog
     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
@@ -38,12 +38,17 @@
       <column name="review_by" type="varchar(50)"/>
       <column name="review_date" type="timestamp"/>
 
-      <column name="processing_status" type="varchar(50)"/>
+      <column name="processing_status" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
       <column name="normal_range_value" type="varchar(150)"/>
 
-      <!-- auditing -->
-      <column name="created_date" type="timestamp"/>
-      <column name="created_by" type="varchar(50)"/>
+      <column name="created_date" type="timestamp" defaultValue="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
       <column name="last_modified_by" type="varchar(50)"/>
       <column name="last_modified_date" type="timestamp"/>
 
