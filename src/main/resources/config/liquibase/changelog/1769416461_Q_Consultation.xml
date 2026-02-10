@@ -130,6 +130,19 @@
 
       <column name="reject_reason" type="text"/>
 
+
+        <column name="confirmed_date" type="timestamp">
+          <constraints nullable="true"/>
+        </column>
+
+        <column name="confirmed_by" type="bigint">
+          <constraints
+            nullable="true"
+            foreignKeyName="fk_consultation_confirmed_by"
+            referencedTableName="app_user"
+            referencedColumnNames="id"/>
+        </column>
+
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
@@ -144,7 +157,7 @@
       <![CDATA[
       ALTER TABLE consultation
         ADD CONSTRAINT ck_consultation_status
-          CHECK (status IN ('SUBMITTED', 'REJECTED', 'CONFIRMED', 'REQUESTED', 'COMPLETED', 'CANCELLED'));
+          CHECK (status IN ('SUBMITTED', 'REJECTED', 'CONFIRMED', 'REQUESTED', 'READY', 'CANCELLED'));
       ]]>
     </sql>
 
@@ -160,7 +173,7 @@
       <![CDATA[
       ALTER TABLE consultation
         ADD CONSTRAINT ck_consultation_response_text
-          CHECK (status <> 'COMPLETED' OR response_text IS NOT NULL);
+          CHECK (status <> 'READY' OR response_text IS NOT NULL);
       ]]>
     </sql>
 
@@ -215,6 +228,17 @@
                 );
       ]]>
     </sql>
+
+    <sql>
+    <![CDATA[
+      ALTER TABLE consultation
+        ADD CONSTRAINT ck_consultation_confirmed_fields
+          CHECK (
+            status <> 'CONFIRMED'
+              OR (confirmed_date IS NOT NULL AND confirmed_by IS NOT NULL)
+            );
+      ]]>
+  </sql>
 
   </changeSet>
 
