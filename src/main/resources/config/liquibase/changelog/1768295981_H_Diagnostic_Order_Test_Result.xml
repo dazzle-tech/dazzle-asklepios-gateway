@@ -14,10 +14,6 @@
         <constraints nullable="false" primaryKey="true" />
       </column>
 
-      <column name="order_id" type="bigint">
-        <constraints nullable="false"/>
-      </column>
-
       <column name="order_test_id" type="bigint">
         <constraints nullable="false"/>
       </column>
@@ -59,15 +55,6 @@
       tableName="diagnostic_order_tests_result"
       columnNames="order_id,order_test_id,profile_test_id"
       constraintName="uk_diag_res_order_order_test_profile"/>
-
-
-    <addForeignKeyConstraint
-      baseTableName="diagnostic_order_tests_result"
-      baseColumnNames="order_id"
-      constraintName="fk_diag_res_order"
-      referencedTableName="diagnostic_orders"
-      referencedColumnNames="id"
-    />
 
     <addForeignKeyConstraint
       baseTableName="diagnostic_order_tests_result"
