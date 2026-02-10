@@ -60,10 +60,6 @@
       <column name="encounter_id"/>
     </createIndex>
 
-    <createIndex tableName="encounter_assessments" indexName="idx_enc_assessment_encounter_active">
-      <column name="encounter_id"/>
-      <column name="is_active"/>
-    </createIndex>
 
   </changeSet>
 
