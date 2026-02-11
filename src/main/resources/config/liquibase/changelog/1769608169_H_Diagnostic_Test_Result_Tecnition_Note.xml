@@ -34,8 +34,12 @@
       </column>
 
       <!-- Auditing -->
-      <column name="created_date" type="timestamp"/>
-      <column name="created_by" type="varchar(50)"/>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
       <column name="last_modified_by" type="varchar(50)"/>
       <column name="last_modified_date" type="timestamp"/>
     </createTable>
@@ -73,11 +77,6 @@
       <column name="order_test_id"/>
     </createIndex>
 
-    <!-- ========== Auditing default handling ========== -->
-    <dropDefaultValue
-      tableName="diagnostic_order_test_result_technician_notes"
-      columnName="created_date"
-      columnDataType="${datetimeType}"/>
 
   </changeSet>
 
