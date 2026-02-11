@@ -75,6 +75,7 @@
             referencedColumnNames="id"/>
 
   </changeSet>
+
   <changeSet id="H000000000001_RESULT_LOG" author="hanan253yahya">
     <createTable tableName="lab_result_log">
       <column name="id" type="bigint" autoIncrement="true">
@@ -108,4 +109,5 @@
 
   </changeSet>
 <include file="config/liquibase/sql/Lab_Result_Log.sql" relativeToChangelogFile="false"/>
+
 </databaseChangeLog>
