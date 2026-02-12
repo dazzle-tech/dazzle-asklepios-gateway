@@ -103,5 +103,7 @@
   <include file="/config/liquibase/changelog/1768824118_Q_Telephonic_Consultation.xml" relativeToChangelogFile="false" />
   <include file="/config/liquibase/changelog/1765875560_B_patientInsurances.xml" relativeToChangelogFile="false" />
   <include file="/config/liquibase/changelog/1765892720_B_patientInsuranceCoverages.xml" relativeToChangelogFile="false" />
-
+  <include file="/config/liquibase/changelog/1768307386_B_PatientProblems.xml" relativeToChangelogFile="false" />
+  <include file="/config/liquibase/changelog/1768381461_Q_Family_History.xml" relativeToChangelogFile="false" />
+  <include file="/config/liquibase/changelog/1768389695_Q_Hospitalizations.xml" relativeToChangelogFile="false" />
 </databaseChangeLog>
