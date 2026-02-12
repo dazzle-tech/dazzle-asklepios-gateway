@@ -14,9 +14,7 @@
         <constraints nullable="false" primaryKey="true" />
       </column>
 
-      <column name="order_id" type="bigint">
-        <constraints nullable="false"/>
-      </column>
+
 
       <column name="order_test_id" type="bigint">
         <constraints nullable="false"/>
@@ -40,7 +38,7 @@
         <constraints nullable="false"/>
       </column>
 
-      <column name="created_date" type="timestamp" defaultValue="now()">
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
         <constraints nullable="false"/>
       </column>
 
@@ -55,17 +53,9 @@
 
     <addUniqueConstraint
       tableName="diagnostic_order_tests_report"
-      columnNames="order_id,order_test_id"
-      constraintName="uk_diag_rep_order_order_test"/>
+      columnNames="order_test_id"
+      constraintName="uk_diag_rep_order_test"/>
 
-
-    <addForeignKeyConstraint
-      baseTableName="diagnostic_order_tests_report"
-      baseColumnNames="order_id"
-      constraintName="fk_diag_res_order"
-      referencedTableName="diagnostic_orders"
-      referencedColumnNames="id"
-    />
 
     <addForeignKeyConstraint
       baseTableName="diagnostic_order_tests_report"
