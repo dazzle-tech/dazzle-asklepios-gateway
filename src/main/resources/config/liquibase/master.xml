@@ -99,8 +99,12 @@
   <include file="config/liquibase/changelog/1766396407_BM_Form_Entries.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1766367799_S_organization_definition.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1765794249_H_Review_of_System.xml" relativeToChangelogFile="false" />
+  <include file="config/liquibase/changelog/1768295981_H_Diagnostic_Order_Test_Result.xml" relativeToChangelogFile="false" />
+  <include
+    file="config/liquibase/changelog/1769608169_H_Diagnostic_Test_Result_Tecnition_Note.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1768892972_H_Diagnostic_Test_Request.xml" relativeToChangelogFile="false" />
   <include file="config/liquibase/changelog/1768250591_Q_Favorite_Diagnostic_Tests.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/1769002068_H_Extarnel_Test.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1768804453_B_ICD10.xml" relativeToChangelogFile="false" />
   <include file="/config/liquibase/changelog/1763384457_P_patient.xml" relativeToChangelogFile="false" />
   <include file="/config/liquibase/changelog/1764081062_B_PatientDocuments.xml" relativeToChangelogFile="false" />
