@@ -47,16 +47,21 @@
         <constraints nullable="false"/>
       </column>
 
-      <column name="created_date" type="timestamp"/>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
       <column name="last_modified_by" type="varchar(50)"/>
       <column name="last_modified_date" type="timestamp"/>
 
     </createTable>
 
-    <addUniqueConstraint
-      tableName="surgical_history"
-      columnNames="patient_id,surgery,date_of_surgery,facility"
-      constraintName="ux_surgical_history_patient_surgery_date_facility"/>
+    <sql><![CDATA[
+      CREATE UNIQUE INDEX ux_surgical_history_patient_surgery_date_ci
+        ON surgical_history (patient_id, lower(surgery), date_of_surgery);
+      ]]></sql>
+
+
+
 
   </changeSet>
 

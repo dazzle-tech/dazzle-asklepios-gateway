@@ -22,21 +22,33 @@
           references="patients(id)"/>
       </column>
 
-      <column name="is_current_smoker" type="boolean"/>
+      <column name="is_current_smoker" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
       <column name="smoke_start_date" type="date"/>
       <column name="cigarette_amount" type="int"/>
       <column name="cigarette_type" type="varchar(255)"/>
 
-      <column name="is_previous_smoker" type="boolean"/>
+      <column name="is_previous_smoker" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
       <column name="smoke_quit_date" type="date"/>
 
-      <column name="exposure_to_second_hand_smoke" type="boolean"/>
+      <column name="exposure_to_second_hand_smoke" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
 
-      <column name="alcohol_consumption" type="boolean"/>
+      <column name="alcohol_consumption" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
       <column name="type_of_alcohol" type="varchar(255)"/>
       <column name="alcohol_since_when" type="date"/>
 
-      <column name="substance_use" type="boolean"/>
+      <column name="substance_use" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
       <column name="route" type="varchar(50)"/>
       <column name="frequency" type="varchar(50)"/>
 
@@ -47,7 +59,10 @@
         <constraints nullable="false"/>
       </column>
 
-      <column name="created_date" type="timestamp"/>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+
       <column name="last_modified_by" type="varchar(50)"/>
       <column name="last_modified_date" type="timestamp"/>
 
