@@ -6,7 +6,7 @@
     http://www.liquibase.org/xml/ns/dbchangelog
     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-  <changeSet id="b00000000000028" author="batool">
+  <changeSet id="b00000000000029" author="batool">
 
     <createTable tableName="patient_diagnoses">
 
