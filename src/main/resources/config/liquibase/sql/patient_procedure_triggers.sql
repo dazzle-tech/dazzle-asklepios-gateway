@@ -66,7 +66,7 @@ ELSIF (TG_OP = 'UPDATE') THEN
     VALUES (
       NEW.id,
       'UPDATE',
-      COALESCE(OLD.created_by, v_user),
+      COALESCE(NEW.created_by, v_user),
       now(),
       COALESCE(NEW.last_modified_by, v_user),
       now(),

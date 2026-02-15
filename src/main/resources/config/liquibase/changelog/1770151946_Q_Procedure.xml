@@ -51,11 +51,12 @@
       </column>
 
       <column name="to_department_id" type="bigint">
-        <constraints nullable="true"
+        <constraints nullable="false"
                      foreignKeyName="fk_procedure_to_department"
                      referencedTableName="department"
                      referencedColumnNames="id"/>
       </column>
+
 
       <column name="indication_id" type="bigint">
         <constraints nullable="true"
@@ -69,7 +70,7 @@
       </column>
 
       <column name="priority" type="varchar(30)">
-        <constraints nullable="true"/>
+        <constraints nullable="false"/>
       </column>
 
       <column name="body_part" type="varchar(100)">
@@ -103,19 +104,21 @@
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
-      <column name="created_date" type="timestamp"/>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
       <column name="last_modified_by" type="varchar(50)"/>
       <column name="last_modified_date" type="timestamp"/>
 
     </createTable>
 
     <sql>
-  <![CDATA[
-      CREATE UNIQUE INDEX uk_procedure_unique_context_active
-        ON patient_procedure (procedure_id, body_part, patient_id, encounter_id)
-        WHERE status <> 'CANCELLED';
+      <![CDATA[
+        CREATE UNIQUE INDEX uk_procedure_unique_context_active
+            ON patient_procedure (procedure_id, body_part, patient_id, encounter_id)
+            WHERE status <> 'CANCELLED';
       ]]>
-</sql>
+    </sql>
 
 
     <sql>
@@ -172,9 +175,15 @@
                      referencedColumnNames="id"/>
       </column>
 
-      <column name="action" type="varchar(10)"/>
-      <column name="created_by" type="varchar(50)"/>
-      <column name="created_date" type="timestamp"/>
+      <column name="action" type="varchar(10)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
       <column name="last_modified_by" type="varchar(50)"/>
       <column name="last_modified_date" type="timestamp"/>
       <column name="payload" type="jsonb"/>
@@ -185,7 +194,3 @@
   <include file="config/liquibase/sql/patient_procedure_triggers.sql" relativeToChangelogFile="false"/>
 
 </databaseChangeLog>
-
-
-
-
