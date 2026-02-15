@@ -110,5 +110,6 @@
   <include file="config/liquibase/changelog/1769331928_S_general_assessment.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1769333918_S_chief_complain.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1770533403_R_patient_warnings.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1770791655_R_PatientServicesAndProducts.xml" relativeToChangelogFile="false"/>
 
 </databaseChangeLog>
