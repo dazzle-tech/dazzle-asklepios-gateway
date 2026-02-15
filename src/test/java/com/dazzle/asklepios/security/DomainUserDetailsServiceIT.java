@@ -15,7 +15,6 @@ import org.springframework.r2dbc.core.DatabaseClient;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
 import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -82,8 +81,8 @@ class DomainUserDetailsServiceIT {
         databaseClient.sql(insertFacility)
             .bind("$1", "Facility One")
             .bind("$2", "Type A")
-            .bind("$3","555")
-            .bind("$4","system")
+            .bind("$3", "555")
+            .bind("$4", "system")
             .fetch()
             .rowsUpdated()
             .block();
@@ -185,6 +184,7 @@ class DomainUserDetailsServiceIT {
         assertThat(userDetails).isNotNull();
         assertThat(userDetails.getUsername()).isEqualTo(USER_ONE_LOGIN);
     }
+
     @Test
     void assertThatUserCanBeFoundByLoginIgnoreCase() {
         UserDetails userDetails = domainUserDetailsService.findByUsernameAndFacility(USER_ONE_LOGIN.toUpperCase(Locale.ENGLISH), getFacilityId()).block();
@@ -233,7 +233,7 @@ class DomainUserDetailsServiceIT {
     @Test
     void assertThatUserCanBeFoundByLoginAdminFacility1() {
         UserDetails user = domainUserDetailsService.findByUsernameAndFacility("admin", 1L).block();
-        assertUserHasAuthorities(user, Set.of("ROLE_ADMIN", "ROLE_USER" ,"SETUP_EDIT", "USER_VIEW" ));
+        assertUserHasAuthorities(user, Set.of("ROLE_ADMIN", "ROLE_USER", "SETUP_EDIT", "USER_VIEW"));
     }
 
 
@@ -248,9 +248,6 @@ class DomainUserDetailsServiceIT {
         UserDetails user = domainUserDetailsService.findByUsernameAndFacility("lab.tech", 2L).block();
         assertUserHasAuthorities(user, Set.of("ROLE_USER"));
     }
-
-
-
 
 
     private void assertUserHasAuthorities(UserDetails user, Set<String> expectedAuthorities) {
