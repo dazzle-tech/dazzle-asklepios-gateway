@@ -43,13 +43,18 @@ jobs:
           docker version || true
           docker info || true
           docker ps -a || true
-      
+
 
 
       - name: Run integration tests
         run: |
           chmod +x ./gradlew
-          ./gradlew --no-daemon clean integrationTest --info --stacktrace
+          ./gradlew --no-daemon clean integrationTest --info --stacktrace || true
+          echo "=== FAILURES (first 200 lines) ==="
+          (sed -n '1,200p' **/build/reports/tests/integrationTest/classes/*.html || true)
+          echo "=== STACKTRACES (first 200 lines) ==="
+          (sed -n '1,200p' **/build/reports/tests/integrationTest/index.html || true)
+          exit 1
 
       - name: Upload integration test report (HTML)
         if: always()
