@@ -45,23 +45,26 @@ jobs:
           docker ps -a || true
       - name: Docker diagnostics (extended)
         run: |
-         set -euxo pipefail
-         id
-         groups
-         ls -l /var/run/docker.sock || true
-         echo "DOCKER_HOST=$DOCKER_HOST"
-         docker version
-         docker info
-         docker ps -a
+          set -euxo pipefail
+          id
+          groups
+          ls -l /var/run/docker.sock || true
+          echo "DOCKER_HOST=${DOCKER_HOST-<unset>}"
+          docker version
+          docker info
+          docker ps -a
+
 
 
       - name: Run integration tests
         env:
           DOCKER_HOST: unix:///var/run/docker.sock
           TESTCONTAINERS_HOST_OVERRIDE: localhost
+          TESTCONTAINERS_RYUK_DISABLED: "true"
         run: |
           chmod +x ./gradlew
           ./gradlew --no-daemon clean integrationTest --info --stacktrace
+      
 
       - name: Print root cause
         if: failure()
