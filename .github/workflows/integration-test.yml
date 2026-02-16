@@ -55,6 +55,14 @@ jobs:
           echo "=== STACKTRACES (first 200 lines) ==="
           (sed -n '1,200p' **/build/reports/tests/integrationTest/index.html || true)
           exit 1
+          
+      - name: Print root cause
+        if: failure()
+        run: |
+          echo "=== ROOT CAUSE ==="
+          grep -R "Caused by:" -n build/ -n || true
+          echo "=== TESTCONTAINERS ==="
+          grep -R "testcontainers" -n build/ -n || true
 
       - name: Upload integration test report (HTML)
         if: always()
