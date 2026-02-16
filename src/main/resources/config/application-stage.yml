@@ -11,7 +11,8 @@ management:
         enabled: false
   zipkin:
     tracing:
-      endpoint: http://localhost:9411/api/v2/spans
+      endpoint:
+        http://localhost:9411/api/v2/spans
   tracing:
     sampling:
       probability: 1.0
@@ -23,6 +24,10 @@ services:
   asklepios-inventory-service-url :  http://asklepios-inventory-service:8080
   asklepios-billing-service-url :  http://asklepios-billing-service:8080
 
+  medication-test-orders-validation-service-url: http://medication-test-orders-validation-service:8005
+  clinical-summary-service-url: http://clinical-summary-service:8003
+  clinical-recommendations-service-url: http://clinical-recommendations-service:8004
+
 spring:
   devtools:
     restart:
@@ -31,14 +36,14 @@ spring:
       enabled: false
   liquibase:
     contexts: stage
-    url: jdbc:postgresql://db-postgresql-nyc3-94186-do-user-10936078-0.j.db.ondigitalocean.com:25060/asklepios?sslmode=require
+    url: jdbc:postgresql://161.35.195.29:5432/asklepios
   mail:
     host: localhost
     port: 25
     username:
     password:
   r2dbc:
-    url: r2dbc:postgresql://db-postgresql-nyc3-94186-do-user-10936078-0.j.db.ondigitalocean.com:25060/asklepios?sslmode=require
+    url: r2dbc:postgresql://161.35.195.29:5432/asklepios
     username: asklepios
     password: AVNS_Dw0mJXT6mnivz3bN70_
     pool:
@@ -211,7 +216,28 @@ spring:
             - Path=/api/billing/**
           filters:
             - StripPrefix=0
-            
+
+        - id: medication-test-orders-validation
+          uri: ${services.medication-test-orders-validation-service-url}
+          predicates:
+            - Path=/api/ai/v1/medication-test-orders-validation/**
+          filters:
+            - RewritePath=/api/ai/v1/medication-test-orders-validation/(?<segment>.*),/api/v1/${segment}
+
+        - id: clinical-summary
+          uri: ${services.clinical-summary-service-url}
+          predicates:
+            - Path=/api/ai/v1/clinical-summary/**
+          filters:
+            - RewritePath=/api/ai/v1/clinical-summary/(?<segment>.*),/api/v1/${segment}
+
+        - id: clinical-recommendations
+          uri: ${services.clinical-recommendations-service-url}
+          predicates:
+            - Path=/api/ai/v1/clinical-recommendations/**
+          filters:
+            - RewritePath=/api/ai/v1/clinical-recommendations/(?<segment>.*),/api/v1/${segment}
+
       httpclient:
         pool:
           max-connections: 1000
@@ -242,6 +268,6 @@ asklepios:
         token-validity-in-seconds: 86400
         token-validity-in-seconds-for-remember-me: 2592000
   mail:
-    base-url: http://asklepios.nereuscloud.de/
+    base-url: http://asklepios.nereuscloud.de
     username: systemask73@gmail.com
     password: ocdh hvae hhsz cyxc

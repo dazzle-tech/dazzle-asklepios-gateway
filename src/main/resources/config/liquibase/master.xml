@@ -92,7 +92,24 @@
   <include file="config/liquibase/changelog/1764578272_R_UserStickyNotes.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1764601808_H_PriceList_Item.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1764754649_H_Referral_Request.xml" relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/1764662181_H_Payor_Setup.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1764826849_H_Discharge_Planning.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1764776884_H_Payor_Plan.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1765198918_H_Price_List_Attributes.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1766065547_BM_Form_Template.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1766396407_BM_Form_Entries.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1766367799_S_organization_definition.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1765794249_H_Review_of_System.xml" relativeToChangelogFile="false" />
+  <include file="config/liquibase/changelog/1768722141_R_patient_allergies.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1768730708_R_patient_allergies_active_ingredients.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1768804453_B_ICD10.xml" relativeToChangelogFile="false" />
+  <include file="/config/liquibase/changelog/1763382042_Q_PatientPreferredHealthProfessional.xml" relativeToChangelogFile="false" />
+  <include file="/config/liquibase/changelog/1763381810_Q_Patient_Address.xml" relativeToChangelogFile="false" />
+  <include file="/config/liquibase/changelog/1765875560_B_patientInsurances.xml" relativeToChangelogFile="false" />
+  <include file="/config/liquibase/changelog/1765892720_B_patientInsuranceCoverages.xml" relativeToChangelogFile="false" />
+  <include file="config/liquibase/changelog/1763980448_S_AdminstrativeWarnings.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1769048234_S_emergency_triage.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1769331928_S_general_assessment.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1769333918_S_chief_complain.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1770533403_R_patient_warnings.xml" relativeToChangelogFile="false"/>
 
 </databaseChangeLog>

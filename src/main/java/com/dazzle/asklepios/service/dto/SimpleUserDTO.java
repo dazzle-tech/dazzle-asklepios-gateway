@@ -5,8 +5,6 @@ import com.dazzle.asklepios.domain.Authority;
 import com.dazzle.asklepios.domain.User;
 import com.dazzle.asklepios.domain.enumeration.Gender;
 import com.dazzle.asklepios.domain.enumeration.JobRole;
-import com.dazzle.asklepios.domain.enumeration.SecurityLevel;
-import com.dazzle.asklepios.security.AuthoritiesConstants;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -23,7 +21,7 @@ import java.util.stream.Collectors;
  * A DTO representing a user, with his authorities.
  */
 @Data
-public class AdminUserDTO implements Serializable {
+public class SimpleUserDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -61,7 +59,6 @@ public class AdminUserDTO implements Serializable {
 
     private Instant lastModifiedDate;
 
-    private Set<String> authorities;
 
 
     @Size(max = 20)
@@ -71,14 +68,12 @@ public class AdminUserDTO implements Serializable {
 
     private Gender gender;
     private JobRole jobRole;
-    private SecurityLevel securityAccessLeve;
-    private boolean isAdmin;
 
 
-    public AdminUserDTO() {
+    public SimpleUserDTO() {
     }
 
-    public AdminUserDTO(User user) {
+    public SimpleUserDTO(User user) {
         this.id = user.getId();
         this.login = user.getLogin();
         this.firstName = user.getFirstName();
@@ -91,19 +86,10 @@ public class AdminUserDTO implements Serializable {
         this.createdDate = user.getCreatedDate();
         this.lastModifiedBy = user.getLastModifiedBy();
         this.lastModifiedDate = user.getLastModifiedDate();
-
-        this.authorities = user.getAuthorities()
-            .stream()
-            .map(Authority::getName)
-            .collect(Collectors.toSet());
-
-        this.isAdmin = this.authorities.contains(AuthoritiesConstants.ADMIN);
-
         this.phoneNumber = user.getPhoneNumber();
         this.birthDate = user.getBirthDate();
         this.gender = user.getGender();
-        this.jobRole = user.getJobRole();
-        this.securityAccessLeve = user.getSecurityAccessLeve();
-    }
+        this.jobRole=user.getJobRole();
 
+    }
 }
