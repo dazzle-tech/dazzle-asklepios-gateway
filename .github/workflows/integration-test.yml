@@ -59,6 +59,7 @@ jobs:
         run: |
            unset DOCKER_HOST DOCKER_TLS_VERIFY DOCKER_CERT_PATH
            echo "DOCKER_HOST=${DOCKER_HOST:-<unset>}"
+           echo "DOCKER_API_VERSION=${DOCKER_API_VERSION-<unset>}"
            docker version
            docker info
            docker run --rm hello-world
@@ -73,7 +74,7 @@ jobs:
         run: |
           chmod +x ./gradlew
           ./gradlew --no-daemon clean integrationTest --info --stacktrace
-      
+
 
 
       - name: Print root cause
