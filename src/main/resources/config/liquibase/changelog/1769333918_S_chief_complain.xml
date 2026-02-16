@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="100000000000066_CHIEF_COMPLAIN" author="Sondos">
+    <createTable tableName="chief_complain">
+      <column name="id" type="bigint" startWith="1" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="chief_complaint" type="text">
+        <constraints nullable="false"/>
+      </column>
+      <column name="provocation" type="varchar(200)"/>
+      <column name="palliation" type="varchar(200)"/>
+      <column name="quality" type="varchar(50)"/>
+      <column name="region" type="varchar(50)"/>
+      <column name="severity" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="onset_date_time" type="timestamp" >
+        <constraints nullable="false"/>
+      </column>
+      <column name="case_understanding" type="varchar(500)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="patient_condition" type="varchar(50)"/>
+      <column name="is_triage" type="boolean">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <createIndex indexName="idx_chief_complain_encounter_createddate_desc" tableName="chief_complain">
+      <column name="encounter_id"/>
+      <column name="created_date" descending="true"/>
+    </createIndex>
+    <addUniqueConstraint
+      tableName="chief_complain"
+      columnNames="encounter_id, is_triage"
+      constraintName="uk_chief_complain_encounter_id_is_triage"/>
+
+    <addForeignKeyConstraint
+      baseTableName="chief_complain"
+      baseColumnNames="patient_id"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+      constraintName="fk_chief_complain_patient_id"/>
+
+    <!-- TODO: add foreign key with encounter table when ready-->
+    <!--
+    <addForeignKeyConstraint
+      baseTableName="chief_complain"
+      baseColumnNames="encounter_id"
+      referencedTableName="encounter"
+      referencedColumnNames="id"
+      constraintName="fk_chief_complain_encounter_id"
+      onDelete="CASCADE"/>
+    -->
+  </changeSet>
+
+</databaseChangeLog>
