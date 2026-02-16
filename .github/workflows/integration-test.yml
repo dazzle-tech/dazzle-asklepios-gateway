@@ -54,17 +54,26 @@ jobs:
           docker info
           docker ps -a
 
+      - name: Docker sanity + fix env for Testcontainers
+        shell: bash
+        run: |
+           unset DOCKER_HOST DOCKER_TLS_VERIFY DOCKER_CERT_PATH
+           echo "DOCKER_HOST=${DOCKER_HOST:-<unset>}"
+           docker version
+           docker info
+           docker run --rm hello-world
+
 
 
       - name: Run integration tests
         env:
-          DOCKER_HOST: unix:///var/run/docker.sock
           TESTCONTAINERS_HOST_OVERRIDE: localhost
           TESTCONTAINERS_RYUK_DISABLED: "true"
-          DOCKER_API_VERSION: "1.44"
+        shell: bash
         run: |
           chmod +x ./gradlew
           ./gradlew --no-daemon clean integrationTest --info --stacktrace
+      
 
 
       - name: Print root cause
