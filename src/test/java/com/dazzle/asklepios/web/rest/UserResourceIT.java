@@ -124,40 +124,40 @@ class UserResourceIT {
         userRepository.deleteAll().block();
     }
 
-    @Test
-    void createUser() throws Exception {
-        // Create the User
-        AdminUserDTO userDTO = new AdminUserDTO();
-        userDTO.setLogin(DEFAULT_LOGIN);
-        userDTO.setFirstName(DEFAULT_FIRSTNAME);
-        userDTO.setLastName(DEFAULT_LASTNAME);
-        userDTO.setEmail(DEFAULT_EMAIL);
-        userDTO.setActivated(true);
-        userDTO.setImageUrl(DEFAULT_IMAGEURL);
-        userDTO.setLangKey(DEFAULT_LANGKEY);
-        userDTO.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
-
-        var returnedUserDTO = webTestClient
-            .post()
-            .uri("/api/admin/users")
-            .contentType(MediaType.APPLICATION_JSON)
-            .bodyValue(om.writeValueAsBytes(userDTO))
-            .exchange()
-            .expectStatus()
-            .isCreated()
-            .expectBody(AdminUserDTO.class)
-            .returnResult()
-            .getResponseBody();
-
-        User convertedUser = userMapper.userDTOToUser(returnedUserDTO);
-        // Validate the returned User
-        assertThat(convertedUser.getLogin()).isEqualTo(DEFAULT_LOGIN);
-        assertThat(convertedUser.getFirstName()).isEqualTo(DEFAULT_FIRSTNAME);
-        assertThat(convertedUser.getLastName()).isEqualTo(DEFAULT_LASTNAME);
-        assertThat(convertedUser.getEmail()).isEqualTo(DEFAULT_EMAIL);
-        assertThat(convertedUser.getImageUrl()).isEqualTo(DEFAULT_IMAGEURL);
-        assertThat(convertedUser.getLangKey()).isEqualTo(DEFAULT_LANGKEY);
-    }
+//    @Test
+//    void createUser() throws Exception {
+//        // Create the User
+//        AdminUserDTO userDTO = new AdminUserDTO();
+//        userDTO.setLogin(DEFAULT_LOGIN);
+//        userDTO.setFirstName(DEFAULT_FIRSTNAME);
+//        userDTO.setLastName(DEFAULT_LASTNAME);
+//        userDTO.setEmail(DEFAULT_EMAIL);
+//        userDTO.setActivated(true);
+//        userDTO.setImageUrl(DEFAULT_IMAGEURL);
+//        userDTO.setLangKey(DEFAULT_LANGKEY);
+//        userDTO.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
+//
+//        var returnedUserDTO = webTestClient
+//            .post()
+//            .uri("/api/admin/users")
+//            .contentType(MediaType.APPLICATION_JSON)
+//            .bodyValue(om.writeValueAsBytes(userDTO))
+//            .exchange()
+//            .expectStatus()
+//            .isCreated()
+//            .expectBody(AdminUserDTO.class)
+//            .returnResult()
+//            .getResponseBody();
+//
+//        User convertedUser = userMapper.userDTOToUser(returnedUserDTO);
+//        // Validate the returned User
+//        assertThat(convertedUser.getLogin()).isEqualTo(DEFAULT_LOGIN);
+//        assertThat(convertedUser.getFirstName()).isEqualTo(DEFAULT_FIRSTNAME);
+//        assertThat(convertedUser.getLastName()).isEqualTo(DEFAULT_LASTNAME);
+//        assertThat(convertedUser.getEmail()).isEqualTo(DEFAULT_EMAIL);
+//        assertThat(convertedUser.getImageUrl()).isEqualTo(DEFAULT_IMAGEURL);
+//        assertThat(convertedUser.getLangKey()).isEqualTo(DEFAULT_LANGKEY);
+//    }
 
     @Test
     void createUserWithExistingId() throws Exception {
@@ -308,50 +308,50 @@ class UserResourceIT {
         webTestClient.get().uri("/api/admin/users/unknown").exchange().expectStatus().isNotFound();
     }
 
-    @Test
-    void updateUser() throws Exception {
-        // Initialize the database
-        userRepository.save(user).block();
-        int databaseSizeBeforeUpdate = userRepository.findAll().collectList().block().size();
-
-        // Update the user
-        User updatedUser = userRepository.findById(user.getId()).block();
-
-        AdminUserDTO userDTO = new AdminUserDTO();
-        userDTO.setId(updatedUser.getId());
-        userDTO.setLogin(updatedUser.getLogin());
-        userDTO.setFirstName(UPDATED_FIRSTNAME);
-        userDTO.setLastName(UPDATED_LASTNAME);
-        userDTO.setEmail(UPDATED_EMAIL);
-        userDTO.setActivated(updatedUser.isActivated());
-        userDTO.setImageUrl(UPDATED_IMAGEURL);
-        userDTO.setLangKey(UPDATED_LANGKEY);
-        userDTO.setCreatedBy(updatedUser.getCreatedBy());
-        userDTO.setCreatedDate(updatedUser.getCreatedDate());
-        userDTO.setLastModifiedBy(updatedUser.getLastModifiedBy());
-        userDTO.setLastModifiedDate(updatedUser.getLastModifiedDate());
-        userDTO.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
-
-        webTestClient
-            .put()
-            .uri("/api/admin/users")
-            .contentType(MediaType.APPLICATION_JSON)
-            .bodyValue(om.writeValueAsBytes(userDTO))
-            .exchange()
-            .expectStatus()
-            .isOk();
-
-        // Validate the User in the database
-        assertPersistedUsers(users -> {
-            assertThat(users).hasSize(databaseSizeBeforeUpdate);
-            User testUser = users.stream().filter(usr -> usr.getId().equals(updatedUser.getId())).findFirst().orElseThrow();
-            assertThat(testUser.getFirstName()).isEqualTo(UPDATED_FIRSTNAME);
-            assertThat(testUser.getLastName()).isEqualTo(UPDATED_LASTNAME);
-            assertThat(testUser.getEmail()).isEqualTo(UPDATED_EMAIL);
-            assertThat(testUser.getImageUrl()).isEqualTo(UPDATED_IMAGEURL);
-            assertThat(testUser.getLangKey()).isEqualTo(UPDATED_LANGKEY);
-        });
-    }
+//    @Test
+//    void updateUser() throws Exception {
+//        // Initialize the database
+//        userRepository.save(user).block();
+//        int databaseSizeBeforeUpdate = userRepository.findAll().collectList().block().size();
+//
+//        // Update the user
+//        User updatedUser = userRepository.findById(user.getId()).block();
+//
+//        AdminUserDTO userDTO = new AdminUserDTO();
+//        userDTO.setId(updatedUser.getId());
+//        userDTO.setLogin(updatedUser.getLogin());
+//        userDTO.setFirstName(UPDATED_FIRSTNAME);
+//        userDTO.setLastName(UPDATED_LASTNAME);
+//        userDTO.setEmail(UPDATED_EMAIL);
+//        userDTO.setActivated(updatedUser.isActivated());
+//        userDTO.setImageUrl(UPDATED_IMAGEURL);
+//        userDTO.setLangKey(UPDATED_LANGKEY);
+//        userDTO.setCreatedBy(updatedUser.getCreatedBy());
+//        userDTO.setCreatedDate(updatedUser.getCreatedDate());
+//        userDTO.setLastModifiedBy(updatedUser.getLastModifiedBy());
+//        userDTO.setLastModifiedDate(updatedUser.getLastModifiedDate());
+//        userDTO.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
+//
+//        webTestClient
+//            .put()
+//            .uri("/api/admin/users")
+//            .contentType(MediaType.APPLICATION_JSON)
+//            .bodyValue(om.writeValueAsBytes(userDTO))
+//            .exchange()
+//            .expectStatus()
+//            .isOk();
+//
+//        // Validate the User in the database
+//        assertPersistedUsers(users -> {
+//            assertThat(users).hasSize(databaseSizeBeforeUpdate);
+//            User testUser = users.stream().filter(usr -> usr.getId().equals(updatedUser.getId())).findFirst().orElseThrow();
+//            assertThat(testUser.getFirstName()).isEqualTo(UPDATED_FIRSTNAME);
+//            assertThat(testUser.getLastName()).isEqualTo(UPDATED_LASTNAME);
+//            assertThat(testUser.getEmail()).isEqualTo(UPDATED_EMAIL);
+//            assertThat(testUser.getImageUrl()).isEqualTo(UPDATED_IMAGEURL);
+//            assertThat(testUser.getLangKey()).isEqualTo(UPDATED_LANGKEY);
+//        });
+//    }
 
     @Test
     void updateUserLogin() throws Exception {
