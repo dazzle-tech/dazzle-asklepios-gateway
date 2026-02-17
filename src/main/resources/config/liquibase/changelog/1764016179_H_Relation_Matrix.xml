@@ -23,13 +23,7 @@
       <column name="second_relation_code" type="varchar(50)"/>
     </createTable>
 
-    <createIndex tableName="relations_matrix" indexName="idx_rel_matrix_first_rel">
-      <column name="first_relation_code"/>
-    </createIndex>
 
-    <createIndex tableName="relations_matrix" indexName="idx_rel_matrix_second_rel">
-      <column name="second_relation_code"/>
-    </createIndex>
 
     <loadData
       tableName="relations_matrix"
@@ -37,10 +31,10 @@
       separator=","
       quotchar="&quot;"
       encoding="UTF-8">
-      <column name="first_patient_gender" type="STRING"/>
-      <column name="second_patient_gender" type="STRING"/>
-      <column name="first_relation_code" type="STRING"/>
-      <column name="second_relation_code" type="STRING"/>
+      <column name="first_patient_gender" type="varchar(50)"/>
+      <column name="second_patient_gender" type="varchar(50)"/>
+      <column name="first_relation_code" type="varchar(50)"/>
+      <column name="second_relation_code" type="varchar(50)"/>
     </loadData>
   </changeSet>
 
@@ -84,7 +78,6 @@
 
     <!-- ================= FK CONSTRAINTS ================= -->
 
-    <!-- patient_id -> ap_patient.id -->
     <addForeignKeyConstraint
       baseTableName="patient_relation"
       baseColumnNames="patient_id"
@@ -93,7 +86,6 @@
       constraintName="fk_patient_relation_patient"
      />
 
-    <!-- relative_patient_id -> ap_patient.id -->
     <addForeignKeyConstraint
       baseTableName="patient_relation"
       baseColumnNames="relative_patient_id"
@@ -102,12 +94,6 @@
       constraintName="fk_patient_relation_relative"
      />
 
-
-    <!-- Remove default after insert (same standard) -->
-    <dropDefaultValue
-      tableName="patient_relation"
-      columnName="created_date"
-      columnDataType="${datetimeType}"/>
     <addUniqueConstraint
       tableName="patient_relation"
       columnNames="patient_id, relative_patient_id, relation_type"
