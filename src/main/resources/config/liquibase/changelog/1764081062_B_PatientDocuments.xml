@@ -61,11 +61,18 @@
   </changeSet>
 
   <changeSet id="bs0000000000021-primary" author="batool">
-    <sql dbms="postgresql">
-      CREATE UNIQUE INDEX ux_patient_documents_primary_per_patient
-        ON patient_documents (patient_id)
-        WHERE is_primary = true;
-    </sql>
+
+    <createIndex
+      tableName="patient_documents"
+      indexName="ux_patient_documents_primary_per_patient"
+      unique="true">
+      <column name="patient_id"/>
+    </createIndex>
+
+    <modifySql dbms="postgresql">
+      <append value=" WHERE is_primary = true"/>
+    </modifySql>
+
   </changeSet>
 
   <changeSet id="bs0000000000022" author="batool">
