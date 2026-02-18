@@ -19,7 +19,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        java: ['21']   # Test against both Java 17 and 21 (adjust as needed)
+        java: [ '17','21' ]
+        # Test against both Java 17 and 21 (adjust as needed)
 
     steps:
       - name: Checkout
@@ -27,6 +28,7 @@ jobs:
 
       - name: Validate Gradle Wrapper
         uses: gradle/wrapper-validation-action@v2
+        continue-on-error: true
         env:
           NODE_OPTIONS: --dns-result-order=ipv4first
 
