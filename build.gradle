@@ -99,6 +99,13 @@ test {
 }
 
 check.dependsOn integrationTest
+tasks.named("integrationTest", Test) {
+  testClassesDirs = sourceSets.test.output.classesDirs
+  classpath = sourceSets.test.runtimeClasspath
+  useJUnitPlatform()
+  include "**/*IT*", "**/*IntTest*"
+}
+
 task testReport(type: TestReport) {
     destinationDirectory = file("$buildDir/reports/tests")
     testResults.from(test)
@@ -117,7 +124,6 @@ gitProperties {
 tasks.withType(com.gorylenko.GenerateGitPropertiesTask).configureEach {
   outputs.doNotCacheIf("Task is always executed") { true }
 }
-
 configurations {
     providedRuntime
     implementation.exclude module: "spring-boot-starter-tomcat"
