@@ -6,11 +6,7 @@
     http://www.liquibase.org/xml/ns/dbchangelog
     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-  <!-- ... your existing changeSets ... -->
-
-  <!-- ===================================================== -->
-  <!-- Technician Notes (child table of diagnostic_order_tests) -->
-  <!-- ===================================================== -->
+ 
   <changeSet id="H000000000000MD_DIAG_REPORT_TECHNICIAN_NOTES" author="hanan253yahya">
 
     <createTable tableName="diagnostic_order_test_report_comments">
@@ -44,7 +40,6 @@
       <column name="last_modified_date" type="timestamp"/>
     </createTable>
 
-    <!-- FK: order_test_id -> diagnostic_order_tests(id) -->
     <addForeignKeyConstraint
       constraintName="fk_dotr_tn_order_test_id"
       baseTableName="diagnostic_order_test_report_comments"
