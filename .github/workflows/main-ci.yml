@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Log in to DigitalOcean Container Registry
         env:
@@ -30,12 +30,12 @@ jobs:
 
       - name: Logout of DigitalOcean Container Registry
         run: docker logout ${{ secrets.DOCR_REGISTRY_URL }}
-
+        
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
         with:
           token: ${{ secrets.DOCR_ACCESS_TOKEN }}
-
+        
       - name: Save DigitalOcean kubeconfig with short-lived credentials
         run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 k8s-1-31-1-do-3-fra1-1730027205220
 

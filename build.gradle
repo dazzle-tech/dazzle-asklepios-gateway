@@ -24,9 +24,7 @@ java {
 
 def v = System.getProperty("java.specification.version")
 assert ["17","21","23"].contains(v) : "Unsupported Java version: ${v}"
-tasks.withType(Test).configureEach {
-  useJUnitPlatform()
-}
+
 
 ext {
     springProfiles = ""
