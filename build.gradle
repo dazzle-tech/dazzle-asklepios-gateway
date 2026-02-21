@@ -43,6 +43,12 @@ repositories {
 
 apply plugin: 'io.spring.dependency-management'
 
+dependencyManagement {
+  imports {
+    mavenBom "org.testcontainers:testcontainers-bom:1.21.4"
+  }
+}
+
 apply from: "gradle/liquibase.gradle"
 
 if (project.hasProperty("prod")) {
