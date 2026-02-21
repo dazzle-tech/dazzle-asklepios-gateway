@@ -61,12 +61,13 @@ jobs:
           echo "DOCKER_HOST=$DOCKER_HOST"
 
       - name: Run integration tests
-        shell: bash
+        env:
+          DOCKER_HOST: unix:///var/run/docker.sock
+          TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE: /var/run/docker.sock
         run: |
-          set -euxo pipefail
           chmod +x ./gradlew
           ./gradlew --no-daemon clean integrationTest --info --stacktrace
-
+      
       - name: Upload integration test report (HTML)
         if: always()
         uses: actions/upload-artifact@v4
