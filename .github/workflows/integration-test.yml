@@ -50,15 +50,12 @@ jobs:
         run: |
           set -euxo pipefail
           docker version
-          echo "Server API: $(docker version --format '{{.Server.APIVersion}}')"
-          echo "Client API: $(docker version --format '{{.Client.APIVersion}}')"
-      
+
       - name: Debug Docker
         run: |
           docker version
           docker info
 
-          echo "DOCKER_HOST=$DOCKER_HOST"
 
       - name: Run integration tests
         env:
