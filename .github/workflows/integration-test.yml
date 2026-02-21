@@ -1,4 +1,3 @@
-# .github/workflows/integration-tests.yml
 name: Integration Tests (Gradle)
 
 on:
@@ -20,7 +19,6 @@ jobs:
     # Forces Docker client to speak the expected API version,
     # and prefers IPv4 (helps with ENETUNREACH/IPv6 issues on runners).
     env:
-      DOCKER_API_VERSION: "1.44"
       JAVA_TOOL_OPTIONS: "-Djava.net.preferIPv4Stack=true -Djava.net.preferIPv6Addresses=false"
 
     strategy:
@@ -55,6 +53,12 @@ jobs:
           echo "Server API: $(docker version --format '{{.Server.APIVersion}}')"
           echo "Client API: $(docker version --format '{{.Client.APIVersion}}')"
           echo "DOCKER_API_VERSION=${DOCKER_API_VERSION}"
+      - name: Debug Docker
+        run: |
+          docker version
+          docker info
+          echo "DOCKER_API_VERSION=$DOCKER_API_VERSION"
+          echo "DOCKER_HOST=$DOCKER_HOST"
 
       - name: Run integration tests
         shell: bash
