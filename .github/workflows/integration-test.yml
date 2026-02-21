@@ -52,12 +52,12 @@ jobs:
           docker version
           echo "Server API: $(docker version --format '{{.Server.APIVersion}}')"
           echo "Client API: $(docker version --format '{{.Client.APIVersion}}')"
-          echo "DOCKER_API_VERSION=${DOCKER_API_VERSION}"
+      
       - name: Debug Docker
         run: |
           docker version
           docker info
-          echo "DOCKER_API_VERSION=$DOCKER_API_VERSION"
+
           echo "DOCKER_HOST=$DOCKER_HOST"
 
       - name: Run integration tests
@@ -67,7 +67,7 @@ jobs:
         run: |
           chmod +x ./gradlew
           ./gradlew --no-daemon clean integrationTest --info --stacktrace
-      
+
       - name: Upload integration test report (HTML)
         if: always()
         uses: actions/upload-artifact@v4
