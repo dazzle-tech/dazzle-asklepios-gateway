@@ -34,10 +34,20 @@ jobs:
           distribution: temurin
           java-version: ${{ matrix.java }}
           cache: gradle
+      - name: Force Gradle to use Java 21
+        run: echo "ORG_GRADLE_JAVA_HOME=$JAVA_HOME" >> $GITHUB_ENV
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
 
+      - name: Java version (debug)
+        run: |
+            echo "JAVA_HOME=$JAVA_HOME"
+            echo "ORG_GRADLE_JAVA_HOME=$ORG_GRADLE_JAVA_HOME"
+            java -version
+
+            - name: Docker info (debug)
+              run: docker version && docker info
       - name: Run integration tests
         run: |
           chmod +x ./gradlew
