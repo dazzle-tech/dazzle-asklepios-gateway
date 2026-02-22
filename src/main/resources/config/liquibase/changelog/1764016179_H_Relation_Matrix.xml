@@ -15,12 +15,20 @@
         <constraints nullable="false" primaryKey="true"/>
       </column>
 
-      <column name="first_patient_gender" type="varchar(20)"/>
-      <column name="second_patient_gender" type="varchar(20)"/>
+      <column name="first_patient_gender" type="varchar(20)">
+      <constraints nullable="false"/>
+        </column>
+      <column name="second_patient_gender" type="varchar(20)">
+        <constraints nullable="false"/>
+      </column>
 
       <!-- Enum name RelationType -->
-      <column name="first_relation_code" type="varchar(50)"/>
-      <column name="second_relation_code" type="varchar(50)"/>
+      <column name="first_relation_code" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="second_relation_code" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
     </createTable>
 
 
@@ -59,7 +67,6 @@
         <constraints nullable="false"/>
       </column>
 
-      <column name="is_active" type="boolean" defaultValue="true"/>
 
       <!-- Enum name FamilyMemberCategory -->
       <column name="category_type" type="varchar(20)"/>
