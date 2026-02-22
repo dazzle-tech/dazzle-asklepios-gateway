@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+  <changeSet id="R00000000000006" author="Rawan-Yahya200">
+    <createTable tableName="patient_warnings">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="warning_type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="warning" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+
+      <column name="severity" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="onset_date_undefined" type="boolean" defaultValue="true"/>
+
+      <column name="onset_date" type="timestamp" />
+
+      <column name="by_patient" type="boolean"  defaultValue="true"/>
+
+      <column name="source_of_information" type="varchar(50)"/>
+
+      <column name="note" type="varchar(255)"/>
+
+      <column name="action_taken" type="varchar(255)"/>
+
+      <column name="status" type="varchar(50)" defaultValue="ACTIVE"/>
+
+      <column name="resolved_by" type="varchar(50)" />
+
+      <column name="resolved_date" type="timestamp"/>
+
+      <column name="cancelled_by" type="varchar(50)" />
+
+      <column name="cancelled_date" type="timestamp"/>
+
+      <column name="cancellation_reason" type="varchar(50)" />
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+
+    <addUniqueConstraint
+      tableName="patient_warnings"
+      columnNames="patient_id,warning_type,warning"
+      constraintName="uk_patient_warning"/>
+
+  </changeSet>
+
+</databaseChangeLog>
