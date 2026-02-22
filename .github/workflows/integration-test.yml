@@ -45,16 +45,6 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Docker version (debug)
-        shell: bash
-        run: |
-          set -euxo pipefail
-          docker version
-
-      - name: Debug Docker
-        run: |
-          docker version
-          docker info
 
 
       - name: Run integration tests
