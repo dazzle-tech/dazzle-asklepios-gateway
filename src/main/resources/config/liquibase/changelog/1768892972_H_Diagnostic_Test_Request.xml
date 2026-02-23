@@ -35,7 +35,8 @@
       <column name="approved_by" type="varchar(50)"/>
 
       <column name="rejected_reason" type="varchar(200)"/>
-
+      <column name="diagnostic_test_id" type="bigint">
+      </column>
 
       <column name="from_department_id" type="bigint">
         <constraints nullable="false"/>
@@ -73,6 +74,12 @@
       referencedColumnNames="id"
 
     />
+    <addForeignKeyConstraint
+      constraintName="fk_dtr_diagnostic_test"
+      baseTableName="diagnostic_test_requests"
+      baseColumnNames="diagnostic_test_id"
+      referencedTableName="diagnostic_test"
+      referencedColumnNames="id"/>
 
   </changeSet>
 
