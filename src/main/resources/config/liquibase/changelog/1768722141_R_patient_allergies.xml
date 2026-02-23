@@ -96,6 +96,13 @@
       referencedColumnNames="id"
       constraintName="fk_patient_allergies_medication_class"/>
 
+    <addForeignKeyConstraint
+      baseTableName="patient_allergies"
+      baseColumnNames="patient_id"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+      constraintName="fk_patient_allergies_patient_id"/>
+
 
     <addUniqueConstraint
       tableName="patient_allergies"
