@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+<changeSet id="R00000000000007_PATIENT_WARNINGS_LOG" author="Rawan-Yahya200">
+  <createTable tableName="patient_warnings_log">
+    <column name="id" type="bigint" autoIncrement="true">
+      <constraints primaryKey="true" nullable="false"/>
+    </column>
+
+    <column name="warning_id" type="bigint">
+      <constraints nullable="false"/>
+    </column>
+
+    <column name="operation_type" type="varchar(10)">
+      <constraints nullable="false"/>
+    </column>
+
+    <column name="log_date" type="timestamp">
+      <constraints nullable="false"/>
+    </column>
+
+    <column name="log_by" type="varchar(50)"/>
+
+    <column name="patient_id" type="bigint">
+      <constraints nullable="false"/>
+    </column>
+
+    <column name="encounter_id" type="bigint">
+      <constraints nullable="false"/>
+    </column>
+
+    <column name="warning_type" type="varchar(50)">
+      <constraints nullable="false"/>
+    </column>
+
+    <column name="warning" type="varchar(100)">
+      <constraints nullable="false"/>
+    </column>
+
+    <column name="severity" type="varchar(50)">
+      <constraints nullable="false"/>
+    </column>
+
+    <column name="onset_date_undefined" type="boolean"/>
+
+    <column name="onset_date" type="timestamp"/>
+
+    <column name="by_patient" type="boolean"/>
+
+    <column name="source_of_information" type="varchar(50)"/>
+
+    <column name="note" type="varchar(255)"/>
+
+    <column name="action_taken" type="varchar(255)"/>
+
+    <column name="status" type="varchar(50)"/>
+
+    <column name="resolved_by" type="varchar(50)"/>
+
+    <column name="resolved_date" type="timestamp"/>
+
+    <column name="cancelled_by" type="varchar(50)"/>
+
+    <column name="cancelled_date" type="timestamp"/>
+
+    <column name="cancellation_reason" type="varchar(50)"/>
+
+    <column name="created_by" type="varchar(50)">
+      <constraints nullable="false"/>
+    </column>
+
+    <column name="created_date" type="timestamp">
+      <constraints nullable="false"/>
+    </column>
+
+    <column name="last_modified_by" type="varchar(50)"/>
+
+    <column name="last_modified_date" type="timestamp"/>
+  </createTable>
+
+  <addForeignKeyConstraint
+    baseTableName="patient_warnings_log"
+    baseColumnNames="warning_id"
+    constraintName="fk_pat_warnings_log_warning"
+    referencedTableName="patient_warnings"
+    referencedColumnNames="id"
+  />
+
+
+  <createIndex tableName="patient_warnings_log"
+               indexName="idx_pat_warnings_log_warning_id">
+    <column name="warning_id"/>
+  </createIndex>
+
+  <createIndex tableName="patient_warnings_log"
+               indexName="idx_pat_warnings_log_date">
+    <column name="log_date"/>
+  </createIndex>
+</changeSet>
+<include file="config/liquibase/sql/Patient_Warnings_Log.sql" relativeToChangelogFile="false"/>
+</databaseChangeLog>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+  <changeSet id="R00000000000007" author="Rawan-Yahya200">
+    <createTable tableName="patient_services_and_products">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="category" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="service_id" type="bigint" />
+
+      <column name="product_id" type="bigint" />
+
+      <column name="quantity" type="bigint" defaultValue="1">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="patient_services_and_products"
+      baseColumnNames="product_id"
+      referencedTableName="inventory_products"
+      referencedColumnNames="id"
+      constraintName="fk_patient_services_and_products_product_id"/>
+
+    <addForeignKeyConstraint
+      baseTableName="patient_services_and_products"
+      baseColumnNames="service_id"
+      referencedTableName="service"
+      referencedColumnNames="id"
+      constraintName="fk_patient_services_and_products_service_id"/>
+
+    <addUniqueConstraint
+      tableName="patient_services_and_products"
+      columnNames="encounter_id,patient_id,product_id"
+      constraintName="uk_patient_product"/>
+
+    <addUniqueConstraint
+      tableName="patient_services_and_products"
+      columnNames="encounter_id,patient_id,service_id"
+      constraintName="uk_patient_service"/>
+
+  </changeSet>
+
+</databaseChangeLog>
