@@ -47,7 +47,9 @@
 
             <column name="extra_documentation" type="text"/>
 
-            <column name="status" type="varchar(50)"/>
+            <column name="status" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
 
             <column name="cancellation_reason" type="varchar(255)"/>
 
@@ -64,7 +66,9 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="created_date" type="timestamp"/>
+            <column name="created_date" type="timestamp" defaultValueComputed="now()">
+                <constraints nullable="false"/>
+            </column>
 
             <column name="last_modified_by" type="varchar(50)"/>
 
