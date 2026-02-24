@@ -40,7 +40,10 @@
 
       <column name="adverse_reactions_to_anesthesia" type="varchar(1000)"/>
 
-      <column name="has_implants_or_devices" type="boolean"/>
+      <column name="has_implants_or_devices" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
       <column name="implants_or_devices_description" type="varchar(1000)"/>
 
       <column name="created_by" type="varchar(50)">
