@@ -120,7 +120,9 @@
   <include file="config/liquibase/changelog/1765448261_H_Next_Of_Kin.xml" relativeToChangelogFile="false" />
   <include file="config/liquibase/changelog/1771843369_R_patient_warnings_log.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1770791655_R_PatientServicesAndProducts.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1768307386_B_PatientProblems.xml" relativeToChangelogFile="false" />
+  <include file="/config/liquibase/changelog/1768381461_Q_Family_History.xml" relativeToChangelogFile="false" />
+  <include file="/config/liquibase/changelog/1768389695_Q_Hospitalizations.xml" relativeToChangelogFile="false" />
 
 </databaseChangeLog>
-
 
