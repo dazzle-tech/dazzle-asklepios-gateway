@@ -39,13 +39,17 @@
 
       <column name="onset" type="varchar(50)"/>
 
-      <column name="onset_date_undefined" type="boolean" defaultValue="true"/>
+      <column name="onset_date_undefined" type="boolean" defaultValue="true">
+        <constraints nullable="false"/>
+      </column>
 
       <column name="onset_date" type="timestamp" />
 
       <column name="type_of_propensity" type="varchar(50)" />
 
-      <column name="by_patient" type="boolean"  defaultValue="true"/>
+      <column name="by_patient" type="boolean"  defaultValue="true">
+        <constraints nullable="false"/>
+      </column>
 
       <column name="source_of_information" type="varchar(50)"/>
 
@@ -91,6 +95,13 @@
       referencedTableName="medication_categories_class"
       referencedColumnNames="id"
       constraintName="fk_patient_allergies_medication_class"/>
+
+    <addForeignKeyConstraint
+      baseTableName="patient_allergies"
+      baseColumnNames="patient_id"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+      constraintName="fk_patient_allergies_patient_id"/>
 
 
     <addUniqueConstraint
