@@ -7,30 +7,46 @@
     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
   <changeSet id="bs000000000028_VITAL_SIGNS_LOG_TABLE" author="batool">
+
     <createTable tableName="vital_signs_log">
+
       <column name="id" type="bigint" autoIncrement="true">
         <constraints primaryKey="true" nullable="false"/>
       </column>
 
-      <column name="vital_signs_id" type="bigint"/>
+      <column name="vital_signs_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_vs_log_vital_signs"
+                     referencedTableName="vital_signs"
+                     referencedColumnNames="id"/>
+      </column>
 
-      <column name="action" type="varchar(10)"/>
+      <column name="action" type="varchar(10)">
+        <constraints nullable="false"/>
+      </column>
 
-      <column name="created_by" type="varchar(50)"/>
-      <column name="created_date" type="timestamp"/>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
 
       <column name="last_modified_by" type="varchar(50)"/>
       <column name="last_modified_date" type="timestamp"/>
 
       <column name="payload" type="jsonb"/>
+
     </createTable>
 
     <createIndex indexName="ix_vital_signs_log_vs_id" tableName="vital_signs_log">
       <column name="vital_signs_id"/>
     </createIndex>
+
   </changeSet>
 
-  <include file="config/liquibase/sql/vital_signs_triggers.sql" relativeToChangelogFile="false"/>
-
+  <include file="config/liquibase/sql/vital_signs_triggers.sql"
+           relativeToChangelogFile="false"/>
 
 </databaseChangeLog>
