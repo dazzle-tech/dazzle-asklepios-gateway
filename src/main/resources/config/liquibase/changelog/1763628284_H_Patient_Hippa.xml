@@ -18,8 +18,12 @@
                      references="patients(id)"
                      unique="true"/>
       </column>
-      <column name="notice_of_privacy_practice" type="boolean" defaultValueBoolean="false"/>
-      <column name="privacy_authorization" type="boolean" defaultValueBoolean="false"/>
+      <column name="notice_of_privacy_practice" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="privacy_authorization" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
       <column name="notice_of_privacy_practice_date" type="date"/>
       <column name="privacy_authorization_date" type="date"/>
 

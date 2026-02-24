@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <databaseChangeLog
   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -71,10 +71,14 @@
   <include file="config/liquibase/changelog/1762846530_B_vaccineDosesInterval.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762701643_S_BrandMedication.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762850672_S_BrandMedicationSubstitute.xml" relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/1763540965_B_country.xml" relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/1763555389_B_countryDistricts.xml" relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/1763619622_B_districtCommunities.xml" relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/1763620160_B_communityAreas.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1763384457_P_patient.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1763381810_Q_Patient_Address.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1763540965_B_country.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1763555389_B_countryDistricts.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1763619622_B_districtCommunities.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1763620160_B_communityAreas.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1764081062_B_PatientDocuments.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1763628284_H_Patient_Hippa.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1763378801_S_InventoryProducts.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1763293500_S_BrandMedicationActiveIngredient.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1764762354_BM_Billing_Invoice.xml" relativeToChangelogFile="false"/>
@@ -96,20 +100,30 @@
   <include file="config/liquibase/changelog/1766396407_BM_Form_Entries.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1766367799_S_organization_definition.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1765794249_H_Review_of_System.xml" relativeToChangelogFile="false" />
-  <include file="config/liquibase/changelog/1768722141_R_patient_allergies.xml" relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/1768730708_R_patient_allergies_active_ingredients.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1768804453_B_ICD10.xml" relativeToChangelogFile="false" />
-  <include file="/config/liquibase/changelog/1763384457_P_patient.xml" relativeToChangelogFile="false" />
-  <include file="/config/liquibase/changelog/1764081062_B_PatientDocuments.xml" relativeToChangelogFile="false" />
   <include file="/config/liquibase/changelog/1763382042_Q_PatientPreferredHealthProfessional.xml" relativeToChangelogFile="false" />
-  <include file="/config/liquibase/changelog/1763381810_Q_Patient_Address.xml" relativeToChangelogFile="false" />
+  <include file="/config/liquibase/changelog/1768473866_Q_Surgical_History.xml" relativeToChangelogFile="false" />
+  <include file="/config/liquibase/changelog/1768721356_Q_Social_History.xml" relativeToChangelogFile="false" />
+  <include file="/config/liquibase/changelog/1770025904_Q_Progress_Notes.xml" relativeToChangelogFile="false" />
+  <include file="/config/liquibase/changelog/1768824118_Q_Telephonic_Consultation.xml" relativeToChangelogFile="false" />
   <include file="/config/liquibase/changelog/1765875560_B_patientInsurances.xml" relativeToChangelogFile="false" />
   <include file="/config/liquibase/changelog/1765892720_B_patientInsuranceCoverages.xml" relativeToChangelogFile="false" />
   <include file="config/liquibase/changelog/1763980448_S_AdminstrativeWarnings.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1769048234_S_emergency_triage.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1769331928_S_general_assessment.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1769333918_S_chief_complain.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1770151946_Q_Procedure.xml" relativeToChangelogFile="false" />
+  <include file="config/liquibase/changelog/1768722141_R_patient_allergies.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1770533404_R_patient_allergies_log.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1768730708_R_patient_allergies_active_ingredients.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1770533403_R_patient_warnings.xml" relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/1763628284_H_Patient_Hippa.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1764016179_H_Relation_Matrix.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1765448261_H_Next_Of_Kin.xml" relativeToChangelogFile="false" />
+  <include file="config/liquibase/changelog/1771843369_R_patient_warnings_log.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1770791655_R_PatientServicesAndProducts.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1768307386_B_PatientProblems.xml" relativeToChangelogFile="false" />
+  <include file="/config/liquibase/changelog/1768381461_Q_Family_History.xml" relativeToChangelogFile="false" />
+  <include file="/config/liquibase/changelog/1768389695_Q_Hospitalizations.xml" relativeToChangelogFile="false" />
+
 </databaseChangeLog>
+
