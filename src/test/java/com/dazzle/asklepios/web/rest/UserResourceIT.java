@@ -364,7 +364,6 @@ class UserResourceIT {
 
         AdminUserDTO userDTO = new AdminUserDTO();
         userDTO.setId(updatedUser.getId());
-        userDTO.setLogin(UPDATED_LOGIN);
         userDTO.setFirstName(UPDATED_FIRSTNAME);
         userDTO.setLastName(UPDATED_LASTNAME);
         userDTO.setEmail(UPDATED_EMAIL);
