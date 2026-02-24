@@ -116,7 +116,8 @@
   <include file="config/liquibase/changelog/1770533403_R_patient_warnings.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1771843369_R_patient_warnings_log.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1770791655_R_PatientServicesAndProducts.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1771073729_B_encounter.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1771244437_B_patientPayment.xml" relativeToChangelogFile="false"/>
 
 </databaseChangeLog>
-
 
