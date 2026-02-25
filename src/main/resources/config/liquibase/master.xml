@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <databaseChangeLog
   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -131,5 +131,8 @@
   <include file="/config/liquibase/changelog/1769277985_B_additionalMeasurements.xml" relativeToChangelogFile="false" />
   <include file="/config/liquibase/changelog/1770560484_B_vitalSignsLog.xml" relativeToChangelogFile="false" />
   <include file="/config/liquibase/changelog/1767772955_B_encounterVaccination.xml" relativeToChangelogFile="false" />
+  <include file="config/liquibase/changelog/1770017212_B_encounterAssessments.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1770024936_B_encounterPlan.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1770108176_B_patientDiagnoses.xml" relativeToChangelogFile="false"/>
 
 </databaseChangeLog>

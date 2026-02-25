@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="b00000000000027" author="batool">
+
+    <createTable tableName="encounter_assessments">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"
+                     referencedTableName="patients"
+                     referencedColumnNames="id"
+                     foreignKeyName="fk_enc_assessment_patient"/>
+      </column>
+
+      <column name="user_id" type="bigint">
+        <constraints nullable="false"
+                     referencedTableName="app_user"
+                     referencedColumnNames="id"
+                     foreignKeyName="fk_enc_assessment_user"/>
+      </column>
+
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="assessment" type="text">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+
+    <createIndex tableName="encounter_assessments" indexName="idx_enc_assessment_patient">
+      <column name="patient_id"/>
+    </createIndex>
+
+    <createIndex tableName="encounter_assessments" indexName="idx_enc_assessment_user">
+      <column name="user_id"/>
+    </createIndex>
+
+    <createIndex tableName="encounter_assessments" indexName="idx_enc_assessment_encounter">
+      <column name="encounter_id"/>
+    </createIndex>
+
+    <addUniqueConstraint
+      tableName="encounter_assessments"
+      columnNames="encounter_id, patient_id, user_id"
+      constraintName="uk_enc_assessment_enc_patient_user"/>
+
+  </changeSet>
+
+</databaseChangeLog>
