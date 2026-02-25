@@ -130,4 +130,6 @@
   <include file="/config/liquibase/changelog/1769266434_B_painAssessment.xml" relativeToChangelogFile="false" />
   <include file="/config/liquibase/changelog/1769277985_B_additionalMeasurements.xml" relativeToChangelogFile="false" />
   <include file="/config/liquibase/changelog/1770560484_B_vitalSignsLog.xml" relativeToChangelogFile="false" />
+  <include file="/config/liquibase/changelog/1767772955_B_encounterVaccination.xml" relativeToChangelogFile="false" />
+
 </databaseChangeLog>
