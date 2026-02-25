@@ -36,11 +36,11 @@
         <constraints nullable="false"/>
       </column>
 
-      <column name="suspected" type="boolean">
+      <column name="suspected" type="boolean" defaultValueBoolean="false">
         <constraints nullable="false"/>
       </column>
 
-      <column name="major" type="boolean">
+      <column name="major" type="boolean" defaultValueBoolean="false">
         <constraints nullable="false"/>
       </column>
 

@@ -60,6 +60,10 @@
       <column name="encounter_id"/>
     </createIndex>
 
+    <addUniqueConstraint
+      tableName="encounter_assessments"
+      columnNames="encounter_id, patient_id, user_id"
+      constraintName="uk_enc_assessment_enc_patient_user"/>
 
   </changeSet>
 

@@ -48,6 +48,10 @@
       <column name="encounter_id"/>
     </createIndex>
 
+    <addUniqueConstraint
+      tableName="encounter_plans"
+      columnNames="encounter_id, patient_id"
+      constraintName="uk_enc_plan_enc_patient"/>
   </changeSet>
 
 </databaseChangeLog>
