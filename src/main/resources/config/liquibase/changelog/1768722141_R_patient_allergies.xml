@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+  <changeSet id="R00000000000004" author="Rawan-Yahya200">
+    <createTable tableName="patient_allergies">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="allergen_type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="allergen_id" type="bigint"/>
+
+      <column name="severity" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="medication_class_id" type="bigint"/>
+
+      <column name="criticality" type="varchar(50)"/>
+
+      <column name="certainty" type="varchar(50)"/>
+
+      <column name="treatment_strategy" type="varchar(50)" />
+
+      <column name="onset" type="varchar(50)"/>
+
+      <column name="onset_date_undefined" type="boolean" defaultValue="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="onset_date" type="timestamp" />
+
+      <column name="type_of_propensity" type="varchar(50)" />
+
+      <column name="by_patient" type="boolean"  defaultValue="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="source_of_information" type="varchar(50)"/>
+
+      <column name="allergic_reactions" type="varchar(255)"/>
+
+      <column name="note" type="varchar(50)"/>
+
+      <column name="status" type="varchar(50)" defaultValue="ACTIVE"/>
+
+      <column name="resolved_by" type="varchar(50)" />
+
+      <column name="resolved_date" type="timestamp"/>
+
+      <column name="cancelled_by" type="varchar(50)" />
+
+      <column name="cancelled_date" type="timestamp"/>
+
+      <column name="cancellation_reason" type="varchar(50)" />
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="patient_allergies"
+      baseColumnNames="allergen_id"
+      referencedTableName="allergens"
+      referencedColumnNames="id"
+      constraintName="fk_patient_allergies_allergen"/>
+
+    <addForeignKeyConstraint
+      baseTableName="patient_allergies"
+      baseColumnNames="medication_class_id"
+      referencedTableName="medication_categories_class"
+      referencedColumnNames="id"
+      constraintName="fk_patient_allergies_medication_class"/>
+
+    <addForeignKeyConstraint
+      baseTableName="patient_allergies"
+      baseColumnNames="patient_id"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+      constraintName="fk_patient_allergies_patient_id"/>
+
+
+    <addUniqueConstraint
+      tableName="patient_allergies"
+      columnNames="patient_id,allergen_type,allergen_id"
+      constraintName="uk_patient_allergies_allergen"/>
+
+    <addUniqueConstraint
+      tableName="patient_allergies"
+      columnNames="patient_id,allergen_type,medication_class_id"
+      constraintName="uk_patient_allergies_medication_class"/>
+
+  </changeSet>
+
+</databaseChangeLog>
