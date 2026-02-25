@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+  <changeSet id="bs000000000031" author="batool">
+
+    <createTable tableName="additional_measurements">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_additional_measurements_patient"
+                     referencedTableName="patients"
+                     referencedColumnNames="id"/>
+      </column>
+
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="age_group" type="varchar(20)">
+        <constraints nullable="false"/>
+      </column>
+
+      <!-- INFANT / NEONATE -->
+      <column name="hearing_test" type="text">
+        <constraints nullable="true"/>
+      </column>
+
+      <column name="dehydration" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="nasal_flaring" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="response_to_light" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="pupil_response" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="ability_to_follow_target" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="color_testing" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <!-- GERIATRIC -->
+      <column name="fall_risk" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="vision_problems_affecting_function"
+              type="boolean"
+              defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="hearing_problems_affecting_function"
+              type="boolean"
+              defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="details" type="text"/>
+
+      <column name="action_to_take" type="text">
+        <constraints nullable="true"/>
+      </column>
+
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="true"/>
+      </column>
+
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+
+    <createIndex indexName="ix_additional_measurements_patient"
+                 tableName="additional_measurements">
+      <column name="patient_id"/>
+    </createIndex>
+
+    <createIndex indexName="ix_additional_measurements_encounter"
+                 tableName="additional_measurements">
+      <column name="encounter_id"/>
+    </createIndex>
+
+    <createIndex indexName="ix_additional_measurements_age_group"
+                 tableName="additional_measurements">
+      <column name="age_group"/>
+    </createIndex>
+
+    <createIndex indexName="ix_additional_measurements_active"
+                 tableName="additional_measurements">
+      <column name="is_active"/>
+    </createIndex>
+
+  </changeSet>
+
+</databaseChangeLog>
