@@ -154,7 +154,6 @@ public class UserService {
         return userRepository
             .findById(userDTO.getId())
             .map(user -> {
-                user.setLogin(userDTO.getLogin().toLowerCase());
                 user.setFirstName(userDTO.getFirstName());
                 user.setLastName(userDTO.getLastName());
                 if (userDTO.getEmail() != null) {
