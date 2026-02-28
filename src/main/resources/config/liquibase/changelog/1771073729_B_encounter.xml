@@ -143,6 +143,9 @@
         <sql dbms="postgresql">
             <![CDATA[
                 ALTER TABLE patient_encounters
+                    DROP CONSTRAINT IF EXISTS ck_patient_encounters_cancel_only_when_new_or_not_observed;
+
+                ALTER TABLE patient_encounters
                     ADD CONSTRAINT ck_patient_encounters_cancel_only_when_new_or_not_observed
                     CHECK (
                         status <> 'CANCELLED'
