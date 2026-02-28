@@ -103,8 +103,8 @@ public class UserService {
         user.setBirthDate(userDTO.getBirthDate());
         user.setGender(userDTO.getGender());
         user.setJobRole(userDTO.getJobRole());
-        if (userDTO.getSecurityAccessLeve() == null) {
-            user.setSecurityAccessLeve(SecurityLevel.NORMAL_1);
+        if (userDTO.getSecurityAccessLevel() == null) {
+            user.setSecurityAccessLevel(SecurityLevel.NORMAL_1);
         }
         user.setLangKey(userDTO.getLangKey() == null ? Constants.DEFAULT_LANGUAGE : userDTO.getLangKey());
 
@@ -166,8 +166,8 @@ public class UserService {
                 user.setBirthDate(userDTO.getBirthDate());
                 user.setGender(userDTO.getGender());
                 user.setJobRole(userDTO.getJobRole());
-                if(userDTO.getSecurityAccessLeve() ==null){
-                    user.setSecurityAccessLeve(SecurityLevel.NORMAL_1);
+                if(userDTO.getSecurityAccessLevel() ==null){
+                    user.setSecurityAccessLevel(SecurityLevel.NORMAL_1);
                 }
                 Set<Authority> managedAuthorities = user.getAuthorities();
                 managedAuthorities.clear();

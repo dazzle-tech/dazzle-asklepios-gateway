@@ -95,8 +95,8 @@ public class User extends AbstractAuditingEntity<Long> implements Serializable {
     private JobRole jobRole;
 
     @Enumerated(EnumType.STRING)
-    @Column("security_access_leve")
-    private SecurityLevel securityAccessLeve;
+    @Column("security_access_level")
+    private SecurityLevel securityAccessLevel;
 
     @JsonIgnore
     @org.springframework.data.annotation.Transient

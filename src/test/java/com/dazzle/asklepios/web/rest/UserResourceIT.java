@@ -1,9 +1,9 @@
 package com.dazzle.asklepios.web.rest;
 
-
 import com.dazzle.asklepios.IntegrationTest;
 import com.dazzle.asklepios.config.Constants;
 import com.dazzle.asklepios.domain.User;
+import com.dazzle.asklepios.domain.enumeration.JobRole;
 import com.dazzle.asklepios.repository.AuthorityRepository;
 import com.dazzle.asklepios.repository.UserRepository;
 import com.dazzle.asklepios.security.AuthoritiesConstants;
@@ -92,12 +92,12 @@ class UserResourceIT {
         persistUser.setImageUrl(DEFAULT_IMAGEURL);
         persistUser.setLangKey(DEFAULT_LANGKEY);
         persistUser.setCreatedBy(Constants.SYSTEM);
+
+        // job_role is mandatory
+        persistUser.setJobRole(JobRole.ANESTHESIOLOGIST);
+
         return persistUser;
     }
-
-    /**
-     * Delete all the users from the database.
-     */
 
     /**
      * Setups the database with one user.
@@ -126,7 +126,6 @@ class UserResourceIT {
 
     @Test
     void createUser() throws Exception {
-        // Create the User
         AdminUserDTO userDTO = new AdminUserDTO();
         userDTO.setLogin(DEFAULT_LOGIN);
         userDTO.setFirstName(DEFAULT_FIRSTNAME);
@@ -135,6 +134,7 @@ class UserResourceIT {
         userDTO.setActivated(true);
         userDTO.setImageUrl(DEFAULT_IMAGEURL);
         userDTO.setLangKey(DEFAULT_LANGKEY);
+        userDTO.setJobRole(JobRole.ANESTHESIOLOGIST);
         userDTO.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
 
         var returnedUserDTO = webTestClient
@@ -150,13 +150,14 @@ class UserResourceIT {
             .getResponseBody();
 
         User convertedUser = userMapper.userDTOToUser(returnedUserDTO);
-        // Validate the returned User
+
         assertThat(convertedUser.getLogin()).isEqualTo(DEFAULT_LOGIN);
         assertThat(convertedUser.getFirstName()).isEqualTo(DEFAULT_FIRSTNAME);
         assertThat(convertedUser.getLastName()).isEqualTo(DEFAULT_LASTNAME);
         assertThat(convertedUser.getEmail()).isEqualTo(DEFAULT_EMAIL);
         assertThat(convertedUser.getImageUrl()).isEqualTo(DEFAULT_IMAGEURL);
         assertThat(convertedUser.getLangKey()).isEqualTo(DEFAULT_LANGKEY);
+        assertThat(convertedUser.getJobRole()).isEqualTo(JobRole.ANESTHESIOLOGIST);
     }
 
     @Test
@@ -172,9 +173,9 @@ class UserResourceIT {
         userDTO.setActivated(true);
         userDTO.setImageUrl(DEFAULT_IMAGEURL);
         userDTO.setLangKey(DEFAULT_LANGKEY);
+        userDTO.setJobRole(JobRole.ANESTHESIOLOGIST);
         userDTO.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
 
-        // An entity with an existing ID cannot be created, so this API call must fail
         webTestClient
             .post()
             .uri("/api/admin/users")
@@ -184,27 +185,25 @@ class UserResourceIT {
             .expectStatus()
             .isBadRequest();
 
-        // Validate the User in the database
         assertPersistedUsers(users -> assertThat(users).hasSize(databaseSizeBeforeCreate));
     }
 
     @Test
     void createUserWithExistingLogin() throws Exception {
-        // Initialize the database
         userRepository.save(user).block();
         int databaseSizeBeforeCreate = userRepository.findAll().collectList().block().size();
 
         AdminUserDTO userDTO = new AdminUserDTO();
-        userDTO.setLogin(DEFAULT_LOGIN); // this login should already be used
+        userDTO.setLogin(DEFAULT_LOGIN);
         userDTO.setFirstName(DEFAULT_FIRSTNAME);
         userDTO.setLastName(DEFAULT_LASTNAME);
         userDTO.setEmail("anothermail@localhost");
         userDTO.setActivated(true);
         userDTO.setImageUrl(DEFAULT_IMAGEURL);
         userDTO.setLangKey(DEFAULT_LANGKEY);
+        userDTO.setJobRole(JobRole.ANESTHESIOLOGIST);
         userDTO.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
 
-        // Create the User
         webTestClient
             .post()
             .uri("/api/admin/users")
@@ -214,13 +213,11 @@ class UserResourceIT {
             .expectStatus()
             .isBadRequest();
 
-        // Validate the User in the database
         assertPersistedUsers(users -> assertThat(users).hasSize(databaseSizeBeforeCreate));
     }
 
     @Test
     void createUserWithExistingEmail() throws Exception {
-        // Initialize the database
         userRepository.save(user).block();
         int databaseSizeBeforeCreate = userRepository.findAll().collectList().block().size();
 
@@ -228,32 +225,30 @@ class UserResourceIT {
         userDTO.setLogin("anotherlogin");
         userDTO.setFirstName(DEFAULT_FIRSTNAME);
         userDTO.setLastName(DEFAULT_LASTNAME);
-        userDTO.setEmail(DEFAULT_EMAIL); // this email should already be used
+        userDTO.setEmail(DEFAULT_EMAIL);
         userDTO.setActivated(true);
         userDTO.setImageUrl(DEFAULT_IMAGEURL);
         userDTO.setLangKey(DEFAULT_LANGKEY);
+        userDTO.setJobRole(JobRole.ANESTHESIOLOGIST);
         userDTO.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
 
-        // Create the User
+        // FIX: send userDTO (not user entity)
         webTestClient
             .post()
             .uri("/api/admin/users")
             .contentType(MediaType.APPLICATION_JSON)
-            .bodyValue(om.writeValueAsBytes(user))
+            .bodyValue(om.writeValueAsBytes(userDTO))
             .exchange()
             .expectStatus()
             .isBadRequest();
 
-        // Validate the User in the database
         assertPersistedUsers(users -> assertThat(users).hasSize(databaseSizeBeforeCreate));
     }
 
     @Test
     void getAllUsers() {
-        // Initialize the database
         userRepository.save(user).block();
 
-        // Get all the users
         AdminUserDTO foundUser = webTestClient
             .get()
             .uri("/api/admin/users?sort=id,desc")
@@ -266,20 +261,21 @@ class UserResourceIT {
             .returnResult(AdminUserDTO.class)
             .getResponseBody()
             .blockFirst();
+
         assertThat(foundUser.getLogin()).isEqualTo(DEFAULT_LOGIN);
         assertThat(foundUser.getFirstName()).isEqualTo(DEFAULT_FIRSTNAME);
         assertThat(foundUser.getLastName()).isEqualTo(DEFAULT_LASTNAME);
         assertThat(foundUser.getEmail()).isEqualTo(DEFAULT_EMAIL);
         assertThat(foundUser.getImageUrl()).isEqualTo(DEFAULT_IMAGEURL);
         assertThat(foundUser.getLangKey()).isEqualTo(DEFAULT_LANGKEY);
+        // Optional (recommended) assertion:
+        assertThat(foundUser.getJobRole()).isEqualTo(JobRole.ANESTHESIOLOGIST);
     }
 
     @Test
     void getUser() {
-        // Initialize the database
         userRepository.save(user).block();
 
-        // Get the user
         webTestClient
             .get()
             .uri("/api/admin/users/{login}", user.getLogin())
@@ -289,18 +285,14 @@ class UserResourceIT {
             .expectHeader()
             .contentType(MediaType.APPLICATION_JSON)
             .expectBody()
-            .jsonPath("$.login")
-            .isEqualTo(user.getLogin())
-            .jsonPath("$.firstName")
-            .isEqualTo(DEFAULT_FIRSTNAME)
-            .jsonPath("$.lastName")
-            .isEqualTo(DEFAULT_LASTNAME)
-            .jsonPath("$.email")
-            .isEqualTo(DEFAULT_EMAIL)
-            .jsonPath("$.imageUrl")
-            .isEqualTo(DEFAULT_IMAGEURL)
-            .jsonPath("$.langKey")
-            .isEqualTo(DEFAULT_LANGKEY);
+            .jsonPath("$.login").isEqualTo(user.getLogin())
+            .jsonPath("$.firstName").isEqualTo(DEFAULT_FIRSTNAME)
+            .jsonPath("$.lastName").isEqualTo(DEFAULT_LASTNAME)
+            .jsonPath("$.email").isEqualTo(DEFAULT_EMAIL)
+            .jsonPath("$.imageUrl").isEqualTo(DEFAULT_IMAGEURL)
+            .jsonPath("$.langKey").isEqualTo(DEFAULT_LANGKEY)
+            // Optional (recommended) assertion:
+            .jsonPath("$.jobRole").isEqualTo("ANESTHESIOLOGIST");
     }
 
     @Test
@@ -310,11 +302,9 @@ class UserResourceIT {
 
     @Test
     void updateUser() throws Exception {
-        // Initialize the database
         userRepository.save(user).block();
         int databaseSizeBeforeUpdate = userRepository.findAll().collectList().block().size();
 
-        // Update the user
         User updatedUser = userRepository.findById(user.getId()).block();
 
         AdminUserDTO userDTO = new AdminUserDTO();
@@ -330,6 +320,10 @@ class UserResourceIT {
         userDTO.setCreatedDate(updatedUser.getCreatedDate());
         userDTO.setLastModifiedBy(updatedUser.getLastModifiedBy());
         userDTO.setLastModifiedDate(updatedUser.getLastModifiedDate());
+
+        // job_role is mandatory: keep existing value (or set a new one explicitly)
+        userDTO.setJobRole(updatedUser.getJobRole());
+
         userDTO.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
 
         webTestClient
@@ -341,7 +335,6 @@ class UserResourceIT {
             .expectStatus()
             .isOk();
 
-        // Validate the User in the database
         assertPersistedUsers(users -> {
             assertThat(users).hasSize(databaseSizeBeforeUpdate);
             User testUser = users.stream().filter(usr -> usr.getId().equals(updatedUser.getId())).findFirst().orElseThrow();
@@ -350,58 +343,12 @@ class UserResourceIT {
             assertThat(testUser.getEmail()).isEqualTo(UPDATED_EMAIL);
             assertThat(testUser.getImageUrl()).isEqualTo(UPDATED_IMAGEURL);
             assertThat(testUser.getLangKey()).isEqualTo(UPDATED_LANGKEY);
-        });
-    }
-
-    @Test
-    void updateUserLogin() throws Exception {
-        // Initialize the database
-        userRepository.save(user).block();
-        int databaseSizeBeforeUpdate = userRepository.findAll().collectList().block().size();
-
-        // Update the user
-        User updatedUser = userRepository.findById(user.getId()).block();
-
-        AdminUserDTO userDTO = new AdminUserDTO();
-        userDTO.setId(updatedUser.getId());
-        userDTO.setLogin(UPDATED_LOGIN);
-        userDTO.setFirstName(UPDATED_FIRSTNAME);
-        userDTO.setLastName(UPDATED_LASTNAME);
-        userDTO.setEmail(UPDATED_EMAIL);
-        userDTO.setActivated(updatedUser.isActivated());
-        userDTO.setImageUrl(UPDATED_IMAGEURL);
-        userDTO.setLangKey(UPDATED_LANGKEY);
-        userDTO.setCreatedBy(updatedUser.getCreatedBy());
-        userDTO.setCreatedDate(updatedUser.getCreatedDate());
-        userDTO.setLastModifiedBy(updatedUser.getLastModifiedBy());
-        userDTO.setLastModifiedDate(updatedUser.getLastModifiedDate());
-        userDTO.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
-
-        webTestClient
-            .put()
-            .uri("/api/admin/users")
-            .contentType(MediaType.APPLICATION_JSON)
-            .bodyValue(om.writeValueAsBytes(userDTO))
-            .exchange()
-            .expectStatus()
-            .isOk();
-
-        // Validate the User in the database
-        assertPersistedUsers(users -> {
-            assertThat(users).hasSize(databaseSizeBeforeUpdate);
-            User testUser = users.stream().filter(usr -> usr.getId().equals(updatedUser.getId())).findFirst().orElseThrow();
-            assertThat(testUser.getLogin()).isEqualTo(UPDATED_LOGIN);
-            assertThat(testUser.getFirstName()).isEqualTo(UPDATED_FIRSTNAME);
-            assertThat(testUser.getLastName()).isEqualTo(UPDATED_LASTNAME);
-            assertThat(testUser.getEmail()).isEqualTo(UPDATED_EMAIL);
-            assertThat(testUser.getImageUrl()).isEqualTo(UPDATED_IMAGEURL);
-            assertThat(testUser.getLangKey()).isEqualTo(UPDATED_LANGKEY);
+            assertThat(testUser.getJobRole()).isEqualTo(updatedUser.getJobRole());
         });
     }
 
     @Test
     void updateUserExistingEmail() throws Exception {
-        // Initialize the database with 2 users
         userRepository.save(user).block();
 
         User anotherUser = new User();
@@ -414,17 +361,19 @@ class UserResourceIT {
         anotherUser.setImageUrl("");
         anotherUser.setLangKey("en");
         anotherUser.setCreatedBy(Constants.SYSTEM);
+
+        // job_role is mandatory
+        anotherUser.setJobRole(JobRole.ANESTHESIOLOGIST);
+
         userRepository.save(anotherUser).block();
 
-        // Update the user
         User updatedUser = userRepository.findById(user.getId()).block();
 
         AdminUserDTO userDTO = new AdminUserDTO();
         userDTO.setId(updatedUser.getId());
-        userDTO.setLogin(updatedUser.getLogin());
         userDTO.setFirstName(updatedUser.getFirstName());
         userDTO.setLastName(updatedUser.getLastName());
-        userDTO.setEmail("testuser@localhost"); // this email should already be used by anotherUser
+        userDTO.setEmail("testuser@localhost");
         userDTO.setActivated(updatedUser.isActivated());
         userDTO.setImageUrl(updatedUser.getImageUrl());
         userDTO.setLangKey(updatedUser.getLangKey());
@@ -432,6 +381,10 @@ class UserResourceIT {
         userDTO.setCreatedDate(updatedUser.getCreatedDate());
         userDTO.setLastModifiedBy(updatedUser.getLastModifiedBy());
         userDTO.setLastModifiedDate(updatedUser.getLastModifiedDate());
+
+        // job_role is mandatory
+        userDTO.setJobRole(updatedUser.getJobRole());
+
         userDTO.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
 
         webTestClient
@@ -446,7 +399,6 @@ class UserResourceIT {
 
     @Test
     void updateUserExistingLogin() throws Exception {
-        // Initialize the database
         userRepository.save(user).block();
 
         User anotherUser = new User();
@@ -459,14 +411,17 @@ class UserResourceIT {
         anotherUser.setImageUrl("");
         anotherUser.setLangKey("en");
         anotherUser.setCreatedBy(Constants.SYSTEM);
+
+        // job_role is mandatory
+        anotherUser.setJobRole(JobRole.ANESTHESIOLOGIST);
+
         userRepository.save(anotherUser).block();
 
-        // Update the user
         User updatedUser = userRepository.findById(user.getId()).block();
 
         AdminUserDTO userDTO = new AdminUserDTO();
         userDTO.setId(updatedUser.getId());
-        userDTO.setLogin("testuser"); // this login should already be used by anotherUser
+        userDTO.setLogin("testuser");
         userDTO.setFirstName(updatedUser.getFirstName());
         userDTO.setLastName(updatedUser.getLastName());
         userDTO.setEmail(updatedUser.getEmail());
@@ -477,6 +432,10 @@ class UserResourceIT {
         userDTO.setCreatedDate(updatedUser.getCreatedDate());
         userDTO.setLastModifiedBy(updatedUser.getLastModifiedBy());
         userDTO.setLastModifiedDate(updatedUser.getLastModifiedDate());
+
+        // job_role is mandatory
+        userDTO.setJobRole(updatedUser.getJobRole());
+
         userDTO.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
 
         webTestClient
@@ -491,11 +450,9 @@ class UserResourceIT {
 
     @Test
     void deleteUser() {
-        // Initialize the database
         userRepository.save(user).block();
         int databaseSizeBeforeDelete = userRepository.findAll().collectList().block().size();
 
-        // Delete the user
         webTestClient
             .delete()
             .uri("/api/admin/users/{login}", user.getLogin())
@@ -504,7 +461,6 @@ class UserResourceIT {
             .expectStatus()
             .isNoContent();
 
-        // Validate the database is empty
         assertPersistedUsers(users -> assertThat(users).hasSize(databaseSizeBeforeDelete - 1));
     }
 

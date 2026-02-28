@@ -98,7 +98,7 @@
       <column name="job_role" type="varchar(255)">
         <constraints nullable="false"/>
       </column>
-      <column name="security_access_leve" type="varchar(255)">
+      <column name="security_access_level" type="varchar(255)">
         <constraints nullable="true"/>
       </column>
 
@@ -197,6 +197,7 @@
       <column name="id" type="numeric"/>
       <column name="activated" type="boolean"/>
       <column name="created_date" type="timestamp"/>
+      <column name="job_role" type="varchar"/>
     </loadData>
     <loadData
       file="config/liquibase/data/role_authority.csv"
