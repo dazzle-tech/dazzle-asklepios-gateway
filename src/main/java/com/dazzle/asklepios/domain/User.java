@@ -89,6 +89,7 @@ public class User extends AbstractAuditingEntity<Long> implements Serializable {
     @Column("gender")
     private Gender gender;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     @Column("job_role")
     private JobRole jobRole;
