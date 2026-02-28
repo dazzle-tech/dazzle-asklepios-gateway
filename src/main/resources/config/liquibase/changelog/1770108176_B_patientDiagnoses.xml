@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="b00000000000029" author="batool">
+
+    <createTable tableName="patient_diagnoses">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"
+                     referencedTableName="patients"
+                     referencedColumnNames="id"
+                     foreignKeyName="fk_patient_diagnosis_patient"/>
+      </column>
+
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="diagnosis_id" type="bigint">
+        <constraints nullable="false"
+                     referencedTableName="icd_diagnosis"
+                     referencedColumnNames="id"
+                     foreignKeyName="fk_patient_diagnosis_icd_diagnosis"/>
+      </column>
+
+      <column name="type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="suspected" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="major" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+
+    <createIndex tableName="patient_diagnoses" indexName="idx_patient_diagnosis_patient">
+      <column name="patient_id"/>
+    </createIndex>
+
+    <createIndex tableName="patient_diagnoses" indexName="idx_patient_diagnosis_encounter">
+      <column name="encounter_id"/>
+    </createIndex>
+
+    <createIndex tableName="patient_diagnoses" indexName="idx_patient_diagnosis_diagnosis">
+      <column name="diagnosis_id"/>
+    </createIndex>
+
+    <addUniqueConstraint
+      tableName="patient_diagnoses"
+      columnNames="diagnosis_id,type,suspected,major,patient_id,encounter_id"
+      constraintName="ux_patient_diagnosis_diag_type_flags_patient_encounter"/>
+
+  </changeSet>
+
+</databaseChangeLog>
