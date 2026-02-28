@@ -16,9 +16,15 @@ version = "0.0.1-SNAPSHOT"
 
 description = ""
 
-sourceCompatibility=17
-targetCompatibility=17
-assert System.properties["java.specification.version"] == "17" || "21" || "23"
+java {
+  toolchain {
+    languageVersion = JavaLanguageVersion.of(21)
+  }
+}
+
+def v = System.getProperty("java.specification.version")
+assert ["17","21","23"].contains(v) : "Unsupported Java version: ${v}"
+
 
 ext {
     springProfiles = ""
@@ -36,6 +42,12 @@ repositories {
 }
 
 apply plugin: 'io.spring.dependency-management'
+
+dependencyManagement {
+  imports {
+    mavenBom "org.testcontainers:testcontainers-bom:1.21.4"
+  }
+}
 
 apply from: "gradle/liquibase.gradle"
 
@@ -93,6 +105,11 @@ test {
 }
 
 check.dependsOn integrationTest
+tasks.named("integrationTest", Test) {
+  testClassesDirs = sourceSets.test.output.classesDirs
+  classpath = sourceSets.test.runtimeClasspath
+}
+
 task testReport(type: TestReport) {
     destinationDirectory = file("$buildDir/reports/tests")
     testResults.from(test)
@@ -111,7 +128,6 @@ gitProperties {
 tasks.withType(com.gorylenko.GenerateGitPropertiesTask).configureEach {
   outputs.doNotCacheIf("Task is always executed") { true }
 }
-
 configurations {
     providedRuntime
     implementation.exclude module: "spring-boot-starter-tomcat"
