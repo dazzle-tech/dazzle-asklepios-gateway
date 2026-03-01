@@ -79,6 +79,7 @@
   <include file="/config/liquibase/changelog/1763620160_B_communityAreas.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1764081062_B_PatientDocuments.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1763628284_H_Patient_Hippa.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1771073729_B_encounter.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1763378801_S_InventoryProducts.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1763293500_S_BrandMedicationActiveIngredient.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1764762354_BM_Billing_Invoice.xml" relativeToChangelogFile="false"/>
@@ -121,6 +122,7 @@
   <include file="/config/liquibase/changelog/1768824118_Q_Telephonic_Consultation.xml" relativeToChangelogFile="false" />
   <include file="/config/liquibase/changelog/1765875560_B_patientInsurances.xml" relativeToChangelogFile="false" />
   <include file="/config/liquibase/changelog/1765892720_B_patientInsuranceCoverages.xml" relativeToChangelogFile="false" />
+  <include file="config/liquibase/changelog/1771244437_B_patientPayment.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1763980448_S_AdminstrativeWarnings.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1769048234_S_emergency_triage.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1769331928_S_general_assessment.xml" relativeToChangelogFile="false"/>
@@ -147,7 +149,6 @@
   <include file="config/liquibase/changelog/1770017212_B_encounterAssessments.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1770024936_B_encounterPlan.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1770108176_B_patientDiagnoses.xml" relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/1771073729_B_encounter.xml" relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/1771244437_B_patientPayment.xml" relativeToChangelogFile="false"/>
+
 
 </databaseChangeLog>
