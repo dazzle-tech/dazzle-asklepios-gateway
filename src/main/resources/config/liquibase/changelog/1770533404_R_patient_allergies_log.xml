@@ -95,6 +95,14 @@
 
     <addForeignKeyConstraint
       baseTableName="patient_allergies_log"
+      baseColumnNames="encounter_id"
+      constraintName="fk_pat_allergies_log_encounter"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"
+    />
+
+    <addForeignKeyConstraint
+      baseTableName="patient_allergies_log"
       baseColumnNames="allergy_id"
       constraintName="fk_pat_allergies_log_allergy"
       referencedTableName="patient_allergies"
@@ -115,4 +123,3 @@
   <include file="config/liquibase/sql/Patient_Allergies_Log.sql" relativeToChangelogFile="false"/>
 
 </databaseChangeLog>
-

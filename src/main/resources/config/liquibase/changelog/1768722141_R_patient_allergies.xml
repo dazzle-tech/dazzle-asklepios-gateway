@@ -84,6 +84,13 @@
 
     <addForeignKeyConstraint
       baseTableName="patient_allergies"
+      baseColumnNames="encounter_id"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"
+      constraintName="fk_patient_allergies_encounter"/>
+
+    <addForeignKeyConstraint
+      baseTableName="patient_allergies"
       baseColumnNames="allergen_id"
       referencedTableName="allergens"
       referencedColumnNames="id"
@@ -102,7 +109,6 @@
       referencedTableName="patients"
       referencedColumnNames="id"
       constraintName="fk_patient_allergies_patient_id"/>
-
 
     <addUniqueConstraint
       tableName="patient_allergies"

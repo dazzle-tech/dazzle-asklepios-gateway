@@ -99,27 +99,36 @@
                      referencedTableName="app_user"
                      referencedColumnNames="id"/>
       </column>
+
       <column name="cancellation_reason" type="text"/>
 
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
+
       <column name="created_date" type="timestamp" defaultValueComputed="now()">
         <constraints nullable="false"/>
       </column>
+
       <column name="last_modified_by" type="varchar(50)"/>
       <column name="last_modified_date" type="timestamp"/>
 
     </createTable>
 
+    <addForeignKeyConstraint
+      baseTableName="patient_procedure"
+      baseColumnNames="encounter_id"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"
+      constraintName="fk_procedure_encounter"/>
+
     <sql>
       <![CDATA[
-        CREATE UNIQUE INDEX uk_procedure_unique_context_active
-            ON patient_procedure (procedure_id, body_part, patient_id, encounter_id)
-            WHERE status <> 'CANCELLED';
+      CREATE UNIQUE INDEX uk_procedure_unique_context_active
+        ON patient_procedure (procedure_id, body_part, patient_id, encounter_id)
+        WHERE status <> 'CANCELLED';
       ]]>
     </sql>
-
 
     <sql>
       <![CDATA[
@@ -178,12 +187,15 @@
       <column name="action" type="varchar(10)">
         <constraints nullable="false"/>
       </column>
+
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
+
       <column name="created_date" type="timestamp" defaultValueComputed="now()">
         <constraints nullable="false"/>
       </column>
+
       <column name="last_modified_by" type="varchar(50)"/>
       <column name="last_modified_date" type="timestamp"/>
       <column name="payload" type="jsonb"/>

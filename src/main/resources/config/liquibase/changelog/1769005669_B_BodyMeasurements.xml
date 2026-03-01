@@ -56,6 +56,14 @@
 
     </createTable>
 
+    <!-- FK encounter -->
+    <addForeignKeyConstraint
+      baseTableName="body_measurements"
+      baseColumnNames="encounter_id"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"
+      constraintName="fk_body_measurements_encounter"/>
+
     <createIndex indexName="ix_body_measurements_patient"
                  tableName="body_measurements">
       <column name="patient_id"/>
