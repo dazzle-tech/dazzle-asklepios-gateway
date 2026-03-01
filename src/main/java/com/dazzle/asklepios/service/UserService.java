@@ -27,6 +27,7 @@ import reactor.core.scheduler.Schedulers;
 import java.security.SecureRandom;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -153,7 +154,6 @@ public class UserService {
         return userRepository
             .findById(userDTO.getId())
             .map(user -> {
-                user.setLogin(userDTO.getLogin().toLowerCase());
                 user.setFirstName(userDTO.getFirstName());
                 user.setLastName(userDTO.getLastName());
                 if (userDTO.getEmail() != null) {
@@ -397,5 +397,12 @@ public class UserService {
         return password != null && STRONG_PASSWORD_PATTERN.matcher(password).matches();
     }
 
+    public Flux<User> findByIds(List<Long> ids) {
+        LOG.debug("[BULK FIND USERS] idsCount={} ids={}",
+            ids == null ? 0 : ids.size(), ids);
+
+        return userRepository.findAllById(ids)
+            .doOnNext(u -> LOG.debug("[BULK FIND USERS] found user id={}", u.getId()));
+    }
 
 }

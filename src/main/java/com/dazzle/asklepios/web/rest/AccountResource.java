@@ -11,6 +11,7 @@ import com.dazzle.asklepios.web.rest.errors.EmailAlreadyUsedException;
 import com.dazzle.asklepios.web.rest.errors.InvalidPasswordException;
 import com.dazzle.asklepios.web.rest.vm.KeyAndPasswordVM;
 import com.dazzle.asklepios.web.rest.vm.ManagedUserVM;
+import com.dazzle.asklepios.web.rest.vm.UserBasicNameResponseVM;
 import jakarta.validation.Valid;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -22,8 +23,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -181,5 +184,21 @@ public class AccountResource {
     public Mono<CreatePasswordKeyValidationDTO> validate(@RequestParam("key") String key) {
         return userService.validateCreatePasswordKey(key);
     }
+
+    @PostMapping("/account/bulk/basic-name")
+    public Flux<UserBasicNameResponseVM> getUsersBasicNamesBulk(
+        @RequestBody List<Long> ids
+    ) {
+        LOG.debug("REST bulk User BASIC NAME idsCount={}",
+            ids == null ? 0 : ids.size());
+
+        return userService.findByIds(ids)
+            .map(u -> UserBasicNameResponseVM.builder()
+                .firstName(u.getFirstName())
+                .lastName(u.getLastName())
+                .build()
+            );
+    }
+
 
 }
