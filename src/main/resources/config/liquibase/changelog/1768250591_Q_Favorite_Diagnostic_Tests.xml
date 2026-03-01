@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="QA00000000000009" author="qais">
+
+    <createTable tableName="favorite_diagnostic_test">
+      <column name="id" type="bigint" autoIncrement="true" startWith="2000">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="user_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="test_id" type="bigint">
+        <constraints
+          nullable="false"
+          foreignKeyName="fk_fav_diagtest_test"
+          references="diagnostic_test(id)"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp" defaultValue="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addUniqueConstraint
+      tableName="favorite_diagnostic_test"
+      columnNames="user_id,test_id"
+      constraintName="uk_fav_diagtest_user_test"/>
+
+    <addForeignKeyConstraint baseTableName="favorite_diagnostic_test" baseColumnNames="user_id" constraintName="fk_ft_user_id"
+                             referencedTableName="app_user"
+                             referencedColumnNames="id" />
+  </changeSet>
+
+</databaseChangeLog>

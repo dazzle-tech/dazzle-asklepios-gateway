@@ -54,6 +54,13 @@
       <column name="last_modified_date" type="timestamp"/>
     </createTable>
 
+    <addForeignKeyConstraint
+      baseTableName="patient_observations_complaints"
+      baseColumnNames="encounter_id"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"
+      constraintName="fk_patient_obs_comp_encounter"/>
+
     <createIndex indexName="ix_patient_obs_comp_patient"
                  tableName="patient_observations_complaints">
       <column name="patient_id"/>

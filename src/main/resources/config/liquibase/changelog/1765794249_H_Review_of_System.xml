@@ -34,12 +34,18 @@
 
     </createTable>
 
+    <addForeignKeyConstraint
+      baseTableName="review_of_system"
+      baseColumnNames="encounter_id"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"
+      constraintName="fk_review_of_system_encounter"/>
+
     <addUniqueConstraint
       tableName="review_of_system"
       columnNames="encounter_id, body_system, system_detail"
       constraintName="uk_ros_encounter_system_detail"/>
 
-    
 
   </changeSet>
 

@@ -101,6 +101,13 @@
 
     </createTable>
 
+    <addForeignKeyConstraint
+      baseTableName="additional_measurements"
+      baseColumnNames="encounter_id"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"
+      constraintName="fk_additional_measurements_encounter"/>
+
     <createIndex indexName="ix_additional_measurements_patient"
                  tableName="additional_measurements">
       <column name="patient_id"/>

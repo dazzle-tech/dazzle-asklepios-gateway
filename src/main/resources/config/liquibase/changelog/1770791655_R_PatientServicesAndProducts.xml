@@ -46,6 +46,13 @@
 
     <addForeignKeyConstraint
       baseTableName="patient_services_and_products"
+      baseColumnNames="encounter_id"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"
+      constraintName="fk_patient_services_and_products_encounter"/>
+
+    <addForeignKeyConstraint
+      baseTableName="patient_services_and_products"
       baseColumnNames="product_id"
       referencedTableName="inventory_products"
       referencedColumnNames="id"
