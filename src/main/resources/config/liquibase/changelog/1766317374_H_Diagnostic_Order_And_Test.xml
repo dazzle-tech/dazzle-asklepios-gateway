@@ -84,6 +84,19 @@
       referencedColumnNames="id"
 
     />
+    <addForeignKeyConstraint
+      constraintName="fk_do_patient"
+      baseTableName="diagnostic_orders"
+      baseColumnNames="patient_id"
+      referencedTableName="patients"
+      referencedColumnNames="id"/>
+
+    <addForeignKeyConstraint
+      constraintName="fk_do_encounter"
+      baseTableName="diagnostic_orders"
+      baseColumnNames="encounter_id"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"/>
   </changeSet>
 
   <changeSet id="H000000000000MD_DIAG_ORDER_TESTS" author="hanan253yahya">
@@ -93,7 +106,7 @@
         <constraints nullable="false" primaryKey="true"/>
       </column>
 
-    
+
       <column name="status" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
