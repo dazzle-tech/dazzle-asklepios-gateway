@@ -40,6 +40,13 @@
       <column name="last_modified_date" type="timestamp"/>
     </createTable>
 
+    <addForeignKeyConstraint
+      baseTableName="encounter_plans"
+      baseColumnNames="encounter_id"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"
+      constraintName="fk_enc_plan_encounter"/>
+
     <createIndex tableName="encounter_plans" indexName="idx_enc_plan_patient">
       <column name="patient_id"/>
     </createIndex>
@@ -52,6 +59,7 @@
       tableName="encounter_plans"
       columnNames="encounter_id, patient_id"
       constraintName="uk_enc_plan_enc_patient"/>
+
   </changeSet>
 
 </databaseChangeLog>

@@ -70,6 +70,13 @@
 
     </createTable>
 
+    <addForeignKeyConstraint
+      baseTableName="vital_signs"
+      baseColumnNames="encounter_id"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"
+      constraintName="fk_vital_signs_encounter"/>
+
     <createIndex indexName="ix_vital_signs_patient" tableName="vital_signs">
       <column name="patient_id"/>
     </createIndex>
