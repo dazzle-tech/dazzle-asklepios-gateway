@@ -70,7 +70,7 @@
     <addForeignKeyConstraint
       baseTableName="emergency_triage"
       baseColumnNames="encounter_id"
-      referencedTableName="encounter"
+      referencedTableName="patient_encounters"
       referencedColumnNames="id"
       constraintName="fk_emergency_triage_encounter_id"
       onDelete="CASCADE"/>
