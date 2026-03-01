@@ -3,6 +3,7 @@ package com.dazzle.asklepios.web.rest;
 import com.dazzle.asklepios.IntegrationTest;
 import com.dazzle.asklepios.config.Constants;
 import com.dazzle.asklepios.domain.User;
+import com.dazzle.asklepios.domain.enumeration.JobRole;
 import com.dazzle.asklepios.repository.AuthorityRepository;
 import com.dazzle.asklepios.repository.UserRepository;
 import com.dazzle.asklepios.service.UserService;
@@ -86,6 +87,7 @@ class AccountResourceIT {
         user.setEmail("cpw-ok@example.com");
         user.setLangKey("en");
         user.setCreatedBy(Constants.SYSTEM);
+        user.setJobRole(JobRole.ANESTHESIOLOGIST);
         user.setActivated(false);
         user.setPassword(RandomStringUtils.insecure().nextAlphanumeric(60));
         user.setResetKey("CPWKEYOK");
@@ -115,6 +117,7 @@ class AccountResourceIT {
         user.setEmail("cpw-exp@example.com");
         user.setLangKey("en");
         user.setCreatedBy(Constants.SYSTEM);
+        user.setJobRole(JobRole.ANESTHESIOLOGIST);
         user.setActivated(false);
         user.setPassword(RandomStringUtils.insecure().nextAlphanumeric(60));
         user.setResetKey("CPWKEYEXP");
@@ -144,6 +147,7 @@ class AccountResourceIT {
         user.setEmail("cpw-fin@example.com");
         user.setLangKey("en");
         user.setCreatedBy(Constants.SYSTEM);
+        user.setJobRole(JobRole.ANESTHESIOLOGIST);
         user.setActivated(false);
         user.setPassword(RandomStringUtils.insecure().nextAlphanumeric(60));
         user.setResetKey("CPWKEYFIN");
@@ -179,6 +183,7 @@ class AccountResourceIT {
         user.setEmail("cpw-weak@example.com");
         user.setLangKey("en");
         user.setCreatedBy(Constants.SYSTEM);
+        user.setJobRole(JobRole.ANESTHESIOLOGIST);
         user.setActivated(false);
         user.setPassword(RandomStringUtils.insecure().nextAlphanumeric(60));
         user.setResetKey("CPWKEYW");
@@ -207,6 +212,7 @@ class AccountResourceIT {
         user.setEmail("cpw-act@example.com");
         user.setLangKey("en");
         user.setCreatedBy(Constants.SYSTEM);
+        user.setJobRole(JobRole.ANESTHESIOLOGIST);
         user.setActivated(true); // active
         user.setPassword(RandomStringUtils.insecure().nextAlphanumeric(60));
         user.setResetKey("CPWKEYA");
