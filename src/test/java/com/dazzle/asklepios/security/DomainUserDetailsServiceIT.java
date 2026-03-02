@@ -85,12 +85,13 @@ class DomainUserDetailsServiceIT {
         userRepository.save(getUserOne()).block();
         userRepository.save(getUserTwo()).block();
 
-        String insertFacility = "INSERT INTO facility (name, type,code,created_by) VALUES ($1, $2,$3,$4)";
+        String insertFacility = "INSERT INTO facility (name, type,code,created_by,default_currency) VALUES ($1, $2,$3,$4,$5)";
         databaseClient.sql(insertFacility)
             .bind("$1", "Facility One")
             .bind("$2", "Type A")
             .bind("$3", "555")
             .bind("$4", "system")
+            .bind("$5", "USD")
             .fetch()
             .rowsUpdated()
             .block();
