@@ -92,6 +92,13 @@
 
       <column name="last_modified_date" type="timestamp"/>
     </createTable>
+    <addForeignKeyConstraint
+      baseTableName="patient_allergies_log"
+      baseColumnNames="patient_id"
+      constraintName="fk_pat_allergies_log_patient"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+    />
 
     <addForeignKeyConstraint
       baseTableName="patient_allergies_log"

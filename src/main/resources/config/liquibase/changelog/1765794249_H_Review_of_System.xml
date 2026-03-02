@@ -33,7 +33,12 @@
 
 
     </createTable>
-
+    <addForeignKeyConstraint
+      baseTableName="review_of_system"
+      baseColumnNames="patient_id"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+      constraintName="fk_review_of_system_patient"/>
     <addForeignKeyConstraint
       baseTableName="review_of_system"
       baseColumnNames="encounter_id"

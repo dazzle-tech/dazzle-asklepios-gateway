@@ -3,6 +3,7 @@ package com.dazzle.asklepios.service;
 import com.dazzle.asklepios.IntegrationTest;
 import com.dazzle.asklepios.config.Constants;
 import com.dazzle.asklepios.domain.User;
+import com.dazzle.asklepios.domain.enumeration.JobRole;
 import com.dazzle.asklepios.repository.UserRepository;
 import com.dazzle.asklepios.service.dto.CreatePasswordKeyValidationDTO;
 import com.dazzle.asklepios.service.errors.UserAlreadyActiveException;
@@ -53,6 +54,7 @@ class UserServiceCreatePasswordIT {
         user.setFirstName(DEFAULT_FIRSTNAME);
         user.setLastName(DEFAULT_LASTNAME);
         user.setLangKey(DEFAULT_LANGKEY);
+        user.setJobRole(JobRole.ANESTHESIOLOGIST);
         user.setCreatedBy(Constants.SYSTEM);
 
         user.setResetKey(UserService.RandomUtil.generateResetKey());

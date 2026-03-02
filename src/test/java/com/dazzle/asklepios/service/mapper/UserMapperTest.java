@@ -3,6 +3,7 @@ package com.dazzle.asklepios.service.mapper;
 
 import com.dazzle.asklepios.domain.Authority;
 import com.dazzle.asklepios.domain.User;
+import com.dazzle.asklepios.domain.enumeration.JobRole;
 import com.dazzle.asklepios.security.AuthoritiesConstants;
 import com.dazzle.asklepios.service.dto.AdminUserDTO;
 import com.dazzle.asklepios.service.dto.UserDTO;
@@ -46,6 +47,7 @@ class UserMapperTest {
         user.setLastModifiedBy(DEFAULT_LOGIN);
         user.setLastModifiedDate(Instant.now());
         user.setLangKey("en");
+        user.setJobRole(JobRole.ANESTHESIOLOGIST);
 
         Set<Authority> authorities = new HashSet<>();
         Authority authority = new Authority();
