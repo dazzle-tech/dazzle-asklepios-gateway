@@ -3,6 +3,7 @@ package com.dazzle.asklepios.security;
 import com.dazzle.asklepios.IntegrationTest;
 import com.dazzle.asklepios.config.Constants;
 import com.dazzle.asklepios.domain.User;
+import com.dazzle.asklepios.domain.enumeration.JobRole;
 import com.dazzle.asklepios.repository.UserRepository;
 import com.dazzle.asklepios.service.UserService;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -46,6 +47,7 @@ class DomainUserDetailsServiceIT {
     @Qualifier("userDetailsService")
     private DomainUserDetailsService domainUserDetailsService;
 
+
     public User getUserOne() {
         User userOne = new User();
         userOne.setLogin(USER_ONE_LOGIN);
@@ -56,6 +58,9 @@ class DomainUserDetailsServiceIT {
         userOne.setLastName("doe");
         userOne.setLangKey("en");
         userOne.setCreatedBy(Constants.SYSTEM);
+
+        userOne.setJobRole(JobRole.ANESTHESIOLOGIST);
+
         return userOne;
     }
 
@@ -69,6 +74,9 @@ class DomainUserDetailsServiceIT {
         userTwo.setLastName("doe");
         userTwo.setLangKey("en");
         userTwo.setCreatedBy(Constants.SYSTEM);
+
+        userTwo.setJobRole(JobRole.ANESTHESIOLOGIST);
+
         return userTwo;
     }
 
@@ -77,12 +85,13 @@ class DomainUserDetailsServiceIT {
         userRepository.save(getUserOne()).block();
         userRepository.save(getUserTwo()).block();
 
-        String insertFacility = "INSERT INTO facility (name, type,code,created_by) VALUES ($1, $2,$3,$4)";
+        String insertFacility = "INSERT INTO facility (name, type,code,created_by,default_currency) VALUES ($1, $2,$3,$4,$5)";
         databaseClient.sql(insertFacility)
             .bind("$1", "Facility One")
             .bind("$2", "Type A")
             .bind("$3", "555")
             .bind("$4", "system")
+            .bind("$5", "USD")
             .fetch()
             .rowsUpdated()
             .block();

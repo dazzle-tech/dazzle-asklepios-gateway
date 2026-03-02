@@ -80,7 +80,9 @@
             <column name="is_completed_patient" type="boolean">
                 <constraints nullable="false"/>
             </column>
-
+          <column name="security_access_level" type="varchar(255)">
+            <constraints nullable="true"/>
+          </column>
             <column name="created_by" type="varchar(50)">
                 <constraints nullable="false"/>
             </column>
