@@ -59,6 +59,10 @@
                              referencedTableName="patients" referencedColumnNames="id"
                              constraintName="fk_patient_prescriptions_patient_id"/>
 
+    <addForeignKeyConstraint baseTableName="patient_prescriptions" baseColumnNames="encounter_id"
+                             referencedTableName="patient_encounters" referencedColumnNames="id"
+                             constraintName="fk_patient_prescriptions_encounter"/>
+
     <addForeignKeyConstraint baseTableName="patient_prescriptions" baseColumnNames="from_facility_id"
                              referencedTableName="facility" referencedColumnNames="id"
                              constraintName="fk_patient_prescriptions_from_facility"/>

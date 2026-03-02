@@ -109,9 +109,10 @@
     file="config/liquibase/changelog/1769608169_H_Diagnostic_Test_Result_Tecnition_Note.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1768892972_H_Diagnostic_Test_Request.xml" relativeToChangelogFile="false" />
   <include file="config/liquibase/changelog/1768250591_Q_Favorite_Diagnostic_Tests.xml" relativeToChangelogFile="false"/>
-<include file="config/liquibase/changelog/1769002068_H_Extarnel_Test.xml" relativeToChangelogFile="false"/>
+ <include file="config/liquibase/changelog/1769002068_H_Extarnel_Test.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1768722141_R_patient_allergies.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1768730708_R_patient_allergies_active_ingredients.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1770533404_R_patient_allergies_log.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1763382042_Q_PatientPreferredHealthProfessional.xml" relativeToChangelogFile="false" />
   <include file="config/liquibase/changelog/1769941783_H_Diagnostic_Order_Test_Report.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1768804453_B_ICD10.xml" relativeToChangelogFile="false" />
@@ -130,14 +131,9 @@
   <include file="/config/liquibase/changelog/1769596005_BM_Patient_Prescription.xml" relativeToChangelogFile="false" />
   <include file="/config/liquibase/changelog/1769071937_BM_Patient_Prescription_Medications.xml" relativeToChangelogFile="false" />
   <include file="/config/liquibase/changelog/1770151946_Q_Procedure.xml" relativeToChangelogFile="false" />
-  <include file="config/liquibase/changelog/1768722141_R_patient_allergies.xml" relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/1770533404_R_patient_allergies_log.xml" relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/1768730708_R_patient_allergies_active_ingredients.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1770241186_H_Diagnostic_Order_Test_Report_Comments.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1770475075_Diagnostic_Order_Reports_Log.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1770533403_R_patient_warnings.xml" relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/1770151946_Q_Procedure.xml" relativeToChangelogFile="false" />
-  <include file="config/liquibase/changelog/1770533404_R_patient_allergies_log.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1764016179_H_Relation_Matrix.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1765448261_H_Next_Of_Kin.xml" relativeToChangelogFile="false" />
   <include file="config/liquibase/changelog/1771843369_R_patient_warnings_log.xml" relativeToChangelogFile="false"/>
