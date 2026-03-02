@@ -51,6 +51,13 @@
 
     </createTable>
 
+    <addForeignKeyConstraint
+      baseTableName="progress_notes"
+      baseColumnNames="encounter_id"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"
+      constraintName="fk_progress_notes_encounter"/>
+
     <sql>
     <![CDATA[
       ALTER TABLE progress_notes
@@ -60,7 +67,7 @@
               OR cancellation_reason IS NOT NULL
             );
       ]]>
-  </sql>
+    </sql>
 
   </changeSet>
 

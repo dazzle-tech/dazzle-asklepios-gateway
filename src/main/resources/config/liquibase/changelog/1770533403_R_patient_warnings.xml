@@ -73,6 +73,13 @@
       <column name="last_modified_date" type="timestamp"/>
     </createTable>
 
+    <addForeignKeyConstraint
+      baseTableName="patient_warnings"
+      baseColumnNames="encounter_id"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"
+      constraintName="fk_patient_warnings_encounter"/>
+
     <addUniqueConstraint
       tableName="patient_warnings"
       columnNames="patient_id,warning_type,warning"
@@ -86,8 +93,5 @@
       constraintName="fk_patient_warnings_patient_id"/>
 
   </changeSet>
-
-
-
 
 </databaseChangeLog>

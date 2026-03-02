@@ -54,7 +54,9 @@
       </column>
 
       <column name="consultation_number" type="bigint" autoIncrement="true" startWith="100">
-        <constraints nullable="false" unique="true" uniqueConstraintName="uk_consultation_consultation_number"/>
+        <constraints nullable="false"
+                     unique="true"
+                     uniqueConstraintName="uk_consultation_consultation_number"/>
       </column>
 
 
@@ -89,23 +91,18 @@
 
       <column name="notes" type="text"/>
       <column name="extra_document" type="text"/>
-
       <column name="approval_number" type="bigint"/>
 
       <column name="status" type="varchar(30)">
         <constraints nullable="false"/>
       </column>
 
-      <column name="cancelled_date" type="timestamp">
-        <constraints nullable="true"/>
-      </column>
-
+      <column name="cancelled_date" type="timestamp"/>
       <column name="cancelled_by" type="bigint">
-        <constraints
-          nullable="true"
-          foreignKeyName="fk_consultation_cancelled_by"
-          referencedTableName="app_user"
-          referencedColumnNames="id"/>
+        <constraints nullable="true"
+                     foreignKeyName="fk_consultation_cancelled_by"
+                     referencedTableName="app_user"
+                     referencedColumnNames="id"/>
       </column>
 
       <column name="cancellation_reason" type="text"/>
@@ -130,23 +127,15 @@
 
       <column name="reject_reason" type="text"/>
 
-
-        <column name="confirmed_date" type="timestamp">
-          <constraints nullable="true"/>
-        </column>
-
-        <column name="confirmed_by" type="bigint">
-          <constraints
-            nullable="true"
-            foreignKeyName="fk_consultation_confirmed_by"
-            referencedTableName="app_user"
-            referencedColumnNames="id"/>
-        </column>
-
-      <column name="submitted_date" type="timestamp">
-        <constraints nullable="true"/>
+      <column name="confirmed_date" type="timestamp"/>
+      <column name="confirmed_by" type="bigint">
+        <constraints nullable="true"
+                     foreignKeyName="fk_consultation_confirmed_by"
+                     referencedTableName="app_user"
+                     referencedColumnNames="id"/>
       </column>
 
+      <column name="submitted_date" type="timestamp"/>
       <column name="submitted_by" type="bigint">
         <constraints nullable="true"
                      foreignKeyName="fk_consultation_submitted_by"
@@ -163,6 +152,13 @@
       <column name="last_modified_date" type="timestamp"/>
 
     </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="consultation"
+      baseColumnNames="encounter_id"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"
+      constraintName="fk_consultation_encounter"/>
 
     <sql>
       <![CDATA[
@@ -231,17 +227,17 @@
 
     <sql>
       <![CDATA[
-          ALTER TABLE consultation
-            ADD CONSTRAINT ck_consultation_cancellation_reason
-              CHECK (
-                status <> 'CANCELLED'
-                  OR cancellation_reason IS NOT NULL
-                );
+      ALTER TABLE consultation
+        ADD CONSTRAINT ck_consultation_cancellation_reason
+          CHECK (
+            status <> 'CANCELLED'
+              OR cancellation_reason IS NOT NULL
+            );
       ]]>
     </sql>
 
     <sql>
-    <![CDATA[
+      <![CDATA[
       ALTER TABLE consultation
         ADD CONSTRAINT ck_consultation_confirmed_fields
           CHECK (
@@ -249,19 +245,18 @@
               OR (confirmed_date IS NOT NULL AND confirmed_by IS NOT NULL)
             );
       ]]>
-  </sql>
+    </sql>
 
     <sql>
-    <![CDATA[
+      <![CDATA[
       ALTER TABLE consultation
         ADD CONSTRAINT ck_consultation_submitted_fields
           CHECK (
-            status <> '
-            '
+            status <> 'SUBMITTED'
               OR (submitted_date IS NOT NULL AND submitted_by IS NOT NULL)
             );
       ]]>
-  </sql>
+    </sql>
 
   </changeSet>
 

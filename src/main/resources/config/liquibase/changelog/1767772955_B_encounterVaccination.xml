@@ -99,6 +99,13 @@
       </column>
     </createTable>
 
+    <addForeignKeyConstraint
+      baseTableName="encounter_vaccination"
+      baseColumnNames="encounter_id"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"
+      constraintName="fk_encounter_vaccination_encounter"/>
+
     <sql dbms="postgresql">
       <![CDATA[
       ALTER TABLE encounter_vaccination

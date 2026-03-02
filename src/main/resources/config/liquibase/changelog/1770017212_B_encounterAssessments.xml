@@ -48,6 +48,13 @@
 
     </createTable>
 
+    <addForeignKeyConstraint
+      baseTableName="encounter_assessments"
+      baseColumnNames="encounter_id"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"
+      constraintName="fk_enc_assessment_encounter"/>
+
     <createIndex tableName="encounter_assessments" indexName="idx_enc_assessment_patient">
       <column name="patient_id"/>
     </createIndex>

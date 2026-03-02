@@ -67,16 +67,13 @@
       referencedColumnNames="id"
       constraintName="fk_emergency_triage_patient_id"/>
 
-    <!-- TODO: add foreign key with encounter table when ready-->
-    <!--
     <addForeignKeyConstraint
       baseTableName="emergency_triage"
       baseColumnNames="encounter_id"
-      referencedTableName="encounter"
+      referencedTableName="patient_encounters"
       referencedColumnNames="id"
       constraintName="fk_emergency_triage_encounter_id"
       onDelete="CASCADE"/>
-    -->
   </changeSet>
 
 </databaseChangeLog>
