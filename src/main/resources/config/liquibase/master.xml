@@ -149,6 +149,7 @@
   <include file="config/liquibase/changelog/1770017212_B_encounterAssessments.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1770024936_B_encounterPlan.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1770108176_B_patientDiagnoses.xml" relativeToChangelogFile="false"/>
-
+  <include file="/config/liquibase/changelog/1769596005_BM_Patient_Prescription.xml" relativeToChangelogFile="false" />
+  <include file="/config/liquibase/changelog/1769071937_BM_Patient_Prescription_Medications.xml" relativeToChangelogFile="false" />
 
 </databaseChangeLog>
