@@ -61,11 +61,8 @@
       <column name="cancellation_reason" type="varchar(255)"/>
 
       <column name="cancelled_at" type="timestamp"/>
-      <column name="cancelled_by_id" type="bigint">
-        <constraints nullable="true"
-                     foreignKeyName="fk_encounter_vaccination_cancelled_by"
-                     referencedTableName="app_user"
-                     referencedColumnNames="id"/>
+      <column name="cancelled_by" type="varchar(50)">
+        <constraints nullable="true"/>
       </column>
 
       <column name="administered_location" type="varchar(255)"/>
@@ -91,12 +88,10 @@
       <column name="last_modified_date" type="timestamp"/>
 
       <column name="reviewed_at" type="timestamp"/>
-      <column name="reviewed_by_id" type="bigint">
-        <constraints nullable="true"
-                     foreignKeyName="fk_encounter_vaccination_reviewed_by"
-                     referencedTableName="app_user"
-                     referencedColumnNames="id"/>
+      <column name="reviewed_by" type="varchar(50)">
+        <constraints nullable="true"/>
       </column>
+
     </createTable>
 
     <addForeignKeyConstraint
@@ -112,8 +107,8 @@
         ADD CONSTRAINT ck_encounter_vaccination_external_facility_name
           CHECK (
             is_external_facility = false
-            OR external_facility_name IS NOT NULL
-          );
+              OR external_facility_name IS NOT NULL
+            );
       ]]>
     </sql>
 
@@ -137,7 +132,7 @@
       <![CDATA[
       ALTER TABLE encounter_vaccination
         ADD CONSTRAINT ck_encounter_vaccination_cancelled_by
-          CHECK (status <> 'CANCELLED' OR cancelled_by_id IS NOT NULL);
+          CHECK (status <> 'CANCELLED' OR cancelled_by IS NOT NULL);
       ]]>
     </sql>
 
@@ -153,7 +148,7 @@
       <![CDATA[
       ALTER TABLE encounter_vaccination
         ADD CONSTRAINT ck_encounter_vaccination_reviewed_by
-          CHECK (status <> 'REVIEW' OR reviewed_by_id IS NOT NULL);
+          CHECK (status <> 'REVIEW' OR reviewed_by IS NOT NULL);
       ]]>
     </sql>
 
