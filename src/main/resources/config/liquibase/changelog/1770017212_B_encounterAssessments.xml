@@ -20,13 +20,6 @@
                      foreignKeyName="fk_enc_assessment_patient"/>
       </column>
 
-      <column name="user_id" type="bigint">
-        <constraints nullable="false"
-                     referencedTableName="app_user"
-                     referencedColumnNames="id"
-                     foreignKeyName="fk_enc_assessment_user"/>
-      </column>
-
       <column name="encounter_id" type="bigint">
         <constraints nullable="false"/>
       </column>
@@ -59,18 +52,14 @@
       <column name="patient_id"/>
     </createIndex>
 
-    <createIndex tableName="encounter_assessments" indexName="idx_enc_assessment_user">
-      <column name="user_id"/>
-    </createIndex>
-
     <createIndex tableName="encounter_assessments" indexName="idx_enc_assessment_encounter">
       <column name="encounter_id"/>
     </createIndex>
 
     <addUniqueConstraint
       tableName="encounter_assessments"
-      columnNames="encounter_id, patient_id, user_id"
-      constraintName="uk_enc_assessment_enc_patient_user"/>
+      columnNames="encounter_id, patient_id"
+      constraintName="uk_enc_assessment_enc_patient"/>
 
   </changeSet>
 
