@@ -54,12 +54,7 @@
 
       <column name="cancelled_at" type="timestamp"/>
 
-      <column name="cancelled_by_id" type="bigint">
-        <constraints nullable="true"
-                     foreignKeyName="fk_tele_consultation_cancelled_by"
-                     referencedTableName="app_user"
-                     referencedColumnNames="id"/>
-      </column>
+      <column name="cancelled_by" type="varchar(50)"/>
 
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>

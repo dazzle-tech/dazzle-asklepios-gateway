@@ -59,7 +59,6 @@
                      uniqueConstraintName="uk_consultation_consultation_number"/>
       </column>
 
-
       <column name="destination_type" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
@@ -98,50 +97,25 @@
       </column>
 
       <column name="cancelled_date" type="timestamp"/>
-      <column name="cancelled_by" type="bigint">
-        <constraints nullable="true"
-                     foreignKeyName="fk_consultation_cancelled_by"
-                     referencedTableName="app_user"
-                     referencedColumnNames="id"/>
-      </column>
+      <column name="cancelled_by" type="varchar(50)"/>
 
       <column name="cancellation_reason" type="text"/>
 
       <column name="response_date" type="timestamp"/>
-      <column name="response_by" type="bigint">
-        <constraints nullable="true"
-                     foreignKeyName="fk_consultation_response_by"
-                     referencedTableName="app_user"
-                     referencedColumnNames="id"/>
-      </column>
+      <column name="response_by" type="varchar(50)"/>
 
       <column name="response_text" type="text"/>
 
       <column name="rejected_date" type="timestamp"/>
-      <column name="rejected_by" type="bigint">
-        <constraints nullable="true"
-                     foreignKeyName="fk_consultation_rejected_by"
-                     referencedTableName="app_user"
-                     referencedColumnNames="id"/>
-      </column>
+      <column name="rejected_by" type="varchar(50)"/>
 
       <column name="reject_reason" type="text"/>
 
       <column name="confirmed_date" type="timestamp"/>
-      <column name="confirmed_by" type="bigint">
-        <constraints nullable="true"
-                     foreignKeyName="fk_consultation_confirmed_by"
-                     referencedTableName="app_user"
-                     referencedColumnNames="id"/>
-      </column>
+      <column name="confirmed_by" type="varchar(50)"/>
 
       <column name="submitted_date" type="timestamp"/>
-      <column name="submitted_by" type="bigint">
-        <constraints nullable="true"
-                     foreignKeyName="fk_consultation_submitted_by"
-                     referencedTableName="app_user"
-                     referencedColumnNames="id"/>
-      </column>
+      <column name="submitted_by" type="varchar(50)"/>
 
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>

@@ -57,7 +57,6 @@
                      referencedColumnNames="id"/>
       </column>
 
-
       <column name="indication_id" type="bigint">
         <constraints nullable="true"
                      foreignKeyName="fk_procedure_indication_icd"
@@ -93,13 +92,8 @@
       </column>
 
       <column name="cancelled_date" type="timestamp"/>
-      <column name="cancelled_by" type="bigint">
-        <constraints nullable="true"
-                     foreignKeyName="fk_procedure_cancelled_by"
-                     referencedTableName="app_user"
-                     referencedColumnNames="id"/>
-      </column>
-
+      <!-- ✅ bigint + FK → varchar(50) بدون FK -->
+      <column name="cancelled_by" type="varchar(50)"/>
       <column name="cancellation_reason" type="text"/>
 
       <column name="created_by" type="varchar(50)">

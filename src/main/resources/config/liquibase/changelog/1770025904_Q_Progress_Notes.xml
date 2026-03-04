@@ -39,12 +39,7 @@
       <column name="last_modified_by" type="varchar(50)"/>
       <column name="last_modified_date" type="timestamp"/>
 
-      <column name="cancelled_by" type="bigint">
-        <constraints nullable="true"
-                     foreignKeyName="fk_progress_notes_cancelled_by"
-                     referencedTableName="app_user"
-                     referencedColumnNames="id"/>
-      </column>
+      <column name="cancelled_by" type="varchar(50)"/>
 
       <column name="cancelled_date" type="timestamp"/>
       <column name="cancellation_reason" type="text"/>
