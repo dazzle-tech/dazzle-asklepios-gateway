@@ -53,6 +53,9 @@
                              referencedColumnNames="id"/>
             </column>
 
+<!--    TODO:Will change when the appointment change-->
+          <column name="appointment_id" type="varchar(100)"/>
+
             <column name="encounter_type" type="varchar(50)">
                 <constraints nullable="false"/>
             </column>
