@@ -235,7 +235,7 @@ spring:
             - RewritePath=/api/ai/v1/clinical-recommendations/(?<segment>.*),/api/v1/${segment}
 
         - id: analytics
-          uri: ${services.dazzle-asklepios-analytics-service-url}
+          uri: ${services.dazzle-asklepios-analytics-service}
           predicates:
             - Path=/api/analytics/**
           filters:
