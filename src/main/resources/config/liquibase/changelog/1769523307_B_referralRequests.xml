@@ -20,7 +20,6 @@
                      foreignKeyName="fk_referral_request_patient"/>
       </column>
 
-      <!-- ✅ encounter_id صار NOT NULL -->
       <column name="encounter_id" type="bigint">
         <constraints nullable="false"/>
       </column>
