@@ -75,7 +75,11 @@
     <createIndex tableName="patient_diagnoses" indexName="idx_patient_diagnosis_diagnosis">
       <column name="diagnosis_id"/>
     </createIndex>
-
+    <sql>
+      CREATE UNIQUE INDEX ux_patient_diagnosis_primary_per_encounter
+        ON patient_diagnoses (encounter_id)
+        WHERE type = 'PRIMARY';
+    </sql>
     <addUniqueConstraint
       tableName="patient_diagnoses"
       columnNames="diagnosis_id,type,suspected,major,patient_id,encounter_id"
