@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="b00000000000026" author="batool">
+
+    <createTable tableName="referral_requests">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"
+                     referencedTableName="patients"
+                     referencedColumnNames="id"
+                     foreignKeyName="fk_referral_request_patient"/>
+      </column>
+
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="true"/>
+      </column>
+
+      <column name="from_facility_id" type="bigint">
+        <constraints nullable="false"
+                     referencedTableName="facility"
+                     referencedColumnNames="id"
+                     foreignKeyName="fk_ref_req_from_facility"/>
+      </column>
+
+      <column name="to_facility_id" type="bigint">
+        <constraints nullable="false"
+                     referencedTableName="facility"
+                     referencedColumnNames="id"
+                     foreignKeyName="fk_ref_req_to_facility"/>
+      </column>
+
+      <column name="from_department_id" type="bigint">
+        <constraints nullable="false"
+                     referencedTableName="department"
+                     referencedColumnNames="id"
+                     foreignKeyName="fk_ref_req_from_department"/>
+      </column>
+
+      <column name="to_department_id" type="bigint">
+        <constraints nullable="false"
+                     referencedTableName="department"
+                     referencedColumnNames="id"
+                     foreignKeyName="fk_ref_req_to_department"/>
+      </column>
+
+      <column name="referral_type" type="varchar(20)" defaultValue="INTERNAL">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="referral_reason" type="text">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="priority" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="status" type="varchar(30)" defaultValue="NEW">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="rejected_date" type="timestamp"/>
+      <column name="rejected_by" type="varchar(50)"/>
+      <column name="reject_reason" type="text"/>
+
+      <column name="accepted_date" type="timestamp"/>
+      <column name="accepted_by" type="varchar(50)"/>
+
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+
+    <createIndex tableName="referral_requests" indexName="idx_ref_req_patient">
+      <column name="patient_id"/>
+    </createIndex>
+
+    <createIndex tableName="referral_requests" indexName="idx_ref_req_encounter">
+      <column name="encounter_id"/>
+    </createIndex>
+
+    <createIndex tableName="referral_requests" indexName="idx_ref_req_from_facility">
+      <column name="from_facility_id"/>
+    </createIndex>
+
+    <createIndex tableName="referral_requests" indexName="idx_ref_req_to_facility">
+      <column name="to_facility_id"/>
+    </createIndex>
+
+    <createIndex tableName="referral_requests" indexName="idx_ref_req_from_department">
+      <column name="from_department_id"/>
+    </createIndex>
+
+    <createIndex tableName="referral_requests" indexName="idx_ref_req_to_department">
+      <column name="to_department_id"/>
+    </createIndex>
+
+    <sql>
+      <![CDATA[
+      ALTER TABLE referral_requests
+        ADD CONSTRAINT ck_referral_requests_reject_reason
+          CHECK (status <> 'REJECTED' OR reject_reason IS NOT NULL);
+      ]]>
+    </sql>
+
+    <sql>
+  <![CDATA[
+      ALTER TABLE referral_requests
+        ADD CONSTRAINT ck_referral_requests_accepted_fields
+          CHECK (
+            status <> 'ACCEPTED'
+              OR (
+              accepted_date IS NOT NULL
+                AND accepted_by IS NOT NULL
+                AND TRIM(accepted_by) <> ''
+              )
+            );
+      ]]>
+</sql>
+    <addUniqueConstraint
+      tableName="referral_requests"
+      columnNames="encounter_id,to_department_id"
+      constraintName="uk_referral_encounter_to_department"/>
+
+  </changeSet>
+
+</databaseChangeLog>
