@@ -20,8 +20,9 @@
                      foreignKeyName="fk_referral_request_patient"/>
       </column>
 
+      <!-- ✅ encounter_id صار NOT NULL -->
       <column name="encounter_id" type="bigint">
-        <constraints nullable="true"/>
+        <constraints nullable="false"/>
       </column>
 
       <column name="from_facility_id" type="bigint">
@@ -85,6 +86,13 @@
 
     </createTable>
 
+    <addForeignKeyConstraint
+      baseTableName="referral_requests"
+      baseColumnNames="encounter_id"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"
+      constraintName="fk_referral_encounter"/>
+
     <createIndex tableName="referral_requests" indexName="idx_ref_req_patient">
       <column name="patient_id"/>
     </createIndex>
@@ -118,19 +126,20 @@
     </sql>
 
     <sql>
-  <![CDATA[
+      <![CDATA[
       ALTER TABLE referral_requests
         ADD CONSTRAINT ck_referral_requests_accepted_fields
           CHECK (
             status <> 'ACCEPTED'
               OR (
-              accepted_date IS NOT NULL
+                accepted_date IS NOT NULL
                 AND accepted_by IS NOT NULL
                 AND TRIM(accepted_by) <> ''
               )
-            );
+          );
       ]]>
-</sql>
+    </sql>
+
     <addUniqueConstraint
       tableName="referral_requests"
       columnNames="encounter_id,to_department_id"
