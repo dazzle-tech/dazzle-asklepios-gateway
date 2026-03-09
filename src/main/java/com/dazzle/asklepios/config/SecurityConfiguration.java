@@ -106,6 +106,7 @@ public class SecurityConfiguration {
                 .pathMatchers("/transaction/**").permitAll()
                 .pathMatchers("/operation/**").permitAll()
                 .pathMatchers("/procedures/**").permitAll()
+                .pathMatchers("/api/analytics").permitAll()
                 .anyExchange().authenticated()
             )
             .httpBasic(basic -> basic.disable())

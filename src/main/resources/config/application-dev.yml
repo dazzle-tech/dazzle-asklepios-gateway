@@ -19,6 +19,7 @@ services:
   asklepios-patient-service-url: http://localhost:8083
   asklepios-inventory-service-url: http://localhost:8084
   asklepios-billing-service-url: http://localhost:8085
+  dazzle-asklepios-analytics-service: http://localhost:8089
 
   medication-test-orders-validation-service-url: http://localhost:8005
   clinical-summary-service-url: http://localhost:8003
@@ -233,7 +234,12 @@ spring:
           filters:
             - RewritePath=/api/ai/v1/clinical-recommendations/(?<segment>.*),/api/v1/${segment}
 
-
+        - id: analytics
+          uri: ${services.dazzle-asklepios-analytics-service}
+          predicates:
+            - Path=/api/analytics/**
+          filters:
+            - StripPrefix=0
       httpclient:
         pool:
           max-connections: 1000
