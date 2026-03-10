@@ -50,7 +50,7 @@
       <column name="refill_unit" type="varchar(50)"/>
       <column name="notes" type="text"/>
       <column name="extra_documentation" type="text"/>
-      <column name="administration_Instructions" type="varchar(50)"/>
+      <column name="administration_instructions" type="varchar(50)"/>
       <column name="status" type="varchar(50)"/>
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>
