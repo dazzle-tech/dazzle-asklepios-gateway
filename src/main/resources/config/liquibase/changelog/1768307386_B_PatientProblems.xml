@@ -30,7 +30,11 @@
       <column name="status" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
-      <column name="type" type="varchar(50)"/>
+
+      <column name="type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
       <column name="date_of_resolution" type="date"/>
 
       <column name="by_patient" type="boolean" defaultValueBoolean="true">
