@@ -69,6 +69,8 @@ public class SimpleUserDTO implements Serializable {
     private Gender gender;
     private JobRole jobRole;
 
+    private Boolean admin;
+
 
     public SimpleUserDTO() {
     }
@@ -90,6 +92,7 @@ public class SimpleUserDTO implements Serializable {
         this.birthDate = user.getBirthDate();
         this.gender = user.getGender();
         this.jobRole=user.getJobRole();
+        this.admin=user.isAdmin();
 
     }
 }
