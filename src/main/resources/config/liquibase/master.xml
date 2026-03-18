@@ -189,4 +189,5 @@
   <include file="/config/liquibase/changelog/1769523307_B_referralRequests.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1773620179000_S_organizationWorkingDay.xml"
            relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1773745759000_S_OrganizationHoliday.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>
