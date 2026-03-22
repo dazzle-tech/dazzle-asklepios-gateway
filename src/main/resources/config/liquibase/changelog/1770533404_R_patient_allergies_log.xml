@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="R00000000000007_PATIENT_ALLERGIES_LOG" author="Rawan-Yahya200">
+    <createTable tableName="patient_allergies_log">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="allergy_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="operation_type" type="varchar(10)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="log_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="log_by" type="varchar(50)"/>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="allergen_type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="allergen_id" type="bigint"/>
+
+      <column name="severity" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="medication_class_id" type="bigint"/>
+
+      <column name="criticality" type="varchar(50)"/>
+
+      <column name="certainty" type="varchar(50)"/>
+
+      <column name="treatment_strategy" type="varchar(50)"/>
+
+      <column name="onset" type="varchar(50)"/>
+
+      <column name="onset_date_undefined" type="boolean"/>
+
+      <column name="onset_date" type="timestamp"/>
+
+      <column name="type_of_propensity" type="varchar(50)"/>
+
+      <column name="by_patient" type="boolean"/>
+
+      <column name="source_of_information" type="varchar(50)"/>
+
+      <column name="allergic_reactions" type="varchar(255)"/>
+
+      <column name="note" type="varchar(50)"/>
+
+      <column name="status" type="varchar(50)"/>
+
+      <column name="resolved_by" type="varchar(50)"/>
+
+      <column name="resolved_date" type="timestamp"/>
+
+      <column name="cancelled_by" type="varchar(50)"/>
+
+      <column name="cancelled_date" type="timestamp"/>
+
+      <column name="cancellation_reason" type="varchar(50)"/>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+    <addForeignKeyConstraint
+      baseTableName="patient_allergies_log"
+      baseColumnNames="patient_id"
+      constraintName="fk_pat_allergies_log_patient"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+    />
+
+    <addForeignKeyConstraint
+      baseTableName="patient_allergies_log"
+      baseColumnNames="encounter_id"
+      constraintName="fk_pat_allergies_log_encounter"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"
+    />
+
+    <addForeignKeyConstraint
+      baseTableName="patient_allergies_log"
+      baseColumnNames="allergy_id"
+      constraintName="fk_pat_allergies_log_allergy"
+      referencedTableName="patient_allergies"
+      referencedColumnNames="id"
+    />
+
+    <createIndex tableName="patient_allergies_log"
+                 indexName="idx_pat_allergies_log_allergy_id">
+      <column name="allergy_id"/>
+    </createIndex>
+
+    <createIndex tableName="patient_allergies_log"
+                 indexName="idx_pat_allergies_log_date">
+      <column name="log_date"/>
+    </createIndex>
+  </changeSet>
+
+  <include file="config/liquibase/sql/Patient_Allergies_Log.sql" relativeToChangelogFile="false"/>
+
+</databaseChangeLog>

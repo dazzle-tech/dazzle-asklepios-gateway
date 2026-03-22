@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="100000000000065_EMERGENCY_TRIAGE" author="Sondos">
+    <createTable tableName="emergency_triage">
+      <column name="id" type="bigint" startWith="1" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="emergency_level" type="varchar(50)"/>
+
+      <column name="right_eye_light_response" type="boolean"/>
+
+      <column name="right_eye_pupil_size" type="varchar(50)"/>
+
+      <column name="left_eye_light_response" type="boolean"/>
+
+      <column name="left_eye_pupil_size" type="varchar(50)"/>
+
+      <column name="hpi_additional_notes" type="text"/>
+
+      <column name="life_saving" type="varchar(50)"/>
+      <column name="unresponsive" type="varchar(50)"/>
+      <column name="high_risk" type="varchar(50)"/>
+      <column name="avpu_scale" type="varchar(50)"/>
+      <column name="pain_score" type="varchar(50)"/>
+
+      <column name="labs_required" type="varchar(50)"/>
+      <column name="imaging_required" type="varchar(50)"/>
+      <column name="iv_fluids_required" type="varchar(50)"/>
+      <column name="medication_required" type="varchar(50)"/>
+      <column name="ecg_required" type="varchar(50)"/>
+      <column name="consultation_required" type="varchar(50)"/>
+      <column name="destination" type="varchar(50)"/>
+      <column name="completed_date" type="timestamp"/>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+    <createIndex indexName="idx_emergency_triage_encounter_createddate_desc"
+                 tableName="emergency_triage">
+      <column name="encounter_id"/>
+      <column name="created_date" descending="true"/>
+    </createIndex>
+    <addForeignKeyConstraint
+      baseTableName="emergency_triage"
+      baseColumnNames="patient_id"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+      constraintName="fk_emergency_triage_patient_id"/>
+
+    <addForeignKeyConstraint
+      baseTableName="emergency_triage"
+      baseColumnNames="encounter_id"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"
+      constraintName="fk_emergency_triage_encounter_id"
+      onDelete="CASCADE"/>
+  </changeSet>
+
+</databaseChangeLog>

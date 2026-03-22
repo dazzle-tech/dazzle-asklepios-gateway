@@ -18,7 +18,9 @@ import reactor.core.publisher.Mono;
 import reactor.util.function.Tuple2;
 import reactor.util.function.Tuples;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -150,42 +152,70 @@ class UserRepositoryInternalImpl implements UserRepositoryInternal {
 
     @Override
     public Flux<User> findBasicUsers(String login, String email, String name, Pageable pageable) {
+        StringBuilder sql = new StringBuilder("""
+        SELECT u.id,u.login,u.first_name,u.last_name,email,u.image_url,u.activated,u.lang_key,
+        u.created_by, u.created_date,u.last_modified_by,u.last_modified_date,u.phone_number,u.phone_number,u.birth_date,u.gender,u.gender,u.job_role
+        , ra.authority_name
 
-        Criteria criteria = Criteria.empty();
+        FROM app_user u
+        LEFT JOIN user_role ur ON u.id = ur.user_id
+        LEFT JOIN role_authority ra ON ur.role_id = ra.role_id
+        WHERE 1=1
+        """);
+
+        Map<String, Object> params = new HashMap<>();
 
         if (login != null && !login.isBlank()) {
-            criteria = criteria.and(
-                where("login").like("%" + login + "%").ignoreCase(true)
-            );
+            sql.append(" AND LOWER(u.login) LIKE LOWER(:login) ");
+            params.put("login", "%" + login + "%");
         }
 
         if (email != null && !email.isBlank()) {
-            criteria = criteria.and(
-                where("email").like("%" + email + "%").ignoreCase(true)
-            );
+            sql.append(" AND LOWER(u.email) LIKE LOWER(:email) ");
+            params.put("email", "%" + email + "%");
         }
 
         if (name != null && !name.isBlank()) {
-            Criteria firstName = where("first_name").like("%" + name + "%").ignoreCase(true);
-            Criteria lastName  = where("last_name").like("%" + name + "%").ignoreCase(true);
-            criteria = criteria.and(firstName.or(lastName));
+            sql.append("""
+            AND (
+                LOWER(u.first_name) LIKE LOWER(:name)
+                OR LOWER(u.last_name) LIKE LOWER(:name)
+            )
+            """);
+            params.put("name", "%" + name + "%");
         }
 
-        org.springframework.data.relational.core.query.Query q =
-            org.springframework.data.relational.core.query.Query.query(criteria);
+        String property = pageable.getSort().stream()
+            .map(Sort.Order::getProperty)
+            .findFirst()
+            .orElse("id");
 
-        // Sorting
-        if (pageable.getSort().isEmpty()) {
-            q = q.sort(Sort.by(Sort.Direction.ASC, "id"));
-        } else {
-            q = q.sort(pageable.getSort());
+        String direction = pageable.getSort().stream()
+            .map(order -> order.getDirection().name())
+            .findFirst()
+            .orElse("ASC");
+
+        sql.append(" ORDER BY u.").append(property).append(" ").append(direction);
+        sql.append(" LIMIT :limit OFFSET :offset");
+
+        params.put("limit", pageable.getPageSize());
+        params.put("offset", pageable.getOffset());
+
+        DatabaseClient.GenericExecuteSpec spec = db.sql(sql.toString());
+        for (Map.Entry<String, Object> entry : params.entrySet()) {
+            spec = spec.bind(entry.getKey(), entry.getValue());
         }
 
-        // Pagination
-        q = q.limit(pageable.getPageSize())
-            .offset(pageable.getOffset());
-
-        return r2dbcEntityTemplate.select(q, User.class);
+        return spec
+            .map((row, metadata) ->
+                Tuples.of(
+                    r2dbcConverter.read(User.class, row, metadata),
+                    Optional.ofNullable(row.get("authority_name", String.class))
+                )
+            )
+            .all()
+            .groupBy(t -> t.getT1().getId())
+            .flatMap(group -> group.collectList().map(list -> updateUserWithAuthorities(list.get(0).getT1(), list)));
     }
 
     @Override

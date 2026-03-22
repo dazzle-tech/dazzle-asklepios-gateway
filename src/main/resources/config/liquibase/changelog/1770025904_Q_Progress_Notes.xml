@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+  <changeSet id="QA0000000000017" author="qais">
+
+    <createTable tableName="progress_notes">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_progress_notes_patient"
+                     referencedTableName="patients"
+                     referencedColumnNames="id"/>
+      </column>
+
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="note_text" type="text">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+
+      <column name="cancelled_by" type="varchar(50)"/>
+
+      <column name="cancelled_date" type="timestamp"/>
+      <column name="cancellation_reason" type="text"/>
+
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="progress_notes"
+      baseColumnNames="encounter_id"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"
+      constraintName="fk_progress_notes_encounter"/>
+
+    <sql>
+    <![CDATA[
+      ALTER TABLE progress_notes
+        ADD CONSTRAINT ck_progress_notes_cancellation_reason
+          CHECK (
+            cancelled_date IS NULL
+              OR cancellation_reason IS NOT NULL
+            );
+      ]]>
+    </sql>
+
+  </changeSet>
+
+  <changeSet id="QA0000000000017_PROGRESS_NOTES_LOG_TABLE" author="qais">
+
+    <createTable tableName="progress_notes_log">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="progress_note_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_progress_notes_log_note"
+                     referencedTableName="progress_notes"
+                     referencedColumnNames="id"/>
+      </column>
+
+      <column name="action" type="varchar(10)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)"/>
+      <column name="created_date" type="timestamp"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+
+      <column name="payload" type="jsonb"/>
+
+    </createTable>
+
+  </changeSet>
+
+  <include file="config/liquibase/sql/progress_notes_triggers.sql" relativeToChangelogFile="false"/>
+
+</databaseChangeLog>

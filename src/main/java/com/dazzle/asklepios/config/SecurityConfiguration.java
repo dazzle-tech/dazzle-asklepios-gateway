@@ -62,6 +62,8 @@ public class SecurityConfiguration {
                     )
             )
             .authorizeExchange(authz -> authz
+                .pathMatchers(HttpMethod.GET,  "/api/account/create-password/validate").permitAll()
+                .pathMatchers(HttpMethod.POST, "/api/account/create-password/finish").permitAll()
                 .pathMatchers("/api/authenticate").permitAll()
                 .pathMatchers("/api/register").permitAll()
                 .pathMatchers(HttpMethod.GET, "/api/setup/facility").permitAll()
@@ -104,6 +106,7 @@ public class SecurityConfiguration {
                 .pathMatchers("/transaction/**").permitAll()
                 .pathMatchers("/operation/**").permitAll()
                 .pathMatchers("/procedures/**").permitAll()
+                .pathMatchers("/api/analytics").permitAll()
                 .anyExchange().authenticated()
             )
             .httpBasic(basic -> basic.disable())

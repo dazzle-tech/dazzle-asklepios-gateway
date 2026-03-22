@@ -70,8 +70,9 @@ public class AdminUserDTO implements Serializable {
     private java.time.LocalDate birthDate;
 
     private Gender gender;
+    @NotNull(message = "Job Role can not to be Null")
     private JobRole jobRole;
-    private SecurityLevel securityAccessLeve;
+    private SecurityLevel securityAccessLevel;
     private boolean isAdmin;
 
 
@@ -103,7 +104,7 @@ public class AdminUserDTO implements Serializable {
         this.birthDate = user.getBirthDate();
         this.gender = user.getGender();
         this.jobRole = user.getJobRole();
-        this.securityAccessLeve = user.getSecurityAccessLeve();
+        this.securityAccessLevel = user.getSecurityAccessLevel();
     }
 
 }
