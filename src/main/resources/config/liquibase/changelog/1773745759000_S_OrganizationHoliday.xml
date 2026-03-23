@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="100000000000068_ORG_HOLIDAY" author="Sondos">
+    <createTable tableName="organization_holiday">
+      <column name="id" type="bigint" autoIncrement="true" startWith="5000">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="organization_definition_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="name" type="varchar(500)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="holiday_type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="start_date" type="date">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="end_date" type="date">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="reason" type="varchar(500)"/>
+
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="all_facilities" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="facility_ids" type="varchar(2000)"/>
+      <column name="recurring" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="organization_holiday"
+      baseColumnNames="organization_definition_id"
+      constraintName="fk_org_holiday_org_definition"
+      referencedTableName="organization_definition"
+      referencedColumnNames="id"/>
+
+    <sql>
+    <![CDATA[
+      ALTER TABLE organization_holiday
+        ADD CONSTRAINT ck_org_holiday_facilities_required
+          CHECK (
+            all_facilities = true
+              OR (facility_ids IS NOT NULL AND btrim(facility_ids) <> '')
+            );
+      ]]>
+</sql>
+  </changeSet>
+</databaseChangeLog>

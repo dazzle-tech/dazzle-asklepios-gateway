@@ -31,6 +31,15 @@
         <constraints nullable="false"/>
       </column>
 
+      <!-- Default Timezone and Language-->
+      <column name="default_time_zone" type="varchar(100)" defaultValue="ASIA_AMMAN">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="default_language_id" type="bigint" >
+        <constraints nullable="false"/>
+      </column>
+
       <!-- Audit -->
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>
@@ -41,6 +50,13 @@
       <column name="last_modified_by" type="varchar(50)"/>
       <column name="last_modified_date" type="timestamp"/>
     </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="organization_definition"
+      baseColumnNames="default_language_id"
+      constraintName="fk_org_definition_language"
+      referencedTableName="language"
+      referencedColumnNames="id"/>
   </changeSet>
 
 </databaseChangeLog>
