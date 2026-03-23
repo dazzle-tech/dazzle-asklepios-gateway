@@ -24,6 +24,8 @@
         <constraints nullable="false"/>
       </column>
 
+      
+
     </createTable>
 
     <addForeignKeyConstraint
