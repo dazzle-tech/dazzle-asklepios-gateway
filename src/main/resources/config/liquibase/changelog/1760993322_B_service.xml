@@ -33,6 +33,15 @@
         <constraints nullable="false" foreignKeyName="fk_service_facility"
                      references="facility(id)"/>
       </column>
+      <column name="appointable" type="boolean"/>
+
+      <column name="parallel_capacity_value" type="int" defaultValueNumeric="1">
+        <constraints nullable="false"/>
+      </column>
+      <column name="default_duration_minutes" type="int"/>
+      <column name="default_buffer_before_minutes" type="int" defaultValueNumeric="0"/>
+      <column name="default_buffer_after_minutes" type="int" defaultValueNumeric="0"/>
+
 
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>
@@ -48,6 +57,20 @@
       tableName="service"
       columnNames="facility_id, name"
       constraintName="uk_service_facility_name"/>
+
+    <sql>
+      ALTER TABLE service
+        ADD CONSTRAINT chk_service_appointable_requirements
+          CHECK (
+            appointable = false
+              OR (
+              appointable = true
+                AND default_duration_minutes IS NOT NULL AND default_duration_minutes > 0
+                AND default_buffer_before_minutes IS NOT NULL AND default_buffer_before_minutes >= 0
+                AND default_buffer_after_minutes IS NOT NULL AND default_buffer_after_minutes >= 0
+              )
+            );
+    </sql>
   </changeSet>
 
 </databaseChangeLog>
