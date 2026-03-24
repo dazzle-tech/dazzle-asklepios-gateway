@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="availability_template_working_day" author="BushraMashaiekh">
+
+    <createTable tableName="availability_template_working_day">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="template_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="day_of_week" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="is_working" type="boolean" defaultValue="true">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="availability_template_working_day"
+      baseColumnNames="template_id"
+      referencedTableName="availability_template"
+      referencedColumnNames="id"
+      constraintName="fk_template_working_day"/>
+
+  </changeSet>
+
+</databaseChangeLog>

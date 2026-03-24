@@ -194,5 +194,11 @@
   <include file="config/liquibase/changelog/1774280357000_S_departmentServices.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1774280336000_S_PolicyDefinition.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1774280532000_S_skillDefinition.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1774339192_BM_availability_template.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1774339298_BM_availability_template_working_day.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1774339357_BM_availability_template_interval.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1774339421_BM_availability_generation_batch.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1774339459_BM_appointment.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1774352873_BM_availability_template_allowed_services.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>
 
