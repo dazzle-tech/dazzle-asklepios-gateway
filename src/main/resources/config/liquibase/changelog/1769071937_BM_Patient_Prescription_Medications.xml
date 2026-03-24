@@ -22,7 +22,6 @@
         <constraints nullable="false"/>
       </column>
       <column name="instructions" type="text"/>
-      <column name="prescription_id" type="varchar(50)"/>
       <column name="dose" type="bigint"/>
       <column name="does_unit" type="varchar(100)"/>
       <column name="rout" type="varchar(100)"/>
