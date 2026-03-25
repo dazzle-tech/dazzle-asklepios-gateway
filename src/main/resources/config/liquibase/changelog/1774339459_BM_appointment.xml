@@ -77,14 +77,14 @@
 
 
     <addForeignKeyConstraint
-      baseTableName="availability_template"
+      baseTableName="appointment"
       baseColumnNames="facility_id"
       referencedTableName="facility"
       referencedColumnNames="id"
       constraintName="fk_appointment_facility"/>
 
     <addForeignKeyConstraint
-      baseTableName="availability_template"
+      baseTableName="appointment"
       baseColumnNames="department_id"
       referencedTableName="department"
       referencedColumnNames="id"
@@ -92,7 +92,7 @@
 
 
     <addForeignKeyConstraint
-      baseTableName="availability_template"
+      baseTableName="appointment"
       baseColumnNames="patient_id"
       referencedTableName="patients"
       referencedColumnNames="id"
@@ -100,14 +100,14 @@
 
 
     <addForeignKeyConstraint
-      baseTableName="availability_template"
+      baseTableName="appointment"
       baseColumnNames="default_practitioner_id"
       referencedTableName="practitioner"
       referencedColumnNames="id"
       constraintName="fk_appointment_practitioner"/>
 
     <addForeignKeyConstraint
-      baseTableName="availability_template"
+      baseTableName="appointment"
       baseColumnNames="default_service_id"
       referencedTableName="service"
       referencedColumnNames="id"
