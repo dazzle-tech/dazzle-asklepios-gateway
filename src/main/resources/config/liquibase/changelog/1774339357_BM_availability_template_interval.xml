@@ -15,14 +15,20 @@
       <column name="template_id" type="bigint">
         <constraints nullable="false"/>
       </column>
-      <column name="day_of_week" type="varchar(50)"/>
+      <column name="day_of_week" type="varchar(50)">
+        <constraints nullable="false" />
+      </column>
 
-      <column name="start_time" type="time"/>
-      <column name="end_time" type="time"/>
+      <column name="start_time" type="time">
+        <constraints nullable="false" />
+      </column>
 
-      <column name="slot_duration_minutes" type="int"/>
-      <column name="is_active" type="boolean" defaultValue="true">
-        <constraints nullable="false"/>
+      <column name="end_time" type="time">
+        <constraints nullable="false" />
+      </column>
+
+      <column name="slot_duration_minutes" type="int">
+        <constraints nullable="false" />
       </column>
 
       <column name="created_by" type="varchar(50)">

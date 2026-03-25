@@ -16,7 +16,9 @@
         <constraints nullable="false"/>
       </column>
       <column name="template_interval_id" type="bigint"/>
-      <column name="service" type="bigint"/>
+      <column name="service" type="varchar(50)" >
+        <constraints nullable="false" />
+      </column>
     </createTable>
 
     <addForeignKeyConstraint

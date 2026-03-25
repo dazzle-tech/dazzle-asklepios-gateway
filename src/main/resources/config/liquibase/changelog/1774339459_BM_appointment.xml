@@ -5,7 +5,7 @@
                      http://www.liquibase.org/xml/ns/dbchangelog
                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-<changeSet id="appointment" author="BushraMashaiekh">
+  <changeSet id="appointment" author="BushraMashaiekh">
 
     <createTable tableName="appointment">
       <column name="id" type="bigint" autoIncrement="true">
@@ -19,12 +19,15 @@
         <constraints nullable="false"/>
       </column>
 
-      <column name="availability_generation_batch_id" type="bigint">
+      <column name="availability_generation_batch_id" type="bigint"/>
+
+      <column name="start_datetime" type="timestamp">
         <constraints nullable="false"/>
       </column>
 
-      <column name="start_datetime" type="timestamp"/>
-      <column name="end_datetime" type="timestamp"/>
+      <column name="end_datetime" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
 
       <column name="patient_id" type="bigint"/>
       <column name="default_service_id" type="bigint"/>
@@ -32,12 +35,17 @@
 
       <column name="reason" type="varchar(255)"/>
 
-      <column name="booking_mode" type="varchar(20)"/>
+      <column name="booking_mode" type="varchar(20)">
+        <constraints nullable="false"/>
+      </column>
       <column name="status" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
 
-      <column name="deferred" type="boolean" defaultValueBoolean="false"/>
+      <column name="deferred" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
       <column name="deferred_at" type="timestamp"/>
 
       <column name="no_show_reason" type="varchar(255)"/>
@@ -47,7 +55,7 @@
       <column name="priority" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
-      <column name="note" type="varchar(500)"/>
+      <column name="note" type="text"/>
 
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>
@@ -66,6 +74,53 @@
       referencedTableName="availability_generation_batch"
       referencedColumnNames="id"
       constraintName="fk_appointment_batch"/>
+
+
+    <addForeignKeyConstraint
+      baseTableName="availability_template"
+      baseColumnNames="facility_id"
+      referencedTableName="facility"
+      referencedColumnNames="id"
+      constraintName="fk_appointment_facility"/>
+
+    <addForeignKeyConstraint
+      baseTableName="availability_template"
+      baseColumnNames="department_id"
+      referencedTableName="department"
+      referencedColumnNames="id"
+      constraintName="fk_appointment_department"/>
+
+
+    <addForeignKeyConstraint
+      baseTableName="availability_template"
+      baseColumnNames="patient_id"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+      constraintName="fk_appointment_patient"/>
+
+
+    <addForeignKeyConstraint
+      baseTableName="availability_template"
+      baseColumnNames="default_practitioner_id"
+      referencedTableName="practitioner"
+      referencedColumnNames="id"
+      constraintName="fk_appointment_practitioner"/>
+
+    <addForeignKeyConstraint
+      baseTableName="availability_template"
+      baseColumnNames="default_service_id"
+      referencedTableName="service"
+      referencedColumnNames="id"
+      constraintName="fk_appointment_service"/>
+
+    <sql>
+      ALTER TABLE appointment
+        ADD CONSTRAINT chk_appointment_deferred_time
+          CHECK (
+        deferred = false
+        OR deferred_at IS NOT NULL
+        );
+    </sql>
 
   </changeSet>
 

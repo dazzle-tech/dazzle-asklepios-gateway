@@ -20,9 +20,11 @@
       <column name="apply_start_date_time" type="timestamp">
         <constraints nullable="false"/>
       </column>
-      <column name="apply_end_date_time" type="timestamp"/>
+      <column name="apply_end_date_time" type="timestamp">
+        <constraints nullable="false" />
+      </column>
 
-      <column name="execution_status" type="varchar(20)">
+      <column name="execution_status" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
 
