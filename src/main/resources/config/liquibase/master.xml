@@ -190,4 +190,8 @@
   <include file="/config/liquibase/changelog/1773620179000_S_organizationWorkingDay.xml"
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1773745759000_S_OrganizationHoliday.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1774252400_B_room.xml" relativeToChangelogFile="false" />
+  <include file="/config/liquibase/changelog/1774265919_B_bed.xml" relativeToChangelogFile="false" />
+  <include file="/config/liquibase/changelog/1774275632_B_bedRoomServices.xml" relativeToChangelogFile="false" />
+
 </databaseChangeLog>
