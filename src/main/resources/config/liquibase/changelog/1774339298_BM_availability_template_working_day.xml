@@ -30,6 +30,11 @@
       referencedColumnNames="id"
       constraintName="fk_template_working_day"/>
 
+    <addUniqueConstraint
+      tableName="availability_template_working_day"
+      columnNames="template_id, day_of_week"
+      constraintName="uk_template_working_day_temp_day"/>
+
   </changeSet>
 
 </databaseChangeLog>
