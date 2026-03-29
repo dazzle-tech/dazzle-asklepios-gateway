@@ -75,6 +75,9 @@
         <constraints nullable="false" />
       </column>
 
+      <column name="is_active" type="boolean" defaultValue="true" >
+        <constraints nullable="false" />
+      </column>
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
@@ -127,6 +130,11 @@
       referencedTableName="availability_template"
       referencedColumnNames="id"
       constraintName="fk_template_copy"/>
+
+    <addUniqueConstraint
+      tableName="availability_template"
+      columnNames="facility_id, department_id, template_name"
+      constraintName="uk_template_name_per_department"/>
 
     <sql>
       ALTER TABLE availability_template
