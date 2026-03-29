@@ -37,8 +37,11 @@
       </column>
       <column name="last_modified_by" type="varchar(50)"/>
       <column name="last_modified_date" type="timestamp"/>
-
     </createTable>
+    <addUniqueConstraint
+      tableName="facility"
+      columnNames="code"
+      constraintName="uk_facility_code"/>
 
     <createTable tableName="role">
       <column name="id" type="bigint" autoIncrement="true" startWith="1500">
