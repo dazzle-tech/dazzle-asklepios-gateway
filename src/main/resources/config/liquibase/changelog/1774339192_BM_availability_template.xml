@@ -26,12 +26,17 @@
       <column name="template_type" type="varchar(30)">
         <constraints nullable="false"/>
       </column>
+
+      <column name="resource_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
       <column name="template_color" type="varchar(20)"/>
 
       <column name="status" type="varchar(20)">
         <constraints nullable="false"/>
       </column>
-      <column name="version_no" type="int">
+      <column name="version_no" type="int" defaultValue="1">
         <constraints nullable="false"/>
       </column>
 
@@ -71,8 +76,12 @@
         <constraints nullable="false" />
       </column>
 
-      <column name="financial_details" type="varchar(50)">
+      <column name="financial_details" type="varchar(50)" defaultValue="BOTH">
         <constraints nullable="false" />
+      </column>
+
+      <column name="working_days" type="json">
+        <constraints nullable="false"/>
       </column>
 
       <column name="is_active" type="boolean" defaultValue="true" >
