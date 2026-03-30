@@ -38,6 +38,10 @@
       referencedColumnNames="id"
       constraintName="fk_policy_definition_facility"/>
 
+    <addUniqueConstraint
+      tableName="policy_definition"
+      columnNames="code"
+      constraintName="uk_policy_definition_code"/>
 
 
   </changeSet>
