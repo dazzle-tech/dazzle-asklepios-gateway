@@ -31,7 +31,7 @@
       <column name="status" type="varchar(20)">
         <constraints nullable="false"/>
       </column>
-      <column name="version_no" type="int">
+      <column name="version_no" type="int" defaultValue="1">
         <constraints nullable="false"/>
       </column>
 
@@ -71,7 +71,7 @@
         <constraints nullable="false" />
       </column>
 
-      <column name="financial_details" type="varchar(50)">
+      <column name="financial_details" type="varchar(50)" defaultValue="BOTH">
         <constraints nullable="false" />
       </column>
 
