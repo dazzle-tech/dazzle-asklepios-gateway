@@ -26,6 +26,11 @@
       <column name="template_type" type="varchar(30)">
         <constraints nullable="false"/>
       </column>
+
+      <column name="resource_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
       <column name="template_color" type="varchar(20)"/>
 
       <column name="status" type="varchar(20)">
