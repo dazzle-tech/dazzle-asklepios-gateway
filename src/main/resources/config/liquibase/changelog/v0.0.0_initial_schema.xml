@@ -31,6 +31,9 @@
       </column>
       <column name="is_active" type="boolean" defaultValueBoolean="true"/>
       <column name="time_zone" type="varchar(100)"/>
+
+      <column name="working_days" type="json"/>
+
       <column name="created_date" type="timestamp"/>
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>

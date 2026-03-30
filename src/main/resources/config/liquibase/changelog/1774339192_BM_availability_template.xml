@@ -75,6 +75,10 @@
         <constraints nullable="false" />
       </column>
 
+      <column name="working_days" type="json">
+        <constraints nullable="false"/>
+      </column>
+
       <column name="is_active" type="boolean" defaultValue="true" >
         <constraints nullable="false" />
       </column>
