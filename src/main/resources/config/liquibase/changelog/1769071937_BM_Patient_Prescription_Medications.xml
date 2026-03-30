@@ -22,7 +22,6 @@
         <constraints nullable="false"/>
       </column>
       <column name="instructions" type="text"/>
-      <column name="prescription_id" type="varchar(50)"/>
       <column name="dose" type="bigint"/>
       <column name="does_unit" type="varchar(100)"/>
       <column name="rout" type="varchar(100)"/>
@@ -66,6 +65,9 @@
                              referencedTableName="patient_prescriptions" referencedColumnNames="id"
                              constraintName="fk_ppm_prescription_header"/>
 
+    <addForeignKeyConstraint baseTableName="patient_prescription_medications" baseColumnNames="medications_id"
+                             referencedTableName="brand_medication" referencedColumnNames="id"
+                             constraintName="fk_ppm_brand_medication"/>
   </changeSet>
 
 </databaseChangeLog>
