@@ -26,6 +26,10 @@
         <constraints nullable="false" />
       </column>
 
+      <column name="total_slots" type="int"/>
+
+      <column name="daily_avg" type="int"/>
+
       <column name="execution_status" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
