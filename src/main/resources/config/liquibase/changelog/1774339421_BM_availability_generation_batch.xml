@@ -15,7 +15,9 @@
       <column name="template_id" type="bigint">
         <constraints nullable="false"/>
       </column>
-      <column name="template_type" type="varchar(50)"/>
+      <column name="scope" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
 
       <column name="apply_start_date_time" type="timestamp">
         <constraints nullable="false"/>
