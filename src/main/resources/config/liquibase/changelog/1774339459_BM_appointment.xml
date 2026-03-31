@@ -41,7 +41,8 @@
       <column name="status" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
-
+      <column name="service" type="varchar(50)"/>
+      <column name="service_group_id" type="bigint"/>
       <column name="deferred" type="boolean" defaultValueBoolean="false">
         <constraints nullable="false"/>
       </column>
@@ -112,6 +113,14 @@
       referencedTableName="service"
       referencedColumnNames="id"
       constraintName="fk_appointment_service"/>
+<!-- TODO: When create the service group table-->
+<!--    <addForeignKeyConstraint
+      baseTableName="appointment"
+      baseColumnNames="service_group_id"
+      referencedTableName="service_group"
+      referencedColumnNames="id"
+      constraintName="fk_service_group_appointment"/>
+      -->
 
     <sql>
       ALTER TABLE appointment
