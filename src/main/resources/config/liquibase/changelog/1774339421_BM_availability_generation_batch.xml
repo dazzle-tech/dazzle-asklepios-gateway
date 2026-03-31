@@ -34,6 +34,10 @@
         <constraints nullable="false"/>
       </column>
 
+        <column name="holiday_handling_mode" type="varchar(50)">
+          <constraints nullable="false"/>
+      </column>
+
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
