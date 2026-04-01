@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="
+                     http://www.liquibase.org/xml/ns/dbchangelog
+                     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="availability_template" author="BushraMashaiekh">
+
+    <createTable tableName="availability_template">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="facility_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="department_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="template_name" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="template_type" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="resource_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="template_color" type="varchar(20)"/>
+
+      <column name="status" type="varchar(20)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="version_no" type="int" defaultValue="1">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="copy_from_template_id" type="bigint"/>
+      <column name="parent_template_id" type="bigint"/>
+
+      <column name="duration_minutes" type="int" >
+        <constraints nullable="false" />
+      </column>
+      <column name="default_buffer_before_minutes" type="int" defaultValue="0">
+        <constraints nullable="false" />
+      </column>
+      <column name="default_buffer_after_minutes" type="int" defaultValue="0">
+        <constraints nullable="false" />
+      </column>
+      <column name="parallel_capacity_value" type="int" defaultValue="1">
+        <constraints nullable="false" />
+      </column>
+      <column name="default_service_id" type="bigint"/>
+      <column name="number_of_resources_expected" type="int"/>
+      <column name="require_practitioner" type="boolean" defaultValue="false">
+        <constraints nullable="false" />
+      </column>
+      <column name="default_practitioner_id" type="bigint"/>
+      <column name="require_billing" type="boolean" defaultValue="false">
+        <constraints nullable="false" />
+      </column>
+      <column name="require_pre_assessment" type="boolean" defaultValue="false">
+        <constraints nullable="false" />
+      </column>
+
+      <column name="allow_patient_portal_booking" type="boolean" defaultValue="false">
+        <constraints nullable="false" />
+      </column>
+
+      <column name="require_confirmation" type="boolean" defaultValue="true">
+        <constraints nullable="false" />
+      </column>
+
+      <column name="financial_details" type="varchar(50)" defaultValue="BOTH">
+        <constraints nullable="false" />
+      </column>
+
+      <column name="working_days" type="json">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="is_active" type="boolean" defaultValue="true" >
+        <constraints nullable="false" />
+      </column>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="availability_template"
+      baseColumnNames="facility_id"
+      referencedTableName="facility"
+      referencedColumnNames="id"
+      constraintName="fk_template_facility"/>
+
+    <addForeignKeyConstraint
+      baseTableName="availability_template"
+      baseColumnNames="department_id"
+      referencedTableName="department"
+      referencedColumnNames="id"
+      constraintName="fk_template_department"/>
+
+    <addForeignKeyConstraint
+      baseTableName="availability_template"
+      baseColumnNames="default_practitioner_id"
+      referencedTableName="practitioner"
+      referencedColumnNames="id"
+      constraintName="fk_template_practitioner"/>
+
+    <addForeignKeyConstraint
+      baseTableName="availability_template"
+      baseColumnNames="default_service_id"
+      referencedTableName="service"
+      referencedColumnNames="id"
+      constraintName="fk_template_service"/>
+
+    <addForeignKeyConstraint
+      baseTableName="availability_template"
+      baseColumnNames="parent_template_id"
+      referencedTableName="availability_template"
+      referencedColumnNames="id"
+      constraintName="fk_template_parent"/>
+
+    <addForeignKeyConstraint
+      baseTableName="availability_template"
+      baseColumnNames="copy_from_template_id"
+      referencedTableName="availability_template"
+      referencedColumnNames="id"
+      constraintName="fk_template_copy"/>
+
+    <addUniqueConstraint
+      tableName="availability_template"
+      columnNames="facility_id, department_id, template_name"
+      constraintName="uk_template_name_per_department"/>
+
+    <sql>
+      ALTER TABLE availability_template
+        ADD CONSTRAINT chk_template_practitioner_required
+          CHECK (
+            require_practitioner = false
+              OR default_practitioner_id IS NOT NULL
+            );
+    </sql>
+
+  </changeSet>
+
+</databaseChangeLog>

@@ -40,6 +40,11 @@
         <constraints nullable="false"/>
       </column>
 
+      <!-- Working days as JSON -->
+      <column name="working_days" type="json">
+        <constraints nullable="false"/>
+      </column>
+
       <!-- Audit -->
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>

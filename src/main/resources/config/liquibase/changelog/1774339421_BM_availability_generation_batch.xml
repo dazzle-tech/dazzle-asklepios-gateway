@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="
+                     http://www.liquibase.org/xml/ns/dbchangelog
+                     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+<changeSet id="availability_generation_batch" author="BushraMashaiekh">
+
+    <createTable tableName="availability_generation_batch">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="template_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="scope" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="apply_start_date_time" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+      <column name="apply_end_date_time" type="timestamp">
+        <constraints nullable="false" />
+      </column>
+
+      <column name="total_slots" type="int"/>
+
+      <column name="daily_avg" type="int"/>
+
+      <column name="execution_status" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+        <column name="holiday_handling_mode" type="varchar(50)">
+          <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="availability_generation_batch"
+      baseColumnNames="template_id"
+      referencedTableName="availability_template"
+      referencedColumnNames="id"
+      constraintName="fk_generation_template"/>
+
+  </changeSet>
+
+</databaseChangeLog>

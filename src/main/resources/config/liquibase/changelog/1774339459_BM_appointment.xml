@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="
+                     http://www.liquibase.org/xml/ns/dbchangelog
+                     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="appointment" author="BushraMashaiekh">
+
+    <createTable tableName="appointment">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="facility_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="department_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="availability_generation_batch_id" type="bigint"/>
+
+      <column name="capacity_index" type="int"/>
+
+      <column name="start_datetime" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="end_datetime" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint"/>
+      <column name="default_service_id" type="bigint"/>
+      <column name="default_practitioner_id" type="bigint"/>
+
+      <column name="reason" type="varchar(255)"/>
+
+      <column name="booking_mode" type="varchar(20)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="status" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="service" type="varchar(50)"/>
+      <column name="service_group_id" type="bigint"/>
+      <column name="deferred" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="deferred_at" type="timestamp"/>
+
+      <column name="no_show_reason" type="varchar(255)"/>
+      <column name="cancel_reason" type="varchar(255)"/>
+      <column name="cancelled_by" type="varchar(50)"/>
+
+      <column name="priority" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="note" type="text"/>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="appointment"
+      baseColumnNames="availability_generation_batch_id"
+      referencedTableName="availability_generation_batch"
+      referencedColumnNames="id"
+      constraintName="fk_appointment_batch"/>
+
+
+    <addForeignKeyConstraint
+      baseTableName="appointment"
+      baseColumnNames="facility_id"
+      referencedTableName="facility"
+      referencedColumnNames="id"
+      constraintName="fk_appointment_facility"/>
+
+    <addForeignKeyConstraint
+      baseTableName="appointment"
+      baseColumnNames="department_id"
+      referencedTableName="department"
+      referencedColumnNames="id"
+      constraintName="fk_appointment_department"/>
+
+
+    <addForeignKeyConstraint
+      baseTableName="appointment"
+      baseColumnNames="patient_id"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+      constraintName="fk_appointment_patient"/>
+
+
+    <addForeignKeyConstraint
+      baseTableName="appointment"
+      baseColumnNames="default_practitioner_id"
+      referencedTableName="practitioner"
+      referencedColumnNames="id"
+      constraintName="fk_appointment_practitioner"/>
+
+    <addForeignKeyConstraint
+      baseTableName="appointment"
+      baseColumnNames="default_service_id"
+      referencedTableName="service"
+      referencedColumnNames="id"
+      constraintName="fk_appointment_service"/>
+<!-- TODO: When create the service group table-->
+<!--    <addForeignKeyConstraint
+      baseTableName="appointment"
+      baseColumnNames="service_group_id"
+      referencedTableName="service_group"
+      referencedColumnNames="id"
+      constraintName="fk_service_group_appointment"/>
+      -->
+
+    <sql>
+      ALTER TABLE appointment
+        ADD CONSTRAINT chk_appointment_deferred_time
+          CHECK (
+        deferred = false
+        OR deferred_at IS NOT NULL
+        );
+    </sql>
+
+  </changeSet>
+
+</databaseChangeLog>

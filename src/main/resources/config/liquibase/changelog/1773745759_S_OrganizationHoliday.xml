@@ -72,6 +72,12 @@
               OR (facility_ids IS NOT NULL AND btrim(facility_ids) <> '')
             );
       ]]>
-</sql>
+    </sql>
+    <sql>
+    <![CDATA[
+      CREATE UNIQUE INDEX uq_org_holiday_recurring_dates_type
+        ON organization_holiday (start_date, end_date, holiday_type) WHERE recurring = true;
+      ]]>
+   </sql>
   </changeSet>
 </databaseChangeLog>

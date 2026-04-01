@@ -30,14 +30,21 @@
         <constraints nullable="false"/>
       </column>
       <column name="is_active" type="boolean" defaultValueBoolean="true"/>
+      <column name="time_zone" type="varchar(100)"/>
+
+      <column name="working_days" type="json"/>
+
       <column name="created_date" type="timestamp"/>
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
       <column name="last_modified_by" type="varchar(50)"/>
       <column name="last_modified_date" type="timestamp"/>
-
     </createTable>
+    <addUniqueConstraint
+      tableName="facility"
+      columnNames="code"
+      constraintName="uk_facility_code"/>
 
     <createTable tableName="role">
       <column name="id" type="bigint" autoIncrement="true" startWith="1500">
