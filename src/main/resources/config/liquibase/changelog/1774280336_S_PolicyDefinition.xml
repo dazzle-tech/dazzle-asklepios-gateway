@@ -14,7 +14,7 @@
       </column>
       <column name="facility_id" type="bigint"/>
       <column name="code" type="varchar(50)">
-        <constraints nullable="false" unique="true"/>
+        <constraints nullable="false" />
       </column>
       <column name="name" type="varchar(100)">
         <constraints nullable="false"/>
