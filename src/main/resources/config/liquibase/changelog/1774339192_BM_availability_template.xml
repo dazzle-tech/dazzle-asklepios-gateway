@@ -64,7 +64,7 @@
       <column name="require_billing" type="boolean" defaultValue="false">
         <constraints nullable="false" />
       </column>
-      <column name="require_pre_assessment" type="boolean">
+      <column name="require_pre_assessment" type="boolean" defaultValue="false">
         <constraints nullable="false" />
       </column>
 

@@ -20,7 +20,9 @@
         <constraints nullable="false"/>
       </column>
       <column name="description" type="varchar(500)"/>
-      <column name="is_active" type="boolean" defaultValueBoolean="true"/>
+      <column name="is_active" type="boolean" defaultValue="true">
+        <constraints nullable="false"/>
+      </column>
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>
       </column>

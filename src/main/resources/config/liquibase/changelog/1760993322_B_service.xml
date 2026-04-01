@@ -33,7 +33,9 @@
         <constraints nullable="false" foreignKeyName="fk_service_facility"
                      references="facility(id)"/>
       </column>
-      <column name="appointable" type="boolean"/>
+      <column name="appointable" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
 
       <column name="parallel_capacity_value" type="int" defaultValueNumeric="1">
         <constraints nullable="false"/>

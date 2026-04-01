@@ -42,7 +42,9 @@
       <column name="is_active" type="boolean" defaultValueBoolean="true"/>
 
 
-      <column name="appointable" type="boolean"/>
+      <column name="appointable" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
       <column name="parallel_capacity_value" type="int" defaultValueNumeric="1">
         <constraints nullable="false"/>
       </column>

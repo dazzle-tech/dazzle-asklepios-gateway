@@ -23,7 +23,9 @@
       <column name="department_id" type="bigint">
         <constraints  foreignKeyName="fk_catalog_department" referencedTableName="department" referencedColumnNames="id"/>
       </column>
-      <column name="appointable" type="boolean"/>
+      <column name="appointable" type="boolean" defaultValue="false">
+        <constraints nullable="false"/>
+      </column>
       <column name="parallel_capacity_value" type="int" defaultValueNumeric="1">
         <constraints nullable="false"/>
       </column>
