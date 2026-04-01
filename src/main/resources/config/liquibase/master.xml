@@ -196,5 +196,9 @@
   <include file="config/liquibase/changelog/1774339421_BM_availability_generation_batch.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1774339459_BM_appointment.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1774352873_BM_availability_template_allowed_services.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1774252400_B_room.xml" relativeToChangelogFile="false" />
+  <include file="/config/liquibase/changelog/1774265919_B_bed.xml" relativeToChangelogFile="false" />
+  <include file="/config/liquibase/changelog/1774275632_B_bedRoomServices.xml" relativeToChangelogFile="false" />
+
 </databaseChangeLog>
 

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="bs000000000032" author="batool">
+
+    <createTable tableName="rooms">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="facility_id" type="bigint">
+        <constraints nullable="false"
+                     referencedTableName="facility"
+                     referencedColumnNames="id"
+                     foreignKeyName="fk_room_facility"/>
+      </column>
+
+      <column name="department_type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="department_id" type="bigint">
+        <constraints nullable="false"
+                     referencedTableName="department"
+                     referencedColumnNames="id"
+                     foreignKeyName="fk_room_department"/>
+      </column>
+
+      <column name="name" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="floor" type="varchar(20)"/>
+
+      <column name="is_specific_gender" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="gender" type="varchar(10)"/>
+
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+      <column name="appointable" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="parallel_capacity_value" type="int" defaultValueNumeric="1">
+        <constraints nullable="false"/>
+      </column>
+      <column name="default_duration_minutes" type="int"/>
+      <column name="default_buffer_before_minutes" type="int" defaultValueNumeric="0"/>
+      <column name="default_buffer_after_minutes" type="int" defaultValueNumeric="0"/>
+    </createTable>
+
+    <createIndex tableName="rooms" indexName="idx_room_facility">
+      <column name="facility_id"/>
+    </createIndex>
+
+    <createIndex tableName="rooms" indexName="idx_room_department">
+      <column name="department_id"/>
+    </createIndex>
+
+    <sql>
+      <![CDATA[
+      CREATE UNIQUE INDEX uk_room_name_department_ci
+        ON rooms (department_id, LOWER(name));
+      ]]>
+    </sql>
+    <sql>
+  <![CDATA[
+      ALTER TABLE rooms
+        ADD CONSTRAINT ck_room_gender_required
+          CHECK (
+            is_specific_gender = false
+              OR (
+              gender IS NOT NULL
+                AND TRIM(gender) <> ''
+              )
+            );
+      ]]>
+</sql>
+    <sql>
+      ALTER TABLE rooms
+        ADD CONSTRAINT chk_room_appointable_requirements
+          CHECK (
+            appointable = false
+              OR (
+              appointable = true
+                AND default_duration_minutes IS NOT NULL AND default_duration_minutes > 0
+                AND default_buffer_before_minutes IS NOT NULL AND default_buffer_before_minutes >= 0
+                AND default_buffer_after_minutes IS NOT NULL AND default_buffer_after_minutes >= 0
+              )
+            );
+    </sql>
+  </changeSet>
+
+</databaseChangeLog>
