@@ -18,11 +18,16 @@ import reactor.core.publisher.Mono;
 import reactor.util.function.Tuple2;
 import reactor.util.function.Tuples;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static org.springframework.data.relational.core.query.Criteria.where;
 import static org.springframework.data.relational.core.query.Query.query;
@@ -65,6 +70,7 @@ interface UserRepositoryInternal extends DeleteExtended<User> {
     Flux<User> findBasicUsers(String login, String email, String name, Pageable pageable);
 
     Mono<Long> countBasicUsers(String login, String email, String name);
+    Flux<Tuple2<Long, Optional<String>>> findAuthoritiesByUserIds(List<Long> userIds);
 }
 
 @Slf4j
@@ -149,18 +155,63 @@ class UserRepositoryInternalImpl implements UserRepositoryInternal {
     }
 
     // ======= FIXED METHODS (no manual SQL) =======
+    @Override
+    public Flux<Tuple2<Long, Optional<String>>> findAuthoritiesByUserIds(List<Long> userIds) {
+        if (userIds == null || userIds.isEmpty()) {
+            return Flux.empty();
+        }
+
+        String placeholders = IntStream.range(0, userIds.size())
+            .mapToObj(i -> ":id" + i)
+            .collect(Collectors.joining(", "));
+
+        String sql = """
+        SELECT
+            ur.user_id,
+            ra.authority_name
+        FROM user_role ur
+        LEFT JOIN role_authority ra ON ur.role_id = ra.role_id
+        WHERE ur.user_id IN (%s)
+        """.formatted(placeholders);
+
+        DatabaseClient.GenericExecuteSpec spec = db.sql(sql);
+
+        for (int i = 0; i < userIds.size(); i++) {
+            spec = spec.bind("id" + i, userIds.get(i));
+        }
+
+        return spec
+            .map((row, metadata) ->
+                Tuples.of(
+                    row.get("user_id", Long.class),
+                    Optional.ofNullable(row.get("authority_name", String.class))
+                )
+            )
+            .all();
+    }
 
     @Override
     public Flux<User> findBasicUsers(String login, String email, String name, Pageable pageable) {
         StringBuilder sql = new StringBuilder("""
-        SELECT u.id,u.login,u.first_name,u.last_name,email,u.image_url,u.activated,u.lang_key,
-        u.created_by, u.created_date,u.last_modified_by,u.last_modified_date,u.phone_number,u.phone_number,u.birth_date,u.gender,u.gender,u.job_role
-        , ra.authority_name
-
+        SELECT
+            u.id,
+            u.login,
+            u.first_name,
+            u.last_name,
+            u.email,
+            u.image_url,
+            u.activated,
+            u.lang_key,
+            u.created_by,
+            u.created_date,
+            u.last_modified_by,
+            u.last_modified_date,
+            u.phone_number,
+            u.birth_date,
+            u.gender,
+            u.job_role
         FROM app_user u
-        LEFT JOIN user_role ur ON u.id = ur.user_id
-        LEFT JOIN role_authority ra ON ur.role_id = ra.role_id
-        WHERE 1=1
+        WHERE 1 = 1
         """);
 
         Map<String, Object> params = new HashMap<>();
@@ -195,6 +246,20 @@ class UserRepositoryInternalImpl implements UserRepositoryInternal {
             .findFirst()
             .orElse("ASC");
 
+        Set<String> allowedSortFields = Set.of(
+            "id",
+            "login",
+            "first_name",
+            "last_name",
+            "email",
+            "created_date",
+            "last_modified_date"
+        );
+
+        if (!allowedSortFields.contains(property)) {
+            property = "id";
+        }
+
         sql.append(" ORDER BY u.").append(property).append(" ").append(direction);
         sql.append(" LIMIT :limit OFFSET :offset");
 
@@ -207,17 +272,51 @@ class UserRepositoryInternalImpl implements UserRepositoryInternal {
         }
 
         return spec
-            .map((row, metadata) ->
-                Tuples.of(
-                    r2dbcConverter.read(User.class, row, metadata),
-                    Optional.ofNullable(row.get("authority_name", String.class))
-                )
-            )
+            .map((row, metadata) -> r2dbcConverter.read(User.class, row, metadata))
             .all()
-            .groupBy(t -> t.getT1().getId())
-            .flatMap(group -> group.collectList().map(list -> updateUserWithAuthorities(list.get(0).getT1(), list)));
-    }
+            .collectList()
+            .flatMapMany(users -> {
+                if (users.isEmpty()) {
+                    return Flux.empty();
+                }
 
+                List<Long> userIds = users.stream()
+                    .map(User::getId)
+                    .toList();
+
+                return findAuthoritiesByUserIds(userIds)
+                    .collectMultimap(
+                        Tuple2::getT1,
+                        tuple -> tuple.getT2().orElse(null)
+                    )
+                    .flatMapMany(authoritiesMap -> {
+                        users.forEach(user -> {
+                            @SuppressWarnings("unchecked")
+                            Collection<String> authorityNames =
+                                (Collection<String>) authoritiesMap.get(user.getId());
+
+                            if (authorityNames == null || authorityNames.isEmpty()) {
+                                user.setAuthorities(new HashSet<>());
+                                return;
+                            }
+
+                            user.setAuthorities(
+                                authorityNames.stream()
+                                    .filter(Objects::nonNull)
+                                    .distinct()
+                                    .map(authorityName -> {
+                                        Authority authority = new Authority();
+                                        authority.setName(authorityName);
+                                        return authority;
+                                    })
+                                    .collect(Collectors.toSet())
+                            );
+                        });
+
+                        return Flux.fromIterable(users);
+                    });
+            });
+    }
     @Override
     public Mono<Long> countBasicUsers(String login, String email, String name) {
 
