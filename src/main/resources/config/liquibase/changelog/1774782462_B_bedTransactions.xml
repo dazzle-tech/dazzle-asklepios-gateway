@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="bs000000000036" author="batool">
+
+    <createTable tableName="bed_transactions">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="false"
+                     referencedTableName="patient_encounters"
+                     referencedColumnNames="id"
+                     foreignKeyName="fk_bed_transaction_encounter"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"
+                     referencedTableName="patients"
+                     referencedColumnNames="id"
+                     foreignKeyName="fk_bed_transaction_patient"/>
+      </column>
+
+      <column name="from_room_id" type="bigint">
+        <constraints referencedTableName="rooms"
+                     referencedColumnNames="id"
+                     foreignKeyName="fk_bed_transaction_from_room"/>
+      </column>
+
+      <column name="from_bed_id" type="bigint">
+        <constraints referencedTableName="beds"
+                     referencedColumnNames="id"
+                     foreignKeyName="fk_bed_transaction_from_bed"/>
+      </column>
+
+      <column name="to_room_id" type="bigint">
+        <constraints referencedTableName="rooms"
+                     referencedColumnNames="id"
+                     foreignKeyName="fk_bed_transaction_to_room"/>
+      </column>
+
+      <column name="to_bed_id" type="bigint">
+        <constraints referencedTableName="beds"
+                     referencedColumnNames="id"
+                     foreignKeyName="fk_bed_transaction_to_bed"/>
+      </column>
+
+      <column name="department_id" type="bigint">
+        <constraints nullable="false"
+                     referencedTableName="department"
+                     referencedColumnNames="id"
+                     foreignKeyName="fk_bed_transaction_department"/>
+      </column>
+
+      <column name="transaction_type" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="transaction_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+
+    <createIndex tableName="bed_transactions" indexName="idx_bed_transaction_encounter">
+      <column name="encounter_id"/>
+    </createIndex>
+
+    <createIndex tableName="bed_transactions" indexName="idx_bed_transaction_patient">
+      <column name="patient_id"/>
+    </createIndex>
+
+    <createIndex tableName="bed_transactions" indexName="idx_bed_transaction_from_room">
+      <column name="from_room_id"/>
+    </createIndex>
+
+    <createIndex tableName="bed_transactions" indexName="idx_bed_transaction_from_bed">
+      <column name="from_bed_id"/>
+    </createIndex>
+
+    <createIndex tableName="bed_transactions" indexName="idx_bed_transaction_to_room">
+      <column name="to_room_id"/>
+    </createIndex>
+
+    <createIndex tableName="bed_transactions" indexName="idx_bed_transaction_to_bed">
+      <column name="to_bed_id"/>
+    </createIndex>
+
+    <createIndex tableName="bed_transactions" indexName="idx_bed_transaction_department">
+      <column name="department_id"/>
+    </createIndex>
+
+    <createIndex tableName="bed_transactions" indexName="idx_bed_transaction_type">
+      <column name="transaction_type"/>
+    </createIndex>
+
+    <createIndex tableName="bed_transactions" indexName="idx_bed_transaction_date">
+      <column name="transaction_date"/>
+    </createIndex>
+
+    <sql>
+      <![CDATA[
+      ALTER TABLE bed_transactions
+        ADD CONSTRAINT ck_bed_transaction_type
+          CHECK (
+            transaction_type IN ('ASSIGN', 'TRANSFER', 'RELEASE', 'DISCHARGE')
+            );
+      ]]>
+    </sql>
+
+    <sql>
+      <![CDATA[
+      ALTER TABLE bed_transactions
+        ADD CONSTRAINT ck_bed_transaction_direction
+          CHECK (
+            (
+              transaction_type = 'ASSIGN'
+                AND from_room_id IS NULL
+                AND from_bed_id IS NULL
+                AND to_room_id IS NOT NULL
+                AND to_bed_id IS NOT NULL
+              )
+              OR
+            (
+              transaction_type = 'TRANSFER'
+                AND from_room_id IS NOT NULL
+                AND from_bed_id IS NOT NULL
+                AND to_room_id IS NOT NULL
+                AND to_bed_id IS NOT NULL
+              )
+              OR
+            (
+              transaction_type IN ('RELEASE', 'DISCHARGE')
+                AND from_room_id IS NOT NULL
+                AND from_bed_id IS NOT NULL
+                AND to_room_id IS NULL
+                AND to_bed_id IS NULL
+              )
+            );
+      ]]>
+    </sql>
+
+    <sql>
+      <![CDATA[
+      ALTER TABLE bed_transactions
+        ADD CONSTRAINT ck_bed_transaction_not_same_bed
+          CHECK (
+            from_bed_id IS NULL
+              OR to_bed_id IS NULL
+              OR from_bed_id <> to_bed_id
+            );
+      ]]>
+    </sql>
+
+  </changeSet>
+
+</databaseChangeLog>
