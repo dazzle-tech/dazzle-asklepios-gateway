@@ -25,6 +25,14 @@
       </column>
       <column name="storage_requirements" type="text">
       </column>
+      <column name="price" type="decimal(10,2)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="currency" type="varchar(10)">
+        <constraints nullable="false"/>
+      </column>
+
       <column name="expires_after_opening" type="BOOLEAN"/>
       <column name="expires_after_opening_value" type="decimal(10, 3)"/>
       <column name="expires_after_opening_unit" type="varchar(50)"/>
