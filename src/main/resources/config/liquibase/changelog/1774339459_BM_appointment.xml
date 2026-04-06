@@ -21,6 +21,16 @@
 
       <column name="availability_generation_batch_id" type="bigint"/>
 
+
+      <column name="resource_type" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="resource_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+
       <column name="capacity_index" type="int"/>
 
       <column name="start_datetime" type="timestamp">
