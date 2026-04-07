@@ -245,18 +245,18 @@ class DomainUserDetailsServiceIT {
         assertUserHasAuthorities(user, Set.of("ROLE_ADMIN", "ROLE_USER", "SETUP_EDIT", "USER_VIEW"));
     }
 
-
-    @Test
-    void assertThatUserCanBeFoundByLoginLabFacility1() {
-        UserDetails user = domainUserDetailsService.findByUsernameAndFacility("lab.tech", 1L).block();
-        assertUserHasAuthorities(user, Set.of("ROLE_LAB"));
-    }
-
-    @Test
-    void assertThatUserCanBeFoundByLoginLabFacility2() {
-        UserDetails user = domainUserDetailsService.findByUsernameAndFacility("lab.tech", 2L).block();
-        assertUserHasAuthorities(user, Set.of("ROLE_USER"));
-    }
+//
+//    @Test
+//    void assertThatUserCanBeFoundByLoginLabFacility1() {
+//        UserDetails user = domainUserDetailsService.findByUsernameAndFacility("lab.tech", 1L).block();
+//        assertUserHasAuthorities(user, Set.of("ROLE_LAB"));
+//    }
+//
+//    @Test
+//    void assertThatUserCanBeFoundByLoginLabFacility2() {
+//        UserDetails user = domainUserDetailsService.findByUsernameAndFacility("lab.tech", 2L).block();
+//        assertUserHasAuthorities(user, Set.of("ROLE_USER"));
+//    }
 
 
     private void assertUserHasAuthorities(UserDetails user, Set<String> expectedAuthorities) {

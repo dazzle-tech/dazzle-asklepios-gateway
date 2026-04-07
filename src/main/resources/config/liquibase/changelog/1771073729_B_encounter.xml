@@ -1,243 +1,284 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <databaseChangeLog
-    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
         http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <changeSet id="b00000000000030" author="batool">
+  <changeSet id="b00000000000030" author="batool">
 
-        <createSequence
-            sequenceName="patient_encounter_number_sequence"
-            startValue="1"
-            incrementBy="1"/>
+    <createSequence
+      sequenceName="patient_encounter_number_sequence"
+      startValue="1"
+      incrementBy="1"/>
 
-        <createTable tableName="patient_encounters">
+    <createTable tableName="patient_encounters">
 
-            <column name="id" type="bigint" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
 
-            <column name="patient_id" type="bigint">
-                <constraints nullable="false"
-                             foreignKeyName="fk_patient_encounters_patient"
-                             referencedTableName="patients"
-                             referencedColumnNames="id"/>
-            </column>
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_patient_encounters_patient"
+                     referencedTableName="patients"
+                     referencedColumnNames="id"/>
+      </column>
 
-            <column name="encounter_number"
-                    type="varchar(50)"
-                    defaultValueComputed="'E' || lpad(nextval('patient_encounter_number_sequence')::text, 5, '0')">
-                <constraints nullable="false" unique="true"/>
-            </column>
+      <column name="encounter_number"
+              type="varchar(50)"
+              defaultValueComputed="'E' || lpad(nextval('patient_encounter_number_sequence')::text, 5, '0')">
+        <constraints nullable="false" unique="true"/>
+      </column>
 
-            <column name="facility_id" type="bigint">
-                <constraints nullable="false"
-                             foreignKeyName="fk_patient_encounters_facility"
-                             referencedTableName="facility"
-                             referencedColumnNames="id"/>
-            </column>
+      <column name="facility_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_patient_encounters_facility"
+                     referencedTableName="facility"
+                     referencedColumnNames="id"/>
+      </column>
 
-            <column name="department_id" type="bigint">
-                <constraints nullable="false"
-                             foreignKeyName="fk_patient_encounters_department"
-                             referencedTableName="department"
-                             referencedColumnNames="id"/>
-            </column>
+      <column name="department_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_patient_encounters_department"
+                     referencedTableName="department"
+                     referencedColumnNames="id"/>
+      </column>
 
-            <column name="practitioner_id" type="bigint">
-                <constraints nullable="true"
-                             foreignKeyName="fk_patient_encounters_practitioner"
-                             referencedTableName="practitioner"
-                             referencedColumnNames="id"/>
-            </column>
+      <column name="practitioner_id" type="bigint">
+        <constraints nullable="true"
+                     foreignKeyName="fk_patient_encounters_practitioner"
+                     referencedTableName="practitioner"
+                     referencedColumnNames="id"/>
+      </column>
 
-<!--    TODO:Will change when the appointment change-->
-          <column name="appointment_id" type="varchar(100)"/>
+      <!-- TODO: Will change when the appointment change -->
+      <column name="appointment_id" type="varchar(100)"/>
 
-            <column name="encounter_type" type="varchar(50)">
-                <constraints nullable="false"/>
-            </column>
+      <column name="encounter_type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
 
-            <column name="encounter_reason" type="varchar(50)">
-                <constraints nullable="false"/>
-            </column>
+      <column name="encounter_reason" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
 
-            <column name="follow_up_encounter_id" type="bigint">
-                <constraints nullable="true"
-                             foreignKeyName="fk_patient_encounters_follow_up"
-                             referencedTableName="patient_encounters"
-                             referencedColumnNames="id"/>
-            </column>
+      <column name="follow_up_encounter_id" type="bigint">
+        <constraints nullable="true"
+                     foreignKeyName="fk_patient_encounters_follow_up"
+                     referencedTableName="patient_encounters"
+                     referencedColumnNames="id"/>
+      </column>
 
-            <column name="priority" type="varchar(50)">
-                <constraints nullable="false"/>
-            </column>
+      <column name="priority" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
 
-            <column name="origin_type" type="varchar(255)"/>
-            <column name="origin_name" type="varchar(255)"/>
+      <column name="origin_type" type="varchar(255)"/>
+      <column name="origin_name" type="varchar(255)"/>
 
-            <column name="notes" type="text"/>
+      <column name="notes" type="text"/>
 
-            <column name="status"
-                    type="varchar(50)"
-                    defaultValue="PENDING_PAYMENT">
-                <constraints nullable="false"/>
-            </column>
+      <column name="status"
+              type="varchar(50)"
+              defaultValue="PENDING_PAYMENT">
+        <constraints nullable="false"/>
+      </column>
 
-            <column name="department_daily_sequence_number" type="int">
-                <constraints nullable="false"/>
-            </column>
+      <column name="department_daily_sequence_number" type="int">
+        <constraints nullable="false"/>
+      </column>
 
-            <column name="chief_complaint" type="text"/>
+      <column name="chief_complaint" type="text"/>
 
-            <column name="has_prescription"
-                    type="boolean"
-                    defaultValueBoolean="false">
-                <constraints nullable="false"/>
-            </column>
+      <column name="discharge_type" type="varchar(50)"/>
 
-            <column name="has_order"
-                    type="boolean"
-                    defaultValueBoolean="false">
-                <constraints nullable="false"/>
-            </column>
+      <column name="discharge_at" type="timestamp"/>
 
-            <column name="is_observed"
-                    type="boolean"
-                    defaultValueBoolean="false">
-                <constraints nullable="false"/>
-            </column>
+      <column name="encounter_date"
+              type="date"
+              defaultValueComputed="CURRENT_DATE">
+        <constraints nullable="false"/>
+      </column>
 
-            <column name="encounter_date"
-                    type="date"
-                    defaultValueComputed="CURRENT_DATE">
-                <constraints nullable="false"/>
-            </column>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
 
-            <column name="created_by" type="varchar(50)">
-                <constraints nullable="false"/>
-            </column>
+      <column name="created_date"
+              type="timestamp"
+              defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
 
-            <column name="created_date"
-                    type="timestamp"
-                    defaultValueComputed="now()">
-                <constraints nullable="false"/>
-            </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
 
-            <column name="last_modified_by" type="varchar(50)"/>
-            <column name="last_modified_date" type="timestamp"/>
+    </createTable>
 
-        </createTable>
-
-        <sql dbms="postgresql">
+    <sql dbms="postgresql">
             <![CDATA[
-                ALTER TABLE patient_encounters
-                    ADD CONSTRAINT ck_patient_encounters_follow_up_required
-                    CHECK (
-                        (encounter_reason = 'FOLLOW_UP' AND follow_up_encounter_id IS NOT NULL)
-                        OR
-                        (encounter_reason <> 'FOLLOW_UP' AND follow_up_encounter_id IS NULL)
-                    );
-            ]]>
+      ALTER TABLE patient_encounters
+        ADD CONSTRAINT ck_patient_encounters_follow_up_required
+          CHECK (
+            (encounter_reason = 'FOLLOW_UP' AND follow_up_encounter_id IS NOT NULL)
+              OR
+            (encounter_reason <> 'FOLLOW_UP' AND follow_up_encounter_id IS NULL)
+            );
+      ]]>
         </sql>
 
-        <sql dbms="postgresql">
-            <![CDATA[
-                ALTER TABLE patient_encounters
-                    DROP CONSTRAINT IF EXISTS ck_patient_encounters_cancel_only_when_new_or_not_observed;
+    <sql dbms="postgresql">
+<![CDATA[
+      ALTER TABLE patient_encounters
+      DROP CONSTRAINT IF EXISTS ck_patient_encounters_cancel_only_when_new;
 
-                ALTER TABLE patient_encounters
-                    ADD CONSTRAINT ck_patient_encounters_cancel_only_when_new_or_not_observed
-                    CHECK (
-                        status <> 'CANCELLED'
-                        OR (status = 'NEW' OR is_observed = false)
-                    );
-            ]]>
+      ALTER TABLE patient_encounters
+        ADD CONSTRAINT ck_patient_encounters_cancel_only_when_allowed_status
+          CHECK (
+            status <> 'CANCELLED'
+              OR status IN ('NEW', 'WAITING_TRIAGE', 'PENDING_PAYMENT')
+            );
+      ]]>
+</sql>
+
+    <sql dbms="postgresql">
+            <![CDATA[
+      ALTER TABLE patient_encounters
+        ADD CONSTRAINT ck_patient_encounters_discharge_fields_required
+          CHECK (
+            (status = 'DISCHARGED' AND discharge_type IS NOT NULL AND discharge_at IS NOT NULL)
+              OR
+            (status <> 'DISCHARGED')
+            );
+      ]]>
         </sql>
 
-        <addUniqueConstraint
-            tableName="patient_encounters"
-            columnNames="patient_id,department_id,encounter_date"
-            constraintName="unique_patient_department_date_encounter"/>
-
-        <addUniqueConstraint
-            tableName="patient_encounters"
-            columnNames="department_id,encounter_date,department_daily_sequence_number"
-            constraintName="unique_department_date_sequence_number"/>
-
-        <sql dbms="postgresql">
+    <sql dbms="postgresql">
             <![CDATA[
-                CREATE UNIQUE INDEX IF NOT EXISTS uq_patient_one_ongoing_encounter
-                    ON patient_encounters (patient_id)
-                    WHERE status = 'ONGOING';
-            ]]>
+      ALTER TABLE patient_encounters
+        ADD CONSTRAINT ck_patient_encounters_discharge_fields_only_when_discharged
+          CHECK (
+            (status = 'DISCHARGED')
+              OR
+            (status <> 'DISCHARGED' AND discharge_type IS NULL AND discharge_at IS NULL)
+            );
+      ]]>
         </sql>
 
-        <createTable tableName="department_daily_encounter_sequence_counter">
+    <addUniqueConstraint
+      tableName="patient_encounters"
+      columnNames="patient_id,department_id,encounter_date"
+      constraintName="unique_patient_department_date_encounter"/>
 
-            <column name="department_id" type="bigint">
-                <constraints nullable="false"
-                             foreignKeyName="fk_department_daily_sequence_department"
-                             referencedTableName="department"
-                             referencedColumnNames="id"/>
-            </column>
+    <addUniqueConstraint
+      tableName="patient_encounters"
+      columnNames="department_id,encounter_date,department_daily_sequence_number"
+      constraintName="unique_department_date_sequence_number"/>
 
-            <column name="encounter_date" type="date">
-                <constraints nullable="false"/>
-            </column>
-
-            <column name="last_used_sequence_number" type="int">
-                <constraints nullable="false"/>
-            </column>
-
-        </createTable>
-
-        <addUniqueConstraint
-            tableName="department_daily_encounter_sequence_counter"
-            columnNames="department_id,encounter_date"
-            constraintName="unique_department_daily_sequence_counter"/>
-
-        <sql dbms="postgresql" splitStatements="false" stripComments="true">
+    <sql dbms="postgresql">
             <![CDATA[
-                CREATE OR REPLACE FUNCTION set_department_daily_sequence_number_for_patient_encounter()
+      CREATE UNIQUE INDEX IF NOT EXISTS uq_patient_one_ongoing_encounter
+        ON patient_encounters (patient_id)
+        WHERE status = 'ONGOING';
+      ]]>
+        </sql>
+
+    <createTable tableName="department_daily_encounter_sequence_counter">
+
+      <column name="department_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_department_daily_sequence_department"
+                     referencedTableName="department"
+                     referencedColumnNames="id"/>
+      </column>
+
+      <column name="encounter_date" type="date">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_used_sequence_number" type="int">
+        <constraints nullable="false"/>
+      </column>
+
+    </createTable>
+
+    <addUniqueConstraint
+      tableName="department_daily_encounter_sequence_counter"
+      columnNames="department_id,encounter_date"
+      constraintName="unique_department_daily_sequence_counter"/>
+
+    <sql dbms="postgresql" splitStatements="false" stripComments="true">
+            <![CDATA[
+      CREATE OR REPLACE FUNCTION set_department_daily_sequence_number_for_patient_encounter()
                 RETURNS trigger AS $$
                 DECLARE
-                    next_sequence_number integer;
-                BEGIN
+      next_sequence_number integer;
+      BEGIN
 
                     IF NEW.encounter_date IS NULL THEN
                         NEW.encounter_date := CURRENT_DATE;
-                    END IF;
+      END IF;
 
-                    INSERT INTO department_daily_encounter_sequence_counter
-                        (department_id, encounter_date, last_used_sequence_number)
-                    VALUES
-                        (NEW.department_id, NEW.encounter_date, 1)
-                    ON CONFLICT (department_id, encounter_date)
+      INSERT INTO department_daily_encounter_sequence_counter
+        (department_id, encounter_date, last_used_sequence_number)
+      VALUES
+        (NEW.department_id, NEW.encounter_date, 1)
+        ON CONFLICT (department_id, encounter_date)
                     DO UPDATE
-                        SET last_used_sequence_number =
-                            department_daily_encounter_sequence_counter.last_used_sequence_number + 1
-                        RETURNING last_used_sequence_number
-                        INTO next_sequence_number;
+                                 SET last_used_sequence_number =
+                                 department_daily_encounter_sequence_counter.last_used_sequence_number + 1
+                                 RETURNING last_used_sequence_number
+                       INTO next_sequence_number;
 
-                    NEW.department_daily_sequence_number := next_sequence_number;
+      NEW.department_daily_sequence_number := next_sequence_number;
 
-                    RETURN NEW;
-                END;
+      RETURN NEW;
+      END;
                 $$ LANGUAGE plpgsql;
 
-                DROP TRIGGER IF EXISTS trigger_set_department_daily_sequence_number
+      DROP TRIGGER IF EXISTS trigger_set_department_daily_sequence_number
                     ON patient_encounters;
 
-                CREATE TRIGGER trigger_set_department_daily_sequence_number
-                    BEFORE INSERT ON patient_encounters
-                    FOR EACH ROW
-                    EXECUTE FUNCTION set_department_daily_sequence_number_for_patient_encounter();
-            ]]>
+      CREATE TRIGGER trigger_set_department_daily_sequence_number
+        BEFORE INSERT ON patient_encounters
+        FOR EACH ROW
+        EXECUTE FUNCTION set_department_daily_sequence_number_for_patient_encounter();
+      ]]>
         </sql>
 
-    </changeSet>
+    <sql dbms="postgresql" splitStatements="false" stripComments="true">
+            <![CDATA[
+      CREATE OR REPLACE FUNCTION validate_emergency_encounter_creation()
+                RETURNS trigger AS $$
+      BEGIN
+                    IF NEW.encounter_type = 'EMERGENCY'
+                       AND EXISTS (
+                           SELECT 1
+                           FROM patient_encounters pe
+                           WHERE pe.patient_id = NEW.patient_id
+                             AND pe.status = 'ONGOING'
+                             AND (TG_OP = 'INSERT' OR pe.id <> NEW.id)
+                       )
+                    THEN
+                        RAISE EXCEPTION 'Patient already has an ongoing encounter. Cannot create a new emergency encounter.';
+      END IF;
+
+      RETURN NEW;
+      END;
+                $$ LANGUAGE plpgsql;
+
+      DROP TRIGGER IF EXISTS trg_validate_emergency_encounter_creation
+                    ON patient_encounters;
+
+      CREATE TRIGGER trg_validate_emergency_encounter_creation
+        BEFORE INSERT OR UPDATE ON patient_encounters
+                           FOR EACH ROW
+                           EXECUTE FUNCTION validate_emergency_encounter_creation();
+      ]]>
+        </sql>
+
+  </changeSet>
 
 </databaseChangeLog>
