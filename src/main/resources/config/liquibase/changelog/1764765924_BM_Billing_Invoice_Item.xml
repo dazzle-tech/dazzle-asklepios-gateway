@@ -17,7 +17,11 @@
                    foreignKeyName="fk_billing_item_invoice"
                    references="billing_invoice(id)"/>
     </column>
-    <column name="nurse_service_product_key" type="varchar(50)"/>
+    <column name="nurse_service_product_id" type="bigint">
+      <constraints nullable="false"
+                   foreignKeyName="fk_billing_invoice_service_product"
+                   references="patient_services_and_products(id)"/>
+    </column>
     <column name="code" type="varchar(50)"/>
     <column name="quantity" type="numeric(18,3)">
       <constraints nullable="false"/>
@@ -34,16 +38,12 @@
     <column name="created_by" type="varchar(50)">
       <constraints nullable="false"/>
     </column>
-    <column name="created_date" type="timestamp"/>
+    <column name="created_date" type="timestamp" defaultValue="now()"/>
 
     <column name="last_modified_by" type="varchar(50)"/>
 
     <column name="last_modified_date" type="timestamp"/>
   </createTable>
-
-  <dropDefaultValue tableName="billing_invoice_item"
-                    columnName="created_date"
-                    columnDataType="timestamp"/>
 </changeSet>
 
 </databaseChangeLog>
