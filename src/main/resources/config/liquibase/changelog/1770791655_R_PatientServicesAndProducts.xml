@@ -2,10 +2,12 @@
 <databaseChangeLog
   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
-            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
   <changeSet id="R00000000000007" author="Rawan-Yahya200">
+
     <createTable tableName="patient_services_and_products">
       <column name="id" type="bigint" autoIncrement="true">
         <constraints primaryKey="true" nullable="false"/>
@@ -19,17 +21,51 @@
         <constraints nullable="false"/>
       </column>
 
-      <column name="category" type="varchar(50)">
+      <column name="billing_item_type" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
 
-      <column name="service_id" type="bigint" />
+      <column name="brand_medication_id" type="bigint"/>
+      <column name="diagnostic_test_id" type="bigint"/>
+      <column name="service_id" type="bigint"/>
+      <column name="procedure_id" type="bigint"/>
 
-      <column name="product_id" type="bigint" />
-
-      <column name="quantity" type="bigint" defaultValue="1">
+      <column name="quantity" type="bigint" defaultValueNumeric="1">
         <constraints nullable="false"/>
       </column>
+
+      <column name="unit_price" type="numeric(10,2)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="discount_amount" type="numeric(10,2)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="exemption_amount" type="numeric(10,2)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="tax_amount" type="numeric(10,2)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="total_amount" type="numeric(10,2)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="currency" type="varchar(10)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="is_billed" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="billing_invoice_id" type="bigint"/>
+      <column name="billing_invoice_item_id" type="bigint"/>
+
+      <column name="notes" type="text"/>
 
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>
@@ -40,46 +76,133 @@
       </column>
 
       <column name="last_modified_by" type="varchar(50)"/>
-
       <column name="last_modified_date" type="timestamp"/>
     </createTable>
+
     <addForeignKeyConstraint
       baseTableName="patient_services_and_products"
       baseColumnNames="patient_id"
       referencedTableName="patients"
       referencedColumnNames="id"
-      constraintName="fk_patient_services_and_products_patient"/>
+      constraintName="fk_psp_patient"/>
+
     <addForeignKeyConstraint
       baseTableName="patient_services_and_products"
       baseColumnNames="encounter_id"
       referencedTableName="patient_encounters"
       referencedColumnNames="id"
-      constraintName="fk_patient_services_and_products_encounter"/>
+      constraintName="fk_psp_encounter"/>
 
     <addForeignKeyConstraint
       baseTableName="patient_services_and_products"
-      baseColumnNames="product_id"
-      referencedTableName="inventory_products"
+      baseColumnNames="brand_medication_id"
+      referencedTableName="brand_medication"
       referencedColumnNames="id"
-      constraintName="fk_patient_services_and_products_product_id"/>
+      constraintName="fk_psp_brand_medication"/>
+
+    <addForeignKeyConstraint
+      baseTableName="patient_services_and_products"
+      baseColumnNames="diagnostic_test_id"
+      referencedTableName="diagnostic_test"
+      referencedColumnNames="id"
+      constraintName="fk_psp_diagnostic_test"/>
 
     <addForeignKeyConstraint
       baseTableName="patient_services_and_products"
       baseColumnNames="service_id"
       referencedTableName="service"
       referencedColumnNames="id"
-      constraintName="fk_patient_services_and_products_service_id"/>
+      constraintName="fk_psp_service"/>
 
-    <addUniqueConstraint
-      tableName="patient_services_and_products"
-      columnNames="encounter_id,patient_id,product_id"
-      constraintName="uk_patient_product"/>
+    <addForeignKeyConstraint
+      baseTableName="patient_services_and_products"
+      baseColumnNames="procedure_id"
+      referencedTableName="procedure"
+      referencedColumnNames="id"
+      constraintName="fk_psp_procedure"/>
 
-    <addUniqueConstraint
-      tableName="patient_services_and_products"
-      columnNames="encounter_id,patient_id,service_id"
-      constraintName="uk_patient_service"/>
+    <addForeignKeyConstraint
+      baseTableName="patient_services_and_products"
+      baseColumnNames="billing_invoice_id"
+      referencedTableName="billing_invoice"
+      referencedColumnNames="id"
+      constraintName="fk_psp_billing_invoice"/>
+
+    <addForeignKeyConstraint
+      baseTableName="patient_services_and_products"
+      baseColumnNames="billing_invoice_item_id"
+      referencedTableName="billing_invoice_item"
+      referencedColumnNames="id"
+      constraintName="fk_psp_billing_invoice_item"/>
+
+    <sql dbms="postgresql">
+      <![CDATA[
+      ALTER TABLE patient_services_and_products
+        ADD CONSTRAINT ck_psp_item_reference_by_type
+          CHECK (
+            (
+              billing_item_type = 'MEDICATION'
+                AND brand_medication_id IS NOT NULL
+                AND diagnostic_test_id IS NULL
+                AND service_id IS NULL
+                AND procedure_id IS NULL
+              )
+              OR
+            (
+              billing_item_type IN ('LABORATORY', 'RADIOLOGY', 'PATHOLOGY')
+                AND brand_medication_id IS NULL
+                AND diagnostic_test_id IS NOT NULL
+                AND service_id IS NULL
+                AND procedure_id IS NULL
+              )
+              OR
+            (
+              billing_item_type = 'SERVICE'
+                AND brand_medication_id IS NULL
+                AND diagnostic_test_id IS NULL
+                AND service_id IS NOT NULL
+                AND procedure_id IS NULL
+              )
+              OR
+            (
+              billing_item_type = 'PROCEDURE'
+                AND brand_medication_id IS NULL
+                AND diagnostic_test_id IS NULL
+                AND service_id IS NULL
+                AND procedure_id IS NOT NULL
+              )
+            );
+      ]]>
+    </sql>
+
+    <sql dbms="postgresql">
+      <![CDATA[
+      ALTER TABLE patient_services_and_products
+        ADD CONSTRAINT ck_psp_non_negative_amounts
+          CHECK (
+            quantity > 0
+              AND unit_price >= 0
+              AND discount_amount >= 0
+              AND exemption_amount >= 0
+              AND tax_amount >= 0
+              AND total_amount >= 0
+            );
+      ]]>
+    </sql>
+
+    <sql dbms="postgresql">
+      <![CDATA[
+      ALTER TABLE patient_services_and_products
+        ADD CONSTRAINT ck_psp_billed_requires_invoice_ref
+          CHECK (
+            (is_billed = false AND billing_invoice_id IS NULL AND billing_invoice_item_id IS NULL)
+              OR
+            (is_billed = true AND billing_invoice_id IS NOT NULL AND billing_invoice_item_id IS NOT NULL)
+            );
+      ]]>
+    </sql>
 
   </changeSet>
+
 
 </databaseChangeLog>
