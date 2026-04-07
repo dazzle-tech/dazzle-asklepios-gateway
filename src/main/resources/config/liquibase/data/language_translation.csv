@@ -232,7 +232,6 @@ arb;DRAFT_TREATMENT_DETAILS; تفاصيل العلاج المسودة;false;fals
 arb;ACTIVE_TREATMENT_DETAILS; تفاصيل العلاج النشط;false;false
 arb;POSITION_STATUS; حالة الوضعية;false;false
 arb;MORSE_FALL_SCALE_(MFS); مقياس مورس لخطر السقوط;false;false
-arb;"URINARY_FREQUENCY;_URGENCY_OR_INCONTINENCE"; تكرار البول أو الإلحاح أو سلس البول;false;false
 arb;VISUAL_IMPAIRMENT; ضعف البصر;false;false
 arb;STRATIFY_SCALE; مقياس ستراتيفاي;false;false
 arb;BODY_MOVEMENTS; حركات الجسم;false;false
