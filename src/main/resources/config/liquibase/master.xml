@@ -202,5 +202,6 @@
   <include file="/config/liquibase/changelog/1774275632_B_bedRoomServices.xml" relativeToChangelogFile="false" />
   <include file="/config/liquibase/changelog/1774448712_B_encounterAssignToBed.xml" relativeToChangelogFile="false" />
   <include file="/config/liquibase/changelog/1774782462_B_bedTransactions.xml" relativeToChangelogFile="false" />
+  <include file="/config/liquibase/changelog/1775554145_Q_CurrentMedication.xml" relativeToChangelogFile="false" />
 
 </databaseChangeLog>
