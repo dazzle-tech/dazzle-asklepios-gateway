@@ -20,7 +20,7 @@
       </column>
 
       <column name="availability_generation_batch_id" type="bigint"/>
-      
+
       <column name="resource_type" type="varchar(30)">
         <constraints nullable="false"/>
       </column>
@@ -67,6 +67,7 @@
         <constraints nullable="false"/>
       </column>
       <column name="note" type="text"/>
+      <column name="follow_up_encounter_id" type="bigint"/>
 
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>
@@ -123,6 +124,13 @@
       referencedTableName="service"
       referencedColumnNames="id"
       constraintName="fk_appointment_service"/>
+
+    <addForeignKeyConstraint
+      baseTableName="appointment"
+      baseColumnNames="follow_up_encounter_id"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"
+      constraintName="fk_appointment_follow_up_encounter"/>
     <!-- TODO: When create the service group table-->
     <!--    <addForeignKeyConstraint
           baseTableName="appointment"
