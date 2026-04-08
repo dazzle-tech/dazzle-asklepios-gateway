@@ -101,11 +101,7 @@
   <include file="config/liquibase/changelog/1763378801_S_InventoryProducts.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1763293500_S_BrandMedicationActiveIngredient.xml"
            relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/1764762354_BM_Billing_Invoice.xml" relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/1764765924_BM_Billing_Invoice_Item.xml" relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/1764767706_BM_Patient_Payment.xml" relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/1764823037_BM_Payment_Allocation.xml" relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/1764337880_H_Price_List.xml" relativeToChangelogFile="false"/>
+ <include file="config/liquibase/changelog/1764337880_H_Price_List.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1764196005_Report_Template.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1764192615_H_Diagnostic_Test_Report_Template.xml"
            relativeToChangelogFile="false"/>
@@ -169,6 +165,11 @@
   <include file="config/liquibase/changelog/1771843369_R_patient_warnings_log.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1770791655_R_PatientServicesAndProducts.xml"
            relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1764762354_BM_Billing_Invoice.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1764765924_BM_Billing_Invoice_Item.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1764767706_BM_Patient_Payment.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1764823037_BM_Payment_Allocation.xml" relativeToChangelogFile="false"/>
+
   <include file="/config/liquibase/changelog/1768307386_B_PatientProblems.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1768381461_Q_Family_History.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1768389695_Q_Hospitalizations.xml" relativeToChangelogFile="false"/>
@@ -201,6 +202,7 @@
   <include file="/config/liquibase/changelog/1774275632_B_bedRoomServices.xml" relativeToChangelogFile="false" />
   <include file="/config/liquibase/changelog/1774448712_B_encounterAssignToBed.xml" relativeToChangelogFile="false" />
   <include file="/config/liquibase/changelog/1774782462_B_bedTransactions.xml" relativeToChangelogFile="false" />
+  <include file="/config/liquibase/changelog/1775554145_Q_CurrentMedication.xml" relativeToChangelogFile="false" />
 
 </databaseChangeLog>
 
