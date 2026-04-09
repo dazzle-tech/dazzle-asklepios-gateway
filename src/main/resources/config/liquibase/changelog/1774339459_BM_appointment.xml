@@ -66,6 +66,8 @@
       <column name="priority" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
+      <column name="origin_type" type="varchar(255)"/>
+      <column name="origin_name" type="varchar(255)"/>
       <column name="note" type="text"/>
       <column name="follow_up_encounter_id" type="bigint"/>
 
