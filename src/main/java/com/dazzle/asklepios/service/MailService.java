@@ -168,7 +168,7 @@ public class MailService {
             message.setText(htmlContent, true);
 
             // Inline logo referenced as: <img src="cid:logo" ...>
-            Resource logo = new ClassPathResource("templates/mail/images/logo_blue.svg");
+            Resource logo = new ClassPathResource("templates/mail/images/logo.png");
             message.addInline("logo", logo);
 
             javaMailSender.send(mimeMessage);
