@@ -70,7 +70,10 @@
       <column name="origin_name" type="varchar(255)"/>
       <column name="note" type="text"/>
       <column name="follow_up_encounter_id" type="bigint"/>
-
+      <column name="appointment_id" type="bigint">
+        <constraints nullable="false" foreignKeyName="fk_patient_encounters_appointment"
+                     referencedTableName="appointment" referencedColumnNames="id"/>
+      </column>
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
