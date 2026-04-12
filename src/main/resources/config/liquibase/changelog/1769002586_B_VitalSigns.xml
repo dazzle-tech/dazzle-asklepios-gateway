@@ -43,7 +43,7 @@
         <constraints nullable="false"/>
       </column>
 
-      <column name="oxygen_saturation" type="integer"/>
+      <column name="oxygen_saturation" type="numeric(5,2)"/>
 
       <column name="respiratory_rate" type="integer"/>
 
