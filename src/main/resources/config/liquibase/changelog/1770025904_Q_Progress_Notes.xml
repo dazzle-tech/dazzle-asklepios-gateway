@@ -96,6 +96,13 @@
 
   </changeSet>
 
+  <changeSet id="QA0000000000017_PROGRESS_NOTES_LOG_ADD_DIFF" author="qais">
+    <addColumn tableName="progress_notes_log">
+      <column name="old_note_text" type="text"/>
+      <column name="new_note_text" type="text"/>
+    </addColumn>
+  </changeSet>
+
   <include file="config/liquibase/sql/progress_notes_triggers.sql" relativeToChangelogFile="false"/>
 
 </databaseChangeLog>
