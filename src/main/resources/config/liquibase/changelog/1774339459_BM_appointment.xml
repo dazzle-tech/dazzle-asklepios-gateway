@@ -70,10 +70,10 @@
       <column name="origin_name" type="varchar(255)"/>
       <column name="note" type="text"/>
       <column name="follow_up_encounter_id" type="bigint"/>
-      <column name="appointment_id" type="bigint">
-        <constraints nullable="false" foreignKeyName="fk_patient_encounters_appointment"
-                     referencedTableName="appointment" referencedColumnNames="id"/>
-      </column>
+
+      <column name="checked_in_at" type="timestamp"/>
+      <column name="confirmed_at" type="timestamp"/>
+
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
@@ -154,7 +154,202 @@
         OR deferred_at IS NOT NULL
         );
     </sql>
+    <createIndex tableName="appointment" indexName="idx_appt_status_start_datetime">
+      <column name="status"/>
+      <column name="start_datetime"/>
+    </createIndex>
 
+    <createIndex tableName="appointment" indexName="idx_appt_department_start_datetime">
+      <column name="department_id"/>
+      <column name="start_datetime"/>
+    </createIndex>
+
+    <createIndex tableName="appointment" indexName="idx_appt_batch_id">
+      <column name="availability_generation_batch_id"/>
+    </createIndex>
+
+    <createIndex tableName="appointment" indexName="idx_appt_facility_id">
+      <column name="facility_id"/>
+    </createIndex>
+
+    <createIndex tableName="appointment" indexName="idx_appt_patient_id">
+      <column name="patient_id"/>
+    </createIndex>
   </changeSet>
+
+  <changeSet id="R00000000000008_APPOINTMENT_LOG" author="BushraMashaiekh">
+    <createTable tableName="appointment_log">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="appointment_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="operation_type" type="varchar(10)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="log_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="log_by" type="varchar(50)">
+      <constraints nullable="false"/>
+      </column>
+
+      <column name="facility_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="department_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="availability_generation_batch_id" type="bigint"/>
+
+      <column name="resource_type" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="resource_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="capacity_index" type="int"/>
+
+      <column name="start_datetime" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="end_datetime" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint"/>
+      <column name="default_service_id" type="bigint"/>
+      <column name="default_practitioner_id" type="bigint"/>
+
+      <column name="reason" type="varchar(255)"/>
+
+      <column name="booking_mode" type="varchar(20)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="status" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="service" type="varchar(50)"/>
+      <column name="service_group_id" type="bigint"/>
+
+      <column name="deferred" type="boolean">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="deferred_at" type="timestamp"/>
+
+      <column name="no_show_reason" type="varchar(255)"/>
+      <column name="cancel_reason" type="varchar(255)"/>
+      <column name="cancelled_by" type="varchar(50)"/>
+
+      <column name="priority" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="origin_type" type="varchar(255)"/>
+      <column name="origin_name" type="varchar(255)"/>
+      <column name="note" type="text"/>
+      <column name="follow_up_encounter_id" type="bigint"/>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="appointment_log"
+      baseColumnNames="appointment_id"
+      constraintName="fk_appointment_log_appointment"
+      referencedTableName="appointment"
+      referencedColumnNames="id"
+    />
+
+    <addForeignKeyConstraint
+      baseTableName="appointment_log"
+      baseColumnNames="facility_id"
+      referencedTableName="facility"
+      referencedColumnNames="id"
+      constraintName="fk_appointment_log_facility"
+    />
+
+    <addForeignKeyConstraint
+      baseTableName="appointment_log"
+      baseColumnNames="department_id"
+      referencedTableName="department"
+      referencedColumnNames="id"
+      constraintName="fk_appointment_log_department"
+    />
+
+    <addForeignKeyConstraint
+      baseTableName="appointment_log"
+      baseColumnNames="availability_generation_batch_id"
+      referencedTableName="availability_generation_batch"
+      referencedColumnNames="id"
+      constraintName="fk_appointment_log_batch"
+    />
+
+    <addForeignKeyConstraint
+      baseTableName="appointment_log"
+      baseColumnNames="patient_id"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+      constraintName="fk_appointment_log_patient"
+    />
+
+    <addForeignKeyConstraint
+      baseTableName="appointment_log"
+      baseColumnNames="default_practitioner_id"
+      referencedTableName="practitioner"
+      referencedColumnNames="id"
+      constraintName="fk_appointment_log_practitioner"
+    />
+
+    <addForeignKeyConstraint
+      baseTableName="appointment_log"
+      baseColumnNames="default_service_id"
+      referencedTableName="service"
+      referencedColumnNames="id"
+      constraintName="fk_appointment_log_service"
+    />
+
+    <addForeignKeyConstraint
+      baseTableName="appointment_log"
+      baseColumnNames="follow_up_encounter_id"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"
+      constraintName="fk_appointment_log_follow_up_encounter"
+    />
+
+    <createIndex tableName="appointment_log"
+                 indexName="idx_appointment_log_appointment_id">
+      <column name="appointment_id"/>
+    </createIndex>
+
+    <createIndex tableName="appointment_log"
+                 indexName="idx_appointment_log_date">
+      <column name="log_date"/>
+    </createIndex>
+  </changeSet>
+
+  <include file="config/liquibase/sql/appointment_Log.sql" relativeToChangelogFile="false"/>
 
 </databaseChangeLog>

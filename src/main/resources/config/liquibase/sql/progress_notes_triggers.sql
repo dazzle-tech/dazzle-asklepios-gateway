@@ -32,6 +32,8 @@ BEGIN
     INSERT INTO progress_notes_log (
       progress_note_id,
       action,
+      old_note_text,
+      new_note_text,
       created_by,
       created_date,
       last_modified_by,
@@ -41,6 +43,8 @@ BEGIN
     VALUES (
       NEW.id,
       'INSERT',
+      NULL,
+      NEW.note_text,
       COALESCE(NEW.created_by, v_user),
       now(),
       COALESCE(NEW.created_by, v_user),
@@ -53,6 +57,8 @@ ELSIF (TG_OP = 'UPDATE') THEN
     INSERT INTO progress_notes_log (
       progress_note_id,
       action,
+      old_note_text,
+      new_note_text,
       created_by,
       created_date,
       last_modified_by,
@@ -62,6 +68,8 @@ ELSIF (TG_OP = 'UPDATE') THEN
     VALUES (
       NEW.id,
       'UPDATE',
+      OLD.note_text,
+      NEW.note_text,
       COALESCE(OLD.created_by, v_user),
       now(),
       COALESCE(NEW.last_modified_by, v_user),
@@ -77,6 +85,8 @@ ELSIF (TG_OP = 'DELETE') THEN
     INSERT INTO progress_notes_log (
       progress_note_id,
       action,
+      old_note_text,
+      new_note_text,
       created_by,
       created_date,
       last_modified_by,
@@ -86,6 +96,8 @@ ELSIF (TG_OP = 'DELETE') THEN
     VALUES (
       OLD.id,
       'DELETE',
+      OLD.note_text,
+      NULL,
       COALESCE(v_user, OLD.created_by),
       now(),
       v_user,

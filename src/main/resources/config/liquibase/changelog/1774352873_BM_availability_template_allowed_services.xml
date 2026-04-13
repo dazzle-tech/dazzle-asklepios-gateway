@@ -53,6 +53,10 @@
         WHERE template_interval_id IS NOT NULL;
     </sql>
 
+    <createIndex tableName="availability_template_allowed_services"
+                 indexName="idx_allowed_services_template_id">
+      <column name="template_id"/>
+    </createIndex>
   </changeSet>
 
 </databaseChangeLog>
