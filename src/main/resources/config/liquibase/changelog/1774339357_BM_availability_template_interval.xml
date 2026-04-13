@@ -55,6 +55,12 @@
       tableName="availability_template_interval"
       columnNames="template_id, day_of_week, start_time, end_time"
       constraintName="uk_template_interval_template_day_time"/>
+
+    <createIndex tableName="availability_template_interval"
+                 indexName="idx_ati_template_day">
+      <column name="template_id"/>
+      <column name="day_of_week"/>
+    </createIndex>
   </changeSet>
 
 </databaseChangeLog>
