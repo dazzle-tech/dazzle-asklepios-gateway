@@ -75,12 +75,17 @@ BEGIN
       NEW.last_modified_date
     );
 
-    RETURN NEW;
-  END IF;
+RETURN NEW;
+END IF;
 
-  -- UPDATE: log full row snapshot only when any field changed.
+  -- UPDATE: log only if data actually changed
   IF TG_OP = 'UPDATE' THEN
-    IF ROW(OLD.*) IS DISTINCT FROM ROW(NEW.*) THEN
+
+    IF to_jsonb(OLD) - 'created_by' - 'created_date' - 'last_modified_by' - 'last_modified_date'
+       IS DISTINCT FROM
+       to_jsonb(NEW) - 'created_by' - 'created_date' - 'last_modified_by' - 'last_modified_date'
+    THEN
+
       INSERT INTO public.availability_template_log (
         template_id,
         operation_type,
@@ -150,12 +155,13 @@ BEGIN
         NEW.last_modified_by,
         NEW.last_modified_date
       );
-    END IF;
 
-    RETURN NEW;
-  END IF;
+END IF;
 
-  RETURN NEW;
+RETURN NEW;
+END IF;
+
+RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
@@ -163,6 +169,6 @@ DROP TRIGGER IF EXISTS trg_availability_template_log ON public.availability_temp
 
 CREATE TRIGGER trg_availability_template_log
   AFTER INSERT OR UPDATE
-  ON public.availability_template
-  FOR EACH ROW
-  EXECUTE FUNCTION public.trg_availability_template_log_fn();
+                    ON public.availability_template
+                    FOR EACH ROW
+                    EXECUTE FUNCTION public.trg_availability_template_log_fn();
