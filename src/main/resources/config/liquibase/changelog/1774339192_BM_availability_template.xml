@@ -153,7 +153,46 @@
               OR default_practitioner_id IS NOT NULL
             );
     </sql>
+    <!-- Indexes for search criteria -->
 
+    <createIndex tableName="availability_template"
+                 indexName="idx_avt_facility_template_type">
+      <column name="facility_id"/>
+      <column name="template_type"/>
+    </createIndex>
+
+    <createIndex tableName="availability_template"
+                 indexName="idx_avt_facility_department_template_type">
+      <column name="facility_id"/>
+      <column name="department_id"/>
+      <column name="template_type"/>
+    </createIndex>
+
+    <createIndex tableName="availability_template"
+                 indexName="idx_avt_facility_status_template_type">
+      <column name="facility_id"/>
+      <column name="status"/>
+      <column name="template_type"/>
+    </createIndex>
+
+    <createIndex tableName="availability_template"
+                 indexName="idx_avt_facility_status_active_type">
+      <column name="facility_id"/>
+      <column name="status"/>
+      <column name="is_active"/>
+      <column name="template_type"/>
+    </createIndex>
+
+    <createIndex tableName="availability_template"
+                 indexName="idx_avt_department_template_type">
+      <column name="department_id"/>
+      <column name="template_type"/>
+    </createIndex>
+
+    <createIndex tableName="availability_template"
+                 indexName="idx_avt_parent_template_id">
+      <column name="parent_template_id"/>
+    </createIndex>
   </changeSet>
 
 </databaseChangeLog>

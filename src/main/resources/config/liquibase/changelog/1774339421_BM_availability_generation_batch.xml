@@ -5,7 +5,7 @@
                      http://www.liquibase.org/xml/ns/dbchangelog
                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-<changeSet id="availability_generation_batch" author="BushraMashaiekh">
+  <changeSet id="availability_generation_batch" author="BushraMashaiekh">
 
     <createTable tableName="availability_generation_batch">
       <column name="id" type="bigint" autoIncrement="true">
@@ -23,7 +23,7 @@
         <constraints nullable="false"/>
       </column>
       <column name="apply_end_date_time" type="timestamp">
-        <constraints nullable="false" />
+        <constraints nullable="false"/>
       </column>
 
       <column name="total_slots" type="int"/>
@@ -34,7 +34,7 @@
         <constraints nullable="false"/>
       </column>
 
-        <column name="holiday_handling_mode" type="varchar(50)"/>
+      <column name="holiday_handling_mode" type="varchar(50)"/>
 
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>
@@ -54,6 +54,11 @@
       referencedColumnNames="id"
       constraintName="fk_generation_template"/>
 
+    <createIndex tableName="availability_generation_batch"
+                 indexName="idx_agb_template_apply_start">
+      <column name="template_id"/>
+      <column name="apply_start_date_time"/>
+    </createIndex>
   </changeSet>
 
 </databaseChangeLog>

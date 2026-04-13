@@ -154,7 +154,27 @@
         OR deferred_at IS NOT NULL
         );
     </sql>
+    <createIndex tableName="appointment" indexName="idx_appt_status_start_datetime">
+      <column name="status"/>
+      <column name="start_datetime"/>
+    </createIndex>
 
+    <createIndex tableName="appointment" indexName="idx_appt_department_start_datetime">
+      <column name="department_id"/>
+      <column name="start_datetime"/>
+    </createIndex>
+
+    <createIndex tableName="appointment" indexName="idx_appt_batch_id">
+      <column name="availability_generation_batch_id"/>
+    </createIndex>
+
+    <createIndex tableName="appointment" indexName="idx_appt_facility_id">
+      <column name="facility_id"/>
+    </createIndex>
+
+    <createIndex tableName="appointment" indexName="idx_appt_patient_id">
+      <column name="patient_id"/>
+    </createIndex>
   </changeSet>
 
 </databaseChangeLog>
