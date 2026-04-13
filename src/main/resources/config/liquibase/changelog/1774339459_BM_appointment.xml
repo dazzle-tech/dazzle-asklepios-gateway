@@ -130,12 +130,7 @@
       referencedColumnNames="id"
       constraintName="fk_appointment_service"/>
 
-    <addForeignKeyConstraint
-      baseTableName="appointment"
-      baseColumnNames="follow_up_encounter_id"
-      referencedTableName="patient_encounters"
-      referencedColumnNames="id"
-      constraintName="fk_appointment_follow_up_encounter"/>
+
 
     <!-- TODO: When create the service group table-->
     <!--    <addForeignKeyConstraint
@@ -331,13 +326,6 @@
       constraintName="fk_appointment_log_service"
     />
 
-    <addForeignKeyConstraint
-      baseTableName="appointment_log"
-      baseColumnNames="follow_up_encounter_id"
-      referencedTableName="patient_encounters"
-      referencedColumnNames="id"
-      constraintName="fk_appointment_log_follow_up_encounter"
-    />
 
     <createIndex tableName="appointment_log"
                  indexName="idx_appointment_log_appointment_id">
