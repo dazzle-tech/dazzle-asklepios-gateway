@@ -23,6 +23,7 @@ services:
   asklepios-patient-service-url :  http://asklepios-patient-service:8080
   asklepios-inventory-service-url :  http://asklepios-inventory-service:8080
   asklepios-billing-service-url :  http://asklepios-billing-service:8080
+  dazzle-asklepios-analytics-service-url : http://asklepios-analytics-service:8080
 
   medication-test-orders-validation-service-url: http://medication-test-orders-validation-service:8005
   clinical-summary-service-url: http://clinical-summary-service:8003
@@ -237,7 +238,12 @@ spring:
             - Path=/api/ai/v1/clinical-recommendations/**
           filters:
             - RewritePath=/api/ai/v1/clinical-recommendations/(?<segment>.*),/api/v1/${segment}
-
+        - id: analytics
+          uri: ${services.dazzle-asklepios-analytics-service-url}
+          predicates:
+            - Path=/api/analytics/**
+          filters:
+            - StripPrefix=0
       httpclient:
         pool:
           max-connections: 1000

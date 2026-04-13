@@ -148,7 +148,12 @@ spring:
             - Path=/setup-service/v3/api-docs
           filters:
             - StripPrefix=1
-
+        - id: analytics
+          uri: ${services.dazzle-asklepios-analytics-service-url}
+          predicates:
+            - Path=/api/analytics/**
+          filters:
+            - StripPrefix=0
       httpclient:
         pool:
           max-connections: 1000

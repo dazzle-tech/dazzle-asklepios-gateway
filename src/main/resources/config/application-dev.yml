@@ -19,7 +19,7 @@ services:
   asklepios-patient-service-url: http://localhost:8083
   asklepios-inventory-service-url: http://localhost:8084
   asklepios-billing-service-url: http://localhost:8085
-  dazzle-asklepios-analytics-service: http://localhost:8089
+  dazzle-asklepios-analytics-service-url: http://localhost:8089
 
   medication-test-orders-validation-service-url: http://localhost:8005
   clinical-summary-service-url: http://localhost:8003
@@ -235,7 +235,7 @@ spring:
             - RewritePath=/api/ai/v1/clinical-recommendations/(?<segment>.*),/api/v1/${segment}
 
         - id: analytics
-          uri: ${services.dazzle-asklepios-analytics-service}
+          uri: ${services.dazzle-asklepios-analytics-service-url}
           predicates:
             - Path=/api/analytics/**
           filters:
@@ -267,6 +267,6 @@ asklepios:
         token-validity-in-seconds: 86400
         token-validity-in-seconds-for-remember-me: 2592000
   mail:
-    base-url: http://127.0.0.1:8080
+    base-url: http://localhost:3100/
     username: systemask73@gmail.com
     password: ocdh hvae hhsz cyxc
