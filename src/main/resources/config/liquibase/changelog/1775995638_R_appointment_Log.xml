@@ -6,7 +6,7 @@
     http://www.liquibase.org/xml/ns/dbchangelog
     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-  <changeSet id="R00000000000008_APPOINTMENT_LOG" author="BushraMashaiekh">
+  <changeSet id="R00000000000008_APPOINTMENT_LOG" author="Rawan-Yahya">
     <createTable tableName="appointment_log">
       <column name="id" type="bigint" autoIncrement="true">
         <constraints primaryKey="true" nullable="false"/>
