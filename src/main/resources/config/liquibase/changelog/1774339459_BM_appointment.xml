@@ -71,6 +71,9 @@
       <column name="note" type="text"/>
       <column name="follow_up_encounter_id" type="bigint"/>
 
+      <column name="checked_in_at" type="timestamp"/>
+      <column name="confirmed_at" type="timestamp"/>
+
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
