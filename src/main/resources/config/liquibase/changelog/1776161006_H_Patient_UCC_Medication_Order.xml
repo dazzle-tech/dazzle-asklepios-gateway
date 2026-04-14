@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.24.xsd">
+
+  <changeSet id="ucc_medication_order_001_create_table" author="hanan253yahya">
+
+    <createTable tableName="patient_ucc_medication_order">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="active_ingredient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="instruction_type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="instruction_text" type="text"/>
+
+      <column name="dose" type="bigint"/>
+      <column name="dose_unit" type="varchar(100)"/>
+      <column name="route" type="varchar(100)"/>
+      <column name="frequency" type="varchar(100)"/>
+
+      <column name="is_high_alert" type="boolean"/>
+
+      <column name="status" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="submitted_date" type="timestamp"/>
+      <column name="submitted_by" type="varchar(50)"/>
+
+      <column name="administered_date" type="timestamp"/>
+      <column name="administered_by" type="varchar(50)"/>
+
+      <column name="double_checked_date" type="timestamp"/>
+      <column name="double_checked_by" type="varchar(50)"/>
+
+      <column name="discarded_date" type="timestamp"/>
+      <column name="discarded_by" type="varchar(50)"/>
+      <column name="discard_reason" type="varchar(250)"/>
+
+      <column name="cancelled_date" type="timestamp"/>
+      <column name="cancelled_by" type="varchar(50)"/>
+      <column name="cancellation_reason" type="varchar(250)"/>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="patient_ucc_medication_order"
+      baseColumnNames="patient_id"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+      constraintName="fk_ucc_medication_order_patient"/>
+
+    <addForeignKeyConstraint
+      baseTableName="patient_ucc_medication_order"
+      baseColumnNames="encounter_id"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"
+      constraintName="fk_ucc_medication_order_encounter"/>
+
+    <addForeignKeyConstraint
+      baseTableName="patient_ucc_medication_order"
+      baseColumnNames="active_ingredient_id"
+      referencedTableName="active_ingredients"
+      referencedColumnNames="id"
+      constraintName="fk_ucc_medication_order_active_ingredient"/>
+
+  </changeSet>
+
+</databaseChangeLog>
