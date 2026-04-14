@@ -69,7 +69,9 @@
                              referencedTableName="patient_prescriptions" referencedColumnNames="id"
                              constraintName="fk_ppm_prescription_header"/>
 
-
+    <addForeignKeyConstraint baseTableName="patient_prescription_medications" baseColumnNames="medications_id"
+                             referencedTableName="brand_medication" referencedColumnNames="id"
+                             constraintName="fk_ppm_brand_medication"/>
   </changeSet>
 
 </databaseChangeLog>

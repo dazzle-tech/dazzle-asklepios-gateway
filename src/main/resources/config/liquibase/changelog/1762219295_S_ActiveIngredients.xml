@@ -30,9 +30,10 @@
       <column name="controlled" type="varchar(50)"/>
       <column name="has_black_box_warning" type="boolean"/>
       <column name="black_box_warning" type="nvarchar(200)"/>
-      <column name="is_lasa"  type="boolean">
+      <column name="is_look-alike-sound-alike" type="boolean">
         <constraints nullable="false"/>
       </column>
+
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
