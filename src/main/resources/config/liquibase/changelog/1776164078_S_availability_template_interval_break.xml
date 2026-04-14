@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="
+                     http://www.liquibase.org/xml/ns/dbchangelog
+                     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="00000000000072_availability_template_interval_break" author="SondosAbdAlaal">
+
+    <createTable tableName="availability_template_interval_break">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="template_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="interval_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="start_time" type="time">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="end_time" type="time">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+    <addForeignKeyConstraint
+      baseTableName="availability_template_interval_break"
+      baseColumnNames="template_id"
+      referencedTableName="availability_template"
+      referencedColumnNames="id"
+      constraintName="fk_template_interval_break"/>
+    <addForeignKeyConstraint
+      baseTableName="availability_template_interval_break"
+      baseColumnNames="interval_id"
+      referencedTableName="availability_template_interval"
+      referencedColumnNames="id"
+      constraintName="fk_template_interval"/>
+
+    <addUniqueConstraint
+      tableName="availability_template_interval_break"
+      columnNames="interval_id, start_time, end_time"
+      constraintName="uk_template_interval_break_time"/>
+
+    <createIndex tableName="availability_template_interval_break"
+                 indexName="idx_interval_template_break">
+      <column name="interval_id"/>
+    </createIndex>
+  </changeSet>
+
+</databaseChangeLog>
