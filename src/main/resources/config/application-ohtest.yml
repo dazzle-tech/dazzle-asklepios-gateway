@@ -1,0 +1,279 @@
+
+logging:
+  level:
+    ROOT: INFO
+    com.dazzle.asklepios: INFO
+
+management:
+  prometheus:
+    metrics:
+      export:
+        enabled: false
+  zipkin:
+    tracing:
+      endpoint:
+        http://localhost:9411/api/v2/spans
+  tracing:
+    sampling:
+      probability: 1.0
+
+services:
+  asklepios-general-service-url: http://asklepios-service:8081
+  asklepios-setup-service-url :  http://asklepios-api-setup-service:8082
+  asklepios-patient-service-url :  http://asklepios-patient-service:8080
+  asklepios-inventory-service-url :  http://asklepios-inventory-service:8080
+  asklepios-billing-service-url :  http://asklepios-billing-service:8080
+  dazzle-asklepios-analytics-service-url : http://asklepios-analytics-service:8080
+
+  medication-test-orders-validation-service-url: http://medication-test-orders-validation-service:8005
+  clinical-summary-service-url: http://clinical-summary-service:8003
+  clinical-recommendations-service-url: http://clinical-recommendations-service:8004
+
+spring:
+  devtools:
+    restart:
+      enabled: false
+    livereload:
+      enabled: false
+  liquibase:
+    contexts: stage
+    url: jdbc:postgresql://80.238.227.209:9356/asklepios
+  mail:
+    host: localhost
+    port: 25
+    username:
+    password:
+  r2dbc:
+    url: r2dbc:postgresql://80.238.227.209:9356/asklepios
+    username: asklepios
+    password: qqV9pb08@EM2r!
+    pool:
+      # Enable pooling explicitly (optional, often enabled by default if the pool dependency is present)
+      enabled: true
+      # Initial number of connections created when the pool starts (default: 10)
+      initial-size: 3
+      # Maximum number of active connections the pool can have (default: 10)
+      max-size: 6
+      # Maximum time a connection can remain idle in the pool before being closed (default: 30m)
+      max-idle-time: 30m
+      # Minimum number of idle connections to maintain (default: 0)
+      min-idle: 1
+  thymeleaf:
+    cache: true
+  cloud:
+    gateway:
+      default-filters:
+        - JWTRelay
+      routes:
+        - id: reference-data
+          uri: ${services.asklepios-general-service-url}
+          predicates:
+            - Path=/reference-data/**
+          filters:
+            - StripPrefix=0
+
+        - id: appointment
+          uri: ${services.asklepios-patient-service-url}
+          predicates:
+            - Path=/appointment/**
+          filters:
+            - StripPrefix=0
+
+        - id: attachment
+          uri: ${services.asklepios-general-service-url}
+          predicates:
+            - Path=/attachment/**
+          filters:
+            - StripPrefix=0
+
+        - id: dental
+          uri: ${services.asklepios-general-service-url}
+          predicates:
+            - Path=/dental/**
+          filters:
+            - StripPrefix=0
+
+        - id: dvm
+          uri: ${services.asklepios-general-service-url}
+          predicates:
+            - Path=/dvm/**
+          filters:
+            - StripPrefix=0
+
+        - id: encounter
+          uri: ${services.asklepios-general-service-url}
+          predicates:
+            - Path=/encounter/**
+          filters:
+            - StripPrefix=0
+
+        - id: general
+          uri: ${services.asklepios-general-service-url}
+          predicates:
+            - Path=/general/**
+          filters:
+            - StripPrefix=0
+
+        - id: lab
+          uri: ${services.asklepios-general-service-url}
+          predicates:
+            - Path=/lab/**
+          filters:
+            - StripPrefix=0
+
+        - id: medications
+          uri: ${services.asklepios-general-service-url}
+          predicates:
+            - Path=/medications/**
+          filters:
+            - StripPrefix=0
+
+        - id: observation
+          uri: ${services.asklepios-general-service-url}
+          predicates:
+            - Path=/observation/**
+          filters:
+            - StripPrefix=0
+
+        - id: pas
+          uri: ${services.asklepios-general-service-url}
+          predicates:
+            - Path=/pas/**
+          filters:
+            - StripPrefix=0
+
+        - id: rad
+          uri: ${services.asklepios-general-service-url}
+          predicates:
+            - Path=/rad/**
+          filters:
+            - StripPrefix=0
+
+        - id: setup
+          uri: ${services.asklepios-general-service-url}
+          predicates:
+            - Path=/setup/**
+          filters:
+            - StripPrefix=0
+
+        - id: auth
+          uri: ${services.asklepios-general-service-url}
+          predicates:
+            - Path=/auth/**
+          filters:
+            - StripPrefix=0
+        - id: inventory
+          uri: ${services.asklepios-general-service-url}
+          predicates:
+            - Path=/transaction/**
+          filters:
+            - StripPrefix=0
+
+        - id: operation
+          uri: ${services.asklepios-general-service-url}
+          predicates:
+            - Path=/operation/**
+          filters:
+            - StripPrefix=0
+
+        - id: procedures
+          uri: ${services.asklepios-general-service-url}
+          predicates:
+            - Path=/procedures/**
+          filters:
+            - StripPrefix=0
+
+        - id: newsetup
+          uri: ${services.asklepios-setup-service-url}
+          predicates:
+            - Path=/api/setup/**
+          filters:
+            - StripPrefix=0
+
+        - id: setup-docs
+          uri: ${services.asklepios-setup-service-url}
+          predicates:
+            - Path=/setup-service/v3/api-docs
+          filters:
+            - StripPrefix=1
+
+        - id: patient
+          uri: ${services.asklepios-patient-service-url}
+          predicates:
+            - Path=/api/patient/**
+          filters:
+            - StripPrefix=0
+
+        - id: inventoryManagement
+          uri: ${services.asklepios-inventory-service-url}
+          predicates:
+            - Path=/api/inventory/**
+          filters:
+            - StripPrefix=0
+
+        - id: billing
+          uri: ${services.asklepios-billing-service-url}
+          predicates:
+            - Path=/api/billing/**
+          filters:
+            - StripPrefix=0
+
+        - id: medication-test-orders-validation
+          uri: ${services.medication-test-orders-validation-service-url}
+          predicates:
+            - Path=/api/ai/v1/medication-test-orders-validation/**
+          filters:
+            - RewritePath=/api/ai/v1/medication-test-orders-validation/(?<segment>.*),/api/v1/${segment}
+
+        - id: clinical-summary
+          uri: ${services.clinical-summary-service-url}
+          predicates:
+            - Path=/api/ai/v1/clinical-summary/**
+          filters:
+            - RewritePath=/api/ai/v1/clinical-summary/(?<segment>.*),/api/v1/${segment}
+
+        - id: clinical-recommendations
+          uri: ${services.clinical-recommendations-service-url}
+          predicates:
+            - Path=/api/ai/v1/clinical-recommendations/**
+          filters:
+            - RewritePath=/api/ai/v1/clinical-recommendations/(?<segment>.*),/api/v1/${segment}
+        - id: analytics
+          uri: ${services.dazzle-asklepios-analytics-service-url}
+          predicates:
+            - Path=/api/analytics/**
+          filters:
+            - StripPrefix=0
+      httpclient:
+        pool:
+          max-connections: 1000
+
+
+server:
+  port: 8080
+  shutdown: graceful
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css,application/javascript,application/json,image/svg+xml
+    min-response-size: 1024
+
+
+asklepios:
+  cors:
+    allowed-origins: 'http://his.tst.onehealth.com.sa,https://his.tst.onehealth.com.sa,http://localhost:3100,https://localhost:3100'
+    allowed-origin-patterns: 'http://*.onehealth.com.sa,https://*.onehealth.com.sa'
+    allowed-methods: '*'
+    allowed-headers: '*'
+    exposed-headers: 'Authorization,Link,X-Total-Count,X-${asklepios.clientApp.name}-alert,X-${asklepios.clientApp.name}-error,X-${asklepios.clientApp.name}-params,access_token'
+    allow-credentials: true
+    max-age: 1800
+  security:
+    authentication:
+      jwt:
+        base64-secret: Y2RiNDRmMGM3ODZkM2FhMTEwYWYxZGE0NjQ3ODM5YThkYWFjZWYzMzY2ZDVkMTVhNGEyNDNmZTM0MzQ5NTRhMmVlMmFkNGVlODBmYTkyZWE4ZWYyMDRhZDJiZGU4YzJhMGEyN2U5NGUzMmNmNWU4Yzk2MDVkNzhmY2M3YTgyZDM=
+        token-validity-in-seconds: 86400
+        token-validity-in-seconds-for-remember-me: 2592000
+  mail:
+    base-url: http://his.tst.onehealth.com.sa/
+    username: systemask73@gmail.com
+    password: ocdh hvae hhsz cyxc
