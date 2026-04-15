@@ -85,6 +85,9 @@
         <constraints nullable="false"/>
       </column>
 
+      <column name="old_note_text" type="text"/>
+      <column name="new_note_text" type="text"/>
+
       <column name="created_by" type="varchar(50)"/>
       <column name="created_date" type="timestamp"/>
       <column name="last_modified_by" type="varchar(50)"/>
