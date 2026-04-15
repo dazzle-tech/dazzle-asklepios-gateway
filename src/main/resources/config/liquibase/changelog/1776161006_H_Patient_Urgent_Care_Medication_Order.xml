@@ -6,9 +6,9 @@
         http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.24.xsd">
 
-  <changeSet id="ucc_medication_order_001_create_table" author="hanan253yahya">
+  <changeSet id="urgent_care_medication_order_001_create_table" author="hanan253yahya">
 
-    <createTable tableName="patient_ucc_medication_order">
+    <createTable tableName="urgent_care_medication_order">
 
       <column name="id" type="bigint" autoIncrement="true">
         <constraints primaryKey="true" nullable="false"/>
@@ -37,7 +37,9 @@
       <column name="route" type="varchar(100)"/>
       <column name="frequency" type="varchar(100)"/>
 
-      <column name="is_high_alert" type="boolean"/>
+      <column name="is_high_alert" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"  />
+      </column>
 
       <column name="status" type="varchar(50)">
         <constraints nullable="false"/>
