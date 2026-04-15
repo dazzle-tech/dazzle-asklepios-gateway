@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="
+                     http://www.liquibase.org/xml/ns/dbchangelog
+                     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="BM0000000000033" author="BushraMashaiekh">
+
+    <createTable tableName="appointment_request">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="facility_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="department_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="source_encounter_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="appointment_id" type="bigint"/>
+
+      <column name="requested_resource_type" type="varchar(30)"/>
+      <column name="requested_resource_id" type="bigint"/>
+
+      <column name="priority" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="reason" type="varchar(255)"/>
+      <column name="note" type="text"/>
+
+      <column name="status" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="converted_at" type="timestamp"/>
+      <column name="cancelled_at" type="timestamp"/>
+      <column name="cancel_reason" type="varchar(255)"/>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="appointment_request"
+      baseColumnNames="patient_id"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+      constraintName="fk_fu_req_patient"/>
+
+    <addForeignKeyConstraint
+      baseTableName="appointment_request"
+      baseColumnNames="facility_id"
+      referencedTableName="facility"
+      referencedColumnNames="id"
+      constraintName="fk_fu_req_facility"/>
+
+    <addForeignKeyConstraint
+      baseTableName="appointment_request"
+      baseColumnNames="department_id"
+      referencedTableName="department"
+      referencedColumnNames="id"
+      constraintName="fk_fu_req_department"/>
+
+    <addForeignKeyConstraint
+      baseTableName="appointment_request"
+      baseColumnNames="source_encounter_id"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"
+      constraintName="fk_fu_req_source_encounter"/>
+
+    <addForeignKeyConstraint
+      baseTableName="appointment_request"
+      baseColumnNames="appointment_id"
+      referencedTableName="appointment"
+      referencedColumnNames="id"
+      constraintName="fk_fu_req_appointment"/>
+
+    <createIndex tableName="appointment_request" indexName="idx_fu_req_patient">
+      <column name="patient_id"/>
+    </createIndex>
+
+    <createIndex tableName="appointment_request" indexName="idx_fu_req_encounter">
+      <column name="source_encounter_id"/>
+    </createIndex>
+
+    <createIndex tableName="appointment_request" indexName="idx_fu_req_status">
+      <column name="status"/>
+    </createIndex>
+
+  </changeSet>
+
+</databaseChangeLog>
