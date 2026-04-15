@@ -147,7 +147,7 @@ asklepios:
     name: 'gatewayApp'
 #   By default CORS is disabled. Uncomment to enable.
   cors:
-    allowed-origins: "http://localhost:8100,http://localhost:9000,http://localhost:3100"
+    allowed-origins: "http://localhost:8100,http://localhost:9000,http://localhost:3100,http://asklepios.nereuscloud.de,https://asklepios.nereuscloud.de"
     allowed-methods: "*"
     allowed-headers: "*"
     exposed-headers: "Authorization,Link,X-Total-Count,X-${asklepios.clientApp.name}-alert,X-${asklepios.clientApp.name}-error,X-${asklepios.clientApp.name}-params"
