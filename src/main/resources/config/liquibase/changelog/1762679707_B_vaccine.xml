@@ -41,7 +41,8 @@
       <column name="storage_and_handling" type="text"/>
 
       <column name="facility_id" type="bigint">
-        <constraints nullable="false"/>
+        <constraints nullable="false" foreignKeyName="fk_vaccine_facility"
+                     references="facility(id)"/>
       </column>
 
       <column name="price" type="numeric(15, 2)">
