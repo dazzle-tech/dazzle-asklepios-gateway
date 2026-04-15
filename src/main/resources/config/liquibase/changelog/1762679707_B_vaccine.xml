@@ -61,10 +61,12 @@
       <column name="last_modified_date" type="timestamp"/>
     </createTable>
 
+
+
     <addUniqueConstraint
       tableName="vaccine"
-      columnNames="name, type, roa"
-      constraintName="ux_vaccines_name_type_roa"/>
+      columnNames="facility_id, name, type, roa"
+      constraintName="ux_vaccines_facility_name_type_roa"/>
   </changeSet>
 
 </databaseChangeLog>
