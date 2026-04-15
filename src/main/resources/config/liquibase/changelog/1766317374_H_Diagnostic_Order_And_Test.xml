@@ -145,6 +145,9 @@
 
       <column name="cancellation_reason" type="varchar(250)"/>
 
+      <column name="undo_accept_reason" type="varchar(500)"/>
+      <column name="undo_accept_by" type="varchar(50)"/>
+      <column name="undo_accept_date" type="timestamp"/>
 
       <!-- auditing -->
       <column name="created_date" type="timestamp" defaultValue="now()">

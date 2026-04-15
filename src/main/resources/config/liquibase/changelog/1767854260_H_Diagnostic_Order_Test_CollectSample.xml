@@ -32,6 +32,14 @@
         <constraints nullable="false"/>
       </column>
 
+      <column name="expiry_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="source_of_sample" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
       <!-- auditing -->
       <column name="created_date" type="timestamp" defaultValue="now()">
         <constraints nullable="false"/>
