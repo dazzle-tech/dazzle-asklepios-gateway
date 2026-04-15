@@ -76,25 +76,25 @@
     </createTable>
 
     <addForeignKeyConstraint
-      baseTableName="patient_ucc_medication_order"
+      baseTableName="urgent_care_medication_order"
       baseColumnNames="patient_id"
       referencedTableName="patients"
       referencedColumnNames="id"
-      constraintName="fk_ucc_medication_order_patient"/>
+      constraintName="fk_urgent_care_medication_order_patient"/>
 
     <addForeignKeyConstraint
-      baseTableName="patient_ucc_medication_order"
+      baseTableName="urgent_care_medication_order"
       baseColumnNames="encounter_id"
       referencedTableName="patient_encounters"
       referencedColumnNames="id"
-      constraintName="fk_ucc_medication_order_encounter"/>
+      constraintName="fk_urgent_care_medication_order_encounter"/>
 
     <addForeignKeyConstraint
-      baseTableName="patient_ucc_medication_order"
+      baseTableName="urgent_care_medication_order"
       baseColumnNames="active_ingredient_id"
       referencedTableName="active_ingredients"
       referencedColumnNames="id"
-      constraintName="fk_ucc_medication_order_active_ingredient"/>
+      constraintName="fk_urgent_care_medication_order_active_ingredient"/>
 
   </changeSet>
 
