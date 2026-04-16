@@ -16,7 +16,12 @@
         <constraints nullable="false"/>
       </column>
       <column name="medications_id" type="bigint">
-        <constraints nullable="false"/>
+
+      </column>
+      <column name="active_ingredient_id"  type="bigint">
+        <constraints nullable="false" foreignKeyName="fk_active_ingredient_prescription"
+                     references="active_ingredients(id)"/>
+
       </column>
       <column name="instructions_type" type="varchar(50)">
         <constraints nullable="false"/>
@@ -32,7 +37,6 @@
         <constraints nullable="false"/>
       </column>
       <column name="maximum_dose" type="bigint"/>
-      <column name="valid_util" type="date"/>
       <column name="allowed_substitute" type="boolean" defaultValueBoolean="false">
         <constraints nullable="false"/>
       </column>

@@ -200,12 +200,13 @@
   <include file="/config/liquibase/changelog/1774280357_S_departmentServices.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1774280336_S_PolicyDefinition.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1774280532_S_skillDefinition.xml" relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/1774252400_B_room.xml" relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/1774265919_B_bed.xml" relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/1774275632_B_bedRoomServices.xml" relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/1774448712_B_encounterAssignToBed.xml" relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/1774782462_B_bedTransactions.xml" relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/1775554145_Q_CurrentMedication.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1774252400_B_room.xml" relativeToChangelogFile="false" />
+  <include file="/config/liquibase/changelog/1774265919_B_bed.xml" relativeToChangelogFile="false" />
+  <include file="/config/liquibase/changelog/1774275632_B_bedRoomServices.xml" relativeToChangelogFile="false" />
+  <include file="/config/liquibase/changelog/1774448712_B_encounterAssignToBed.xml" relativeToChangelogFile="false" />
+  <include file="/config/liquibase/changelog/1774782462_B_bedTransactions.xml" relativeToChangelogFile="false" />
+  <include file="/config/liquibase/changelog/1775554145_Q_CurrentMedication.xml" relativeToChangelogFile="false" />
+ <include file="/config/liquibase/changelog/1776161006_H_Patient_Urgent_Care_Medication_Order.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1776164078_S_availability_template_interval_break.xml"
            relativeToChangelogFile="false"/>
 </databaseChangeLog>
