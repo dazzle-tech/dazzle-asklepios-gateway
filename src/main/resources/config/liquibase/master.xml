@@ -113,6 +113,8 @@
   <include file="config/liquibase/changelog/1764196005_Report_Template.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1764192615_H_Diagnostic_Test_Report_Template.xml"
            relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1768804453_B_ICD10.xml" relativeToChangelogFile="false"/>
+
   <include file="config/liquibase/changelog/1763300000_D_resource.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1764578272_R_UserStickyNotes.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1764601808_H_PriceList_Item.xml" relativeToChangelogFile="false"/>
@@ -147,7 +149,6 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1769941783_H_Diagnostic_Order_Test_Report.xml"
            relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/1768804453_B_ICD10.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1769416461_Q_Consultation.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1768473866_Q_Surgical_History.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1768721356_Q_Social_History.xml" relativeToChangelogFile="false"/>
