@@ -44,7 +44,6 @@
         <constraints nullable="false"/>
       </column>
 
-      <column name="converted_at" type="timestamp"/>
       <column name="cancelled_at" type="timestamp"/>
       <column name="cancel_reason" type="varchar(255)"/>
 
