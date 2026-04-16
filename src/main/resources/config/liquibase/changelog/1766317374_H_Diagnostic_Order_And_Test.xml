@@ -148,7 +148,10 @@
       <column name="undo_accept_reason" type="varchar(500)"/>
       <column name="undo_accept_by" type="varchar(50)"/>
       <column name="undo_accept_date" type="timestamp"/>
-
+      <column name="icd_diagnosis_id"  type="bigint" >
+        <constraints foreignKeyName="fk_icd_diagnosis_order_tet"
+                     references="icd_diagnosis(id)"/>
+      </column>
       <!-- auditing -->
       <column name="created_date" type="timestamp" defaultValue="now()">
         <constraints nullable="false"/>
