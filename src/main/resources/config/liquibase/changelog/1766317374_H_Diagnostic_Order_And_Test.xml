@@ -192,12 +192,12 @@
 
     />
 
-<!--    <addForeignKeyConstraint-->
-<!--      baseTableName="diagnostic_order_tests"-->
-<!--      baseColumnNames="icd_diagnosis_id"-->
-<!--      referencedTableName="icd_diagnosis"-->
-<!--      referencedColumnNames="id"-->
-<!--      constraintName="fk_icd_diagnostic_order_tests"/>-->
+    <addForeignKeyConstraint
+      baseTableName="diagnostic_order_tests"
+      baseColumnNames="icd_diagnosis_id"
+      referencedTableName="icd_diagnosis"
+      referencedColumnNames="id"
+      constraintName="fk_icd_diagnostic_order_tests"/>
     <sql>
       CREATE UNIQUE INDEX uq_dot_order_test_not_cancelled
         ON public.diagnostic_order_tests (order_id, test_id)
