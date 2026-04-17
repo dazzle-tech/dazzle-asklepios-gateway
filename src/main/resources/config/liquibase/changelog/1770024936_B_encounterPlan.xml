@@ -24,7 +24,11 @@
         <constraints nullable="true"/>
       </column>
 
-      <column name="plan_instructions" type="text">
+      <column name="goals" type="text">
+        <constraints nullable="true"/>
+      </column>
+
+      <column name="treatment_plan" type="text">
         <constraints nullable="false"/>
       </column>
 
