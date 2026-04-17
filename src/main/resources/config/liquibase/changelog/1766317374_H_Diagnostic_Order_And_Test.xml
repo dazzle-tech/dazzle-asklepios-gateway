@@ -148,7 +148,7 @@
       <column name="undo_accept_reason" type="varchar(500)"/>
       <column name="undo_accept_by" type="varchar(50)"/>
       <column name="undo_accept_date" type="timestamp"/>
-
+      <column name="icd_diagnosis_id" type="bigint"/>
       <!-- auditing -->
       <column name="created_date" type="timestamp" defaultValue="now()">
         <constraints nullable="false"/>
@@ -192,6 +192,12 @@
 
     />
 
+    <addForeignKeyConstraint
+      baseTableName="diagnostic_order_tests"
+      baseColumnNames="icd_diagnosis_id"
+      referencedTableName="icd_diagnosis"
+      referencedColumnNames="id"
+      constraintName="fk_icd_diagnostic_order_tests"/>
     <sql>
       CREATE UNIQUE INDEX uq_dot_order_test_not_cancelled
         ON public.diagnostic_order_tests (order_id, test_id)

@@ -37,15 +37,21 @@
 
       <column name="measurement_site" type="varchar(255)"/>
 
-      <column name="heart_rate" type="integer"/>
+      <column name="heart_rate" type="integer">
+        <constraints nullable="false"/>
+      </column>
 
       <column name="temperature" type="numeric(5,2)">
         <constraints nullable="false"/>
       </column>
 
-      <column name="oxygen_saturation" type="numeric(5,2)"/>
+      <column name="oxygen_saturation" type="numeric(5,2)">
+        <constraints nullable="false"/>
+      </column>
 
-      <column name="respiratory_rate" type="integer"/>
+      <column name="respiratory_rate" type="integer">
+        <constraints nullable="false"/>
+      </column>
 
       <column name="notes" type="text"/>
 
