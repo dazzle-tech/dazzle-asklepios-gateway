@@ -106,6 +106,10 @@
         <constraints nullable="false"/>
       </column>
 
+      <column name="started_by" type="varchar(50)"/>
+
+      <column name="started_date" type="timestamp"/>
+
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
@@ -129,6 +133,18 @@
             (encounter_reason = 'FOLLOW_UP' AND follow_up_encounter_id IS NOT NULL)
               OR
             (encounter_reason <> 'FOLLOW_UP' AND follow_up_encounter_id IS NULL)
+            );
+      ]]>
+        </sql>
+
+    <sql dbms="postgresql">
+            <![CDATA[
+      ALTER TABLE patient_encounters
+        ADD CONSTRAINT ck_patient_encounters_ongoing_required
+          CHECK (
+            (status = 'ONGOING' AND started_by IS NOT NULL and started_date IS NOT NULL )
+              OR
+            (status <> 'ONGOING')
             );
       ]]>
         </sql>
