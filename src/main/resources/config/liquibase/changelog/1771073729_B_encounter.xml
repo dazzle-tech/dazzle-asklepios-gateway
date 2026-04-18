@@ -106,6 +106,10 @@
         <constraints nullable="false"/>
       </column>
 
+      <column name="started_by" type="varchar(50)"/>
+
+      <column name="started_date" type="timestamp"/>
+
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
@@ -131,7 +135,19 @@
             (encounter_reason <> 'FOLLOW_UP' AND follow_up_encounter_id IS NULL)
             );
       ]]>
-        </sql>
+    </sql>
+
+    <sql dbms="postgresql">
+            <![CDATA[
+      ALTER TABLE patient_encounters
+        ADD CONSTRAINT ck_patient_encounters_ongoing_required
+          CHECK (
+            (status = 'ONGOING' AND started_by IS NOT NULL and started_date IS NOT NULL )
+              OR
+            (status <> 'ONGOING')
+            );
+      ]]>
+    </sql>
 
     <sql dbms="postgresql">
 <![CDATA[
@@ -145,7 +161,7 @@
               OR status IN ('NEW', 'WAITING_TRIAGE', 'PENDING_PAYMENT')
             );
       ]]>
-</sql>
+    </sql>
 
     <sql dbms="postgresql">
             <![CDATA[
@@ -157,7 +173,7 @@
             (status <> 'DISCHARGED')
             );
       ]]>
-        </sql>
+    </sql>
 
     <sql dbms="postgresql">
             <![CDATA[
@@ -169,7 +185,7 @@
             (status <> 'DISCHARGED' AND discharge_type IS NULL AND discharge_at IS NULL)
             );
       ]]>
-        </sql>
+    </sql>
 
     <addUniqueConstraint
       tableName="patient_encounters"
@@ -180,14 +196,6 @@
       tableName="patient_encounters"
       columnNames="department_id,encounter_date,department_daily_sequence_number"
       constraintName="unique_department_date_sequence_number"/>
-
-    <sql dbms="postgresql">
-            <![CDATA[
-      CREATE UNIQUE INDEX IF NOT EXISTS uq_patient_one_ongoing_encounter
-        ON patient_encounters (patient_id)
-        WHERE status = 'ONGOING';
-      ]]>
-        </sql>
 
     <createTable tableName="department_daily_encounter_sequence_counter">
 
@@ -250,38 +258,7 @@
         FOR EACH ROW
         EXECUTE FUNCTION set_department_daily_sequence_number_for_patient_encounter();
       ]]>
-        </sql>
-
-    <sql dbms="postgresql" splitStatements="false" stripComments="true">
-            <![CDATA[
-      CREATE OR REPLACE FUNCTION validate_emergency_encounter_creation()
-                RETURNS trigger AS $$
-      BEGIN
-                    IF NEW.encounter_type = 'EMERGENCY'
-                       AND EXISTS (
-                           SELECT 1
-                           FROM patient_encounters pe
-                           WHERE pe.patient_id = NEW.patient_id
-                             AND pe.status = 'ONGOING'
-                             AND (TG_OP = 'INSERT' OR pe.id <> NEW.id)
-                       )
-                    THEN
-                        RAISE EXCEPTION 'Patient already has an ongoing encounter. Cannot create a new emergency encounter.';
-      END IF;
-
-      RETURN NEW;
-      END;
-                $$ LANGUAGE plpgsql;
-
-      DROP TRIGGER IF EXISTS trg_validate_emergency_encounter_creation
-                    ON patient_encounters;
-
-      CREATE TRIGGER trg_validate_emergency_encounter_creation
-        BEFORE INSERT OR UPDATE ON patient_encounters
-                           FOR EACH ROW
-                           EXECUTE FUNCTION validate_emergency_encounter_creation();
-      ]]>
-        </sql>
+    </sql>
 
   </changeSet>
 
