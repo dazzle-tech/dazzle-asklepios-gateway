@@ -30,13 +30,6 @@
       <column name="service_id" type="bigint"/>
       <column name="procedure_id" type="bigint"/>
 
-
-      <column name="service_source" type="varchar(50)">
-        <constraints nullable="false"/>
-      </column>
-
-      <column name="source_id" type="bigint"/>
-
       <column name="quantity" type="bigint" defaultValueNumeric="1">
         <constraints nullable="false"/>
       </column>
@@ -128,19 +121,19 @@
       referencedColumnNames="id"
       constraintName="fk_psp_procedure"/>
 
-    <!--    <addForeignKeyConstraint-->
-    <!--      baseTableName="patient_services_and_products"-->
-    <!--      baseColumnNames="billing_invoice_id"-->
-    <!--      referencedTableName="billing_invoice"-->
-    <!--      referencedColumnNames="id"-->
-    <!--      constraintName="fk_psp_billing_invoice"/>-->
+<!--    <addForeignKeyConstraint-->
+<!--      baseTableName="patient_services_and_products"-->
+<!--      baseColumnNames="billing_invoice_id"-->
+<!--      referencedTableName="billing_invoice"-->
+<!--      referencedColumnNames="id"-->
+<!--      constraintName="fk_psp_billing_invoice"/>-->
 
-    <!--    <addForeignKeyConstraint-->
-    <!--      baseTableName="patient_services_and_products"-->
-    <!--      baseColumnNames="billing_invoice_item_id"-->
-    <!--      referencedTableName="billing_invoice_item"-->
-    <!--      referencedColumnNames="id"-->
-    <!--      constraintName="fk_psp_billing_invoice_item"/>-->
+<!--    <addForeignKeyConstraint-->
+<!--      baseTableName="patient_services_and_products"-->
+<!--      baseColumnNames="billing_invoice_item_id"-->
+<!--      referencedTableName="billing_invoice_item"-->
+<!--      referencedColumnNames="id"-->
+<!--      constraintName="fk_psp_billing_invoice_item"/>-->
 
     <sql dbms="postgresql">
       <![CDATA[
