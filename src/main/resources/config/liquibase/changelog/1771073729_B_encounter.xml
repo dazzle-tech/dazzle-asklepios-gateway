@@ -133,7 +133,7 @@
             (encounter_reason = 'FOLLOW_UP' AND follow_up_encounter_id IS NOT NULL)
               OR
             (encounter_reason <> 'FOLLOW_UP' AND follow_up_encounter_id IS NULL)
-            );
+          );
       ]]>
     </sql>
 
@@ -145,7 +145,7 @@
             (status = 'ONGOING' AND started_by IS NOT NULL and started_date IS NOT NULL )
               OR
             (status <> 'ONGOING')
-            );
+          );
       ]]>
     </sql>
 
@@ -159,7 +159,7 @@
           CHECK (
             status <> 'CANCELLED'
               OR status IN ('NEW', 'WAITING_TRIAGE', 'PENDING_PAYMENT')
-            );
+          );
       ]]>
     </sql>
 
@@ -171,7 +171,7 @@
             (status = 'DISCHARGED' AND discharge_type IS NOT NULL AND discharge_at IS NOT NULL)
               OR
             (status <> 'DISCHARGED')
-            );
+          );
       ]]>
     </sql>
 
@@ -183,7 +183,7 @@
             (status = 'DISCHARGED')
               OR
             (status <> 'DISCHARGED' AND discharge_type IS NULL AND discharge_at IS NULL)
-            );
+          );
       ]]>
     </sql>
 
