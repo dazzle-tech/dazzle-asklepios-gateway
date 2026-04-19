@@ -126,7 +126,7 @@
     </createTable>
 
     <sql dbms="postgresql">
-            <![CDATA[
+      <![CDATA[
       ALTER TABLE patient_encounters
         ADD CONSTRAINT ck_patient_encounters_follow_up_required
           CHECK (
@@ -138,7 +138,7 @@
     </sql>
 
     <sql dbms="postgresql">
-            <![CDATA[
+      <![CDATA[
       ALTER TABLE patient_encounters
         ADD CONSTRAINT ck_patient_encounters_ongoing_required
           CHECK (
@@ -150,7 +150,7 @@
     </sql>
 
     <sql dbms="postgresql">
-<![CDATA[
+      <![CDATA[
       ALTER TABLE patient_encounters
       DROP CONSTRAINT IF EXISTS ck_patient_encounters_cancel_only_when_new;
 
@@ -164,7 +164,7 @@
     </sql>
 
     <sql dbms="postgresql">
-            <![CDATA[
+      <![CDATA[
       ALTER TABLE patient_encounters
         ADD CONSTRAINT ck_patient_encounters_discharge_fields_required
           CHECK (
@@ -176,7 +176,7 @@
     </sql>
 
     <sql dbms="postgresql">
-            <![CDATA[
+      <![CDATA[
       ALTER TABLE patient_encounters
         ADD CONSTRAINT ck_patient_encounters_discharge_fields_only_when_discharged
           CHECK (
@@ -222,7 +222,7 @@
       constraintName="unique_department_daily_sequence_counter"/>
 
     <sql dbms="postgresql" splitStatements="false" stripComments="true">
-            <![CDATA[
+      <![CDATA[
       CREATE OR REPLACE FUNCTION set_department_daily_sequence_number_for_patient_encounter()
                 RETURNS trigger AS $$
                 DECLARE
@@ -257,6 +257,39 @@
         BEFORE INSERT ON patient_encounters
         FOR EACH ROW
         EXECUTE FUNCTION set_department_daily_sequence_number_for_patient_encounter();
+      ]]>
+    </sql>
+
+    <sql dbms="postgresql" splitStatements="false" stripComments="true">
+      <![CDATA[
+      CREATE OR REPLACE FUNCTION validate_emergency_encounter_creation()
+                RETURNS trigger AS $$
+      BEGIN
+                    IF NEW.encounter_type = 'EMERGENCY'
+                       AND NEW.status = 'ONGOING'
+                       AND EXISTS (
+                           SELECT 1
+                           FROM patient_encounters pe
+                           WHERE pe.patient_id = NEW.patient_id
+                             AND pe.status = 'ONGOING'
+                             AND pe.encounter_type = 'EMERGENCY'
+                             AND (TG_OP = 'INSERT' OR pe.id <> NEW.id)
+                       )
+                    THEN
+                        RAISE EXCEPTION 'Patient already has an ongoing emergency encounter. Cannot create another ongoing emergency encounter.';
+      END IF;
+
+      RETURN NEW;
+      END;
+                $$ LANGUAGE plpgsql;
+
+      DROP TRIGGER IF EXISTS trg_validate_emergency_encounter_creation
+                    ON patient_encounters;
+
+      CREATE TRIGGER trg_validate_emergency_encounter_creation
+        BEFORE INSERT OR UPDATE ON patient_encounters
+                           FOR EACH ROW
+                           EXECUTE FUNCTION validate_emergency_encounter_creation();
       ]]>
     </sql>
 
