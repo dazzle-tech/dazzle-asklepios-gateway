@@ -126,31 +126,31 @@
     </createTable>
 
     <sql dbms="postgresql">
-            <![CDATA[
+      <![CDATA[
       ALTER TABLE patient_encounters
         ADD CONSTRAINT ck_patient_encounters_follow_up_required
           CHECK (
             (encounter_reason = 'FOLLOW_UP' AND follow_up_encounter_id IS NOT NULL)
               OR
             (encounter_reason <> 'FOLLOW_UP' AND follow_up_encounter_id IS NULL)
-            );
+          );
       ]]>
-        </sql>
+    </sql>
 
     <sql dbms="postgresql">
-            <![CDATA[
+      <![CDATA[
       ALTER TABLE patient_encounters
         ADD CONSTRAINT ck_patient_encounters_ongoing_required
           CHECK (
             (status = 'ONGOING' AND started_by IS NOT NULL and started_date IS NOT NULL )
               OR
             (status <> 'ONGOING')
-            );
+          );
       ]]>
-        </sql>
+    </sql>
 
     <sql dbms="postgresql">
-<![CDATA[
+      <![CDATA[
       ALTER TABLE patient_encounters
       DROP CONSTRAINT IF EXISTS ck_patient_encounters_cancel_only_when_new;
 
@@ -159,33 +159,33 @@
           CHECK (
             status <> 'CANCELLED'
               OR status IN ('NEW', 'WAITING_TRIAGE', 'PENDING_PAYMENT')
-            );
+          );
       ]]>
-</sql>
+    </sql>
 
     <sql dbms="postgresql">
-            <![CDATA[
+      <![CDATA[
       ALTER TABLE patient_encounters
         ADD CONSTRAINT ck_patient_encounters_discharge_fields_required
           CHECK (
             (status = 'DISCHARGED' AND discharge_type IS NOT NULL AND discharge_at IS NOT NULL)
               OR
             (status <> 'DISCHARGED')
-            );
+          );
       ]]>
-        </sql>
+    </sql>
 
     <sql dbms="postgresql">
-            <![CDATA[
+      <![CDATA[
       ALTER TABLE patient_encounters
         ADD CONSTRAINT ck_patient_encounters_discharge_fields_only_when_discharged
           CHECK (
             (status = 'DISCHARGED')
               OR
             (status <> 'DISCHARGED' AND discharge_type IS NULL AND discharge_at IS NULL)
-            );
+          );
       ]]>
-        </sql>
+    </sql>
 
     <addUniqueConstraint
       tableName="patient_encounters"
@@ -196,14 +196,6 @@
       tableName="patient_encounters"
       columnNames="department_id,encounter_date,department_daily_sequence_number"
       constraintName="unique_department_date_sequence_number"/>
-
-    <sql dbms="postgresql">
-            <![CDATA[
-      CREATE UNIQUE INDEX IF NOT EXISTS uq_patient_one_ongoing_encounter
-        ON patient_encounters (patient_id)
-        WHERE status = 'ONGOING';
-      ]]>
-        </sql>
 
     <createTable tableName="department_daily_encounter_sequence_counter">
 
@@ -230,7 +222,7 @@
       constraintName="unique_department_daily_sequence_counter"/>
 
     <sql dbms="postgresql" splitStatements="false" stripComments="true">
-            <![CDATA[
+      <![CDATA[
       CREATE OR REPLACE FUNCTION set_department_daily_sequence_number_for_patient_encounter()
                 RETURNS trigger AS $$
                 DECLARE
@@ -266,23 +258,25 @@
         FOR EACH ROW
         EXECUTE FUNCTION set_department_daily_sequence_number_for_patient_encounter();
       ]]>
-        </sql>
+    </sql>
 
     <sql dbms="postgresql" splitStatements="false" stripComments="true">
-            <![CDATA[
+      <![CDATA[
       CREATE OR REPLACE FUNCTION validate_emergency_encounter_creation()
                 RETURNS trigger AS $$
       BEGIN
                     IF NEW.encounter_type = 'EMERGENCY'
+                       AND NEW.status = 'ONGOING'
                        AND EXISTS (
                            SELECT 1
                            FROM patient_encounters pe
                            WHERE pe.patient_id = NEW.patient_id
                              AND pe.status = 'ONGOING'
+                             AND pe.encounter_type = 'EMERGENCY'
                              AND (TG_OP = 'INSERT' OR pe.id <> NEW.id)
                        )
                     THEN
-                        RAISE EXCEPTION 'Patient already has an ongoing encounter. Cannot create a new emergency encounter.';
+                        RAISE EXCEPTION 'Patient already has an ongoing emergency encounter. Cannot create another ongoing emergency encounter.';
       END IF;
 
       RETURN NEW;
@@ -297,7 +291,7 @@
                            FOR EACH ROW
                            EXECUTE FUNCTION validate_emergency_encounter_creation();
       ]]>
-        </sql>
+    </sql>
 
   </changeSet>
 
