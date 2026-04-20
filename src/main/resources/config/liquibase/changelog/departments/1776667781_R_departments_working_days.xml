@@ -6,12 +6,25 @@
     http://www.liquibase.org/xml/ns/dbchangelog
     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-  <changeSet id="00000000000019" author="Sondos">
+  <changeSet id="DEP_00000000000019" author="Sondos">
     <addColumn tableName="department">
-      <column name="working_days" type="json" defaultValueComputed="'[]'::json">
-        <constraints nullable="false"/>
-      </column>
+      <column name="working_days" type="json"/>
     </addColumn>
+  </changeSet>
+
+  <changeSet id="DEP_00000000000020" author="Sondos">
+    <addDefaultValue
+      tableName="department"
+      columnName="working_days"
+      defaultValueComputed="'[]'::json"/>
+    <update tableName="department">
+      <column name="working_days" valueComputed="'[]'::json"/>
+      <where>working_days IS NULL</where>
+    </update>
+    <addNotNullConstraint
+      tableName="department"
+      columnName="working_days"
+      columnDataType="json"/>
   </changeSet>
 
 </databaseChangeLog>
