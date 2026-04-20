@@ -48,6 +48,9 @@
       <column name="require_practitioner" type="boolean" defaultValueBoolean="false"/>
       <column name="require_billing" type="boolean" defaultValueBoolean="false"/>
       <column name="require_pre_assessment" type="boolean" defaultValueBoolean="false"/>
+      <column name="working_days" type="json">
+        <constraints nullable="false"/>
+      </column>
     </createTable>
 
     <addForeignKeyConstraint
