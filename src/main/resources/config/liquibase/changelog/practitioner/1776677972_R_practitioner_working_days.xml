@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="PRA_00000000000024" author="Rawan-Yahya">
+    <addColumn tableName="practitioner">
+      <column name="working_days" type="json"/>
+    </addColumn>
+  </changeSet>
+
+  <changeSet id="PRA_00000000000025" author="Rawan-Yahya">
+    <addDefaultValue
+      tableName="practitioner"
+      columnName="working_days"
+      defaultValueComputed="'[]'::json"/>
+    <update tableName="practitioner">
+      <column name="working_days" valueComputed="'[]'::json"/>
+      <where>working_days IS NULL</where>
+    </update>
+    <addNotNullConstraint
+      tableName="practitioner"
+      columnName="working_days"
+      columnDataType="json"/>
+  </changeSet>
+
+</databaseChangeLog>
