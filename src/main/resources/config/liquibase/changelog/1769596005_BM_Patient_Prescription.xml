@@ -44,7 +44,8 @@
       </column>
       <column name="to_facility_id" type="bigint"/>
       <column name="to_department_id" type="bigint"/>
-
+      <column name="submited_by" type="varchar(100)" />
+      <column name="submited_date" type="timestamp" />
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
