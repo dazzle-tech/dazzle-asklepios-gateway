@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+  <changeSet id="QA000000000021" author="Qais">
+    <createTable tableName="dental_procedure">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false" foreignKeyName="fk_dental_procedure_patient"
+                     references="patients(id)"/>
+      </column>
+
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="false" foreignKeyName="fk_dental_procedure_encounter"
+                     references="patient_encounters(id)"/>
+      </column>
+
+      <column name="service_id" type="bigint">
+        <constraints nullable="false" foreignKeyName="fk_dental_procedure_service"
+                     references="service(id)"/>
+      </column>
+
+      <column name="tooth_number" type="varchar(10)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="surface" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="anesthesia_used" type="varchar(255)">
+        <constraints nullable="true"/>
+      </column>
+
+      <column name="dose" type="decimal(10,2)">
+        <constraints nullable="true"/>
+      </column>
+
+      <column name="unit" type="varchar(50)">
+        <constraints nullable="true"/>
+      </column>
+
+      <column name="filling_material" type="varchar(255)">
+        <constraints nullable="true"/>
+      </column>
+
+      <column name="cdt_code_id" type="bigint">
+        <constraints nullable="true" foreignKeyName="fk_dental_procedure_cdt_code"
+                     references="cdt_code(id)"/>
+      </column>
+
+      <column name="notes" type="text">
+        <constraints nullable="true"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp" defaultValueDate="CURRENT_TIMESTAMP">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)">
+        <constraints nullable="true"/>
+      </column>
+
+      <column name="last_modified_date" type="timestamp">
+        <constraints nullable="true"/>
+      </column>
+
+      <column name="is_cancelled" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+    </createTable>
+  </changeSet>
+
+</databaseChangeLog>
