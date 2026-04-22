@@ -325,5 +325,19 @@ public class UserResource {
             .map(headers -> ResponseEntity.ok().headers(headers).body(userService.getActiveAdmins(pageable)));
     }
 
+    @PostMapping("/users/{login}/resend-create-password-email")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
+    public Mono<ResponseEntity<Void>> resendCreatePasswordEmail(@PathVariable("login") String login) {
+        LOG.debug("REST request to resend create-password email for user : {}", login);
 
+        return userService
+            .resendCreatePasswordEmail(login)
+            .then(
+                Mono.just(
+                    ResponseEntity.noContent()
+                        .headers(HeaderUtil.createAlert(applicationName, "userManagement.createPasswordEmailResent", login))
+                        .build()
+                )
+            );
+    }
 }
