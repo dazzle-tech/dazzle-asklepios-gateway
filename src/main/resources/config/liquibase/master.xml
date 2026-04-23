@@ -213,5 +213,7 @@
  <include file="/config/liquibase/changelog/1776161006_H_Patient_Urgent_Care_Medication_Order.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1776164078_S_availability_template_interval_break.xml"
            relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1776673436_Q_Dental_Procedure.xml" relativeToChangelogFile="false" />
+
 </databaseChangeLog>
 
