@@ -431,14 +431,13 @@ public class UserService {
                             now.minus(CREATE_PASSWORD_KEY_EXPIRATION_HOURS, ChronoUnit.HOURS)
                         );
 
-                // إذا ما في توكن صالحة → أنشئ جديدة
                 if (!hasValidToken) {
                     token = RandomUtil.generateResetKey();
                     user.setResetKey(token);
                     user.setResetDate(now);
                 }
 
-                String finalToken = token; // ✅ حل مشكلة lambda
+                String finalToken = token;
 
                 return saveUser(user)
                     .flatMap(savedUser ->
@@ -450,5 +449,23 @@ public class UserService {
                     );
             });
     }
+    @Transactional
+    public Mono<Void> toggleActivation(String login) {
+        return userRepository
+            .findOneByLogin(login.toLowerCase())
+            .switchIfEmpty(Mono.error(new RuntimeException("User not found")))
+            .flatMap(user -> {
 
+                boolean newState = !Boolean.TRUE.equals(user.isActivated());
+                user.setActivated(newState);
+
+                if (!newState) {
+                    user.setResetKey(null);
+                    user.setResetDate(null);
+                }
+
+                return userRepository.save(user);
+            })
+            .then();
+    }
 }
