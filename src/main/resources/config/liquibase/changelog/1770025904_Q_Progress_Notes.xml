@@ -99,6 +99,10 @@
 
   </changeSet>
 
-  <include file="config/liquibase/sql/progress_notes_triggers.sql" relativeToChangelogFile="false"/>
+  <changeSet id="QA0000000000017_TRIGGERS" author="qais" runOnChange="true">
+    <sqlFile path="config/liquibase/sql/progress_notes_triggers.sql"
+             relativeToChangelogFile="false"
+             splitStatements="false"/>
+  </changeSet>
 
 </databaseChangeLog>
