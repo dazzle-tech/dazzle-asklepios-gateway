@@ -14,7 +14,7 @@
   <include file="/config/liquibase/changelog/v0.0.0_initial_schema.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1726297332_H_AuthorityAndScreen.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1758431905_H_RoleScreen.xml" relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/departments/1758455979_S_departments.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1758455979_S_departments.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/departments/1776667781_R_departments_working_days.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1759823656_S_UserDepartments.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1760438060_BM_Language.xml" relativeToChangelogFile="false"/>
@@ -25,6 +25,7 @@
   <include file="/config/liquibase/changelog/1760993322_B_service.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1760993358_B_serviceItems.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1746352745_H_Practitioner.xml"/>
+  <include file="/config/liquibase/changelog/practitioner/1776677972_R_practitioner_working_days.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1761035006_B_allergens.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1763384457_P_patient.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1774339192_BM_availability_template.xml" relativeToChangelogFile="false"/>
@@ -213,5 +214,7 @@
  <include file="/config/liquibase/changelog/1776161006_H_Patient_Urgent_Care_Medication_Order.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1776164078_S_availability_template_interval_break.xml"
            relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1776673436_Q_Dental_Procedure.xml" relativeToChangelogFile="false" />
+
 </databaseChangeLog>
 
