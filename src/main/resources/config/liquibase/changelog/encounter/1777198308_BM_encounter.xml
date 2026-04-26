@@ -8,6 +8,10 @@
 
   <changeSet id="1777198308-fix-cancel-rule-trigger" author="BushraMashaiekh">
 
+    <addColumn tableName="patient_encounters">
+      <column name="physical_examination_summery" type="text"/>
+    </addColumn>
+
     <sql dbms="postgresql" splitStatements="false" stripComments="true">
       <![CDATA[
       ALTER TABLE patient_encounters
