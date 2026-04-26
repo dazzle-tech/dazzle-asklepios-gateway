@@ -38,6 +38,10 @@ spring:
   liquibase:
     contexts: stage
     url: jdbc:postgresql://80.238.227.209:9356/asklepios
+    parameters:
+      hl7.integrationSchema: '"HL7_INTEGRATION"'
+      hl7.events.createPatient: CREATE_PATIENT
+
   mail:
     host: localhost
     port: 25
@@ -277,3 +281,9 @@ asklepios:
     base-url: http://his.tst.onehealth.com.sa/
     username: systemask73@gmail.com
     password: ocdh hvae hhsz cyxc
+hl7:
+  integrationSchema: testIntegrationDB
+  tableEvent: hl7_event
+  events:
+    createPatient: CREATE_PATIENT
+    updatePatient: UPDATE_PATIENT
