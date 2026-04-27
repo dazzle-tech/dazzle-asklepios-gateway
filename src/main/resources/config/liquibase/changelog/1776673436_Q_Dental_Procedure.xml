@@ -23,8 +23,14 @@
       </column>
 
       <column name="service_id" type="bigint">
-        <constraints nullable="false" foreignKeyName="fk_dental_procedure_service"
+        <constraints nullable="true" foreignKeyName="fk_dental_procedure_service"
                      references="service(id)"/>
+      </column>
+
+      <column name="procedure_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_dental_procedure_procedure"
+                     references="procedure(id)"/>
       </column>
 
       <column name="tooth_number" type="varchar(10)">
