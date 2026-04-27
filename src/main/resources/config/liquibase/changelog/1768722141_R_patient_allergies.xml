@@ -35,7 +35,7 @@
 
       <column name="certainty" type="varchar(50)"/>
 
-      <column name="treatment_strategy" type="varchar(50)" />
+      <column name="treatment_strategy" type="varchar(50)"/>
 
       <column name="onset" type="varchar(50)"/>
 
@@ -43,31 +43,31 @@
         <constraints nullable="false"/>
       </column>
 
-      <column name="onset_date" type="timestamp" />
+      <column name="onset_date" type="timestamp"/>
 
-      <column name="type_of_propensity" type="varchar(50)" />
+      <column name="type_of_propensity" type="varchar(50)"/>
 
-      <column name="by_patient" type="boolean"  defaultValue="true">
+      <column name="by_patient" type="boolean" defaultValue="true">
         <constraints nullable="false"/>
       </column>
 
       <column name="source_of_information" type="varchar(50)"/>
 
-      <column name="allergic_reactions" type="varchar(255)"/>
+      <column name="allergic_reactions" type="Text"/>
 
       <column name="note" type="Text"/>
 
       <column name="status" type="varchar(50)" defaultValue="ACTIVE"/>
 
-      <column name="resolved_by" type="varchar(50)" />
+      <column name="resolved_by" type="varchar(50)"/>
 
       <column name="resolved_date" type="timestamp"/>
 
-      <column name="cancelled_by" type="varchar(50)" />
+      <column name="cancelled_by" type="varchar(50)"/>
 
       <column name="cancelled_date" type="timestamp"/>
 
-      <column name="cancellation_reason" type="Text" />
+      <column name="cancellation_reason" type="Text"/>
 
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>
@@ -110,15 +110,17 @@
       referencedColumnNames="id"
       constraintName="fk_patient_allergies_patient_id"/>
 
-    <addUniqueConstraint
-      tableName="patient_allergies"
-      columnNames="patient_id,allergen_type,allergen_id"
-      constraintName="uk_patient_allergies_allergen"/>
+    <sql>
+      CREATE UNIQUE INDEX uk_patient_allergies_allergen
+      ON patient_allergies (patient_id, allergen_type, allergen_id)
+      WHERE status IN ('ACTIVE', 'RESOLVED');
+    </sql>
 
-    <addUniqueConstraint
-      tableName="patient_allergies"
-      columnNames="patient_id,allergen_type,medication_class_id"
-      constraintName="uk_patient_allergies_medication_class"/>
+    <sql>
+      CREATE UNIQUE INDEX uk_patient_allergies_medication_class
+      ON patient_allergies (patient_id, allergen_type, medication_class_id)
+      WHERE status IN ('ACTIVE', 'RESOLVED');
+    </sql>
 
   </changeSet>
 

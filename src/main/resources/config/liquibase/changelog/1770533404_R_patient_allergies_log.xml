@@ -127,7 +127,7 @@
     </createIndex>
   </changeSet>
 
-  <changeSet id="R00000000000007_PATIENT_ALLERGIES_LOG" author="Rawan-Yahya200" runOnChange="true">
+  <changeSet id="R00000000000007_PATIENT_ALLERGIES_LOG_Trigger" author="Rawan-Yahya200" runOnChange="true">
     <sqlFile path="config/liquibase/sql/Patient_Allergies_Log.sql"
              relativeToChangelogFile="false"
              splitStatements="false"/>

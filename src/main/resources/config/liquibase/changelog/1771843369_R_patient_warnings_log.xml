@@ -46,17 +46,21 @@
         <constraints nullable="false"/>
       </column>
 
-      <column name="onset_date_undefined" type="boolean"/>
+      <column name="onset_date_undefined" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
 
       <column name="onset_date" type="timestamp"/>
 
-      <column name="by_patient" type="boolean"/>
+      <column name="by_patient" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
 
       <column name="source_of_information" type="varchar(50)"/>
 
-      <column name="note" type="varchar(255)"/>
+      <column name="note" type="Text"/>
 
-      <column name="action_taken" type="varchar(255)"/>
+      <column name="action_taken" type="Text"/>
 
       <column name="status" type="varchar(50)"/>
 
@@ -68,7 +72,7 @@
 
       <column name="cancelled_date" type="timestamp"/>
 
-      <column name="cancellation_reason" type="varchar(50)"/>
+      <column name="cancellation_reason" type="Text"/>
 
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>
@@ -116,8 +120,8 @@
     </createIndex>
 
   </changeSet>
-  
-  <changeSet id="R00000000000007_PATIENT_WARNINGS_LOG" author="Rawan-Yahya200" runOnChange="true">
+
+  <changeSet id="R00000000000007_PATIENT_WARNINGS_LOG_Trigger" author="Rawan-Yahya200" runOnChange="true">
     <sqlFile path="config/liquibase/sql/Patient_Warnings_Log.sql"
              relativeToChangelogFile="false"
              splitStatements="false"/>
