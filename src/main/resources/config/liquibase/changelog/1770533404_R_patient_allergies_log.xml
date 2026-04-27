@@ -66,7 +66,7 @@
 
       <column name="allergic_reactions" type="varchar(255)"/>
 
-      <column name="note" type="varchar(50)"/>
+      <column name="note" type="Text"/>
 
       <column name="status" type="varchar(50)"/>
 
@@ -78,7 +78,7 @@
 
       <column name="cancelled_date" type="timestamp"/>
 
-      <column name="cancellation_reason" type="varchar(50)"/>
+      <column name="cancellation_reason" type="Text"/>
 
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>
@@ -127,6 +127,9 @@
     </createIndex>
   </changeSet>
 
-  <include file="config/liquibase/sql/Patient_Allergies_Log.sql" relativeToChangelogFile="false"/>
-
+  <changeSet id="R00000000000007_PATIENT_ALLERGIES_LOG" author="Rawan-Yahya200" runOnChange="true">
+    <sqlFile path="config/liquibase/sql/Patient_Allergies_Log.sql"
+             relativeToChangelogFile="false"
+             splitStatements="false"/>
+  </changeSet>
 </databaseChangeLog>
