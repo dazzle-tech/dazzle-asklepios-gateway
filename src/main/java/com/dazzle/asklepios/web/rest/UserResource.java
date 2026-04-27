@@ -325,5 +325,34 @@ public class UserResource {
             .map(headers -> ResponseEntity.ok().headers(headers).body(userService.getActiveAdmins(pageable)));
     }
 
+    @PostMapping("/users/resend-create-password-email/{login}")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
+    public Mono<ResponseEntity<Void>> resendCreatePasswordEmail(@PathVariable("login") String login) {
+        LOG.debug("REST request to resend create-password email for user : {}", login);
 
+        return userService
+            .resendCreatePasswordEmail(login)
+            .then(
+                Mono.just(
+                    ResponseEntity.noContent()
+                        .headers(HeaderUtil.createAlert(applicationName, "userManagement.createPasswordEmailResent", login))
+                        .build()
+                )
+            );
+    }
+
+    @PostMapping("/users/{login}/toggle-activation")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
+    public Mono<ResponseEntity<Void>> toggleActivation(@PathVariable String login) {
+        LOG.debug("REST request to toggle activation for user : {}", login);
+
+        return userService.toggleActivation(login)
+            .then(
+                Mono.just(
+                    ResponseEntity.ok()
+                        .headers(HeaderUtil.createAlert(applicationName, "userManagement.toggled", login))
+                        .build()
+                )
+            );
+    }
 }
