@@ -405,4 +405,67 @@ public class UserService {
             .doOnNext(u -> LOG.debug("[BULK FIND USERS] found user id={}", u.getId()));
     }
 
+    @Transactional
+    public Mono<Void> resendCreatePasswordEmail(String login) {
+        return userRepository
+            .findOneByLogin(login.toLowerCase())
+            .switchIfEmpty(Mono.error(new RuntimeException("User not found")))
+            .flatMap(user -> {
+
+                if (user.getEmail() == null || user.getEmail().trim().isEmpty()) {
+                    return Mono.error(new RuntimeException("User email is missing"));
+                }
+
+                if (Boolean.TRUE.equals(user.isActivated())) {
+                    return Mono.error(new RuntimeException("User is already activated"));
+                }
+
+                Instant now = Instant.now();
+
+                String token = user.getResetKey();
+
+                boolean hasValidToken =
+                    token != null &&
+                        user.getResetDate() != null &&
+                        user.getResetDate().isAfter(
+                            now.minus(CREATE_PASSWORD_KEY_EXPIRATION_HOURS, ChronoUnit.HOURS)
+                        );
+
+                if (!hasValidToken) {
+                    token = RandomUtil.generateResetKey();
+                    user.setResetKey(token);
+                    user.setResetDate(now);
+                }
+
+                String finalToken = token;
+
+                return saveUser(user)
+                    .flatMap(savedUser ->
+                        Mono.fromRunnable(() ->
+                                mailService.sendOneTimeSetPasswordLinkMail(savedUser, finalToken)
+                            )
+                            .subscribeOn(Schedulers.boundedElastic())
+                            .then()
+                    );
+            });
+    }
+    @Transactional
+    public Mono<Void> toggleActivation(String login) {
+        return userRepository
+            .findOneByLogin(login.toLowerCase())
+            .switchIfEmpty(Mono.error(new RuntimeException("User not found")))
+            .flatMap(user -> {
+
+                boolean newState = !Boolean.TRUE.equals(user.isActivated());
+                user.setActivated(newState);
+
+                if (!newState) {
+                    user.setResetKey(null);
+                    user.setResetDate(null);
+                }
+
+                return userRepository.save(user);
+            })
+            .then();
+    }
 }
