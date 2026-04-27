@@ -15,7 +15,8 @@
   <include file="/config/liquibase/changelog/1726297332_H_AuthorityAndScreen.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1758431905_H_RoleScreen.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1758455979_S_departments.xml" relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/departments/1776667781_R_departments_working_days.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/departments/1776667781_R_departments_working_days.xml"
+           relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1759823656_S_UserDepartments.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1760438060_BM_Language.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1760550923_BM_Language_Translation.xml" relativeToChangelogFile="false"/>
@@ -25,7 +26,8 @@
   <include file="/config/liquibase/changelog/1760993322_B_service.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1760993358_B_serviceItems.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1746352745_H_Practitioner.xml"/>
-  <include file="/config/liquibase/changelog/practitioner/1776677972_R_practitioner_working_days.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/practitioner/1776677972_R_practitioner_working_days.xml"
+           relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1761035006_B_allergens.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1763384457_P_patient.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1774339192_BM_availability_template.xml" relativeToChangelogFile="false"/>
@@ -199,22 +201,26 @@
   <include file="/config/liquibase/changelog/1769596005_BM_Patient_Prescription.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1769071937_BM_Patient_Prescription_Medications.xml"
            relativeToChangelogFile="false"/>
+  <include
+    file="/config/liquibase/changelog/patientPrescriptionMedication/1777282256_S_PatientPrescriptionMedications.xml"
+    relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1769523307_B_referralRequests.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1773745759_S_OrganizationHoliday.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1774280357_S_departmentServices.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1774280336_S_PolicyDefinition.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1774280532_S_skillDefinition.xml" relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/1774252400_B_room.xml" relativeToChangelogFile="false" />
-  <include file="/config/liquibase/changelog/1774265919_B_bed.xml" relativeToChangelogFile="false" />
-  <include file="/config/liquibase/changelog/1774275632_B_bedRoomServices.xml" relativeToChangelogFile="false" />
-  <include file="/config/liquibase/changelog/1774448712_B_encounterAssignToBed.xml" relativeToChangelogFile="false" />
-  <include file="/config/liquibase/changelog/1774782462_B_bedTransactions.xml" relativeToChangelogFile="false" />
-  <include file="/config/liquibase/changelog/1775554145_Q_CurrentMedication.xml" relativeToChangelogFile="false" />
-  <include file="/config/liquibase/changelog/1776165512_BM_Appointment_Request.xml" relativeToChangelogFile="false" />
- <include file="/config/liquibase/changelog/1776161006_H_Patient_Urgent_Care_Medication_Order.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1774252400_B_room.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1774265919_B_bed.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1774275632_B_bedRoomServices.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1774448712_B_encounterAssignToBed.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1774782462_B_bedTransactions.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1775554145_Q_CurrentMedication.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1776165512_BM_Appointment_Request.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1776161006_H_Patient_Urgent_Care_Medication_Order.xml"
+           relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1776164078_S_availability_template_interval_break.xml"
            relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/1776673436_Q_Dental_Procedure.xml" relativeToChangelogFile="false" />
+  <include file="/config/liquibase/changelog/1776673436_Q_Dental_Procedure.xml" relativeToChangelogFile="false"/>
 
 </databaseChangeLog>
 
