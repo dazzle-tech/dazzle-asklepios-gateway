@@ -41,7 +41,7 @@ spring:
     contexts: dev, faker
     url: jdbc:postgresql://localhost:5433/ask
     parameters:
-        hl7.integrationSchema: '"testIntegrationDB"'
+        hl7.integrationSchema: '"HL7_INTEGRATION"'
         hl7.events.patientRegistered: PATIENT_REGISTERED
         hl7.events.patientVisitCreated: PATIENT_VISIT_CREATED
         hl7.events.patientAdmitted: PATIENT_ADMITTED
@@ -279,13 +279,13 @@ asklepios:
         token-validity-in-seconds: 86400
         token-validity-in-seconds-for-remember-me: 2592000
   mail:
-    base-url: http://localhost:3100
+    base-url: http://localhost:3100/
     username: systemask73@gmail.com
     password: ocdh hvae hhsz cyxc
 
 
 hl7:
-  integrationSchema: testIntegrationDB
+  integrationSchema: HL7_INTEGRATION
   tableEvent: hl7_event
   events:
     patientRegistered: PATIENT_REGISTERED
