@@ -42,7 +42,10 @@
     </createIndex>
   </changeSet>
 
-    <include file="config/liquibase/sql/Report_Image_Status_Log.sql" relativeToChangelogFile="false"/>
-
+  <changeSet id="H000000000004_REPORT_IMAGE_STATUS_LOG_TRIGGERS" author="hanan253yahya" runOnChange="true">
+    <sqlFile path="config/liquibase/sql/Report_Image_Status_Log.sql"
+             relativeToChangelogFile="false"
+             splitStatements="false"/>
+  </changeSet>
 
 </databaseChangeLog>
