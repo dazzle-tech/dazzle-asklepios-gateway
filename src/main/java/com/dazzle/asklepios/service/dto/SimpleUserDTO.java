@@ -43,7 +43,7 @@ public class SimpleUserDTO implements Serializable {
 
     private boolean activated = false;
 
-    // ✅ true إذا resetKey موجود
+
     private Boolean hasResetKey;
 
     @Size(min = 2, max = 10)
