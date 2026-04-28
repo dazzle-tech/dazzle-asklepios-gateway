@@ -108,6 +108,4 @@
     />
 
   </changeSet>
-<include file="config/liquibase/sql/Lab_Result_Log.sql" relativeToChangelogFile="false"/>
-
 </databaseChangeLog>
