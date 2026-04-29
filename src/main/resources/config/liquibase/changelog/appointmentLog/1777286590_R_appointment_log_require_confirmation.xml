@@ -10,6 +10,10 @@
     <addColumn tableName="appointment_log">
       <column name="require_confirmation" type="boolean"/>
     </addColumn>
+    <addColumn tableName="appointment_log">
+      <column name="require_practitioner" type="boolean"/>
+    </addColumn>
+
   </changeSet>
 
   <changeSet id="APP_Log_00000000000003" author="Rawan-Yahya">
@@ -26,6 +30,21 @@
     <addNotNullConstraint
       tableName="appointment_log"
       columnName="require_confirmation"
+      columnDataType="boolean"/>
+
+    <addDefaultValue
+      tableName="appointment_log"
+      columnName="require_practitioner"
+      defaultValueBoolean="false"/>
+
+    <update tableName="appointment_log">
+      <column name="require_practitioner" valueBoolean="false"/>
+      <where>require_practitioner IS NULL</where>
+    </update>
+
+    <addNotNullConstraint
+      tableName="appointment_log"
+      columnName="require_practitioner"
       columnDataType="boolean"/>
   </changeSet>
 
