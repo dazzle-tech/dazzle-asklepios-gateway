@@ -35,11 +35,14 @@
   <include file="config/liquibase/changelog/1774339421_BM_availability_generation_batch.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1774339459_BM_appointment.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/appointment/1777285727_R_appointment_require_confirmation.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/appointmentLog/1777286590_R_appointment_log_require_confirmation.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1774352873_BM_availability_template_allowed_services.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1771073729_B_encounter.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/sql/encounter/hl7_encounter_registration_trigger.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/sql/encounter/hl7_discharge_encounter.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/encounter/1777198308_BM_encounter.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1757856381_H_duplication-candidate.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1760505952_S_patientAttachments.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1760518132_S_encounterAttachments.xml" relativeToChangelogFile="false"/>
@@ -130,7 +133,6 @@
   <include file="config/liquibase/changelog/1765198918_H_Price_List_Attributes.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1766317374_H_Diagnostic_Order_And_Test.xml"
            relativeToChangelogFile="false"/>
-  <include file="config/liquibase/sql/orders/hl7_order_create_trigger.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1767792976_H_diagnostic_order_test_technician_notes.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1767854260_H_Diagnostic_Order_Test_CollectSample.xml"
@@ -218,5 +220,6 @@
   <include file="/config/liquibase/changelog/1776164078_S_availability_template_interval_break.xml"
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1776673436_Q_Dental_Procedure.xml" relativeToChangelogFile="false" />
+
 </databaseChangeLog>
 

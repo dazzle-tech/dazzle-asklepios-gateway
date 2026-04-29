@@ -209,7 +209,8 @@ class UserRepositoryInternalImpl implements UserRepositoryInternal {
             u.phone_number,
             u.birth_date,
             u.gender,
-            u.job_role
+            u.job_role,
+            u.reset_key
         FROM app_user u
         WHERE 1 = 1
         """);

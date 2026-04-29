@@ -7,6 +7,7 @@
     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
   <changeSet id="R00000000000006" author="Rawan-Yahya200">
+
     <createTable tableName="patient_warnings">
       <column name="id" type="bigint" autoIncrement="true">
         <constraints primaryKey="true" nullable="false"/>
@@ -32,23 +33,25 @@
         <constraints nullable="false"/>
       </column>
 
-      <column name="onset_date_undefined" type="boolean" defaultValue="true">
+      <column name="onset_date_undefined" type="boolean" defaultValueBoolean="true">
         <constraints nullable="false"/>
       </column>
 
       <column name="onset_date" type="timestamp"/>
 
-      <column name="by_patient" type="boolean" defaultValue="true">
+      <column name="by_patient" type="boolean" defaultValueBoolean="true">
         <constraints nullable="false"/>
       </column>
 
       <column name="source_of_information" type="varchar(50)"/>
 
-      <column name="note" type="varchar(255)"/>
+      <column name="note" type="text"/>
 
-      <column name="action_taken" type="varchar(255)"/>
+      <column name="action_taken" type="text"/>
 
-      <column name="status" type="varchar(50)" defaultValue="ACTIVE"/>
+      <column name="status" type="varchar(50)" defaultValue="ACTIVE">
+        <constraints nullable="false"/>
+      </column>
 
       <column name="resolved_by" type="varchar(50)"/>
 
@@ -58,7 +61,7 @@
 
       <column name="cancelled_date" type="timestamp"/>
 
-      <column name="cancellation_reason" type="varchar(50)"/>
+      <column name="cancellation_reason" type="text"/>
 
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>
@@ -75,22 +78,23 @@
 
     <addForeignKeyConstraint
       baseTableName="patient_warnings"
+      baseColumnNames="patient_id"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+      constraintName="fk_patient_warnings_patient_id"/>
+
+    <addForeignKeyConstraint
+      baseTableName="patient_warnings"
       baseColumnNames="encounter_id"
       referencedTableName="patient_encounters"
       referencedColumnNames="id"
       constraintName="fk_patient_warnings_encounter"/>
 
-    <addUniqueConstraint
-      tableName="patient_warnings"
-      columnNames="patient_id,warning_type,warning"
-      constraintName="uk_patient_warning"/>
-
-    <addForeignKeyConstraint
-      baseTableName="patient_warnings"
-      baseColumnNames="patient_id"
-      referencedTableName="patients"
-      referencedColumnNames="id"
-      constraintName="fk_patient_warnings_patient_id"/>
+    <sql>
+      CREATE UNIQUE INDEX uk_patient_warning
+      ON patient_warnings (patient_id, warning_type, warning)
+      WHERE status IN ('ACTIVE', 'RESOLVED');
+    </sql>
 
   </changeSet>
 
