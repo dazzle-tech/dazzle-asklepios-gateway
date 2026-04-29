@@ -290,8 +290,9 @@ asklepios:
     username: systemask73@gmail.com
     password: ocdh hvae hhsz cyxc
 hl7:
-  integrationSchema: testIntegrationDB
+  integrationSchema: "HL7_INTEGRATION"
   tableEvent: hl7_event
   events:
     createPatient: CREATE_PATIENT
     updatePatient: UPDATE_PATIENT
+
