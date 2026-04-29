@@ -1,10 +1,12 @@
 -- config/liquibase/sql/appointment_Log.sql
 
-CREATE OR REPLACE FUNCTION public.trg_appointment_log_fn()
+CREATE
+OR REPLACE FUNCTION public.trg_appointment_log_fn()
 RETURNS trigger AS $$
 BEGIN
   -- INSERT: log full row snapshot.
-  IF TG_OP = 'INSERT' THEN
+  IF
+TG_OP = 'INSERT' THEN
     INSERT INTO public.appointment_log (
       appointment_id,
       operation_type,
@@ -36,6 +38,8 @@ BEGIN
       origin_name,
       note,
       follow_up_encounter_id,
+      require_confirmation,
+      require_practitioner,
       created_by,
       created_date,
       last_modified_by,
@@ -71,17 +75,20 @@ BEGIN
       NEW.origin_name,
       NEW.note,
       NEW.follow_up_encounter_id,
+      NEW.require_confirmation,
+      NEW.require_practitioner,
       NEW.created_by,
       NEW.created_date,
       NEW.last_modified_by,
       NEW.last_modified_date
     );
 
-    RETURN NEW;
-  END IF;
+RETURN NEW;
+END IF;
 
   -- UPDATE: log full row snapshot only when any field changed.
-  IF TG_OP = 'UPDATE' THEN
+  IF
+TG_OP = 'UPDATE' THEN
     IF ROW(OLD.*) IS DISTINCT FROM ROW(NEW.*) THEN
       INSERT INTO public.appointment_log (
         appointment_id,
@@ -114,6 +121,8 @@ BEGIN
         origin_name,
         note,
         follow_up_encounter_id,
+        require_confirmation,
+        require_practitioner,
         created_by,
         created_date,
         last_modified_by,
@@ -149,24 +158,28 @@ BEGIN
         NEW.origin_name,
         NEW.note,
         NEW.follow_up_encounter_id,
+        NEW.require_confirmation,
+        NEW.require_practitioner,
         NEW.created_by,
         NEW.created_date,
         NEW.last_modified_by,
         NEW.last_modified_date
       );
-    END IF;
+END IF;
 
-    RETURN NEW;
-  END IF;
+RETURN NEW;
+END IF;
 
-  RETURN NEW;
+RETURN NEW;
 END;
-$$ LANGUAGE plpgsql;
+$$
+LANGUAGE plpgsql;
 
 DROP TRIGGER IF EXISTS trg_appointment_log ON public.appointment;
 
 CREATE TRIGGER trg_appointment_log
-  AFTER INSERT OR UPDATE
+  AFTER INSERT OR
+UPDATE
   ON public.appointment
   FOR EACH ROW
   EXECUTE FUNCTION public.trg_appointment_log_fn();
