@@ -39,7 +39,7 @@ spring:
     contexts: stage
     url: jdbc:postgresql://161.35.195.29:5432/asklepios
     parameters:
-      hl7.integrationSchema: HL7_INTEGRATION
+      hl7.integrationSchema: '"HL7_INTEGRATION"'
       hl7.events.patientRegistered: PATIENT_REGISTERED
       hl7.events.patientVisitCreated: PATIENT_VISIT_CREATED
       hl7.events.patientAdmitted: PATIENT_ADMITTED
@@ -290,9 +290,8 @@ asklepios:
     username: systemask73@gmail.com
     password: ocdh hvae hhsz cyxc
 hl7:
-  integrationSchema: HL7_INTEGRATION
+  integrationSchema: "HL7_INTEGRATION"
   tableEvent: hl7_event
   events:
     createPatient: CREATE_PATIENT
     updatePatient: UPDATE_PATIENT
-

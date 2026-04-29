@@ -29,7 +29,7 @@ spring:
     contexts: prod
     url: jdbc:postgresql://db-postgresql-nyc3-94186-do-user-10936078-0.j.db.ondigitalocean.com:25060/asklepios?sslmode=require
     parameters:
-      hl7.integrationSchema: '"HL7_INTEGRATION"'
+      hl7.integrationSchema: HL7_INTEGRATION
       hl7.events.patientRegistered: PATIENT_REGISTERED
       hl7.events.patientVisitCreated: PATIENT_VISIT_CREATED
       hl7.events.patientAdmitted: PATIENT_ADMITTED
