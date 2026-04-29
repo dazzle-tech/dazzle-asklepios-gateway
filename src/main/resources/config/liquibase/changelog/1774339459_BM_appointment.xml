@@ -338,6 +338,4 @@
     </createIndex>
   </changeSet>
 
-  <include file="config/liquibase/sql/appointment_Log.sql" relativeToChangelogFile="false"/>
-
 </databaseChangeLog>
