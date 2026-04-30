@@ -39,7 +39,6 @@ spring:
     contexts: stage
     url: jdbc:postgresql://80.238.227.209:9356/asklepios
 
-
   mail:
     host: localhost
     port: 25

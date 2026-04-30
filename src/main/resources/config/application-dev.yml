@@ -40,7 +40,6 @@ spring:
     # Remove 'faker' if you do not want the sample data to be loaded automatically
     contexts: dev, faker
     url: jdbc:postgresql://localhost:5433/ask
-
   mail:
     host: localhost
     port: 25
@@ -271,5 +270,4 @@ asklepios:
     base-url: http://localhost:3100/
     username: systemask73@gmail.com
     password: ocdh hvae hhsz cyxc
-
 

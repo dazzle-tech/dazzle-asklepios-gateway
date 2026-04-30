@@ -28,7 +28,6 @@ spring:
   liquibase:
     contexts: prod
     url: jdbc:postgresql://db-postgresql-nyc3-94186-do-user-10936078-0.j.db.ondigitalocean.com:25060/asklepios?sslmode=require
-
   mail:
     host: localhost
     port: 25
