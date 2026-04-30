@@ -38,18 +38,7 @@ spring:
   liquibase:
     contexts: stage
     url: jdbc:postgresql://161.35.195.29:5432/asklepios
-    parameters:
-      hl7.integrationSchema: '"HL7_INTEGRATION"'
-      hl7.events.patientRegistered: PATIENT_REGISTERED
-      hl7.events.patientVisitCreated: PATIENT_VISIT_CREATED
-      hl7.events.patientAdmitted: PATIENT_ADMITTED
-      hl7.events.patientTransferred: PATIENT_TRANSFERRED
-      hl7.events.patientDischarged: PATIENT_DISCHARGED
-      hl7.events.patientMerged: PATIENT_MERGED
-      hl7.events.patientUpdated: PATIENT_UPDATED
-      hl7.events.orderCreated: ORDER_CREATED
-      hl7.events.orderAssigned: ORDER_ASSIGNED
-      hl7.events.appointmentCreated: APPOINTMENT_CREATED
+
   mail:
     host: localhost
     port: 25
@@ -289,9 +278,4 @@ asklepios:
     base-url: http://asklepios.nereuscloud.de/
     username: systemask73@gmail.com
     password: ocdh hvae hhsz cyxc
-hl7:
-  integrationSchema: "HL7_INTEGRATION"
-  tableEvent: hl7_event
-  events:
-    createPatient: CREATE_PATIENT
-    updatePatient: UPDATE_PATIENT
+
