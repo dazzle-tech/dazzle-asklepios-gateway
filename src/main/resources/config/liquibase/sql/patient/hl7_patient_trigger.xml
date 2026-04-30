@@ -9,7 +9,7 @@
   <changeSet id="H_PATIENT_TRIGGER" author="hanan">
 
     <sql dbms="postgresql" splitStatements="false">
-    <![CDATA[
+  <![CDATA[
       CREATE OR REPLACE FUNCTION notify_hl7_patient_event()
 RETURNS TRIGGER AS $function$
       BEGIN
@@ -33,8 +33,7 @@ RETURNS TRIGGER AS $function$
       END;
       $function$ LANGUAGE plpgsql;
       ]]>
-  </sql>
-
+</sql>
     <sql dbms="postgresql" splitStatements="false">
     <![CDATA[
       DROP TRIGGER IF EXISTS trg_hl7_create_patient ON patients;
