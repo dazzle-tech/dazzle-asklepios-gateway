@@ -28,18 +28,7 @@ spring:
   liquibase:
     contexts: prod
     url: jdbc:postgresql://db-postgresql-nyc3-94186-do-user-10936078-0.j.db.ondigitalocean.com:25060/asklepios?sslmode=require
-    parameters:
-      hl7.integrationSchema: HL7_INTEGRATION
-      hl7.events.patientRegistered: PATIENT_REGISTERED
-      hl7.events.patientVisitCreated: PATIENT_VISIT_CREATED
-      hl7.events.patientAdmitted: PATIENT_ADMITTED
-      hl7.events.patientTransferred: PATIENT_TRANSFERRED
-      hl7.events.patientDischarged: PATIENT_DISCHARGED
-      hl7.events.patientMerged: PATIENT_MERGED
-      hl7.events.patientUpdated: PATIENT_UPDATED
-      hl7.events.orderCreated: ORDER_CREATED
-      hl7.events.orderAssigned: ORDER_ASSIGNED
-      hl7.events.appointmentCreated: APPOINTMENT_CREATED
+
   mail:
     host: localhost
     port: 25
