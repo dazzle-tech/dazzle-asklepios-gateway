@@ -9,8 +9,9 @@
   <changeSet id="H_PATIENT_TRIGGER" author="hanan">
 
     <sql dbms="postgresql" splitStatements="false">
+    <![CDATA[
       CREATE OR REPLACE FUNCTION notify_hl7_patient_event()
-            RETURNS TRIGGER AS $function$
+RETURNS TRIGGER AS $function$
       BEGIN
       INSERT INTO ${hl7.integrationSchema}.hl7_event (
         id,
@@ -31,31 +32,38 @@
       RETURN NEW;
       END;
       $function$ LANGUAGE plpgsql;
-    </sql>
+      ]]>
+  </sql>
 
-    <sql dbms="postgresql">
+    <sql dbms="postgresql" splitStatements="false">
+    <![CDATA[
       DROP TRIGGER IF EXISTS trg_hl7_create_patient ON patients;
 
       CREATE TRIGGER trg_hl7_create_patient
         AFTER INSERT ON patients
         FOR EACH ROW
         EXECUTE FUNCTION notify_hl7_patient_event();
-    </sql>
+      ]]>
+  </sql>
 
-    <sql dbms="postgresql">
+    <sql dbms="postgresql" splitStatements="false">
+    <![CDATA[
       DROP TRIGGER IF EXISTS trg_hl7_update_patient ON patients;
 
       CREATE TRIGGER trg_hl7_update_patient
         AFTER UPDATE ON patients
         FOR EACH ROW
         EXECUTE FUNCTION notify_hl7_patient_event();
-    </sql>
+      ]]>
+  </sql>
 
     <rollback>
-      <sql dbms="postgresql">
-        DROP TRIGGER IF EXISTS trg_hl7_create_patient ON patients;
-        DROP TRIGGER IF EXISTS trg_hl7_update_patient ON patients;
-        DROP FUNCTION IF EXISTS notify_hl7_patient_event();
+      <sql dbms="postgresql" splitStatements="false">
+        <![CDATA[
+DROP TRIGGER IF EXISTS trg_hl7_create_patient ON patients;
+DROP TRIGGER IF EXISTS trg_hl7_update_patient ON patients;
+DROP FUNCTION IF EXISTS notify_hl7_patient_event();
+      ]]>
       </sql>
     </rollback>
 
