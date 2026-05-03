@@ -229,5 +229,8 @@
   <include file="/config/liquibase/changelog/1776164078_S_availability_template_interval_break.xml"
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1776673436_Q_Dental_Procedure.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/sql/patient/hl7_patient_trigger.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/sql/encounter/hl7_discharge_encounter.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/sql/encounter/hl7_encounter_registration_trigger.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/sql/orders/hl7_order_create_trigger.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>
-
