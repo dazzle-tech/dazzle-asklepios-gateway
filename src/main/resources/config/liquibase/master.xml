@@ -229,6 +229,5 @@
   <include file="/config/liquibase/changelog/1776164078_S_availability_template_interval_break.xml"
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1776673436_Q_Dental_Procedure.xml" relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/allergies/1777540518_add_field_B_allergens.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>
 
