@@ -37,6 +37,7 @@
   <include file="config/liquibase/changelog/1774339421_BM_availability_generation_batch.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1774339459_BM_appointment.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/sql/appointment/hl7_appointment_booked.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/appointment/1777451035_BM_appointment_log_trigger.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/appointment/1777285727_R_appointment_require_confirmation.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/appointmentLog/1777286590_R_appointment_log_require_confirmation.xml" relativeToChangelogFile="false"/>
