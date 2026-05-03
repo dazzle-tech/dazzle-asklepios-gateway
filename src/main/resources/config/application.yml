@@ -95,6 +95,7 @@ spring:
       hl7.events.orderCreated: ORDER_CREATED
       hl7.events.orderAssigned: ORDER_ASSIGNED
       hl7.events.appointmentCreated: APPOINTMENT_CREATED
+      hl7.events.orderAccepted: ACCEPT_TEST
 
 
 

@@ -137,6 +137,7 @@
   <include file="config/liquibase/changelog/1765198918_H_Price_List_Attributes.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1766317374_H_Diagnostic_Order_And_Test.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/sql/orders/hl7_order_test_accept_test_trigger.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1767792976_H_diagnostic_order_test_technician_notes.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1767854260_H_Diagnostic_Order_Test_CollectSample.xml"
