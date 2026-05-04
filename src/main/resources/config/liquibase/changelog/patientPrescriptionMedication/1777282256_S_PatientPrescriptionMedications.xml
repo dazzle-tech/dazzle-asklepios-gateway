@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+          http://www.liquibase.org/xml/ns/dbchangelog
+          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.24.xsd">
+
+  <changeSet id="SA0000000000032" author="SondosAbdAlaal">
+    <addForeignKeyConstraint
+      baseTableName="patient_prescription_medications"
+      baseColumnNames="indication_icd"
+      referencedTableName="icd_diagnosis"
+      referencedColumnNames="id"
+      constraintName="fk_ppm_indication_icd_diagnosis"/> </changeSet>
+
+</databaseChangeLog>
