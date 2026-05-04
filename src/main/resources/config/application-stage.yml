@@ -38,6 +38,7 @@ spring:
   liquibase:
     contexts: stage
     url: jdbc:postgresql://161.35.195.29:5432/asklepios
+
   mail:
     host: localhost
     port: 25
@@ -277,3 +278,4 @@ asklepios:
     base-url: http://asklepios.nereuscloud.de/
     username: systemask73@gmail.com
     password: ocdh hvae hhsz cyxc
+
