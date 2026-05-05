@@ -247,4 +247,5 @@
   <include file="config/liquibase/sql/encounter/hl7_encounter_registration_trigger.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/sql/orders/hl7_order_create_trigger.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1777908430_S_AppointmentReschedule.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>
