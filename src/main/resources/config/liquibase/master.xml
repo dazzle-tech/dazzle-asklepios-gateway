@@ -224,6 +224,8 @@
   <include
     file="/config/liquibase/changelog/patientPrescriptionMedication/1777282256_S_PatientPrescriptionMedications.xml"
     relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/prescription/1778073007_Q_patient_prescription_medications_edit_administration_instructions.xml" relativeToChangelogFile="false"/>
+
   <include file="/config/liquibase/changelog/1769523307_B_referralRequests.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1773745759_S_OrganizationHoliday.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1774280357_S_departmentServices.xml" relativeToChangelogFile="false"/>
