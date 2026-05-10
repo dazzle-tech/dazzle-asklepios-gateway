@@ -72,7 +72,34 @@
         <constraints nullable="true"/>
       </column>
 
+      <column name="cancelled_at" type="timestamp">
+        <constraints nullable="true"/>
+      </column>
+
+      <column name="cancelled_by" type="varchar(50)">
+        <constraints nullable="true"/>
+      </column>
+
+      <column name="cancellation_reason" type="varchar(500)">
+        <constraints nullable="true"/>
+      </column>
+
     </createTable>
+    <sql>
+  <![CDATA[
+      ALTER TABLE glasgow_coma_scale_assessment
+        ADD CONSTRAINT ck_gcs_cancelled_fields
+          CHECK (
+            cancelled_at IS NULL
+              OR (
+              cancelled_by IS NOT NULL
+                AND TRIM(cancelled_by) <> ''
+                AND cancellation_reason IS NOT NULL
+                AND TRIM(cancellation_reason) <> ''
+              )
+            );
+      ]]>
+</sql>
   </changeSet>
 
 </databaseChangeLog>
