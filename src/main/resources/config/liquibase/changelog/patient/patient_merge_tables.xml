@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!-- =========================
+       1. patient_merge_logs
+  ========================== -->
+  <changeSet id="01-patient-merge-logs" author="hanan253yahya">
+
+    <createTable tableName="patient_merge_logs">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="from_patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="to_patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="merge_status" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="merged_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="merged_at" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="undone_by" type="varchar(50)"/>
+      <column name="undone_at" type="timestamp"/>
+
+      <column name="reason" type="varchar(500)"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="patient_merge_logs"
+      baseColumnNames="from_patient_id"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+      constraintName="fk_patient_merge_logs_from_patient"/>
+
+    <addForeignKeyConstraint
+      baseTableName="patient_merge_logs"
+      baseColumnNames="to_patient_id"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+      constraintName="fk_patient_merge_logs_to_patient"/>
+
+
+    <sql dbms="postgresql">
+      ALTER TABLE patient_merge_logs
+        ADD CONSTRAINT chk_patient_merge_logs_status
+          CHECK (merge_status IN ('MERGED', 'UNDONE', 'UNDO_BLOCKED', 'EXPIRED'));
+    </sql>
+
+    <sql dbms="postgresql">
+      ALTER TABLE patient_merge_logs
+        ADD CONSTRAINT chk_patient_merge_logs_not_same_patient
+          CHECK (from_patient_id &lt;&gt; to_patient_id);
+    </sql>
+
+  </changeSet>
+
+
+  <!-- =========================
+       2. patient_merge_item_logs
+  ========================== -->
+  <changeSet id="02-patient-merge-item-logs" author="hanan253yahya">
+
+    <createTable tableName="patient_merge_item_logs">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="merge_log_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="entity_name" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="table_name" type="varchar(100)"/>
+
+      <column name="record_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="old_patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="new_patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="moved_at" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+
+      <!-- مهم لمنع undo إذا تم تعديل بعد الدمج -->
+      <column name="record_updated_at_at_merge" type="timestamp"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="patient_merge_item_logs"
+      baseColumnNames="merge_log_id"
+      referencedTableName="patient_merge_logs"
+      referencedColumnNames="id"
+      constraintName="fk_patient_merge_item_logs_merge_log"/>
+
+    <addForeignKeyConstraint
+      baseTableName="patient_merge_item_logs"
+      baseColumnNames="old_patient_id"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+      constraintName="fk_patient_merge_item_logs_old_patient"/>
+
+    <addForeignKeyConstraint
+      baseTableName="patient_merge_item_logs"
+      baseColumnNames="new_patient_id"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+      constraintName="fk_patient_merge_item_logs_new_patient"/>
+
+    <createIndex tableName="patient_merge_item_logs" indexName="idx_patient_merge_item_logs_merge_log_id">
+      <column name="merge_log_id"/>
+    </createIndex>
+
+    <createIndex tableName="patient_merge_item_logs" indexName="idx_patient_merge_item_logs_entity_record">
+      <column name="entity_name"/>
+      <column name="record_id"/>
+    </createIndex>
+
+    <createIndex tableName="patient_merge_item_logs" indexName="idx_patient_merge_item_logs_table_record">
+      <column name="table_name"/>
+      <column name="record_id"/>
+    </createIndex>
+
+  </changeSet>
+
+
+  <!-- =========================
+       3. patient_merge_table_configs
+  ========================== -->
+  <changeSet id="H-03-patient-merge-table-configs" author="hanan253yahya">
+
+    <createTable tableName="patient_merge_table_configs">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="entity_name" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="table_name" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="primary_key_column_name" type="varchar(100)" defaultValue="id">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="patient_column_name" type="varchar(100)" defaultValue="patient_id">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="updated_at_column_name" type="varchar(100)"/>
+
+      <column name="enabled" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="sort_order" type="int" defaultValueNumeric="100">
+        <constraints nullable="false"/>
+      </column>
+      <column name="match_key_columns" type="varchar(500)"/>
+      <column name="auto_discover_fields" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="merge_category" type="varchar(50)" defaultValue="MASTER">
+        <constraints nullable="false"/>
+      </column>
+      <column name="excluded_columns" type="varchar(1000)"/>
+    </createTable>
+
+    <addUniqueConstraint
+      tableName="patient_merge_table_configs"
+      columnNames="table_name, patient_column_name"
+      constraintName="uq_patient_merge_table_configs_table_patient_column"/>
+
+    <createIndex tableName="patient_merge_table_configs" indexName="idx_patient_merge_table_configs_enabled">
+      <column name="enabled"/>
+    </createIndex>
+
+  </changeSet>
+
+
+  <!-- =========================
+       4. patient_merge_master_decisions
+  ========================== -->
+  <changeSet id="H-04-patient-merge-master-decisions" author="hanan253yahya">
+
+    <createTable tableName="patient_merge_master_decisions">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="merge_log_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="entity_name" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="table_name" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="from_record_id" type="bigint"/>
+
+      <column name="to_record_id" type="bigint"/>
+
+      <column name="match_key" type="varchar(255)"/>
+
+      <column name="field_name" type="varchar(100)"/>
+
+      <column name="field_label" type="varchar(150)"/>
+
+      <column name="from_value" type="varchar(2000)"/>
+
+      <column name="to_value" type="varchar(2000)"/>
+
+      <column name="suggested_decision" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="final_decision" type="varchar(50)"/>
+
+      <column name="selected_value" type="varchar(2000)"/>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="patient_merge_master_decisions"
+      baseColumnNames="merge_log_id"
+      referencedTableName="patient_merge_logs"
+      referencedColumnNames="id"
+      constraintName="fk_patient_merge_master_decisions_merge_log"/>
+
+    <createIndex tableName="patient_merge_master_decisions" indexName="idx_patient_merge_master_decisions_merge_log_id">
+      <column name="merge_log_id"/>
+    </createIndex>
+
+    <createIndex tableName="patient_merge_master_decisions" indexName="idx_patient_merge_master_decisions_entity">
+      <column name="entity_name"/>
+      <column name="table_name"/>
+    </createIndex>
+
+    <sql dbms="postgresql">
+      ALTER TABLE patient_merge_master_decisions
+        ADD CONSTRAINT chk_patient_merge_master_decisions_suggested_decision
+          CHECK (suggested_decision IN (
+                                        'KEEP_TO',
+                                        'TAKE_FROM',
+                                        'ADD_FROM_RECORD',
+                                        'IGNORE_FROM_RECORD',
+                                        'MANUAL'
+            ));
+    </sql>
+    <createIndex tableName="patient_merge_master_decisions"
+                 indexName="idx_patient_merge_master_decisions_merge_entity">
+      <column name="merge_log_id"/>
+      <column name="entity_name"/>
+    </createIndex>
+    <addUniqueConstraint
+      tableName="patient_merge_master_decisions"
+      columnNames="merge_log_id, entity_name, field_name, match_key"
+      constraintName="uq_patient_merge_master_decisions_unique_field"/>
+  </changeSet>
+  <changeSet id="H-05-patient-merge-field-configs" author="hanan253yahya">
+
+    <createTable tableName="patient_merge_field_configs">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="table_config_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="field_name" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="field_label" type="varchar(150)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="suggested_decision" type="varchar(50)" defaultValue="MANUAL">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="enabled" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="sort_order" type="int" defaultValueNumeric="100">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="patient_merge_field_configs"
+      baseColumnNames="table_config_id"
+      referencedTableName="patient_merge_table_configs"
+      referencedColumnNames="id"
+      constraintName="fk_patient_merge_field_configs_table_config"/>
+
+    <addUniqueConstraint
+      tableName="patient_merge_field_configs"
+      columnNames="table_config_id, field_name"
+      constraintName="uq_patient_merge_field_configs_table_field"/>
+
+    <createIndex tableName="patient_merge_field_configs"
+                 indexName="idx_patient_merge_field_configs_table_config_id">
+      <column name="table_config_id"/>
+    </createIndex>
+
+    <createIndex tableName="patient_merge_field_configs"
+                 indexName="idx_patient_merge_field_configs_enabled">
+      <column name="enabled"/>
+    </createIndex>
+
+    <sql dbms="postgresql">
+      ALTER TABLE patient_merge_field_configs
+        ADD CONSTRAINT chk_patient_merge_field_configs_suggested_decision
+          CHECK (suggested_decision IN (
+                                        'KEEP_TO',
+                                        'TAKE_FROM',
+                                        'MANUAL'
+            ));
+    </sql>
+
+  </changeSet>
+
+</databaseChangeLog>
