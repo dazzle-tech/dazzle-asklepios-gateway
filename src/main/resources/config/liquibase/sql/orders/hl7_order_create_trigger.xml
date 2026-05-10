@@ -9,8 +9,8 @@
   <changeSet id="H_DIAGNOSTIC_ORDER_TESTS_TRIGGER" author="hanan">
 
     <sql dbms="postgresql" splitStatements="false">
-      <![CDATA[
-      CREATE OR REPLACE FUNCTION notify_hl7_diagnostic_order_test_created()
+<![CDATA[
+      CREATE OR REPLACE FUNCTION notify_hl7_diagnostic_order_test_submitted()
 RETURNS TRIGGER AS $function$
       BEGIN
       INSERT INTO ${hl7.integrationSchema}.hl7_event (
@@ -30,29 +30,29 @@ RETURNS TRIGGER AS $function$
       END;
       $function$ LANGUAGE plpgsql;
       ]]>
-    </sql>
-
+</sql>
 
     <sql dbms="postgresql" splitStatements="false">
 <![CDATA[
-      DROP TRIGGER IF EXISTS trg_hl7_diagnostic_order_test_created ON diagnostic_order_tests;
+      DROP TRIGGER IF EXISTS trg_hl7_diagnostic_order_test_submitted ON diagnostic_order_tests;
 
-      CREATE TRIGGER trg_hl7_diagnostic_order_test_created
-        AFTER UPDATE OF status  ON diagnostic_order_tests
+      CREATE TRIGGER trg_hl7_diagnostic_order_test_submitted
+        AFTER UPDATE OF status ON diagnostic_order_tests
         FOR EACH ROW
         WHEN (
         NEW.status = 'SUBMITTED'
         AND OLD.status IS DISTINCT FROM NEW.status
-)
-EXECUTE FUNCTION notify_hl7_diagnostic_order_test_created();
+    )
+    EXECUTE FUNCTION notify_hl7_diagnostic_order_test_submitted();
       ]]>
 </sql>
+
     <rollback>
       <sql dbms="postgresql" splitStatements="false">
         <![CDATA[
-DROP TRIGGER IF EXISTS trg_hl7_diagnostic_order_test_created ON diagnostic_order_tests;
-DROP FUNCTION IF EXISTS notify_hl7_diagnostic_order_test_created();
-        ]]>
+DROP TRIGGER IF EXISTS trg_hl7_diagnostic_order_test_submitted ON diagnostic_order_tests;
+DROP FUNCTION IF EXISTS notify_hl7_diagnostic_order_test_submitted();
+]]>
       </sql>
     </rollback>
 
