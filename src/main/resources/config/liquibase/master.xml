@@ -247,4 +247,6 @@
   <include file="config/liquibase/sql/encounter/hl7_encounter_registration_trigger.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/sql/orders/hl7_order_create_trigger.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1778134530_B_glasgowComaScaleAssessment.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
