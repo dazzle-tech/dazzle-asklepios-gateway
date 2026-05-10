@@ -32,21 +32,17 @@ RETURNS TRIGGER AS $function$
       ]]>
     </sql>
 
-
     <sql dbms="postgresql" splitStatements="false">
-<![CDATA[
+      <![CDATA[
       DROP TRIGGER IF EXISTS trg_hl7_diagnostic_order_test_created ON diagnostic_order_tests;
 
       CREATE TRIGGER trg_hl7_diagnostic_order_test_created
-        AFTER UPDATE OF status  ON diagnostic_order_tests
+        AFTER INSERT ON diagnostic_order_tests
         FOR EACH ROW
-        WHEN (
-        NEW.status = 'SUBMITTED'
-        AND OLD.status IS DISTINCT FROM NEW.status
-)
-EXECUTE FUNCTION notify_hl7_diagnostic_order_test_created();
+        EXECUTE FUNCTION notify_hl7_diagnostic_order_test_created();
       ]]>
-</sql>
+    </sql>
+
     <rollback>
       <sql dbms="postgresql" splitStatements="false">
         <![CDATA[
