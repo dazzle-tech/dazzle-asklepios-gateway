@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+  <changeSet id="bs000000000037" author="batool">
+    <createTable tableName="glasgow_coma_scale_assessment">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_triage_gcs_patient"
+                     references="patients(id)"/>
+      </column>
+
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_triage_gcs_encounter"
+                     references="patient_encounters(id)"/>
+      </column>
+
+      <column name="eye_opening" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="eye_opening_score" type="int">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="verbal_response" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="verbal_response_score" type="int">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="motor_response" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="motor_response_score" type="int">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="total_score" type="int">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="score_interpretation" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp" defaultValueDate="CURRENT_TIMESTAMP">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)">
+        <constraints nullable="true"/>
+      </column>
+
+      <column name="last_modified_date" type="timestamp">
+        <constraints nullable="true"/>
+      </column>
+
+      <column name="cancelled_at" type="timestamp">
+        <constraints nullable="true"/>
+      </column>
+
+      <column name="cancelled_by" type="varchar(50)">
+        <constraints nullable="true"/>
+      </column>
+
+      <column name="cancellation_reason" type="varchar(500)">
+        <constraints nullable="true"/>
+      </column>
+
+    </createTable>
+    <sql>
+  <![CDATA[
+      ALTER TABLE glasgow_coma_scale_assessment
+        ADD CONSTRAINT ck_gcs_cancelled_fields
+          CHECK (
+            cancelled_at IS NULL
+              OR (
+              cancelled_by IS NOT NULL
+                AND TRIM(cancelled_by) <> ''
+                AND cancellation_reason IS NOT NULL
+                AND TRIM(cancellation_reason) <> ''
+              )
+            );
+      ]]>
+</sql>
+  </changeSet>
+
+</databaseChangeLog>
