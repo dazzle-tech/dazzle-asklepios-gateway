@@ -108,7 +108,6 @@
         <constraints nullable="false"/>
       </column>
 
-      <!-- مهم لمنع undo إذا تم تعديل بعد الدمج -->
       <column name="record_updated_at_at_merge" type="timestamp"/>
     </createTable>
 
@@ -328,6 +327,8 @@
       <column name="sort_order" type="int" defaultValueNumeric="100">
         <constraints nullable="false"/>
       </column>
+      <column name="input_type" type="varchar(50)"/>
+      <column name="input_source" type="varchar(100)"/>
     </createTable>
 
     <addForeignKeyConstraint
