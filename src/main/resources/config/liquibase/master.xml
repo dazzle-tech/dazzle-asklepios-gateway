@@ -252,5 +252,5 @@
   <include file="/config/liquibase/changelog/1778134530_B_glasgowComaScaleAssessment.xml"
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1777908430_S_AppointmentReschedule.xml" relativeToChangelogFile="false"/>
-
+ <include file="config/liquibase/sql/storProcedure/Diagnostic_Order_Test_Result_Procedure.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>
