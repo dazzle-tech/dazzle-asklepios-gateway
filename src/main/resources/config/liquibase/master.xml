@@ -30,6 +30,7 @@
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1761035006_B_allergens.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1763384457_P_patient.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patient/add_patient_merge_columns.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1774339192_BM_availability_template.xml" relativeToChangelogFile="false"/>
   <include
     file="config/liquibase/changelog/availabilityTemplate/1777441360_R_availability_template_require_confirmation_default_value.xml"
@@ -51,6 +52,7 @@
   <include file="config/liquibase/changelog/1771073729_B_encounter.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/encounter/1777198308_BM_encounter.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1757856381_H_duplication-candidate.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/patient/patient_merge_tables.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1760505952_S_patientAttachments.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1760518132_S_encounterAttachments.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762334049_R_medication_categories.xml" relativeToChangelogFile="false"/>
