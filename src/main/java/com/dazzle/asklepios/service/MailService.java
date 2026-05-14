@@ -190,7 +190,7 @@ public class MailService {
         Context context = new Context(locale);
 
         String encodedToken = URLEncoder.encode(oneTimeToken, StandardCharsets.UTF_8);
-        String setPasswordUrl = baseUrl + "/#/create-password?key=" + encodedToken;
+        String setPasswordUrl = baseUrl + "/#/create-patient-password?key=" + encodedToken;
         context.setVariable("setPasswordUrl", setPasswordUrl);
 
         context.setVariable("title", messageSource.getMessage("email.setpassword.title", null, locale));
