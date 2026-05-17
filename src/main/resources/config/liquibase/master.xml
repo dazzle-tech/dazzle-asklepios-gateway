@@ -174,7 +174,9 @@
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1769416461_Q_Consultation.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1768473866_Q_Surgical_History.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/surgicalhistory/1778668757_surgical_history_add_cancel_fields.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1768721356_Q_Social_History.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/socialhistory/1778663643_social_history_add_cancel_fields.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1770025904_Q_Progress_Notes.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1768824118_Q_Telephonic_Consultation.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/TelephonicConsultation/1778677206_Q_Telephonic_Consultation.xml" relativeToChangelogFile="false"/>
@@ -204,8 +206,11 @@
   <include file="/config/liquibase/changelog/1764823037_BM_Payment_Allocation.xml" relativeToChangelogFile="false"/>
 
   <include file="/config/liquibase/changelog/1768307386_B_PatientProblems.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/patientproblems/1778670079_patient_problems_add_cancel_fields.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1768381461_Q_Family_History.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/familyhistory/1778673454_family_history_add_cancel_fields.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1768389695_Q_Hospitalizations.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/hospitalization/1778674502_hospitalization_add_cancel_fields.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1769002586_B_VitalSigns.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1769005669_B_BodyMeasurements.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1769004404_B_PatientObservation_Complaints.xml"
@@ -239,6 +244,7 @@
   <include file="/config/liquibase/changelog/1774448712_B_encounterAssignToBed.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1774782462_B_bedTransactions.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1775554145_Q_CurrentMedication.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/currentmedication/1778678350_current_medication_add_cancel_fields.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1776165512_BM_Appointment_Request.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1776161006_H_Patient_Urgent_Care_Medication_Order.xml"
            relativeToChangelogFile="false"/>
