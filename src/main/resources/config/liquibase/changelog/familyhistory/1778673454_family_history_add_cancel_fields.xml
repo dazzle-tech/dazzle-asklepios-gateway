@@ -18,9 +18,24 @@
 
       <column name="cancelled_date" type="timestamp"/>
 
-      <column name="cancellation_reason" type="varchar(500)"/>
+      <column name="cancellation_reason" type="text"/>
 
     </addColumn>
+
+    <sql><![CDATA[
+      ALTER TABLE family_history
+      DROP CONSTRAINT IF EXISTS ux_patientId_condition_relation;
+      ]]></sql>
+
+    <sql><![CDATA[
+      CREATE UNIQUE INDEX ux_patientId_condition_relation
+        ON family_history (
+                           patient_id,
+                           lower(condition),
+                           lower(relation)
+          )
+        WHERE status <> 'CANCELLED';
+      ]]></sql>
 
   </changeSet>
 

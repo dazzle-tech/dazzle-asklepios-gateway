@@ -18,9 +18,15 @@
 
       <column name="cancelled_date" type="timestamp"/>
 
-      <column name="cancellation_reason" type="varchar(500)"/>
+      <column name="cancellation_reason" type="text"/>
 
     </addColumn>
+
+    <sql><![CDATA[
+      CREATE UNIQUE INDEX IF NOT EXISTS ux_social_history_patient_active
+        ON social_history (patient_id)
+        WHERE status <> 'CANCELLED';
+      ]]></sql>
 
   </changeSet>
 

@@ -18,9 +18,22 @@
 
       <column name="cancelled_date" type="timestamp"/>
 
-      <column name="cancellation_reason" type="varchar(500)"/>
+      <column name="cancellation_reason" type="text"/>
 
     </addColumn>
+    <sql><![CDATA[
+      DROP INDEX IF EXISTS ux_surgical_history_patient_surgery_date_ci;
+      ]]></sql>
+
+    <sql><![CDATA[
+      CREATE UNIQUE INDEX ux_surgical_history_patient_surgery_date_ci
+        ON surgical_history (
+                             patient_id,
+                             lower(surgery),
+                             date_of_surgery
+          )
+        WHERE status <> 'CANCELLED';
+      ]]></sql>
 
   </changeSet>
 
