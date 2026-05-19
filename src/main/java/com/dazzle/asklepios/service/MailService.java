@@ -177,5 +177,42 @@ public class MailService {
             LOG.warn("Email could not be sent to user '{}'", to, e);
         }
     }
+    /**
+     * New: One-time secure set-password link email for patient (subject + body includes link).
+     *
+     * @param language ,  id , fullName, document id, email  for target patient
+     * @param oneTimeToken single-use token generated/stored/validated elsewhere
+     */
+    public void sendOneTimeSetPasswordLinkMailForPatient(String language, Long id, String name, String documnetId, String email, String oneTimeToken) {
+        if (email == null) return;
+
+        Locale locale = Locale.forLanguageTag(language);
+        Context context = new Context(locale);
+
+        String encodedToken = URLEncoder.encode(oneTimeToken, StandardCharsets.UTF_8);
+        String setPasswordUrl = baseUrl + "/#/create-patient-password?key=" + encodedToken;
+        context.setVariable("setPasswordUrl", setPasswordUrl);
+
+        context.setVariable("title", messageSource.getMessage("email.setpassword.title", null, locale));
+        context.setVariable("greeting", messageSource.getMessage(
+            "email.setpassword.greeting",
+            new Object[]{ name != null ? name: documnetId },
+            locale
+        ));
+        context.setVariable("text1", messageSource.getMessage("email.setpassword.text1", null, locale));
+        context.setVariable("text2", messageSource.getMessage("email.setpassword.text2", null, locale));
+        context.setVariable("text3", messageSource.getMessage("email.setpassword.text3", null, locale));
+        context.setVariable("text4", messageSource.getMessage("email.setpassword.text4", null, locale));
+        context.setVariable("signature", messageSource.getMessage("email.signature", null, locale));
+
+        // Optional RTL support
+        boolean rtl = "ar".equalsIgnoreCase(language);
+        context.setVariable("dir", rtl ? "rtl" : "ltr");
+
+        String content = templateEngine.process("mail/newPatientPasswordEmail", context);
+        String subject = messageSource.getMessage("email.setpassword.title", null, locale);
+
+        sendEmailWithInlineLogoSync(email, subject, content);
+    }
 
 }
