@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="H_DIAGNOSTIC_ORDER_TEST_RESULT_PROCEDURE" author="hanan">
+
+    <sql dbms="postgresql" splitStatements="false">
+      <![CDATA[
+      CREATE OR REPLACE PROCEDURE upsert_diagnostic_order_test_result(
+    p_order_test_id BIGINT,
+    p_profile_test_id BIGINT,
+    p_result_value_number NUMERIC,
+    p_result_value_text TEXT,
+    p_marker VARCHAR,
+    p_approved_by VARCHAR,
+    p_processing_status VARCHAR,
+    p_normal_range_value VARCHAR,
+    p_created_by VARCHAR
+)
+LANGUAGE plpgsql
+AS $procedure$
+      BEGIN
+      INSERT INTO diagnostic_order_tests_result (
+        order_test_id,
+        profile_test_id,
+        result_value_number,
+        result_value_text,
+        marker,
+        approved_by,
+        approved_date,
+        processing_status,
+        normal_range_value,
+        created_by,
+        created_date
+      )
+      VALUES (
+               p_order_test_id,
+               p_profile_test_id,
+               p_result_value_number,
+               p_result_value_text,
+               p_marker,
+               p_approved_by,
+               CASE
+                 WHEN p_approved_by IS NOT NULL THEN NOW()
+                 ELSE NULL
+                 END,
+               COALESCE(p_processing_status, 'NEW'),
+               p_normal_range_value,
+               p_created_by,
+               NOW()
+             )
+        ON CONFLICT (order_test_id, profile_test_id)
+    DO UPDATE SET
+        result_value_number = EXCLUDED.result_value_number,
+                 result_value_text = EXCLUDED.result_value_text,
+                 marker = EXCLUDED.marker,
+                 approved_by = EXCLUDED.approved_by,
+                 approved_date = EXCLUDED.approved_date,
+                 processing_status = EXCLUDED.processing_status,
+                 normal_range_value = EXCLUDED.normal_range_value,
+                 last_modified_by = EXCLUDED.created_by,
+                 last_modified_date = NOW();
+      END;
+      $procedure$;
+      ]]>
+    </sql>
+
+    <rollback>
+      <sql dbms="postgresql" splitStatements="false">
+        <![CDATA[
+DROP PROCEDURE IF EXISTS upsert_diagnostic_order_test_result(
+    BIGINT,
+    BIGINT,
+    NUMERIC,
+    TEXT,
+    VARCHAR,
+    VARCHAR,
+    VARCHAR,
+    VARCHAR,
+    VARCHAR
+);
+        ]]>
+      </sql>
+    </rollback>
+
+  </changeSet>
+
+</databaseChangeLog>
