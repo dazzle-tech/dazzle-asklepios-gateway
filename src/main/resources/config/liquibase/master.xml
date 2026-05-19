@@ -30,6 +30,8 @@
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1761035006_B_allergens.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1763384457_P_patient.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/patient/1779006891_add_document_id_and_cchi_flag_to_patients.xml" relativeToChangelogFile="false"/>
+
   <include file="config/liquibase/changelog/1774339192_BM_availability_template.xml" relativeToChangelogFile="false"/>
   <include
     file="config/liquibase/changelog/availabilityTemplate/1777441360_R_availability_template_require_confirmation_default_value.xml"
@@ -65,6 +67,8 @@
   <include file="config/liquibase/changelog/1762088668_S_InventoryTransactionAttachments.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1761730358_B_CPT.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/cptCodes/1778651711_B_CptCodesNewColumnServiceCategory.xml" relativeToChangelogFile="false"/>
+
   <include file="config/liquibase/changelog/1762148868_H_Diagnostic_Test_Laboratory.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762219295_S_ActiveIngredients.xml" relativeToChangelogFile="false"/>
