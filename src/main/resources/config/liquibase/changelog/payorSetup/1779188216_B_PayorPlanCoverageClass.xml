@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+      http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="bs000000000042" author="batool">
+
+    <createTable tableName="payor_plan_coverage_class">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="plan_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="coverage_class_type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="coverage_class_value" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="coverage_class_name" type="varchar(255)"/>
+
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp"/>
+      <column name="created_by" type="varchar(50)"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="payor_plan_coverage_class"
+      baseColumnNames="plan_id"
+      referencedTableName="payor_plan"
+      referencedColumnNames="id"
+      constraintName="fk_payor_plan_coverage_class_plan"/>
+
+    <addUniqueConstraint
+      tableName="payor_plan_coverage_class"
+      columnNames="plan_id,coverage_class_type,coverage_class_value"
+      constraintName="uk_payor_plan_coverage_class"/>
+
+    <createIndex tableName="payor_plan_coverage_class"
+                 indexName="idx_plan_coverage_class_plan_id">
+      <column name="plan_id"/>
+    </createIndex>
+
+  </changeSet>
+
+</databaseChangeLog>

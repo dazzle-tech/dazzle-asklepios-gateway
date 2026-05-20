@@ -142,6 +142,10 @@
 
   <include file="config/liquibase/changelog/1764754649_H_Referral_Request.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1764662181_H_Payor_Setup.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/payorSetup/1779182620_B_AlterPayorWaseel.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/payorSetup/1779188081_B_AlterPayorPlanWaseel.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/payorSetup/1779188216_B_PayorPlanCoverageClass.xml" relativeToChangelogFile="false"/>
+
   <include file="/config/liquibase/changelog/1764826849_H_Discharge_Planning.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1764776884_H_Payor_Plan.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1765198918_H_Price_List_Attributes.xml" relativeToChangelogFile="false"/>

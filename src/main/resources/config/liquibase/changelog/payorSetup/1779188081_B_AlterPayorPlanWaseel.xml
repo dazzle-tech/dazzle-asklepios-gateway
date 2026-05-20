@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+      http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="bs000000000041" author="batool">
+
+    <addColumn tableName="payor_plan">
+
+      <column name="network_id" type="varchar(100)"/>
+
+      <column name="coverage_type" type="varchar(50)"/>
+
+      <column name="payer_nphies_id" type="varchar(100)"/>
+
+      <column name="waseel_plan_id" type="varchar(100)"/>
+
+    </addColumn>
+
+    <createIndex tableName="payor_plan" indexName="idx_payor_plan_network_id">
+      <column name="network_id"/>
+    </createIndex>
+
+    <createIndex tableName="payor_plan" indexName="idx_payor_plan_payer_nphies_id">
+      <column name="payer_nphies_id"/>
+    </createIndex>
+
+    <addUniqueConstraint
+      tableName="payor_plan"
+      columnNames="payor_id,network_id,coverage_type"
+      constraintName="uk_payor_plan_waseel_key"/>
+
+  </changeSet>
+
+</databaseChangeLog>
