@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+<changeSet id="bs-create-waseel-eligibility-request" author="batool">
+  <createTable tableName="waseel_eligibility_request">
+    <column name="id" type="bigint" autoIncrement="true" startWith="3000">
+      <constraints primaryKey="true" nullable="false"/>
+    </column>
+
+    <column name="patient_id" type="bigint">
+      <constraints nullable="false"/>
+    </column>
+
+    <column name="patient_insurance_id" type="bigint">
+      <constraints nullable="false"/>
+    </column>
+
+    <column name="payor_id" type="bigint"/>
+    <column name="plan_id" type="bigint"/>
+
+    <column name="provider_id" type="varchar(100)"/>
+    <column name="destination_id" type="varchar(100)"/>
+
+    <column name="service_date" type="date"/>
+
+    <column name="benefits" type="boolean"/>
+    <column name="discovery" type="boolean"/>
+    <column name="validation" type="boolean"/>
+    <column name="transfer" type="boolean"/>
+    <column name="emergency" type="boolean"/>
+
+    <column name="api_status" type="varchar(50)"/>
+    <column name="status_code" type="varchar(50)"/>
+    <column name="message" type="varchar(1000)"/>
+
+    <column name="eligibility_response_id" type="varchar(100)"/>
+    <column name="eligibility_response_url" type="varchar(500)"/>
+    <column name="waseel_request_id" type="varchar(100)"/>
+
+    <column name="request_status" type="varchar(50)"/>
+
+    <column name="requested_at" type="timestamp"/>
+    <column name="responded_at" type="timestamp"/>
+
+    <column name="request_json" type="text"/>
+    <column name="response_json" type="text"/>
+
+    <column name="created_by" type="varchar(50)">
+      <constraints nullable="false"/>
+    </column>
+
+    <column name="created_date" type="timestamp"/>
+    <column name="last_modified_by" type="varchar(50)"/>
+    <column name="last_modified_date" type="timestamp"/>
+  </createTable>
+
+  <addForeignKeyConstraint
+    baseTableName="waseel_eligibility_request"
+    baseColumnNames="patient_id"
+    referencedTableName="patients"
+    referencedColumnNames="id"
+    constraintName="fk_waseel_eligibility_patient"/>
+
+  <addForeignKeyConstraint
+    baseTableName="waseel_eligibility_request"
+    baseColumnNames="patient_insurance_id"
+    referencedTableName="patient_insurances"
+    referencedColumnNames="id"
+    constraintName="fk_waseel_eligibility_patient_insurance"/>
+
+  <createIndex
+    tableName="waseel_eligibility_request"
+    indexName="idx_waseel_eligibility_patient">
+    <column name="patient_id"/>
+  </createIndex>
+
+  <createIndex
+    tableName="waseel_eligibility_request"
+    indexName="idx_waseel_eligibility_patient_insurance">
+    <column name="patient_insurance_id"/>
+  </createIndex>
+</changeSet>
+
+</databaseChangeLog>

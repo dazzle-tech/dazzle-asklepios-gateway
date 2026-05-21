@@ -185,6 +185,7 @@
   <include file="/config/liquibase/changelog/1770025904_Q_Progress_Notes.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1768824118_Q_Telephonic_Consultation.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1765875560_B_patientInsurances.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/patientInsurances/1777198310_BM_patient_insurances_waseel_columns.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1765892720_B_patientInsuranceCoverages.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1771244437_B_patientPayment.xml" relativeToChangelogFile="false"/>
@@ -258,5 +259,5 @@
   <include file="/config/liquibase/changelog/1778134530_B_glasgowComaScaleAssessment.xml"
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1777908430_S_AppointmentReschedule.xml" relativeToChangelogFile="false"/>
-
+  <include file="/config/liquibase/changelog/1779352674_BM_waseel_eligibility_request.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>
