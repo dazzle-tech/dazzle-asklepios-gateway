@@ -28,6 +28,7 @@
   <include file="/config/liquibase/changelog/1746352745_H_Practitioner.xml"/>
   <include file="/config/liquibase/changelog/practitioner/1776677972_R_practitioner_working_days.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/sql/practitioner/hl7_create_practitioner.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1761035006_B_allergens.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1763384457_P_patient.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/patient/1778679400_SA_patient.xml" relativeToChangelogFile="false"/>
