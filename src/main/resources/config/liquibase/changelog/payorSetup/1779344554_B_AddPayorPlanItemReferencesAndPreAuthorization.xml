@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+      http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="bs000000000043" author="batool">
+
+    <addColumn tableName="payor_plan_item">
+      <column name="pre_authorization" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+    </addColumn>
+
+    <addColumn tableName="payor_plan_item">
+      <column name="brand_medication_id" type="bigint"/>
+    </addColumn>
+
+    <addColumn tableName="payor_plan_item">
+      <column name="diagnostic_test_id" type="bigint"/>
+    </addColumn>
+
+    <addColumn tableName="payor_plan_item">
+      <column name="service_id" type="bigint"/>
+    </addColumn>
+
+    <addColumn tableName="payor_plan_item">
+      <column name="procedure_id" type="bigint"/>
+    </addColumn>
+
+    <addForeignKeyConstraint
+      baseTableName="payor_plan_item"
+      baseColumnNames="brand_medication_id"
+      referencedTableName="brand_medication"
+      referencedColumnNames="id"
+      constraintName="fk_ppi_brand_medication"/>
+
+    <addForeignKeyConstraint
+      baseTableName="payor_plan_item"
+      baseColumnNames="diagnostic_test_id"
+      referencedTableName="diagnostic_test"
+      referencedColumnNames="id"
+      constraintName="fk_ppi_diagnostic_test"/>
+
+    <addForeignKeyConstraint
+      baseTableName="payor_plan_item"
+      baseColumnNames="service_id"
+      referencedTableName="service"
+      referencedColumnNames="id"
+      constraintName="fk_ppi_service"/>
+
+    <addForeignKeyConstraint
+      baseTableName="payor_plan_item"
+      baseColumnNames="procedure_id"
+      referencedTableName="procedure"
+      referencedColumnNames="id"
+      constraintName="fk_ppi_procedure"/>
+
+    <sql dbms="postgresql">
+        <![CDATA[
+      ALTER TABLE payor_plan_item
+        ADD CONSTRAINT ck_ppi_item_reference_by_type
+          CHECK (
+
+            (
+              item_type = 'MEDICATION'
+                AND brand_medication_id IS NOT NULL
+                AND diagnostic_test_id IS NULL
+                AND service_id IS NULL
+                AND procedure_id IS NULL
+              )
+
+              OR
+
+            (
+              item_type IN ('LABORATORY', 'RADIOLOGY', 'PATHOLOGY')
+                AND brand_medication_id IS NULL
+                AND diagnostic_test_id IS NOT NULL
+                AND service_id IS NULL
+                AND procedure_id IS NULL
+              )
+
+              OR
+
+            (
+              item_type = 'SERVICE'
+                AND brand_medication_id IS NULL
+                AND diagnostic_test_id IS NULL
+                AND service_id IS NOT NULL
+                AND procedure_id IS NULL
+              )
+
+              OR
+
+            (
+              item_type = 'PROCEDURE'
+                AND brand_medication_id IS NULL
+                AND diagnostic_test_id IS NULL
+                AND service_id IS NULL
+                AND procedure_id IS NOT NULL
+              )
+
+            );
+      ]]>
+    </sql>
+
+
+  </changeSet>
+
+</databaseChangeLog>
