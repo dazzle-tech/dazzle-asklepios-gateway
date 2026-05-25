@@ -54,6 +54,7 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/appointmentLog/1777286590_R_appointment_log_require_confirmation.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/sql/storProcedure/1779695062_H_Check_Appointment.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1774352873_BM_availability_template_allowed_services.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1771073729_B_encounter.xml" relativeToChangelogFile="false"/>
