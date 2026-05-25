@@ -145,6 +145,7 @@
   <include file="config/liquibase/changelog/payorSetup/1779182620_B_AlterPayorWaseel.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/payorSetup/1779188081_B_AlterPayorPlanWaseel.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/payorSetup/1779188216_B_PayorPlanCoverageClass.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/payorSetup/1779344554_B_AddPayorPlanItemReferencesAndPreAuthorization.xml" relativeToChangelogFile="false"/>
 
   <include file="/config/liquibase/changelog/1764826849_H_Discharge_Planning.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1764776884_H_Payor_Plan.xml" relativeToChangelogFile="false"/>
