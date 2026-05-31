@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+      http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="H_ADD_MODALITY_TO_DIAGNOSTIC_TEST" author="hanan253yahya">
+
+    <addColumn tableName="diagnostic_test">
+      <column name="modality" type="varchar(100)">
+        <constraints nullable="true"/>
+      </column>
+    </addColumn>
+
+    <rollback>
+      <dropColumn tableName="diagnostic_test" columnName="modality"/>
+    </rollback>
+
+  </changeSet>
+
+</databaseChangeLog>
