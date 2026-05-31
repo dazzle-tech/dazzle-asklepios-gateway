@@ -277,4 +277,7 @@
   <include file="/config/liquibase/changelog/1777908430_S_AppointmentReschedule.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/sql/storProcedure/Diagnostic_Order_Test_Result_Procedure.xml"
            relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1779353699_S_policyAssignment.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1779583432_S_AppointmentPolicyAssignment.xml" relativeToChangelogFile="false"/>
+
 </databaseChangeLog>

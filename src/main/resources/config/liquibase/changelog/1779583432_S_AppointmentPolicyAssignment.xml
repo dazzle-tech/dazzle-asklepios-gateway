@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="00000000000072_POLICY_ASSIGNMENT" author="Sondos">
+
+    <createTable tableName="appointment_policy_assignment">
+      <column name="id" type="bigint" autoIncrement="true" startWith="5000">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+
+      <column name="appointment_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="policy_assignment_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="policy_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="is_required" type="boolean" defaultValue="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="is_applied" type="boolean" defaultValue="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp" defaultValue="now()">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="appointment_policy_assignment"
+      baseColumnNames="policy_id"
+      referencedTableName="policy_definition"
+      referencedColumnNames="id"
+      constraintName="fk_appointment_policy_assignment_policy"/>
+    <addForeignKeyConstraint
+      baseTableName="appointment_policy_assignment"
+      baseColumnNames="appointment_id"
+      referencedTableName="appointment"
+      referencedColumnNames="id"
+      constraintName="fk_appointment_policy_assignment_appointment"/>
+
+    <addForeignKeyConstraint
+      baseTableName="appointment_policy_assignment"
+      baseColumnNames="policy_assignment_id"
+      referencedTableName="policy_assignment"
+      referencedColumnNames="id"
+      constraintName="fk_appointment_policy_assignment_policy_assignment"/>
+
+    <addUniqueConstraint
+      tableName="appointment_policy_assignment"
+      columnNames="policy_id, appointment_id"
+      constraintName="uk_appointment_policy_assignment_policy"/>
+
+    <addUniqueConstraint
+      tableName="appointment_policy_assignment"
+      columnNames="policy_assignment_id, appointment_id"
+      constraintName="uk_appointment_policy_assignment_policy_assignment_id"/>
+
+    <addUniqueConstraint
+      tableName="appointment_policy_assignment"
+      columnNames="policy_id, policy_assignment_id, appointment_id"
+      constraintName="uk_appointment_policy_assignment_policy_and_assignment_and_appointment"/>
+
+    <createIndex
+      tableName="appointment_policy_assignment"
+      indexName="idx_appointment_policy_assignment_policy_id">
+      <column name="policy_id"/>
+    </createIndex>
+    <createIndex
+      tableName="appointment_policy_assignment"
+      indexName="idx_appointment_policy_assignment_appintment_id">
+      <column name="appointment_id"/>
+    </createIndex>
+    <createIndex
+      tableName="appointment_policy_assignment"
+      indexName="idx_appointment_policy_assignment_policy_assignment_id">
+      <column name="policy_assignment_id"/>
+    </createIndex>
+
+  </changeSet>
+
+</databaseChangeLog>
