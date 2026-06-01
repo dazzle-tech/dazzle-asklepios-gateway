@@ -8,11 +8,9 @@
 <changeSet id="BM0000000000037" author="BushraMashaiekh">
   <addColumn tableName="form_entries">
     <column name="patient_id" type="bigint">
-      <constraints nullable="false"/>
     </column>
 
     <column name="encounter_id" type="bigint">
-      <constraints nullable="false"/>
     </column>
   </addColumn>
 
