@@ -25,7 +25,7 @@ public final class SecurityUtils {
 
     public static final String AUTHORITIES_KEY = "auth";
     public static final String FACILITY_KEY = "tenant";
-
+   public  static final  String SECURITY_ACCESS_LEVE="securityAccessLeve";
     private SecurityUtils() {}
 
     /**
