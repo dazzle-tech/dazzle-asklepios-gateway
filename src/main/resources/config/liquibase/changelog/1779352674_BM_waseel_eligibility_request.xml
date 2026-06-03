@@ -15,6 +15,10 @@
       <constraints nullable="false"/>
     </column>
 
+    <column name="encounter_id" type="bigint">
+      <constraints nullable="false"/>
+    </column>
+
     <column name="patient_insurance_id" type="bigint">
       <constraints nullable="false"/>
     </column>
@@ -64,6 +68,11 @@
     referencedTableName="patients"
     referencedColumnNames="id"
     constraintName="fk_waseel_eligibility_patient"/>
+
+  <addForeignKeyConstraint baseTableName="waseel_eligibility_request" baseColumnNames="encounter_id"
+                           referencedTableName="patient_encounters"
+                           referencedColumnNames="id"
+                           constraintName="fk_waseel_eligibility_encounter"/>
 
   <addForeignKeyConstraint
     baseTableName="waseel_eligibility_request"
