@@ -6,7 +6,7 @@
     http://www.liquibase.org/xml/ns/dbchangelog
     https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-  <changeSet id="20260602-01-create-system-configuration" author="asklepios">
+  <changeSet id="20260602-01-create-system-configuration" author="hanan253yahya">
     <createTable tableName="system_configuration">
       <column name="id" type="bigint" autoIncrement="true">
         <constraints primaryKey="true" nullable="false" primaryKeyName="pk_system_configuration"/>
@@ -17,7 +17,7 @@
       </column>
 
       <column name="config_value" type="text">
-        <constraints nullable="true"/>
+        <constraints nullable="false"/>
       </column>
 
       <column name="config_type" type="varchar(50)">
@@ -28,13 +28,12 @@
         <constraints nullable="true"/>
       </column>
 
-      <column name="created_date" type="timestamp">
-        <constraints nullable="true"/>
+      <column name="created_date" type="timestamp"/>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
       </column>
-
-      <column name="last_modified_date" type="timestamp">
-        <constraints nullable="true"/>
-      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
     </createTable>
   </changeSet>
 
