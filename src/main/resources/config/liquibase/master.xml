@@ -52,6 +52,7 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1771073729_B_encounter.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/encounter/1777198308_BM_encounter.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/encounter/1780306435_B_addCompletedFieldstoPatientEncounters.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1757856381_H_duplication-candidate.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1760505952_S_patientAttachments.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1760518132_S_encounterAttachments.xml" relativeToChangelogFile="false"/>
@@ -206,6 +207,8 @@
   <include file="config/liquibase/changelog/1771843369_R_patient_warnings_log.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1770791655_R_PatientServicesAndProducts.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patientServicesAndProducts/1780386684_B__add_pre_auth_status_to_patient_service_and_product.xml"
+           relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1764762354_BM_Billing_Invoice.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1764765924_BM_Billing_Invoice_Item.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1764767706_BM_Patient_Payment.xml" relativeToChangelogFile="false"/>
@@ -261,4 +264,6 @@
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1777908430_S_AppointmentReschedule.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1779352674_BM_waseel_eligibility_request.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/preAuthorization_WaseelIntegration/1780212049_B_preAuthorization.xml" relativeToChangelogFile="false"/>
+
 </databaseChangeLog>

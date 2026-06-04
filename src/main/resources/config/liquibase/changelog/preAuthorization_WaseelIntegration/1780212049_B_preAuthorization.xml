@@ -1,0 +1,581 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+      http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="bs000000000044" author="batool">
+
+    <!-- =========================
+         PRE AUTH REQUEST
+         ========================= -->
+    <createTable tableName="pre_authorization_request">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="patient_insurance_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="payor_id" type="bigint"/>
+      <column name="payor_plan_id" type="bigint"/>
+
+      <column name="provider_id" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="provider_nphies_id" type="varchar(100)"/>
+
+      <column name="transaction_id" type="bigint"/>
+      <column name="outgoing_transaction_id" type="varchar(100)"/>
+      <column name="approval_request_id" type="bigint"/>
+      <column name="approval_response_id" type="bigint"/>
+      <column name="pre_auth_ref_no" type="varchar(100)"/>
+
+      <column name="eligibility_response_id" type="varchar(100)"/>
+      <column name="eligibility_response_url" type="varchar(500)"/>
+      <column name="eligibility_offline_id" type="varchar(100)"/>
+      <column name="eligibility_offline_date" type="date"/>
+
+      <column name="date_ordered" type="date">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="payee_id" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="payee_type" type="varchar(50)" defaultValue="provider">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="preauth_type" type="varchar(50)" defaultValue="professional">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="preauth_sub_type" type="varchar(50)" defaultValue="op">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="episode_id" type="varchar(100)"/>
+      <column name="prescription" type="varchar(500)"/>
+
+      <column name="transfer" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="is_new_born" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="destination_id" type="varchar(100)"/>
+
+      <column name="encounter_status" type="varchar(50)"/>
+      <column name="encounter_class" type="varchar(50)"/>
+      <column name="service_type" type="varchar(100)"/>
+      <column name="service_event_type" type="varchar(50)"/>
+      <column name="service_provider" type="varchar(100)"/>
+      <column name="encounter_start_date" type="date"/>
+      <column name="encounter_end_date" type="date"/>
+
+      <column name="total_net" type="numeric(19,2)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="status" type="varchar(50)" defaultValue="DRAFT">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="outcome" type="varchar(100)"/>
+      <column name="message" type="varchar(1000)"/>
+      <column name="disposition" type="varchar(1000)"/>
+      <column name="status_reason" type="varchar(1000)"/>
+
+      <column name="is_cancelled" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="cancel_reason" type="varchar(50)"/>
+      <column name="cancel_status" type="varchar(100)"/>
+      <column name="cancel_outcome" type="varchar(100)"/>
+      <column name="cancel_message" type="varchar(1000)"/>
+
+      <column name="request_json" type="text"/>
+      <column name="response_json" type="text"/>
+      <column name="search_response_json" type="text"/>
+      <column name="cancel_request_json" type="text"/>
+      <column name="cancel_response_json" type="text"/>
+
+      <column name="created_date" type="timestamp"/>
+      <column name="created_by" type="varchar(50)"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <!-- =========================
+         PRE AUTH ITEM
+         ========================= -->
+    <createTable tableName="pre_authorization_item">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="pre_authorization_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="sequence" type="integer">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="item_type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="item_code" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="item_description" type="varchar(500)"/>
+      <column name="non_standard_code" type="varchar(100)"/>
+      <column name="non_standard_desc" type="varchar(500)"/>
+
+      <column name="is_package" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="is_maternity" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="quantity" type="numeric(19,4)" defaultValueNumeric="1">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="quantity_code" type="varchar(50)"/>
+
+      <column name="unit_price" type="numeric(19,2)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="discount" type="numeric(19,2)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="factor" type="numeric(19,4)" defaultValueNumeric="1">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="tax_percent" type="numeric(19,4)" defaultValueNumeric="0"/>
+      <column name="tax" type="numeric(19,2)" defaultValueNumeric="0"/>
+      <column name="patient_share_percent" type="numeric(19,4)" defaultValueNumeric="0"/>
+      <column name="patient_share" type="numeric(19,2)" defaultValueNumeric="0"/>
+      <column name="payer_share" type="numeric(19,2)" defaultValueNumeric="0"/>
+
+      <column name="net" type="numeric(19,2)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="start_date" type="date"/>
+      <column name="end_date" type="date"/>
+      <column name="invoice_no" type="varchar(100)"/>
+      <column name="body_site" type="varchar(100)"/>
+      <column name="sub_site" type="varchar(100)"/>
+
+      <column name="brand_medication_id" type="bigint"/>
+      <column name="diagnostic_test_id" type="bigint"/>
+      <column name="service_id" type="bigint"/>
+      <column name="procedure_id" type="bigint"/>
+
+      <column name="waseel_item_id" type="bigint"/>
+      <column name="item_decision" type="varchar(100)"/>
+      <column name="reason_codes" type="varchar(500)"/>
+      <column name="raw_json" type="text"/>
+
+      <column name="created_date" type="timestamp"/>
+      <column name="created_by" type="varchar(50)"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <!-- =========================
+         DIAGNOSIS
+         ========================= -->
+    <createTable tableName="pre_authorization_diagnosis">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="pre_authorization_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="sequence" type="integer">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="diagnosis_code" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="diagnosis_description" type="varchar(500)"/>
+      <column name="diagnosis_type" type="varchar(50)"/>
+      <column name="on_admission" type="varchar(50)"/>
+
+      <column name="created_date" type="timestamp"/>
+      <column name="created_by" type="varchar(50)"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <!-- =========================
+         CARE TEAM
+         ========================= -->
+    <createTable tableName="pre_authorization_care_team">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="pre_authorization_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="sequence" type="integer">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="practitioner_name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="physician_code" type="varchar(100)"/>
+      <column name="practitioner_role" type="varchar(100)"/>
+      <column name="care_team_role" type="varchar(100)"/>
+      <column name="speciality" type="varchar(255)"/>
+      <column name="speciality_code" type="varchar(100)"/>
+      <column name="qualification_code" type="varchar(100)"/>
+
+      <column name="created_date" type="timestamp"/>
+      <column name="created_by" type="varchar(50)"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <!-- =========================
+         SUPPORTING INFO
+         ========================= -->
+    <createTable tableName="pre_authorization_supporting_info">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="pre_authorization_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="sequence" type="integer">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="category" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="code" type="varchar(100)"/>
+      <column name="from_date" type="date"/>
+      <column name="to_date" type="date"/>
+      <column name="value" type="text"/>
+      <column name="reason" type="varchar(100)"/>
+      <column name="unit" type="varchar(50)"/>
+
+      <column name="attachment" type="text"/>
+      <column name="attachment_name" type="varchar(255)"/>
+      <column name="attachment_type" type="varchar(100)"/>
+      <column name="attachment_date" type="date"/>
+
+      <column name="created_date" type="timestamp"/>
+      <column name="created_by" type="varchar(50)"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <!-- =========================
+         ATTACHMENTS - CLOUD STORAGE PATTERN
+         ========================= -->
+    <createTable tableName="pre_authorization_attachments">
+      <column name="id" type="BIGINT" autoIncrement="true" startWith="5000">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="pre_authorization_id" type="BIGINT">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="VARCHAR(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="space_key" type="varchar(500)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="filename" type="TEXT">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="mime_type" type="TEXT">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="size_bytes" type="BIGINT">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="TIMESTAMPTZ" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="deleted_at" type="TIMESTAMPTZ"/>
+      <column name="type" type="nvarchar(100)"/>
+      <column name="details" type="TEXT"/>
+
+      <column name="source" type="VARCHAR(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="source_id" type="BIGINT">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="supporting_info_id" type="BIGINT"/>
+
+      <column name="is_sent_to_waseel" type="BOOLEAN" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="waseel_attachment_id" type="VARCHAR(100)"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <!-- =========================
+         TRACKING
+         ========================= -->
+    <createTable tableName="pre_authorization_track">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="pre_authorization_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="track_type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="status" type="varchar(100)"/>
+      <column name="outcome" type="varchar(100)"/>
+      <column name="message" type="varchar(1000)"/>
+      <column name="disposition" type="varchar(1000)"/>
+
+      <column name="transaction_id" type="bigint"/>
+      <column name="outgoing_transaction_id" type="varchar(100)"/>
+      <column name="approval_request_id" type="bigint"/>
+      <column name="approval_response_id" type="bigint"/>
+
+      <column name="request_json" type="text"/>
+      <column name="response_json" type="text"/>
+
+      <column name="created_date" type="timestamp"/>
+      <column name="created_by" type="varchar(50)"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <!-- =========================
+         FOREIGN KEYS
+         ========================= -->
+    <addForeignKeyConstraint baseTableName="pre_authorization_request"
+                             baseColumnNames="patient_id"
+                             referencedTableName="patients"
+                             referencedColumnNames="id"
+                             constraintName="fk_preauth_patient"/>
+
+    <addForeignKeyConstraint baseTableName="pre_authorization_request"
+                             baseColumnNames="encounter_id"
+                             referencedTableName="patient_encounters"
+                             referencedColumnNames="id"
+                             constraintName="fk_preauth_encounter"/>
+
+    <addForeignKeyConstraint baseTableName="pre_authorization_request"
+                             baseColumnNames="patient_insurance_id"
+                             referencedTableName="patient_insurances"
+                             referencedColumnNames="id"
+                             constraintName="fk_preauth_patient_insurance"/>
+
+    <addForeignKeyConstraint baseTableName="pre_authorization_request"
+                             baseColumnNames="payor_id"
+                             referencedTableName="payor"
+                             referencedColumnNames="id"
+                             constraintName="fk_preauth_payor"/>
+
+    <addForeignKeyConstraint baseTableName="pre_authorization_request"
+                             baseColumnNames="payor_plan_id"
+                             referencedTableName="payor_plan"
+                             referencedColumnNames="id"
+                             constraintName="fk_preauth_payor_plan"/>
+
+    <addForeignKeyConstraint baseTableName="pre_authorization_item"
+                             baseColumnNames="pre_authorization_id"
+                             referencedTableName="pre_authorization_request"
+                             referencedColumnNames="id"
+                             constraintName="fk_preauth_item_request"/>
+
+    <addForeignKeyConstraint baseTableName="pre_authorization_diagnosis"
+                             baseColumnNames="pre_authorization_id"
+                             referencedTableName="pre_authorization_request"
+                             referencedColumnNames="id"
+                             constraintName="fk_preauth_diagnosis_request"/>
+
+    <addForeignKeyConstraint baseTableName="pre_authorization_care_team"
+                             baseColumnNames="pre_authorization_id"
+                             referencedTableName="pre_authorization_request"
+                             referencedColumnNames="id"
+                             constraintName="fk_preauth_care_team_request"/>
+
+    <addForeignKeyConstraint baseTableName="pre_authorization_supporting_info"
+                             baseColumnNames="pre_authorization_id"
+                             referencedTableName="pre_authorization_request"
+                             referencedColumnNames="id"
+                             constraintName="fk_preauth_supporting_request"/>
+
+    <addForeignKeyConstraint baseTableName="pre_authorization_attachments"
+                             baseColumnNames="pre_authorization_id"
+                             referencedTableName="pre_authorization_request"
+                             referencedColumnNames="id"
+                             constraintName="fk_paa_preauth"
+                             onDelete="CASCADE"/>
+
+    <addForeignKeyConstraint baseTableName="pre_authorization_attachments"
+                             baseColumnNames="supporting_info_id"
+                             referencedTableName="pre_authorization_supporting_info"
+                             referencedColumnNames="id"
+                             constraintName="fk_paa_supporting_info"/>
+
+    <addForeignKeyConstraint baseTableName="pre_authorization_track"
+                             baseColumnNames="pre_authorization_id"
+                             referencedTableName="pre_authorization_request"
+                             referencedColumnNames="id"
+                             constraintName="fk_preauth_track_request"/>
+
+    <addForeignKeyConstraint baseTableName="pre_authorization_item"
+                             baseColumnNames="brand_medication_id"
+                             referencedTableName="brand_medication"
+                             referencedColumnNames="id"
+                             constraintName="fk_preauth_item_brand_medication"/>
+
+    <addForeignKeyConstraint baseTableName="pre_authorization_item"
+                             baseColumnNames="diagnostic_test_id"
+                             referencedTableName="diagnostic_test"
+                             referencedColumnNames="id"
+                             constraintName="fk_preauth_item_diagnostic_test"/>
+
+    <addForeignKeyConstraint baseTableName="pre_authorization_item"
+                             baseColumnNames="service_id"
+                             referencedTableName="service"
+                             referencedColumnNames="id"
+                             constraintName="fk_preauth_item_service"/>
+
+    <addForeignKeyConstraint baseTableName="pre_authorization_item"
+                             baseColumnNames="procedure_id"
+                             referencedTableName="procedure"
+                             referencedColumnNames="id"
+                             constraintName="fk_preauth_item_procedure"/>
+
+    <!-- =========================
+         INDEXES
+         ========================= -->
+    <createIndex tableName="pre_authorization_request" indexName="idx_preauth_patient">
+      <column name="patient_id"/>
+    </createIndex>
+
+    <createIndex tableName="pre_authorization_request" indexName="idx_preauth_encounter">
+      <column name="encounter_id"/>
+    </createIndex>
+
+    <createIndex tableName="pre_authorization_request" indexName="idx_preauth_status">
+      <column name="status"/>
+    </createIndex>
+
+    <createIndex tableName="pre_authorization_request" indexName="idx_preauth_approval_request">
+      <column name="approval_request_id"/>
+    </createIndex>
+
+    <createIndex tableName="pre_authorization_item" indexName="idx_preauth_item_request">
+      <column name="pre_authorization_id"/>
+    </createIndex>
+
+    <createIndex tableName="pre_authorization_diagnosis" indexName="idx_preauth_diagnosis_request">
+      <column name="pre_authorization_id"/>
+    </createIndex>
+
+    <createIndex tableName="pre_authorization_care_team" indexName="idx_preauth_care_team_request">
+      <column name="pre_authorization_id"/>
+    </createIndex>
+
+    <createIndex tableName="pre_authorization_supporting_info" indexName="idx_preauth_supporting_request">
+      <column name="pre_authorization_id"/>
+    </createIndex>
+
+    <createIndex tableName="pre_authorization_attachments" indexName="idx_paa_preauth">
+      <column name="pre_authorization_id"/>
+    </createIndex>
+
+    <createIndex tableName="pre_authorization_track" indexName="idx_preauth_track_request">
+      <column name="pre_authorization_id"/>
+    </createIndex>
+
+    <!-- =========================
+         UNIQUE + CHECK CONSTRAINTS
+         ========================= -->
+    <addUniqueConstraint
+      tableName="pre_authorization_attachments"
+      columnNames="space_key"
+      constraintName="uq_paa_space_key"/>
+
+    <addUniqueConstraint
+      tableName="pre_authorization_attachments"
+      columnNames="pre_authorization_id, space_key"
+      constraintName="uq_paa_preauth_space"/>
+
+    <sql dbms="postgresql">
+      <![CDATA[
+      ALTER TABLE pre_authorization_attachments
+        ADD CONSTRAINT ck_paa_size_bytes_max_50mb
+          CHECK (size_bytes <= 52428800);
+      ]]>
+    </sql>
+
+    <sql dbms="postgresql">
+      <![CDATA[
+      CREATE INDEX idx_paa_not_deleted
+        ON pre_authorization_attachments (id)
+        WHERE deleted_at IS NULL;
+      ]]>
+    </sql>
+
+  </changeSet>
+
+</databaseChangeLog>

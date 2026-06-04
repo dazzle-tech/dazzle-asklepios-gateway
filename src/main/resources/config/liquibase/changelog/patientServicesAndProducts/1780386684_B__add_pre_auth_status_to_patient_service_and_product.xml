@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="b00000000000046" author="batool">
+
+    <addColumn tableName="patient_services_and_products">
+
+      <column name="pre_authorization_status"
+              type="varchar(50)"/>
+
+    </addColumn>
+
+  </changeSet>
+
+</databaseChangeLog>
