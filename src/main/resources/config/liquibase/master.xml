@@ -31,6 +31,7 @@
   <include file="/config/liquibase/changelog/1761035006_B_allergens.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1763384457_P_patient.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/patient/1779006891_add_document_id_and_cchi_flag_to_patients.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/patient/1780575771_B_rename_native_language.xml" relativeToChangelogFile="false"/>
 
   <include file="config/liquibase/changelog/1774339192_BM_availability_template.xml" relativeToChangelogFile="false"/>
   <include
