@@ -52,7 +52,7 @@
         <constraints nullable="false"/>
       </column>
 
-      <column name="payee_id" type="varchar(100)">
+      <column name="payee_id" type="bigint">
         <constraints nullable="false"/>
       </column>
 
@@ -85,7 +85,7 @@
       <column name="encounter_class" type="varchar(50)"/>
       <column name="service_type" type="varchar(100)"/>
       <column name="service_event_type" type="varchar(50)"/>
-      <column name="service_provider" type="varchar(100)"/>
+      <column name="service_provider" type="bigint"/>
       <column name="encounter_start_date" type="date"/>
       <column name="encounter_end_date" type="date"/>
 
