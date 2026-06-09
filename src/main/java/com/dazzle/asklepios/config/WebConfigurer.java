@@ -87,6 +87,7 @@ public class WebConfigurer implements WebFluxConfigurer {
             source.registerCorsConfiguration("/api/inventory/**" ,config);
             source.registerCorsConfiguration("/api/billing/**" ,config);
             source.registerCorsConfiguration("/api/analytics",config);
+            source.registerCorsConfiguration("/api/notification",config);
         }
         return source;
     }

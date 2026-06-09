@@ -24,6 +24,7 @@ services:
   asklepios-inventory-service-url :  http://asklepios-inventory-service:8080
   asklepios-billing-service-url :  http://asklepios-billing-service:8080
   dazzle-asklepios-analytics-service-url : http://asklepios-analytics-service:8080
+  dazzle-asklepios-notification-service-url : http://asklepios-notification-service:8080
 
   medication-test-orders-validation-service-url: http://medication-test-orders-validation-service:8005
   clinical-summary-service-url: http://clinical-summary-service:8003
@@ -243,6 +244,12 @@ spring:
           uri: ${services.dazzle-asklepios-analytics-service-url}
           predicates:
             - Path=/api/analytics/**
+          filters:
+            - StripPrefix=0
+        - id: notification
+          uri: ${services.dazzle-asklepios-notification-service-url}
+          predicates:
+            - Path=/api/notification/**
           filters:
             - StripPrefix=0
       httpclient:
