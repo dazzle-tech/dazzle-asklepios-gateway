@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="20260602-01-create-system-configuration" author="hanan253yahya">
+    <createTable tableName="system_configuration">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false" primaryKeyName="pk_system_configuration"/>
+      </column>
+
+      <column name="config_key" type="varchar(100)">
+        <constraints nullable="false" unique="true" uniqueConstraintName="uk_system_configuration_key"/>
+      </column>
+
+      <column name="config_value" type="text">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="config_type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="description" type="varchar(500)">
+        <constraints nullable="true"/>
+      </column>
+
+      <column name="created_date" type="timestamp"/>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+  </changeSet>
+
+</databaseChangeLog>

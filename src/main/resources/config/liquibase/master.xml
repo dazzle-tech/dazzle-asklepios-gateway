@@ -18,6 +18,8 @@
   <include file="/config/liquibase/changelog/departments/1776667781_R_departments_working_days.xml"
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1759823656_S_UserDepartments.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/userDepartment/1780583058_S_UserDepartmentAllowBookingFlag.xml"
+           relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1760438060_BM_Language.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1760550923_BM_Language_Translation.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1760537415_H_medicalSheet.xml" relativeToChangelogFile="false"/>
@@ -28,11 +30,20 @@
   <include file="/config/liquibase/changelog/1746352745_H_Practitioner.xml"/>
   <include file="/config/liquibase/changelog/practitioner/1776677972_R_practitioner_working_days.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/practitioner/1779622787_add_document_column.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/sql/practitioner/hl7_create_practitioner.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1761035006_B_allergens.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1763384457_P_patient.xml" relativeToChangelogFile="false"/>
+
   <include file="/config/liquibase/changelog/patient/1779006891_add_document_id_and_cchi_flag_to_patients.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/patient/1780575771_B_rename_native_language.xml" relativeToChangelogFile="false"/>
 
+  <include file="/config/liquibase/changelog/patient/1778679400_SA_patient.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/patient/1778679400_SA_patientPassword.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/patient/1778742616_Q_patient_blood_group_and_conditions.xml"
+           relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1774339192_BM_availability_template.xml" relativeToChangelogFile="false"/>
   <include
     file="config/liquibase/changelog/availabilityTemplate/1777441360_R_availability_template_require_confirmation_default_value.xml"
@@ -43,15 +54,21 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1774339459_BM_appointment.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/sql/appointment/hl7_appointment_booked.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/sql/appointment/hl7_appointment_cancelled.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/appointment/1777451035_BM_appointment_log_trigger.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/appointment/1777285727_R_appointment_require_confirmation.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/appointmentLog/1777286590_R_appointment_log_require_confirmation.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/sql/storProcedure/1779695062_H_Check_Appointment.xml"
+           relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1774352873_BM_availability_template_allowed_services.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1771073729_B_encounter.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/encounter/1779259017_B_drop_unique_patient_department_date_encounter.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/encounter/1779346322_H_Encounter_Time.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/encounter/1777198308_BM_encounter.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/encounter/1780306435_B_addCompletedFieldstoPatientEncounters.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1757856381_H_duplication-candidate.xml" relativeToChangelogFile="false"/>
@@ -63,6 +80,8 @@
   <include file="/config/liquibase/changelog/1761464072_B_ageGroup.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1761567165_create_icd10_table.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1761641123_H_Diagnostic_Test.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/diagnostic_test/1779627074_H_add_modality_column.xml"
+           relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762159584_S_InventoryTransferAttachments.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762066546_B_LOINC_Code.xml" relativeToChangelogFile="false"/>
@@ -161,6 +180,7 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1766065547_BM_Form_Template.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1766396407_BM_Form_Entries.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/formEntries/1780301523_form_entries.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1766367799_S_organization_definition.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1765794249_H_Review_of_System.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1768295981_H_Diagnostic_Order_Test_Result.xml"
@@ -184,9 +204,15 @@
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1769416461_Q_Consultation.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1768473866_Q_Surgical_History.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/surgicalhistory/1778668757_surgical_history_add_cancel_fields.xml"
+           relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1768721356_Q_Social_History.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/socialhistory/1778663643_social_history_add_cancel_fields.xml"
+           relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1770025904_Q_Progress_Notes.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1768824118_Q_Telephonic_Consultation.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/TelephonicConsultation/1778677206_Q_Telephonic_Consultation.xml"
+           relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1765875560_B_patientInsurances.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/patientInsurances/1777198310_BM_patient_insurances_waseel_columns.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1765892720_B_patientInsuranceCoverages.xml"
@@ -216,8 +242,14 @@
   <include file="/config/liquibase/changelog/1764823037_BM_Payment_Allocation.xml" relativeToChangelogFile="false"/>
 
   <include file="/config/liquibase/changelog/1768307386_B_PatientProblems.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/patientproblems/1778670079_patient_problems_add_cancel_fields.xml"
+           relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1768381461_Q_Family_History.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/familyhistory/1778673454_family_history_add_cancel_fields.xml"
+           relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1768389695_Q_Hospitalizations.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/hospitalization/1778674502_hospitalization_add_cancel_fields.xml"
+           relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1769002586_B_VitalSigns.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1769005669_B_BodyMeasurements.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1769004404_B_PatientObservation_Complaints.xml"
@@ -238,6 +270,10 @@
   <include
     file="/config/liquibase/changelog/patientPrescriptionMedication/1777282256_S_PatientPrescriptionMedications.xml"
     relativeToChangelogFile="false"/>
+  <include
+    file="/config/liquibase/changelog/prescription/1778073007_Q_patient_prescription_medications_edit_administration_instructions.xml"
+    relativeToChangelogFile="false"/>
+
   <include file="/config/liquibase/changelog/1769523307_B_referralRequests.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1773745759_S_OrganizationHoliday.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1774280357_S_departmentServices.xml" relativeToChangelogFile="false"/>
@@ -249,7 +285,11 @@
   <include file="/config/liquibase/changelog/1774448712_B_encounterAssignToBed.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1774782462_B_bedTransactions.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1775554145_Q_CurrentMedication.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/currentmedication/1778678350_current_medication_add_cancel_fields.xml"
+           relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1776165512_BM_Appointment_Request.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/appointmentRequest/1779182296_S_appointment_request_preferred_date.xml"
+           relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1776161006_H_Patient_Urgent_Care_Medication_Order.xml"
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1776164078_S_availability_template_interval_break.xml"
@@ -264,7 +304,15 @@
   <include file="/config/liquibase/changelog/1778134530_B_glasgowComaScaleAssessment.xml"
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1777908430_S_AppointmentReschedule.xml" relativeToChangelogFile="false"/>
+
   <include file="/config/liquibase/changelog/1779352674_BM_waseel_eligibility_request.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/preAuthorization_WaseelIntegration/1780212049_B_preAuthorization.xml" relativeToChangelogFile="false"/>
 
+  <include file="config/liquibase/sql/storProcedure/Diagnostic_Order_Test_Result_Procedure.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1779353699_S_policyAssignment.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1779583432_S_AppointmentPolicyAssignment.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/systemConfiguration/1780392466_Create_Table_System_Configueration.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
