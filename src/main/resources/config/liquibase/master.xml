@@ -296,4 +296,9 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/systemConfiguration/1780392466_Create_Table_System_Configueration.xml"
            relativeToChangelogFile="false"/>
+
+  <include file="/config/liquibase/changelog/notification/1781082967_S_NotificationSchema.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/notification/1781084026_S_NotificationHeader.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/notification/1781088043_S_NotificationTemplate.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/notification/1781136609_S_Notification.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>

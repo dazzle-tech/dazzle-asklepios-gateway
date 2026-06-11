@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="NOTIF_00000000000002" author="Sondos-Abd-Alaal">
+
+    <createTable schemaName="notification" tableName="notification_header">
+      <column name="id" type="bigint" autoIncrement="true" startWith="5000">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+
+      <column name="facility_id" type="bigint"/>
+
+      <column name="code" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="name" type="varchar(150)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="description" type="text"/>
+
+      <column name="module" type="varchar(100)"/>
+      <column name="category" type="varchar(50)"/>
+      <column name="priority" type="varchar(50)"/>
+
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(100)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addUniqueConstraint
+      schemaName="notification"
+      tableName="notification_header"
+      columnNames="facility_id, code"
+      constraintName="uq_notification_header_facility_code"/>
+
+    <createIndex
+      schemaName="notification"
+      tableName="notification_header"
+      indexName="idx_notification_header_lookup">
+      <column name="facility_id"/>
+      <column name="code"/>
+      <column name="is_active"/>
+    </createIndex>
+
+  </changeSet>
+
+</databaseChangeLog>
