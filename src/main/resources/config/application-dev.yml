@@ -20,6 +20,7 @@ services:
   asklepios-inventory-service-url: http://localhost:8084
   asklepios-billing-service-url: http://localhost:8085
   dazzle-asklepios-analytics-service-url: http://localhost:8089
+  dazzle-asklepios-notification-service-url: http://localhost:8090
 
   medication-test-orders-validation-service-url: http://localhost:8005
   clinical-summary-service-url: http://localhost:8003
@@ -39,7 +40,7 @@ spring:
   liquibase:
     # Remove 'faker' if you do not want the sample data to be loaded automatically
     contexts: dev, faker
-    url: jdbc:postgresql://localhost:5433/ask
+    url: jdbc:postgresql://localhost:5432/test
   mail:
     host: localhost
     port: 25
@@ -48,10 +49,10 @@ spring:
   messages:
     cache-duration: PT1S # 1 second, see the ISO 8601 standard
   r2dbc:
-    url: r2dbc:postgresql://localhost:5433/ask
+    url: r2dbc:postgresql://localhost:5432/test
     #    url: r2dbc:postgresql://host.docker.internal:5432/asklepios
     username: postgres
-    password: qse123H
+    password: 123456
   thymeleaf:
     cache: false
   cloud:
@@ -240,6 +241,14 @@ spring:
             - Path=/api/analytics/**
           filters:
             - StripPrefix=0
+
+        - id: notification
+          uri: ${services.dazzle-asklepios-notification-service-url}
+          predicates:
+            - Path=/api/notification/**
+          filters:
+            - StripPrefix=0
+
       httpclient:
         pool:
           max-connections: 1000
