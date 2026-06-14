@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="1778679400-setPasswordColumns" author="SondosAbdAlaal">
+
+    <addColumn tableName="patients">
+      <column name="reset_key" type="varchar(20)"/>
+    </addColumn>
+
+    <addColumn tableName="patients">
+      <column name="reset_date" type="timestamp"/>
+    </addColumn>
+
+  </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="H-14-add-encounter-time" author="hanan253yahya">
+
+    <addColumn tableName="patient_encounters">
+      <column name="encounter_time" type="time"/>
+    </addColumn>
+
+    <sql>
+      UPDATE patient_encounters pe
+      SET encounter_time = a.start_datetime::time
+      FROM appointment a
+      WHERE pe.appointment_id = a.id
+        AND pe.encounter_time IS NULL;
+    </sql>
+
+    <addNotNullConstraint
+      tableName="patient_encounters"
+      columnName="encounter_time"
+      columnDataType="time"/>
+
+  </changeSet>
+
+</databaseChangeLog>

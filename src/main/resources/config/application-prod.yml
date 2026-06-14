@@ -154,6 +154,12 @@ spring:
             - Path=/api/analytics/**
           filters:
             - StripPrefix=0
+        - id: notification
+          uri: ${services.dazzle-asklepios-notification-service-url}
+          predicates:
+            - Path=/api/notification/**
+          filters:
+            - StripPrefix=0
       httpclient:
         pool:
           max-connections: 1000
