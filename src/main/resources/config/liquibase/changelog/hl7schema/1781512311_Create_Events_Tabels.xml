@@ -6,55 +6,29 @@
     http://www.liquibase.org/xml/ns/dbchangelog
     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-  <changeSet id="HL7_00000000000002" author="Sondos-Abd-Alaal">
 
-    <createTable schemaName="HL7_INTEGRATION" tableName="hl7_event">
-      <column name="id" type="varchar">
-        <constraints nullable="false" primaryKey="true" primaryKeyName="hl7_event_pk"/>
-      </column>
+    <changeSet id="HL7_00000000000002" author="hanan253yahya">
+      <sql>
+        CREATE TABLE IF NOT EXISTS "HL7_INTEGRATION".hl7_event (
+                                                                 id varchar NOT NULL,
+                                                                 event_type varchar NOT NULL,
+                                                                 object_key varchar NOT NULL,
+                                                                 event_datetime timestamp NOT NULL,
+                                                                 CONSTRAINT hl7_event_pk PRIMARY KEY (id)
+          );
+      </sql>
 
-      <column name="event_type" type="varchar">
-        <constraints nullable="false"/>
-      </column>
-
-      <column name="object_key" type="varchar">
-        <constraints nullable="false"/>
-      </column>
-
-      <column name="event_datetime" type="timestamp">
-        <constraints nullable="false"/>
-      </column>
-    </createTable>
-
-    <createTable schemaName="HL7_INTEGRATION" tableName="hl7_event_processed">
-      <column name="id" type="varchar">
-        <constraints nullable="false"/>
-      </column>
-
-      <column name="event_type" type="varchar">
-        <constraints nullable="false"/>
-      </column>
-
-      <column name="object_key" type="varchar">
-        <constraints nullable="false"/>
-      </column>
-
-      <column name="event_datetime" type="timestamp">
-        <constraints nullable="false"/>
-      </column>
-
-      <column name="process_datetime" type="timestamp">
-        <constraints nullable="false"/>
-      </column>
-
-      <column name="process_status" type="varchar">
-        <constraints nullable="false"/>
-      </column>
-
-      <column name="error_message" type="varchar">
-        <constraints nullable="false"/>
-      </column>
-    </createTable>
+      <sql>
+        CREATE TABLE IF NOT EXISTS "HL7_INTEGRATION".hl7_event_processed (
+                                                                           id varchar NOT NULL,
+                                                                           event_type varchar NOT NULL,
+                                                                           object_key varchar NOT NULL,
+                                                                           event_datetime timestamp NOT NULL,
+                                                                           process_datetime timestamp NOT NULL,
+                                                                           process_status varchar NOT NULL,
+                                                                           error_message varchar NOT NULL
+        );
+      </sql>
 
   </changeSet>
 
