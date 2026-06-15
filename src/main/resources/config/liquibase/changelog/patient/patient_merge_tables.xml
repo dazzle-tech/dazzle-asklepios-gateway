@@ -368,5 +368,50 @@
     </sql>
 
   </changeSet>
+  <changeSet id="H-06-patient_merge_duplicate_rules" author="hanan253yahya">
 
+    <createTable tableName="patient_merge_duplicate_rules">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="table_config_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="condition_column" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="from_value" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="to_value" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="action" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="enabled" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="sort_order" type="int" defaultValueNumeric="100">
+        <constraints nullable="false"/>
+      </column>
+
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="patient_merge_duplicate_rules"
+      baseColumnNames="table_config_id"
+      referencedTableName="patient_merge_table_configs"
+      referencedColumnNames="id"
+      constraintName="fk_patient_merge_duplicate_rules_table_config"/>
+
+  </changeSet>
 </databaseChangeLog>
