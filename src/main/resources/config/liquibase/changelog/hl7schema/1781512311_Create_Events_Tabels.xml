@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="HL7_00000000000002" author="Sondos-Abd-Alaal">
+
+    <createTable schemaName="HL7_INTEGRATION" tableName="hl7_event">
+      <column name="id" type="varchar">
+        <constraints nullable="false" primaryKey="true" primaryKeyName="hl7_event_pk"/>
+      </column>
+
+      <column name="event_type" type="varchar">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="object_key" type="varchar">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="event_datetime" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+
+    <createTable schemaName="HL7_INTEGRATION" tableName="hl7_event_processed">
+      <column name="id" type="varchar">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="event_type" type="varchar">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="object_key" type="varchar">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="event_datetime" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="process_datetime" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="process_status" type="varchar">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="error_message" type="varchar">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+
+  </changeSet>
+
+</databaseChangeLog>

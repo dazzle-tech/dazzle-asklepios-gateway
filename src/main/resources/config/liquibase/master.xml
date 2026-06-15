@@ -296,4 +296,6 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/systemConfiguration/1780392466_Create_Table_System_Configueration.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/hl7schema/1781512245_H_Create_Schema.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/hl7schema/1781512311_Create_Events_Tabels.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>
