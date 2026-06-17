@@ -144,6 +144,28 @@
               )
             );
     </sql>
+    <loadData
+      file="config/liquibase/data/notification/notification_template_default.csv"
+      separator=";"
+      tableName="notification_template"
+      schemaName="notification"
+    >
+
+      <column name="id" type="NUMERIC"/>
+      <column name="notification_header_id" type="NUMERIC"/>
+      <column name="channel" type="STRING"/>
+      <column name="language" type="STRING"/>
+      <column name="subject" type="STRING"/>
+      <column name="title" type="STRING"/>
+      <column name="body" type="STRING"/>
+      <column name="to_recipient_rule" type="STRING"/>
+      <column name="cc_recipient_rule" type="STRING"/>
+      <column name="bcc_recipient_rule" type="STRING"/>
+      <column name="phone_recipient_rule" type="STRING"/>
+      <column name="is_active" type="BOOLEAN"/>
+      <column name="created_by" type="STRING"/>
+      <column name="last_modified_by" type="STRING"/>
+    </loadData>
   </changeSet>
 
 </databaseChangeLog>

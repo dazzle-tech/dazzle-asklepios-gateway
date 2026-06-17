@@ -1,0 +1,97 @@
+id;notification_header_id;channel;language;subject;title;body;to_recipient_rule;cc_recipient_rule;bcc_recipient_rule;phone_recipient_rule;is_active;created_by;created_date;last_modified_by;last_modified_date
+5003;5002;EMAIL;en;Set your patient account password;;"
+<!doctype html>
+<html>
+<head>
+  <meta charset=""UTF-8"" />
+  <meta name=""viewport"" content=""width=device-width, initial-scale=1.0"" />
+  <title>{{title}}</title>
+</head>
+
+<body style=""margin:0;padding:0;background:#f4f6f8;"">
+<table role=""presentation"" width=""100%"" cellspacing=""0"" cellpadding=""0"" style=""background:#f4f6f8;padding:24px 0;"">
+  <tr>
+    <td align=""center"">
+      <table role=""presentation"" width=""600"" cellspacing=""0"" cellpadding=""0""
+             style=""width:600px;max-width:600px;background:#ffffff;border-radius:12px;overflow:hidden;
+                    box-shadow:0 6px 18px rgba(0,0,0,0.08);font-family:Arial,Helvetica,sans-serif;"">
+
+        <tr>
+          <td style=""padding:20px 24px;background:#ffffff;border-bottom:1px solid #e6eaee;"">
+            <table role=""presentation"" width=""100%"" cellspacing=""0"" cellpadding=""0"">
+              <tr>
+                <td valign=""middle"" style=""width:180px;"">
+                  <img src=""{{logoUrl}}"" alt=""Asklepios""
+                       style=""display:block;max-width:160px;height:auto;"" />
+                </td>
+                <td valign=""middle"" align=""right"" style=""color:#5b6770;font-size:12px;"">
+                  {{title}}
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <tr>
+          <td style=""padding:28px 24px;color:#1f2a33;"">
+            <p style=""margin:0 0 14px 0;font-size:16px;line-height:24px;font-weight:600;"">
+              Dear {{patientName}},
+            </p>
+
+            <p style=""margin:0 0 10px 0;font-size:14px;line-height:22px;"">
+              Your account has been created.
+            </p>
+
+            <p style=""margin:0 0 18px 0;font-size:14px;line-height:22px;"">
+              Please use the one-time secure link below to create your password:
+            </p>
+
+            <table role=""presentation"" cellspacing=""0"" cellpadding=""0"" style=""margin:18px 0 18px 0;"">
+              <tr>
+                <td style=""border-radius:10px;background:#0b5cab;"">
+                  <a href=""{{createPasswordUrl}}""
+                     style=""display:inline-block;padding:12px 18px;font-size:14px;line-height:18px;
+                            color:#ffffff;text-decoration:none;font-weight:700;border-radius:10px;"">
+                    Create Patient Password
+                  </a>
+                </td>
+              </tr>
+            </table>
+
+            <p style=""margin:0 0 8px 0;font-size:12px;line-height:18px;color:#5b6770;"">
+              If the button does not work, copy and paste this link into your browser:
+            </p>
+
+            <p style=""margin:0 0 18px 0;font-size:12px;line-height:18px;word-break:break-all;"">
+              <a href=""{{createPasswordUrl}}"" style=""color:#0b5cab;text-decoration:underline;"">
+                {{createPasswordUrl}}
+              </a>
+            </p>
+
+            <p style=""margin:0 0 18px 0;font-size:13px;line-height:20px;color:#33424c;"">
+              This link will expire and can be used only once.
+            </p>
+
+            <p style=""margin:0;font-size:14px;line-height:22px;"">
+              Regards,
+            </p>
+
+            <p style=""margin:6px 0 0 0;font-size:14px;line-height:22px;font-weight:700;"">
+              Asklepios Team.
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td style=""padding:14px 24px;background:#f8fafb;border-top:1px solid #e6eaee;color:#7a8791;font-size:11px;line-height:16px;"">
+            This is an automated message. Do not reply to this email.
+          </td>
+        </tr>
+
+      </table>
+    </td>
+  </tr>
+</table>
+</body>
+</html>
+";PATIENT_EMAIL;;;;true;admin;2026-06-15 06:26:00.980362;admin;2026-06-15 09:03:42.629100

@@ -1,0 +1,2 @@
+id;facility_id;code;name;description;module;category;priority;is_active;created_by;created_date;last_modified_by;last_modified_date
+5002;;PATIENT_CREATE_PASSWORD;Patient Create Portal Password;Email sent to patient to create portal password;PATIENT;AUTHENTICATION;HIGH;true;admin;2026-06-15 06:20:51.695643;admin;2026-06-15 06:24:29.831407

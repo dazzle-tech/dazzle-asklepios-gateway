@@ -58,6 +58,24 @@
       <column name="code"/>
       <column name="is_active"/>
     </createIndex>
+    <loadData
+      file="config/liquibase/data/notification/notification_header_default.csv"
+      separator=";"
+      tableName="notification_header"
+      schemaName="notification"
+    >
+      <column name="id" type="NUMERIC"/>
+      <column name="facility_id" type="NUMERIC"/>
+      <column name="code" type="STRING"/>
+      <column name="name" type="STRING"/>
+      <column name="description" type="STRING"/>
+      <column name="module" type="STRING"/>
+      <column name="category" type="STRING"/>
+      <column name="priority" type="STRING"/>
+      <column name="is_active" type="BOOLEAN"/>
+      <column name="created_by" type="STRING"/>
+      <column name="last_modified_by" type="STRING"/>
+    </loadData>
 
   </changeSet>
 
