@@ -24,6 +24,7 @@ services:
   medication-test-orders-validation-service-url: http://localhost:8005
   clinical-summary-service-url: http://localhost:8003
   clinical-recommendations-service-url: http://localhost:8004
+  ocr-parsing-service-url: http://localhost:8012
 
 
 spring:
@@ -207,7 +208,7 @@ spring:
             - StripPrefix=0
 
         - id: billing
-          uri: ${services.asklepios-billing-service-url}
+          uri: ${services.asklepios-billing-service-url}active_ingredient_contraindications
           predicates:
             - Path=/api/billing/**
           filters:
@@ -233,6 +234,13 @@ spring:
             - Path=/api/ai/v1/clinical-recommendations/**
           filters:
             - RewritePath=/api/ai/v1/clinical-recommendations/(?<segment>.*),/api/v1/${segment}
+
+        - id: ocr-parsing
+          uri: ${services.ocr-parsing-service-url}
+          predicates:
+            - Path=/api/ai/v1/ocr-parsing-service/**
+          filters:
+            - RewritePath=/api/ai/v1/ocr-parsing-service/(?<segment>.*),/api/v1/${segment}
 
         - id: analytics
           uri: ${services.dazzle-asklepios-analytics-service-url}
@@ -270,4 +278,3 @@ asklepios:
     base-url: http://localhost:3100/
     username: systemask73@gmail.com
     password: ocdh hvae hhsz cyxc
-
