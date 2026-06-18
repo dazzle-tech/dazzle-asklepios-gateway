@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+  <changeSet id="bs-create-waseel-sbs-catalog" author="BushraMashaiekh">
+
+    <createTable tableName="waseel_sbs_catalog">
+      <column name="id" type="bigint" autoIncrement="true" startWith="3000">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="sbs_code" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="update_type" type="varchar(20)"/>
+
+      <column name="revision_details" type="varchar(1000)"/>
+
+      <column name="short_description" type="varchar(1000)"/>
+
+      <column name="long_description" type="text"/>
+
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="source_file_name" type="varchar(255)"/>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp"/>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addUniqueConstraint
+      tableName="waseel_sbs_catalog"
+      columnNames="sbs_code"
+      constraintName="uk_waseel_sbs_catalog_code"/>
+
+    <createIndex
+      tableName="waseel_sbs_catalog"
+      indexName="idx_waseel_sbs_catalog_code">
+      <column name="sbs_code"/>
+    </createIndex>
+
+    <createIndex
+      tableName="waseel_sbs_catalog"
+      indexName="idx_waseel_sbs_catalog_short_desc">
+      <column name="short_description"/>
+    </createIndex>
+
+  </changeSet>
+
+
+  <changeSet id="bs-create-waseel-item-mapping" author="BushraMashaiekh">
+
+    <createTable tableName="waseel_item_mapping">
+      <column name="id" type="bigint" autoIncrement="true" startWith="3000">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="item_type" type="varchar(50)">
+        <constraints nullable="true"/>
+      </column>
+
+      <column name="source_id" type="bigint">
+        <constraints nullable="true"/>
+      </column>
+
+      <column name="item_code" type="varchar(255)">
+        <constraints nullable="true"/>
+      </column>
+
+      <column name="item_name" type="varchar(1000)">
+        <constraints nullable="true"/>
+      </column>
+
+
+      <column name="sbs_catalog_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="requires_preauth" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="notes" type="varchar(1000)"/>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+
+    <createIndex
+      tableName="waseel_item_mapping"
+      indexName="idx_waseel_item_mapping_item_type">
+      <column name="item_type"/>
+    </createIndex>
+
+    <createIndex
+      tableName="waseel_item_mapping"
+      indexName="idx_waseel_item_mapping_source_id">
+      <column name="source_id"/>
+    </createIndex>
+
+    <addForeignKeyConstraint
+      baseTableName="waseel_item_mapping"
+      baseColumnNames="sbs_catalog_id"
+      referencedTableName="waseel_sbs_catalog"
+      referencedColumnNames="id"
+      constraintName="fk_waseel_item_mapping_sbs_catalog"/>
+
+
+    <createIndex
+      tableName="waseel_item_mapping"
+      indexName="idx_waseel_item_mapping_sbs_catalog">
+      <column name="sbs_catalog_id"/>
+    </createIndex>
+
+  </changeSet>
+  <changeSet id="bs-create-waseel-sbs-import-log" author="BushraMashaiekh">
+
+    <createTable tableName="waseel_sbs_import_log">
+      <column name="id" type="bigint" autoIncrement="true" startWith="3000">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="file_name" type="varchar(255)"/>
+
+      <column name="total_rows" type="integer"/>
+
+      <column name="success_rows" type="integer"/>
+
+      <column name="failed_rows" type="integer"/>
+
+      <column name="error_details" type="text"/>
+
+      <column name="imported_by" type="varchar(50)"/>
+
+      <column name="imported_at" type="timestamp"/>
+    </createTable>
+
+    <createIndex
+      tableName="waseel_sbs_import_log"
+      indexName="idx_waseel_sbs_import_log_imported_at">
+      <column name="imported_at"/>
+    </createIndex>
+
+  </changeSet>
+
+</databaseChangeLog>
