@@ -168,6 +168,8 @@
   <include file="config/liquibase/changelog/payorSetup/1779188081_B_AlterPayorPlanWaseel.xml"/>
   <include file="/config/liquibase/changelog/payorSetup/1779188216_B_PayorPlanCoverageClass.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/payorSetup/1779344554_B_AddPayorPlanItemReferencesAndPreAuthorization.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/payorSetup/1781770892_B_create_nphies_payers.xml" relativeToChangelogFile="false"/>
+
   <include file="/config/liquibase/changelog/1764826849_H_Discharge_Planning.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1765198918_H_Price_List_Attributes.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1766317374_H_Diagnostic_Order_And_Test.xml"
@@ -213,6 +215,7 @@
   <include file="/config/liquibase/changelog/TelephonicConsultation/1778677206_Q_Telephonic_Consultation.xml"
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1765875560_B_patientInsurances.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/patientInsurances/1781648785_B_detach-patient-insurances-from-payor-setup.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/patientInsurances/1777198310_BM_patient_insurances_waseel_columns.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1765892720_B_patientInsuranceCoverages.xml"
            relativeToChangelogFile="false"/>
