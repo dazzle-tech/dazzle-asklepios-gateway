@@ -209,7 +209,7 @@ asklepios:
         token-validity-in-seconds-for-remember-me: 2592000
   mail:
 
-      base-url: http://asklepios.nereuscloud.de/
+      base-url: http://his.tst.onehealth.com.sa/
       username: systemask73@gmail.com
       password: ocdh hvae hhsz cyxc
 
