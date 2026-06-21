@@ -281,7 +281,7 @@ asklepios:
         token-validity-in-seconds: 86400
         token-validity-in-seconds-for-remember-me: 2592000
   mail:
-    base-url: ${asklepios_mail_base-url:http://localhost:8080/}
+    base-url: http://asklepios.nereuscloud.de
     username: systemask73@gmail.com
     password: ocdh hvae hhsz cyxc
 
