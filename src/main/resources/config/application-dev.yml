@@ -208,7 +208,7 @@ spring:
             - StripPrefix=0
 
         - id: billing
-          uri: ${services.asklepios-billing-service-url}active_ingredient_contraindications
+          uri: ${services.asklepios-billing-service-url}
           predicates:
             - Path=/api/billing/**
           filters:
