@@ -12,6 +12,8 @@
         <constraints primaryKey="true" nullable="false"/>
       </column>
 
+      <column name="waseel_item_type" type="varchar(100)"/>
+
       <column name="sbs_code" type="varchar(100)">
         <constraints nullable="false"/>
       </column>
