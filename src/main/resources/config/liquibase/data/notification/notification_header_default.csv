@@ -1,2 +1,7 @@
 id;facility_id;code;name;description;module;category;priority;is_active;created_by;created_date;last_modified_by;last_modified_date
-5002;;PATIENT_CREATE_PASSWORD;Patient Create Portal Password;Email sent to patient to create portal password;PATIENT;AUTHENTICATION;HIGH;true;admin;2026-06-15 06:20:51.695643;admin;2026-06-15 06:24:29.831407
+5000;;PATIENT_CREATE_PASSWORD;Patient Create Portal Password;Email sent to patient to create portal password;PATIENT;AUTHENTICATION;HIGH;true;admin;2026-06-15 06:20:51.695643;admin;2026-06-15 06:24:29.831407
+5001;;APPOINTMENT_CANCELLED;Appointment Cancelled;Notify users when appointment is cancelled;APPOINTMENT;APPOINTMENT_CANCELLATION;MEDIUM;true;admin;2026-06-18 00:00:00;admin;2026-06-18 00:00:00
+5002;;APPOINTMENT_RESCHEDULED;Appointment Rescheduled;Notify users when appointment is rescheduled;APPOINTMENT;APPOINTMENT_RESCHEDULE;MEDIUM;true;admin;2026-06-18 00:00:00;admin;2026-06-18 00:00:00
+5003;;QUICK_APPOINTMENT_CREATED;Quick Appointment Created;Notify users when quick appointment is created;APPOINTMENT;QUICK_APPOINTMENT;MEDIUM;true;admin;2026-06-18 00:00:00;admin;2026-06-18 00:00:00
+5004;;MEDICAL_WARNING_SEVERE_CRITICAL;Medical Warning Severe Critical;Notify department users when severe or critical medical warning is added;PATIENT;MEDICAL_WARNING;HIGH;true;admin;2026-06-22 00:00:00;admin;2026-06-22 00:00:00
+5005;;PAIN_LEVEL_SEVERE;Pain Level Severe;Notify department users when severe pain level is saved;PATIENT;PAIN_ASSESSMENT;HIGH;true;admin;2026-06-22 00:00:00;admin;2026-06-22 00:00:00

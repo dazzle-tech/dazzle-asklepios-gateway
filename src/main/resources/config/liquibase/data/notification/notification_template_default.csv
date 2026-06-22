@@ -1,5 +1,5 @@
 id;notification_header_id;channel;language;subject;title;body;to_recipient_rule;cc_recipient_rule;bcc_recipient_rule;phone_recipient_rule;is_active;created_by;created_date;last_modified_by;last_modified_date
-5003;5002;EMAIL;en;Set your patient account password;;"
+5000;5000;EMAIL;en;Set your patient account password;;"
 <!doctype html>
 <html>
 <head>
@@ -95,3 +95,8 @@ id;notification_header_id;channel;language;subject;title;body;to_recipient_rule;
 </body>
 </html>
 ";PATIENT_EMAIL;;;;true;admin;2026-06-15 06:26:00.980362;admin;2026-06-15 09:03:42.629100
+5001;5001;IN_APP;en;;Appointment cancelled;Appointment {{appointmentNumber}} for patient {{patientName}} has been cancelled.;DEPARTMENT_USERS;;;;true;admin;2026-06-18 00:00:00;admin;2026-06-18 00:00:00
+5002;5002;IN_APP;en;;Appointment rescheduled;Appointment {{appointmentNumber}} for patient {{patientName}} has been rescheduled from {{oldAppointmentDate}} to {{newAppointmentDate}}.;DEPARTMENT_USERS;;;;true;admin;2026-06-18 00:00:00;admin;2026-06-18 00:00:00
+5003;5003;IN_APP;en;;Quick appointment created;Quick appointment {{appointmentNumber}} has been created for patient {{patientName}} in {{departmentName}}.;DEPARTMENT_USERS;;;;true;admin;2026-06-18 00:00:00;admin;2026-06-18 00:00:00
+5004;5004;IN_APP;en;;Medical warning added;{{severity}} medical warning added for patient {{patientName}}: {{warning}};DEPARTMENT_USERS;;;;true;admin;2026-06-22 00:00:00;admin;2026-06-22 00:00:00
+5005;5005;IN_APP;en;;Severe pain level saved;Severe pain level {{painLevel}} saved for patient {{patientName}}.;DEPARTMENT_USERS;;;;true;admin;2026-06-22 00:00:00;admin;2026-06-22 00:00:00
