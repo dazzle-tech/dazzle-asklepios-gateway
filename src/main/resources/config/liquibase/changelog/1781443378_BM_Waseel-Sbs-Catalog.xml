@@ -85,6 +85,10 @@
       </column>
 
 
+      <column name="waseel_item_type" type="varchar(100)">
+        <constraints nullable="true"/>
+      </column>
+
       <column name="sbs_catalog_id" type="bigint">
         <constraints nullable="false"/>
       </column>
@@ -113,6 +117,12 @@
       tableName="waseel_item_mapping"
       indexName="idx_waseel_item_mapping_item_type">
       <column name="item_type"/>
+    </createIndex>
+
+    <createIndex
+      tableName="waseel_item_mapping"
+      indexName="idx_waseel_item_mapping_waseel_item_type">
+      <column name="waseel_item_type"/>
     </createIndex>
 
     <createIndex
