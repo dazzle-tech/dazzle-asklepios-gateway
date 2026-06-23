@@ -10,9 +10,10 @@
   <property name="uuidType" value="uuid" dbms="postgresql"/>
   <property name="datetimeType" value="datetime" dbms="postgresql"/>
   <property name="timeType" value="time(6)" dbms="postgresql"/>
-
+  <include file="config/liquibase/changelog/hl7schema/1781512245_H_Create_Schema.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/v0.0.0_initial_schema.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1726297332_H_AuthorityAndScreen.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/hl7schema/1781512311_Create_Events_Tabels.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1758431905_H_RoleScreen.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1758455979_S_departments.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/departments/1776667781_R_departments_working_days.xml"
@@ -302,4 +303,5 @@
   <include file="/config/liquibase/changelog/notification/1781088043_S_NotificationTemplate.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/notification/1781136609_S_Notification.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/notification/1781660466_S_NotificationEvent.xml" relativeToChangelogFile="false"/>
+
 </databaseChangeLog>
