@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+
+  <changeSet id="02-patient-merge-item-logs" author="hanan253yahya">
+
+    <createTable tableName="patient_merge_item_logs">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="merge_log_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="entity_name" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="table_name" type="varchar(100)"/>
+
+      <column name="record_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="old_patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="new_patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="moved_at" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="patient_merge_item_logs"
+      baseColumnNames="merge_log_id"
+      referencedTableName="patient_merge_logs"
+      referencedColumnNames="id"
+      constraintName="fk_patient_merge_item_logs_merge_log"/>
+
+    <addForeignKeyConstraint
+      baseTableName="patient_merge_item_logs"
+      baseColumnNames="old_patient_id"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+      constraintName="fk_patient_merge_item_logs_old_patient"/>
+
+    <addForeignKeyConstraint
+      baseTableName="patient_merge_item_logs"
+      baseColumnNames="new_patient_id"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+      constraintName="fk_patient_merge_item_logs_new_patient"/>
+
+    <createIndex tableName="patient_merge_item_logs" indexName="idx_patient_merge_item_logs_merge_log_id">
+      <column name="merge_log_id"/>
+    </createIndex>
+
+    <createIndex tableName="patient_merge_item_logs" indexName="idx_patient_merge_item_logs_entity_record">
+      <column name="entity_name"/>
+      <column name="record_id"/>
+    </createIndex>
+
+    <createIndex tableName="patient_merge_item_logs" indexName="idx_patient_merge_item_logs_table_record">
+      <column name="table_name"/>
+      <column name="record_id"/>
+    </createIndex>
+
+  </changeSet>
+
+</databaseChangeLog>
