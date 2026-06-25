@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="FACILITY_00000000000019LABANDRAD" author="Sondos">
+    <addColumn tableName="facility">
+      <column name="default_lab_department_id" type="bigint"/>
+    </addColumn>
+    <addForeignKeyConstraint
+      baseTableName="facility"
+      baseColumnNames="default_lab_department_id"
+      referencedTableName="department"
+      referencedColumnNames="id"
+      constraintName="fk_facility_default_lab_department"/>
+    <addColumn tableName="facility">
+      <column name="default_rad_department_id" type="bigint"/>
+    </addColumn>
+    <addForeignKeyConstraint
+      baseTableName="facility"
+      baseColumnNames="default_rad_department_id"
+      referencedTableName="department"
+      referencedColumnNames="id"
+      constraintName="fk_facility_default_rad_department"/>
+  </changeSet>
+
+
+</databaseChangeLog>
