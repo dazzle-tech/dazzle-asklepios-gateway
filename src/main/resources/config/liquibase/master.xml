@@ -303,5 +303,6 @@
   <include file="/config/liquibase/changelog/notification/1781088043_S_NotificationTemplate.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/notification/1781136609_S_Notification.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/notification/1781660466_S_NotificationEvent.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/notification/Data/1782179241_S_NotificationData.xml" relativeToChangelogFile="false"/>
 
 </databaseChangeLog>
