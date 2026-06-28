@@ -50,6 +50,9 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1774339421_BM_availability_generation_batch.xml"
            relativeToChangelogFile="false"/>
+  <include
+    file="/config/liquibase/changelog/availabilityGenerationBatch/1782636302_S_AvailabilityGenerationBatchNotificationColumns.xml"
+    relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1774339459_BM_appointment.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/sql/appointment/hl7_appointment_booked.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/sql/appointment/hl7_appointment_cancelled.xml" relativeToChangelogFile="false"/>
