@@ -263,6 +263,7 @@
     relativeToChangelogFile="false"/>
 
   <include file="/config/liquibase/changelog/1769523307_B_referralRequests.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/referralRequest/1782634486_addAppontmentIdColumn.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1773745759_S_OrganizationHoliday.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1774280357_S_departmentServices.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1774280336_S_PolicyDefinition.xml" relativeToChangelogFile="false"/>
