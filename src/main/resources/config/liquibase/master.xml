@@ -323,4 +323,6 @@
   <include file="config/liquibase/changelog/patientMerge/03-patient-merge-table-configs.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/patientMerge/04-patient-merge-master-decisions.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/patientMerge/ 05-patient-merge-field-configs.xml" relativeToChangelogFile="false"/>
+ <include file="config/liquibase/sql/patientMerge/hl7_patient_merge.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/sql/patientMerge/hl7_patient_merge_undo.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>
