@@ -52,7 +52,7 @@ spring:
             - StripPrefix=0
 
         - id: appointment
-          uri: ${services.asklepios-general-service-url}
+          uri: ${services.asklepios-patient-service-url}
           predicates:
             - Path=/appointment/**
           filters:
@@ -141,6 +141,33 @@ spring:
             - Path=/auth/**
           filters:
             - StripPrefix=0
+        - id: inventory
+          uri: ${services.asklepios-general-service-url}
+          predicates:
+            - Path=/transaction/**
+          filters:
+            - StripPrefix=0
+
+        - id: operation
+          uri: ${services.asklepios-general-service-url}
+          predicates:
+            - Path=/operation/**
+          filters:
+            - StripPrefix=0
+
+        - id: procedures
+          uri: ${services.asklepios-general-service-url}
+          predicates:
+            - Path=/procedures/**
+          filters:
+            - StripPrefix=0
+
+        - id: newsetup
+          uri: ${services.asklepios-setup-service-url}
+          predicates:
+            - Path=/api/setup/**
+          filters:
+            - StripPrefix=0
 
         - id: setup-docs
           uri: ${services.asklepios-setup-service-url}
@@ -148,6 +175,48 @@ spring:
             - Path=/setup-service/v3/api-docs
           filters:
             - StripPrefix=1
+
+        - id: patient
+          uri: ${services.asklepios-patient-service-url}
+          predicates:
+            - Path=/api/patient/**
+          filters:
+            - StripPrefix=0
+
+        - id: inventoryManagement
+          uri: ${services.asklepios-inventory-service-url}
+          predicates:
+            - Path=/api/inventory/**
+          filters:
+            - StripPrefix=0
+
+        - id: billing
+          uri: ${services.asklepios-billing-service-url}
+          predicates:
+            - Path=/api/billing/**
+          filters:
+            - StripPrefix=0
+
+        - id: medication-test-orders-validation
+          uri: ${services.medication-test-orders-validation-service-url}
+          predicates:
+            - Path=/api/ai/v1/medication-test-orders-validation/**
+          filters:
+            - RewritePath=/api/ai/v1/medication-test-orders-validation/(?<segment>.*),/api/v1/${segment}
+
+        - id: clinical-summary
+          uri: ${services.clinical-summary-service-url}
+          predicates:
+            - Path=/api/ai/v1/clinical-summary/**
+          filters:
+            - RewritePath=/api/ai/v1/clinical-summary/(?<segment>.*),/api/v1/${segment}
+
+        - id: clinical-recommendations
+          uri: ${services.clinical-recommendations-service-url}
+          predicates:
+            - Path=/api/ai/v1/clinical-recommendations/**
+          filters:
+            - RewritePath=/api/ai/v1/clinical-recommendations/(?<segment>.*),/api/v1/${segment}
         - id: analytics
           uri: ${services.dazzle-asklepios-analytics-service-url}
           predicates:
@@ -208,8 +277,7 @@ asklepios:
         token-validity-in-seconds: 86400
         token-validity-in-seconds-for-remember-me: 2592000
   mail:
-
-      base-url: http://asklepios.nereuscloud.de/
-      username: systemask73@gmail.com
-      password: ocdh hvae hhsz cyxc
+    base-url:  https://his-tst.onehealth.com.sa/
+    username: systemask73@gmail.com
+    password: ocdh hvae hhsz cyxc
 

@@ -10,9 +10,11 @@
   <property name="uuidType" value="uuid" dbms="postgresql"/>
   <property name="datetimeType" value="datetime" dbms="postgresql"/>
   <property name="timeType" value="time(6)" dbms="postgresql"/>
-
+  <include file="config/liquibase/changelog/hl7schema/1781512245_H_Create_Schema.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/v0.0.0_initial_schema.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1726297332_H_AuthorityAndScreen.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/hl7schema/1781512311_Create_Events_Tabels.xml"
+           relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1758431905_H_RoleScreen.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1758455979_S_departments.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/departments/1776667781_R_departments_working_days.xml"
@@ -65,6 +67,7 @@
   <include file="config/liquibase/changelog/1771073729_B_encounter.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/encounter/1779259017_B_drop_unique_patient_department_date_encounter.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/encounter/1782391235_H_HPI_column.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/encounter/1779346322_H_Encounter_Time.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/encounter/1777198308_BM_encounter.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1757856381_H_duplication-candidate.xml" relativeToChangelogFile="false"/>
@@ -298,6 +301,23 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/systemConfiguration/1780392466_Create_Table_System_Configueration.xml"
            relativeToChangelogFile="false"/>
+
+  <include file="/config/liquibase/changelog/notification/1781082967_S_NotificationSchema.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/notification/1781084026_S_NotificationHeader.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/notification/1781088043_S_NotificationTemplate.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/notification/1781136609_S_Notification.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/notification/1781660466_S_NotificationEvent.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/notification/Data/1782179241_S_NotificationData.xml"
+           relativeToChangelogFile="false"/>
+
+  <include file="/config/liquibase/changelog/facility/1782381912_S_facilityDefaultLabAndRad.xml"
+           relativeToChangelogFile="false"/>
+
   <include file="config/liquibase/changelog/patientMerge/01-patient-merge-logs.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/patientMerge/02-patient-merge-item-logs.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/patientMerge/03-patient-merge-table-configs.xml" relativeToChangelogFile="false"/>
