@@ -37,6 +37,7 @@
   <include file="config/liquibase/sql/practitioner/hl7_create_practitioner.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1761035006_B_allergens.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1763384457_P_patient.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patient/add_patient_merge_columns.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/patient/1778679400_SA_patient.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/patient/1778679400_SA_patientPassword.xml"
            relativeToChangelogFile="false"/>
@@ -70,6 +71,7 @@
   <include file="config/liquibase/changelog/encounter/1779346322_H_Encounter_Time.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/encounter/1777198308_BM_encounter.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1757856381_H_duplication-candidate.xml" relativeToChangelogFile="false"/>
+
   <include file="/config/liquibase/changelog/1760505952_S_patientAttachments.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1760518132_S_encounterAttachments.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762334049_R_medication_categories.xml" relativeToChangelogFile="false"/>
@@ -316,4 +318,9 @@
   <include file="/config/liquibase/changelog/facility/1782381912_S_facilityDefaultLabAndRad.xml"
            relativeToChangelogFile="false"/>
 
+  <include file="config/liquibase/changelog/patientMerge/01-patient-merge-logs.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patientMerge/02-patient-merge-item-logs.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patientMerge/03-patient-merge-table-configs.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patientMerge/04-patient-merge-master-decisions.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patientMerge/ 05-patient-merge-field-configs.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>
