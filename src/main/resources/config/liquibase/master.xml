@@ -44,6 +44,11 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1774339192_BM_availability_template.xml" relativeToChangelogFile="false"/>
   <include
+    file="config/liquibase/changelog/availabilityTemplateLog/1782644265_S_availability_template_log_waitingList.xml"
+    relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/availabilityTemplate/1782644265_S_availability_template_waitingList.xml"
+           relativeToChangelogFile="false"/>
+  <include
     file="config/liquibase/changelog/availabilityTemplate/1777441360_R_availability_template_require_confirmation_default_value.xml"
     relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1774339357_BM_availability_template_interval.xml"
@@ -51,6 +56,12 @@
   <include file="config/liquibase/changelog/1774339421_BM_availability_generation_batch.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1774339459_BM_appointment.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1782644939_S_AppointmentBookingGroup.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1782645230_S_AppointmentWaitingList.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/appointment/1782646270_S_AppointmentWaitingListColumns.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1782741099_S_AppointmentWaitingListBooking.xml"
+           relativeToChangelogFile="false"/>
   <include file="config/liquibase/sql/appointment/hl7_appointment_booked.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/sql/appointment/hl7_appointment_cancelled.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/appointment/1777451035_BM_appointment_log_trigger.xml"
@@ -58,6 +69,10 @@
   <include file="config/liquibase/changelog/appointment/1777285727_R_appointment_require_confirmation.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/appointmentLog/1777286590_R_appointment_log_require_confirmation.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/appointment/1782721898_S_AppointmentHL7AppointmentNumber.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/appointmentLog/1782721898_S_AppointmentLogColumns.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/sql/storProcedure/1779695062_H_Check_Appointment.xml"
            relativeToChangelogFile="false"/>
