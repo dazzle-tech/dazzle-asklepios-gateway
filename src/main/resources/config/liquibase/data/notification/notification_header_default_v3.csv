@@ -1,0 +1,4 @@
+id;facility_id;code;name;description;module;category;priority;is_active;created_by;created_date;last_modified_by;last_modified_date
+5013;;NEW_REFERRAL_REQUEST_ARRIVED;New Referral Request Arrived;Notify destination department users when a new referral request arrives;REFERRAL;REFERRAL_REQUEST;HIGH;true;admin;2026-06-22 00:00:00;admin;2026-06-22 00:00:00
+5014;;PATIENT_MERGE_COMPLETED;Patient Merge Completed;Notify department users when patient merge is completed;PATIENT;PATIENT_MERGE;HIGH;true;admin;2026-06-22 00:00:00;admin;2026-06-22 00:00:00
+5015;;TEMPLATE_INTERVAL_ENDED;Template Interval Ended;Notify department users when template interval has ended;APPOINTMENT;TEMPLATE_INTERVAL;MEDIUM;true;admin;2026-06-22 00:00:00;admin;2026-06-22 00:00:00

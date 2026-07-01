@@ -58,6 +58,9 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1774339421_BM_availability_generation_batch.xml"
            relativeToChangelogFile="false"/>
+  <include
+    file="/config/liquibase/changelog/availabilityGenerationBatch/1782636302_S_AvailabilityGenerationBatchNotificationColumns.xml"
+    relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1774339459_BM_appointment.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1782644939_S_AppointmentBookingGroup.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1782645230_S_AppointmentWaitingList.xml" relativeToChangelogFile="false"/>
@@ -331,7 +334,8 @@
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/notification/Data/1782179241_S_NotificationData.xml"
            relativeToChangelogFile="false"/>
-
+  <include file="/config/liquibase/changelog/notification/Data/1782395753_S_NotificationData.xml"
+           relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/facility/1782381912_S_facilityDefaultLabAndRad.xml"
            relativeToChangelogFile="false"/>
 
