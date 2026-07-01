@@ -69,6 +69,8 @@ public class SecurityConfiguration {
                 .pathMatchers("/api/register").permitAll()
                 .pathMatchers(HttpMethod.GET, "/api/setup/facility/active").permitAll()
                 .pathMatchers(HttpMethod.GET, "/api/setup/languages").permitAll()
+                .pathMatchers(HttpMethod.GET, "/api/setup/department/internalJob/**").permitAll()
+                .pathMatchers(HttpMethod.GET, "/api/setup/user-department/department/internalJob/*").permitAll()
                 .pathMatchers("/api/setup/**").authenticated()
                 .pathMatchers("/api/patient/**").authenticated()
                 .pathMatchers("/api/inventory/**").authenticated()
