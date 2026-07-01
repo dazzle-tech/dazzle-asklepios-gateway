@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="H-03-patient-merge-table-configs" author="hanan253yahya">
+
+    <createTable tableName="patient_merge_table_configs">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="entity_name" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="table_name" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="primary_key_column_name" type="varchar(100)" defaultValue="id">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="patient_column_name" type="varchar(100)" defaultValue="patient_id">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="updated_at_column_name" type="varchar(100)"/>
+
+      <column name="enabled" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+
+      <column name="match_key_columns" type="varchar(500)"/>
+      <column name="merge_category" type="varchar(50)" defaultValue="MASTER">
+        <constraints nullable="false"/>
+      </column>
+      <column name="excluded_columns" type="varchar(1000)"/>
+    </createTable>
+
+    <addUniqueConstraint
+      tableName="patient_merge_table_configs"
+      columnNames="table_name, patient_column_name"
+      constraintName="uq_patient_merge_table_configs_table_patient_column"/>
+
+    <createIndex tableName="patient_merge_table_configs" indexName="idx_patient_merge_table_configs_enabled">
+      <column name="enabled"/>
+    </createIndex>
+    <loadData
+      tableName="patient_merge_table_configs"
+      file="config/liquibase/data/patient_merge_table_configs.csv"
+      separator=","
+      encoding="UTF-8">
+
+      <column name="id" type="NUMERIC"/>
+      <column name="entity_name" type="STRING"/>
+      <column name="table_name" type="STRING"/>
+      <column name="primary_key_column_name" type="STRING"/>
+      <column name="patient_column_name" type="STRING"/>
+      <column name="updated_at_column_name" type="STRING"/>
+      <column name="enabled" type="BOOLEAN"/>
+      <column name="match_key_columns" type="STRING"/>
+      <column name="merge_category" type="STRING"/>
+      <column name="excluded_columns" type="STRING"/>
+
+    </loadData>
+  </changeSet>
+
+</databaseChangeLog>
