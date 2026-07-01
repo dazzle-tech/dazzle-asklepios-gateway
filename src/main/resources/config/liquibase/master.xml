@@ -238,6 +238,8 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/patientServicesAndProducts/1780386684_B__add_pre_auth_status_to_patient_service_and_product.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patientServicesAndProducts/1782908342_BM_add_payment_to_patient_services_and_product.xml"
+           relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1764762354_BM_Billing_Invoice.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1764765924_BM_Billing_Invoice_Item.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1764767706_BM_Patient_Payment.xml" relativeToChangelogFile="false"/>
