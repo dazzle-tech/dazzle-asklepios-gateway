@@ -22,6 +22,8 @@
   <include file="/config/liquibase/changelog/1759823656_S_UserDepartments.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/userDepartment/1780583058_S_UserDepartmentAllowBookingFlag.xml"
            relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/userDepartment/1780583058_S_DropUserDepartmentAllowBookingFlag.xml"
+           relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1760438060_BM_Language.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1760550923_BM_Language_Translation.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1760537415_H_medicalSheet.xml" relativeToChangelogFile="false"/>
@@ -338,10 +340,15 @@
            relativeToChangelogFile="false"/>
 
   <include file="config/liquibase/changelog/patientMerge/01-patient-merge-logs.xml" relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/patientMerge/02-patient-merge-item-logs.xml" relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/patientMerge/03-patient-merge-table-configs.xml" relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/patientMerge/04-patient-merge-master-decisions.xml" relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/patientMerge/ 05-patient-merge-field-configs.xml" relativeToChangelogFile="false"/>
- <include file="config/liquibase/sql/patientMerge/hl7_patient_merge.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patientMerge/02-patient-merge-item-logs.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patientMerge/03-patient-merge-table-configs.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patientMerge/04-patient-merge-master-decisions.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patientMerge/ 05-patient-merge-field-configs.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/sql/patientMerge/hl7_patient_merge.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/sql/patientMerge/hl7_patient_merge_undo.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1782834120_S_UserBookableDepartments.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>
