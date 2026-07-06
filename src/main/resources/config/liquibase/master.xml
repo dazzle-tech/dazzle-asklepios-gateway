@@ -285,7 +285,8 @@
     relativeToChangelogFile="false"/>
 
   <include file="/config/liquibase/changelog/1769523307_B_referralRequests.xml" relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/referralRequest/1782634486_addAppontmentIdColumn.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/referralRequest/1782634486_addAppontmentIdColumn.xml"
+           relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1773745759_S_OrganizationHoliday.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1774280357_S_departmentServices.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1774280336_S_PolicyDefinition.xml" relativeToChangelogFile="false"/>
@@ -337,9 +338,12 @@
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/notification/Data/1782395753_S_NotificationData.xml"
            relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/notification/Data/1783260527_S_NotificationData.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/notification/Data/1783350851_S_NotificationData.xml"
+           relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/facility/1782381912_S_facilityDefaultLabAndRad.xml"
            relativeToChangelogFile="false"/>
-
   <include file="config/liquibase/changelog/patientMerge/01-patient-merge-logs.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/patientMerge/02-patient-merge-item-logs.xml"
            relativeToChangelogFile="false"/>
