@@ -220,6 +220,14 @@
   <include file="/config/liquibase/changelog/1765892720_B_patientInsuranceCoverages.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1771244437_B_patientPayment.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patientPayments/1783323586_B_add-status-to-patient-payments.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patientPayments/1783327115_B_create-ledger.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patientPayments/1783327243_B_create-wallet-transactions.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patientPayments/1783332746_B_add-account-to-ledger.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1783503691_BM_Patient_Payments_Log.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1783505951_BM_Patient_Charge_Log.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1783507628_BM_Patient_Payment_Allocation_Log.xml" relativeToChangelogFile="false"/>
+
   <include file="config/liquibase/changelog/1763980448_S_AdminstrativeWarnings.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1769048234_S_emergency_triage.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1769331928_S_general_assessment.xml" relativeToChangelogFile="false"/>
