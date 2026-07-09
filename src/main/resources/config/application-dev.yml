@@ -25,6 +25,7 @@ services:
   medication-test-orders-validation-service-url: http://localhost:8005
   clinical-summary-service-url: http://localhost:8003
   clinical-recommendations-service-url: http://localhost:8004
+  lab-interpreter-service-url: http://localhost:8010
 
 
 spring:
@@ -248,6 +249,15 @@ spring:
             - Path=/api/notification/**
           filters:
             - StripPrefix=0
+
+
+        - id: lab-interpreter
+          uri: ${services.lab-interpreter-service-url}
+          predicates:
+            - Path=/api/ai/v1/lab-interpreter/**
+          filters:
+            - RewritePath=/api/ai/v1/lab-interpreter/(?<segment>.*),/api/v1/${segment}
+
 
       httpclient:
         pool:
