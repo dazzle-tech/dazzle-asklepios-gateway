@@ -25,7 +25,7 @@ services:
   asklepios-billing-service-url :  http://asklepios-billing-service:8080
   dazzle-asklepios-analytics-service-url : http://asklepios-analytics-service:8080
   dazzle-asklepios-notification-service-url : http://asklepios-notification-service:8080
-  medication-test-orders-validation-service-url: http://medication-test-orders-validation-service:8005
+  medication-test-orders-validation-service-url: http://medication-test-orders-validation-service:8006
   clinical-summary-service-url: http://clinical-summary-service:8003
   clinical-recommendations-service-url: http://clinical-recommendations-service:8004
   ocr-parsing-service-url: http://ocr-parsing-service:8012
