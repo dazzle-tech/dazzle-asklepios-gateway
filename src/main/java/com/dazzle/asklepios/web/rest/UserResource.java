@@ -5,6 +5,7 @@ import com.dazzle.asklepios.domain.User;
 import com.dazzle.asklepios.repository.UserRepository;
 import com.dazzle.asklepios.security.AuthoritiesConstants;
 import com.dazzle.asklepios.service.UserService;
+import com.dazzle.asklepios.domain.enumeration.JobRole;
 import com.dazzle.asklepios.service.dto.AdminUserDTO;
 import com.dazzle.asklepios.service.dto.SimpleUserDTO;
 import com.dazzle.asklepios.web.rest.errors.BadRequestAlertException;
@@ -233,16 +234,16 @@ public class UserResource {
         @org.springdoc.core.annotations.ParameterObject Pageable pageable,
         @RequestParam(required = false) String login,
         @RequestParam(required = false) String email,
-        @RequestParam(required = false) String name
+        @RequestParam(required = false) String name,
+        @RequestParam(required = false) JobRole jobRole
     ) {
 
 
-        Mono<Long> total = userRepository.countBasicUsers(login, email, name);
+        Mono<Long> total = userRepository.countBasicUsers(login, email, name, jobRole);
 
         Flux<SimpleUserDTO> users =
-            userRepository.findBasicUsers(login, email, name, pageable)
+            userRepository.findBasicUsers(login, email, name, jobRole, pageable)
                 .map(SimpleUserDTO::new);
-
 
         return total.map(t -> {
 

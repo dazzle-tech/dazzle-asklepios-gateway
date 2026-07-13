@@ -2,6 +2,7 @@ package com.dazzle.asklepios.repository;
 
 import com.dazzle.asklepios.domain.Authority;
 import com.dazzle.asklepios.domain.User;
+import com.dazzle.asklepios.domain.enumeration.JobRole;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.BeanComparator;
 import org.springframework.data.domain.Pageable;
@@ -67,9 +68,20 @@ interface UserRepositoryInternal extends DeleteExtended<User> {
 
     Flux<User> findAllWithAuthorities(Pageable pageable);
 
-    Flux<User> findBasicUsers(String login, String email, String name, Pageable pageable);
+    public Flux<User> findBasicUsers(
+        String login,
+        String email,
+        String name,
+        JobRole jobRole,
+        Pageable pageable
+    );
 
-    Mono<Long> countBasicUsers(String login, String email, String name);
+    Mono<Long> countBasicUsers(
+        String login,
+        String email,
+        String name,
+        JobRole jobRole
+    );
     Flux<Tuple2<Long, Optional<String>>> findAuthoritiesByUserIds(List<Long> userIds);
 }
 
@@ -191,7 +203,13 @@ class UserRepositoryInternalImpl implements UserRepositoryInternal {
     }
 
     @Override
-    public Flux<User> findBasicUsers(String login, String email, String name, Pageable pageable) {
+    public Flux<User> findBasicUsers(
+        String login,
+        String email,
+        String name,
+        JobRole jobRole,
+        Pageable pageable
+    ) {
         StringBuilder sql = new StringBuilder("""
         SELECT
             u.id,
@@ -216,6 +234,11 @@ class UserRepositoryInternalImpl implements UserRepositoryInternal {
         """);
 
         Map<String, Object> params = new HashMap<>();
+
+        if (jobRole != null) {
+            sql.append(" AND u.job_role = :jobRole ");
+            params.put("jobRole", jobRole.name());
+        }
 
         if (login != null && !login.isBlank()) {
             sql.append(" AND LOWER(u.login) LIKE LOWER(:login) ");
@@ -318,9 +341,14 @@ class UserRepositoryInternalImpl implements UserRepositoryInternal {
                     });
             });
     }
-    @Override
-    public Mono<Long> countBasicUsers(String login, String email, String name) {
 
+    @Override
+    public Mono<Long> countBasicUsers(
+        String login,
+        String email,
+        String name,
+        JobRole jobRole
+    ) {
         Criteria criteria = Criteria.empty();
 
         if (login != null && !login.isBlank()) {
@@ -336,9 +364,19 @@ class UserRepositoryInternalImpl implements UserRepositoryInternal {
         }
 
         if (name != null && !name.isBlank()) {
-            Criteria firstName = where("first_name").like("%" + name + "%").ignoreCase(true);
-            Criteria lastName  = where("last_name").like("%" + name + "%").ignoreCase(true);
+            Criteria firstName =
+                where("first_name").like("%" + name + "%").ignoreCase(true);
+
+            Criteria lastName =
+                where("last_name").like("%" + name + "%").ignoreCase(true);
+
             criteria = criteria.and(firstName.or(lastName));
+        }
+
+        if (jobRole != null) {
+            criteria = criteria.and(
+                where("job_role").is(jobRole.name())
+            );
         }
 
         org.springframework.data.relational.core.query.Query q =
