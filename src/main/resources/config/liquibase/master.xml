@@ -329,4 +329,15 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1781443378_BM_Waseel-Sbs-Catalog.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/invoice/1783922350_B_financialDocuments.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/invoice/1783923422_B_financialDocumentItems.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/invoice/1783922948_B_add_document_id_to_patient_payments.xml" relativeToChangelogFile="false"/>
+
+  <include file="config/liquibase/changelog/invoice/1783938051_B_add_document_item_id_to_payment_allocations.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/invoice/1783940573_B_add_payment_status_to_patient_payments.xml"
+           relativeToChangelogFile="false"/>
+
 </databaseChangeLog>
