@@ -100,6 +100,7 @@ spring:
       hl7.events.appointmentRescheduled: APPOINTMENT_RESCHEDULED
       hl7.events.practitionerCreated: PRACTITIONER_CREATED
       hl7.events.patientMergedUndo: PATIENT_MERGED_UNDO
+      hl7.events.patientDocumentCreated: PATIENT_DOCUMENT_CREATED
 
 
 
