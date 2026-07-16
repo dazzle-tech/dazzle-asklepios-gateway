@@ -22,8 +22,12 @@
         <constraints nullable="false"/>
       </column>
 
-      <column name="entity_name" type="varchar(100)"/>
-      <column name="table_name" type="varchar(100)"/>
+      <column name="entity_name" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="table_name" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
 
       <column name="rule_type" type="varchar(50)">
         <constraints nullable="false"/>
