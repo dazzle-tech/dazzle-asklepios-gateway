@@ -352,5 +352,5 @@
   <include file="config/liquibase/changelog/patientMerge/ 05-patient-merge-field-configs.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/patientMerge/06-patient-merge-validation-rules.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1782834120_S_UserBookableDepartments.xml" relativeToChangelogFile="false"/>
-
+  <include file="config/liquibase/sql/patientDocument/hl7_create_patient_primary_document.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>
