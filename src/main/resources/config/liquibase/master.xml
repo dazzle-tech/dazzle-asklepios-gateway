@@ -329,6 +329,10 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1781443378_BM_Waseel-Sbs-Catalog.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1781443380_BM_Waseel_Sbs_Item_mapping.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1781443388_BM_Waseel_Sbs_import_log.xml"
+           relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/invoice/1783922350_B_financialDocuments.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/invoice/1783923422_B_financialDocumentItems.xml"
@@ -342,4 +346,6 @@
   <include file="config/liquibase/changelog/1784492514_BM_Price_List_Setup.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1784493295_BM_Price_List_Setup_Item.xml" relativeToChangelogFile="false"/>
 
+  <include file="config/liquibase/changelog/invoice/1784095585_B_add-insurance-and-payment-fields-to-document-items.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
