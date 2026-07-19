@@ -339,5 +339,7 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/invoice/1783940573_B_add_payment_status_to_patient_payments.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1784492514_BM_Price_List_Setup.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1784493295_BM_Price_List_Setup_Item.xml" relativeToChangelogFile="false"/>
 
 </databaseChangeLog>
