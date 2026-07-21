@@ -348,6 +348,7 @@
 
   <include file="config/liquibase/changelog/invoice/1784095585_B_add-insurance-and-payment-fields-to-document-items.xml"
            relativeToChangelogFile="false"/>
-
   <include file="config/liquibase/changelog/1784618730_BM_Tax_Setup.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1784548568_B_BillingConfiguration.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>

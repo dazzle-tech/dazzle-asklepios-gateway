@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+  <changeSet
+    id="20260720-01-create-dynamic-billing-configuration"
+    author="billing-team">
+
+    <createTable tableName="billing_configuration">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="facility_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="configuration_key" type="varchar(150)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="value_type" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="configuration_value" type="text"/>
+
+      <column name="enum_code" type="varchar(255)"/>
+
+      <column name="description" type="text"/>
+
+      <column name="active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+
+
+      <column name="status" type="varchar(30)" defaultValue="DRAFT">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+
+    <createIndex
+      tableName="billing_configuration"
+      indexName="idx_billing_configuration_scope">
+
+      <column name="facility_id"/>
+      <column name="status"/>
+    </createIndex>
+
+    <addForeignKeyConstraint
+      constraintName="fk_facility"
+      baseTableName="billing_configuration"
+      baseColumnNames="facility_id"
+      referencedTableName="facility"
+      referencedColumnNames="id"
+
+    />
+  </changeSet>
+
+</databaseChangeLog>
