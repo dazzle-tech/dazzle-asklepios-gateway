@@ -245,13 +245,6 @@ spring:
             - RewritePath=/api/ai/v1/ocr-parsing-service/(?<segment>.*),/api/v1/${segment}
 
 
-        - id: auto-population
-          uri: ${services.auto-population-service-url}
-          predicates:
-            - Path=/api/ai/v1/auto-population-service/**
-          filters:
-            - RewritePath=/api/ai/v1/auto-population-service/(?<segment>.*),/api/v1/${segment}
-
         - id: analytics
           uri: ${services.dazzle-asklepios-analytics-service-url}
           predicates:
