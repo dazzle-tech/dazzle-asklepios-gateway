@@ -29,6 +29,7 @@ services:
   clinical-summary-service-url: http://clinical-summary-service:8003
   clinical-recommendations-service-url: http://clinical-recommendations-service:8004
   auto-population-service-url: http://auto-population-service:8010
+  ocr-parsing-service-url: http://ocr-parsing-service:8012
 
 spring:
   devtools:
