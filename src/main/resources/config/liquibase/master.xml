@@ -351,4 +351,6 @@
   <include file="config/liquibase/changelog/1784618730_BM_Tax_Setup.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1784548568_B_BillingConfiguration.xml"
            relativeToChangelogFile="false"/>
+
+  <include file="config/liquibase/changelog/1784630001_BM_Discount_Setup.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>
