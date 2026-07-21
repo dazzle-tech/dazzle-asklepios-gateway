@@ -53,12 +53,8 @@
 
       <column name="minimum_invoice_amount" type="decimal(19,4)"/>
 
-      <column
-        name="requires_reason"
-        type="boolean"
-        defaultValueBoolean="false">
-
-        <constraints nullable="false"/>
+      <column name="requires_reason" type="boolean" defaultValueBoolean="false">
+      <constraints nullable="false"/>
       </column>
 
       <column name="requires_approval" type="boolean" defaultValueBoolean="false">
@@ -77,7 +73,7 @@
         <constraints nullable="false"/>
       </column>
 
-      <column name="description" type="varchar(500)"/>
+      <column name="description" type="text"/>
 
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>
