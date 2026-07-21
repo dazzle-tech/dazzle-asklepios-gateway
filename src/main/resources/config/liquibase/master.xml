@@ -351,6 +351,13 @@
   <include file="config/liquibase/changelog/1784618730_BM_Tax_Setup.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1784548568_B_BillingConfiguration.xml"
            relativeToChangelogFile="false"/>
+  
 
   <include file="config/liquibase/changelog/1784630001_BM_Discount_Setup.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/billing/1784658177_BM_Billing_Wallet.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/billing/1784659366_BM_Billing_Payment.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/billing/1784660922_BM_Billing_Payment_Transaction.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/billing/1784661979_BM_Billing_Charge.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/billing/1784663451_BM_Billing_Charge_Line.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/billing/1784664349_BM_Billing_Pricing_Snapshot.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>

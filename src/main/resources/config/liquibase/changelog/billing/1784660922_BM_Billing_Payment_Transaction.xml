@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="BM000000000045" author="BushraMashaiekh">
+
+    <createTable tableName="billing_payment_transaction">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="transaction_number" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="payment_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="parent_transaction_id" type="bigint"/>
+
+      <column name="transaction_type" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="payment_method_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="payment_method_code" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="amount" type="numeric(19,4)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="currency" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="status" type="varchar(30)" defaultValue="PENDING">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="transaction_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="external_reference" type="varchar(150)"/>
+
+      <column name="authorization_code" type="varchar(100)"/>
+
+      <column name="processor_reference" type="varchar(150)"/>
+
+      <column name="card_last_four" type="varchar(4)"/>
+
+      <column name="bank_reference" type="varchar(150)"/>
+
+      <column name="cash_register_id" type="bigint"/>
+
+      <column name="failure_code" type="varchar(100)"/>
+
+      <column name="failure_reason" type="varchar(500)"/>
+
+      <column name="processor_response" type="jsonb"/>
+
+      <column name="idempotency_key" type="varchar(150)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="notes" type="text"/>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+
+
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_payment_transaction"
+      baseColumnNames="payment_id"
+      referencedTableName="billing_payment"
+      referencedColumnNames="id"
+      constraintName="fk_billing_payment_transaction_payment"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_payment_transaction"
+      baseColumnNames="parent_transaction_id"
+      referencedTableName="billing_payment_transaction"
+      referencedColumnNames="id"
+      constraintName="fk_billing_payment_transaction_parent"/>
+
+    <addUniqueConstraint
+      tableName="billing_payment_transaction"
+      columnNames="transaction_number"
+      constraintName="uq_billing_payment_transaction_number"/>
+
+    <addUniqueConstraint
+      tableName="billing_payment_transaction"
+      columnNames="idempotency_key"
+      constraintName="uq_billing_payment_transaction_idempotency"/>
+
+    <sql>
+      ALTER TABLE billing_payment_transaction
+        ADD CONSTRAINT ck_billing_payment_transaction_amount
+          CHECK (
+            amount > 0
+            );
+    </sql>
+
+    <sql>
+      ALTER TABLE billing_payment_transaction
+        ADD CONSTRAINT ck_billing_payment_transaction_card_last_four
+          CHECK (
+            card_last_four IS NULL
+              OR card_last_four ~ '^[0-9]{4}$'
+        );
+    </sql>
+
+
+    <createIndex
+      tableName="billing_payment_transaction"
+      indexName="idx_billing_payment_transaction_payment">
+      <column name="payment_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_payment_transaction"
+      indexName="idx_billing_payment_transaction_parent">
+      <column name="parent_transaction_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_payment_transaction"
+      indexName="idx_billing_payment_transaction_status">
+      <column name="status"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_payment_transaction"
+      indexName="idx_billing_payment_transaction_type">
+      <column name="transaction_type"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_payment_transaction"
+      indexName="idx_billing_payment_transaction_date">
+      <column name="transaction_date"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_payment_transaction"
+      indexName="idx_billing_payment_transaction_method">
+      <column name="payment_method_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_payment_transaction"
+      indexName="idx_billing_payment_transaction_payment_status">
+      <column name="payment_id"/>
+      <column name="status"/>
+    </createIndex>
+
+  </changeSet>
+
+</databaseChangeLog>

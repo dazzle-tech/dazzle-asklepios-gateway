@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+
+<changeSet id="BM000000000043" author="BushraMashaiekh">
+
+  <createTable tableName="billing_wallet">
+
+    <column name="id" type="bigint" autoIncrement="true">
+      <constraints primaryKey="true" nullable="false"/>
+    </column>
+
+    <column name="patient_id" type="bigint">
+      <constraints nullable="false"/>
+    </column>
+
+    <column name="currency" type="varchar(30)">
+      <constraints nullable="false"/>
+    </column>
+
+    <column name="credited_amount" type="numeric(19,4)" defaultValueNumeric="0">
+      <constraints nullable="false"/>
+    </column>
+
+    <column name="available_balance" type="numeric(19,4)" defaultValueNumeric="0">
+      <constraints nullable="false"/>
+    </column>
+
+    <column name="reserved_balance" type="numeric(19,4)" defaultValueNumeric="0">
+      <constraints nullable="false"/>
+    </column>
+
+    <column name="consumed_amount" type="numeric(19,4)" defaultValueNumeric="0">
+      <constraints nullable="false"/>
+    </column>
+
+    <column name="refunded_amount" type="numeric(19,4)" defaultValueNumeric="0">
+      <constraints nullable="false"/>
+    </column>
+
+    <column name="status" type="varchar(30)" defaultValue="ACTIVE">
+      <constraints nullable="false"/>
+    </column>
+
+    <column name="created_by" type="varchar(50)">
+      <constraints nullable="false"/>
+    </column>
+
+    <column name="created_date" type="timestamp">
+      <constraints nullable="false"/>
+    </column>
+    <column name="last_modified_by" type="varchar(50)"/>
+    <column name="last_modified_date" type="timestamp"/>
+
+  </createTable>
+
+  <addForeignKeyConstraint
+    baseTableName="billing_wallet"
+    baseColumnNames="patient_id"
+    referencedTableName="patients"
+    referencedColumnNames="id"
+    constraintName="fk_billing_wallet_patient"/>
+
+  <addUniqueConstraint
+    tableName="billing_wallet"
+    columnNames="patient_id,currency"
+    constraintName="uq_billing_wallet_patient_currency"/>
+
+  <sql>
+    ALTER TABLE billing_wallet
+      ADD CONSTRAINT ck_billing_wallet_non_negative
+        CHECK (
+          credited_amount >= 0
+            AND available_balance >= 0
+            AND reserved_balance >= 0
+            AND consumed_amount >= 0
+            AND refunded_amount >= 0
+          );
+  </sql>
+
+  <sql>
+    ALTER TABLE billing_wallet
+      ADD CONSTRAINT ck_billing_wallet_balance
+        CHECK (
+          credited_amount =
+          available_balance +
+          reserved_balance +
+          consumed_amount +
+          refunded_amount
+          );
+  </sql>
+
+  <createIndex
+    tableName="billing_wallet"
+    indexName="idx_billing_wallet_patient">
+    <column name="patient_id"/>
+  </createIndex>
+
+  <createIndex
+    tableName="billing_wallet"
+    indexName="idx_billing_wallet_status">
+    <column name="status"/>
+  </createIndex>
+
+</changeSet>
+
+</databaseChangeLog>

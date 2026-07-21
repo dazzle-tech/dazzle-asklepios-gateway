@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="BM000000000048" author="BushraMashaiekh">
+
+    <createTable tableName="billing_pricing_snapshot">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="charge_line_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="patient_service_product_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="price_list_id" type="bigint"/>
+
+      <column name="price_list_item_id" type="bigint"/>
+
+      <column name="billing_configuration_id" type="bigint"/>
+
+      <column name="discount_id" type="bigint"/>
+
+      <column name="tax_id" type="bigint"/>
+
+
+      <column name="pricing_source" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="pricing_version" type="bigint"/>
+
+      <column name="price_list_code" type="varchar(100)"/>
+
+      <column name="price_list_name" type="varchar(255)"/>
+
+      <column name="price_list_item_code" type="varchar(100)"/>
+
+      <column name="quantity" type="numeric(19,4)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="base_unit_price" type="numeric(19,4)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="gross_amount" type="numeric(19,4)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="discount_type" type="varchar(30)"/>
+
+      <column name="discount_rate" type="numeric(19,6)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="discount_amount" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="discount_reason" type="varchar(500)"/>
+
+      <column name="discount_approved_by" type="varchar(50)"/>
+
+      <column name="exemption_type" type="varchar(30)"/>
+
+      <column name="exemption_rate" type="numeric(19,6)"  defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="exemption_amount" type="numeric(19,4)"  defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="exemption_reason" type="varchar(500)"/>
+
+      <column name="tax_type" type="varchar(30)"/>
+
+      <column name="tax_rate" type="numeric(19,6)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="taxable_amount" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="tax_amount" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="net_amount" type="numeric(19,4)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="currency" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="calculation_order" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="rounding_mode" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="rounding_scale"  type="integer" defaultValueNumeric="4">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="patient_responsibility_amount" type="numeric(19,4)"  defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="insurance_responsibility_amount"  type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="other_payer_responsibility_amount"  type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="calculation_payload" type="jsonb"/>
+
+
+      <column name="status" type="varchar(30)" defaultValue="ACTIVE">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="effective_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="superseded_date" type="timestamp"/>
+
+      <column name="superseded_by_snapshot_id" type="bigint"/>
+
+      <column name="pricing_reason" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="override_reason" type="varchar(500)"/>
+
+      <column name="idempotency_key" type="varchar(150)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_pricing_snapshot"
+      baseColumnNames="charge_line_id"
+      referencedTableName="billing_charge_line"
+      referencedColumnNames="id"
+      constraintName="fk_billing_pricing_snapshot_charge_line"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_pricing_snapshot"
+      baseColumnNames="patient_service_product_id"
+      referencedTableName="patient_services_and_products"
+      referencedColumnNames="id"
+      constraintName="fk_billing_pricing_snapshot_psp"/>
+
+
+    <addForeignKeyConstraint
+      baseTableName="billing_pricing_snapshot"
+      baseColumnNames="patient_id"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+      constraintName="fk_billing_pricing_snapshot_patient"/>
+
+
+    <addForeignKeyConstraint
+      baseTableName="billing_pricing_snapshot"
+      baseColumnNames="encounter_id"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"
+      constraintName="fk_billing_pricing_snapshot_encounter"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_pricing_snapshot"
+      baseColumnNames="price_list_id"
+      referencedTableName="price_list_setup"
+      referencedColumnNames="id"
+      constraintName="fk_billing_pricing_snapshot_price_list"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_pricing_snapshot"
+      baseColumnNames="price_list_item_id"
+      referencedTableName="price_list_item_setup"
+      referencedColumnNames="id"
+      constraintName="fk_billing_pricing_snapshot_price_list_item"/>
+
+
+    <addForeignKeyConstraint
+      baseTableName="billing_pricing_snapshot"
+      baseColumnNames="superseded_by_snapshot_id"
+      referencedTableName="billing_pricing_snapshot"
+      referencedColumnNames="id"
+      constraintName="fk_billing_pricing_snapshot_superseded_by"/>
+
+
+    <addUniqueConstraint
+      tableName="billing_pricing_snapshot"
+      columnNames="idempotency_key"
+      constraintName="uq_billing_pricing_snapshot_idempotency"/>
+
+
+    <sql>
+      ALTER TABLE billing_pricing_snapshot
+        ADD CONSTRAINT ck_billing_pricing_snapshot_non_negative
+          CHECK (
+            quantity &gt; 0
+              AND base_unit_price &gt;= 0
+              AND gross_amount &gt;= 0
+              AND discount_rate &gt;= 0
+              AND discount_amount &gt;= 0
+              AND exemption_rate &gt;= 0
+              AND exemption_amount &gt;= 0
+              AND tax_rate &gt;= 0
+              AND taxable_amount &gt;= 0
+              AND tax_amount &gt;= 0
+              AND net_amount &gt;= 0
+              AND patient_responsibility_amount &gt;= 0
+              AND insurance_responsibility_amount &gt;= 0
+              AND other_payer_responsibility_amount &gt;= 0
+              AND rounding_scale &gt;= 0
+            );
+    </sql>
+
+
+    <sql>
+      ALTER TABLE billing_pricing_snapshot
+        ADD CONSTRAINT ck_billing_pricing_snapshot_gross
+          CHECK (
+            gross_amount =
+            ROUND(quantity * base_unit_price, rounding_scale)
+            );
+    </sql>
+
+
+    <sql>
+      ALTER TABLE billing_pricing_snapshot
+        ADD CONSTRAINT ck_billing_pricing_snapshot_net
+          CHECK (
+            net_amount =
+            gross_amount
+              - discount_amount
+              - exemption_amount
+              + tax_amount
+            );
+    </sql>
+
+    <sql>
+      ALTER TABLE billing_pricing_snapshot
+        ADD CONSTRAINT ck_billing_pricing_snapshot_responsibility
+          CHECK (
+            net_amount =
+            patient_responsibility_amount
+              + insurance_responsibility_amount
+              + other_payer_responsibility_amount
+            );
+    </sql>
+    <sql>
+      ALTER TABLE billing_pricing_snapshot
+        ADD CONSTRAINT ck_billing_pricing_snapshot_deductions
+          CHECK (
+            discount_amount + exemption_amount
+              &lt;= gross_amount
+            );
+    </sql>
+
+    <sql>
+      ALTER TABLE billing_pricing_snapshot
+        ADD CONSTRAINT ck_billing_pricing_snapshot_rates
+          CHECK (
+            discount_rate &lt;= 100
+              AND exemption_rate &lt;= 100
+              AND tax_rate &lt;= 100
+            );
+    </sql>
+
+
+    <sql>
+      CREATE UNIQUE INDEX uq_billing_pricing_snapshot_active_line
+        ON billing_pricing_snapshot (charge_line_id)
+        WHERE status = 'ACTIVE';
+    </sql>
+
+    <createIndex
+      tableName="billing_pricing_snapshot"
+      indexName="idx_billing_pricing_snapshot_charge_line">
+      <column name="charge_line_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_pricing_snapshot"
+      indexName="idx_billing_pricing_snapshot_psp">
+      <column name="patient_service_product_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_pricing_snapshot"
+      indexName="idx_billing_pricing_snapshot_patient">
+      <column name="patient_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_pricing_snapshot"
+      indexName="idx_billing_pricing_snapshot_encounter">
+      <column name="encounter_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_pricing_snapshot"
+      indexName="idx_billing_pricing_snapshot_price_list">
+      <column name="price_list_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_pricing_snapshot"
+      indexName="idx_billing_pricing_snapshot_price_list_item">
+      <column name="price_list_item_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_pricing_snapshot"
+      indexName="idx_billing_pricing_snapshot_status">
+      <column name="status"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_pricing_snapshot"
+      indexName="idx_billing_pricing_snapshot_effective_date">
+      <column name="effective_date"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_pricing_snapshot"
+      indexName="idx_billing_pricing_snapshot_superseded_by">
+      <column name="superseded_by_snapshot_id"/>
+    </createIndex>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_charge_line"
+      baseColumnNames="current_pricing_snapshot_id"
+      referencedTableName="billing_pricing_snapshot"
+      referencedColumnNames="id"
+      constraintName="fk_billing_charge_line_current_pricing_snapshot"/>
+
+  </changeSet>
+</databaseChangeLog>
