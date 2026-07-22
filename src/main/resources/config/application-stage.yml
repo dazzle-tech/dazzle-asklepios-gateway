@@ -20,11 +20,11 @@ management:
 services:
   asklepios-general-service-url: http://asklepios-service:8081
   asklepios-setup-service-url :  http://asklepiosdemo-api-setup-service:8082
-  asklepios-patient-service-url :  http://asklepios-patient-service:8080
-  asklepios-inventory-service-url :  http://asklepios-inventory-service:8080
-  asklepios-billing-service-url :  http://asklepios-billing-service:8080
-  dazzle-asklepios-analytics-service-url : http://asklepios-analytics-service:8080
-  dazzle-asklepios-notification-service-url : http://asklepios-notification-service:8080
+  asklepios-patient-service-url :  http://asklepiosdemo-patient-service:8080
+  asklepios-inventory-service-url :  http://asklepiosdemo-inventory-service:8080
+  asklepios-billing-service-url :  http://asklepiosdemo-billing-service:8080
+  dazzle-asklepios-analytics-service-url : http://asklepiosdemo-analytics-service:8080
+  dazzle-asklepios-notification-service-url : http://asklepiosdemo-notification-service:8080
   medication-test-orders-validation-service-url: http://medication-test-orders-validation-service:8005
   clinical-summary-service-url: http://clinical-summary-service:8003
   clinical-recommendations-service-url: http://clinical-recommendations-service:8004
