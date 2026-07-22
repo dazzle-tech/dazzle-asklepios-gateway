@@ -362,4 +362,9 @@
   <include file="config/liquibase/changelog/billing/1784664349_BM_Billing_Pricing_Snapshot.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/billing/1784701001_BM_Billing_Charge_Responsibility.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/billing/1784702558_BM_Billing_Reservation.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/billing/1784704115_BM_Billing_Allocation.xml" relativeToChangelogFile="false" />
+  <include file="config/liquibase/changelog/billing/1784704966_BM_Billing_Debit_Account.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/billing/1784706133_BM_Billing_Debit_Transaction.xml" relativeToChangelogFile="false" />
+  <include file="config/liquibase/changelog/billing/1784706738_BM_Billing_Refund.xml" relativeToChangelogFile="false" />
+  <include file="config/liquibase/changelog/billing/1784707531_BM_Billing_Ledger.xml" relativeToChangelogFile="false" />
 </databaseChangeLog>
