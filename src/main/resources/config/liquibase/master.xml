@@ -367,4 +367,7 @@
   <include file="config/liquibase/changelog/billing/1784706133_BM_Billing_Debit_Transaction.xml" relativeToChangelogFile="false" />
   <include file="config/liquibase/changelog/billing/1784706738_BM_Billing_Refund.xml" relativeToChangelogFile="false" />
   <include file="config/liquibase/changelog/billing/1784707531_BM_Billing_Ledger.xml" relativeToChangelogFile="false" />
+  <include file="config/liquibase/changelog/billing/1784714856_BM_Billing_Rule.xml" relativeToChangelogFile="false" />
+  <include file="config/liquibase/changelog/billing/1784715102_BM_Add_Billing_Rule_ID_to_Billing_Item_Setup.xml" relativeToChangelogFile="false" />
+
 </databaseChangeLog>
