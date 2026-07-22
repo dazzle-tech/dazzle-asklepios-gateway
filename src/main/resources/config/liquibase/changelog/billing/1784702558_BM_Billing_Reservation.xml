@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="BM000000000051" author="BushraMashaiekh">
+
+    <createTable tableName="billing_reservation">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="reservation_number" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="wallet_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="payment_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="payment_transaction_id" type="bigint"/>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="charge_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="charge_line_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="charge_responsibility_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="patient_service_product_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="original_reserved_amount" type="numeric(19,4)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="remaining_reserved_amount" type="numeric(19,4)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="consumed_amount" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="released_amount" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="currency" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="status" type="varchar(30)" defaultValue="ACTIVE">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="reserved_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="consumed_date" type="timestamp"/>
+
+      <column name="released_date" type="timestamp"/>
+
+      <column name="cancelled_date" type="timestamp"/>
+
+      <column name="release_reason" type="varchar(50)"/>
+
+      <column name="release_notes" type="varchar(500)"/>
+
+      <column name="released_by" type="varchar(50)"/>
+
+      <column name="cancelled_by" type="varchar(50)"/>
+
+      <column name="cancellation_reason" type="varchar(500)"/>
+
+      <column name="previous_reservation_id" type="bigint"/>
+
+      <column name="idempotency_key" type="varchar(150)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="transaction_group_id" type="uuid">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_reservation"
+      baseColumnNames="wallet_id"
+      referencedTableName="billing_wallet"
+      referencedColumnNames="id"
+      constraintName="fk_billing_reservation_wallet"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_reservation"
+      baseColumnNames="payment_id"
+      referencedTableName="billing_payment"
+      referencedColumnNames="id"
+      constraintName="fk_billing_reservation_payment"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_reservation"
+      baseColumnNames="payment_transaction_id"
+      referencedTableName="billing_payment_transaction"
+      referencedColumnNames="id"
+      constraintName="fk_billing_reservation_payment_transaction"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_reservation"
+      baseColumnNames="patient_id"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+      constraintName="fk_billing_reservation_patient"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_reservation"
+      baseColumnNames="encounter_id"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"
+      constraintName="fk_billing_reservation_encounter"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_reservation"
+      baseColumnNames="charge_id"
+      referencedTableName="billing_charge"
+      referencedColumnNames="id"
+      constraintName="fk_billing_reservation_charge"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_reservation"
+      baseColumnNames="charge_line_id"
+      referencedTableName="billing_charge_line"
+      referencedColumnNames="id"
+      constraintName="fk_billing_reservation_charge_line"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_reservation"
+      baseColumnNames="charge_responsibility_id"
+      referencedTableName="billing_charge_responsibility"
+      referencedColumnNames="id"
+      constraintName="fk_billing_reservation_responsibility"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_reservation"
+      baseColumnNames="patient_service_product_id"
+      referencedTableName="patient_services_and_products"
+      referencedColumnNames="id"
+      constraintName="fk_billing_reservation_psp"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_reservation"
+      baseColumnNames="previous_reservation_id"
+      referencedTableName="billing_reservation"
+      referencedColumnNames="id"
+      constraintName="fk_billing_reservation_previous"/>
+
+    <addUniqueConstraint
+      tableName="billing_reservation"
+      columnNames="reservation_number"
+      constraintName="uq_billing_reservation_number"/>
+
+    <addUniqueConstraint
+      tableName="billing_reservation"
+      columnNames="idempotency_key"
+      constraintName="uq_billing_reservation_idempotency"/>
+
+    <sql>
+      ALTER TABLE billing_reservation
+        ADD CONSTRAINT ck_billing_reservation_non_negative
+          CHECK (
+            original_reserved_amount &gt; 0
+              AND remaining_reserved_amount &gt;= 0
+              AND consumed_amount &gt;= 0
+              AND released_amount &gt;= 0
+            );
+    </sql>
+
+    <sql>
+      ALTER TABLE billing_reservation
+        ADD CONSTRAINT ck_billing_reservation_balance
+          CHECK (
+            original_reserved_amount =
+            remaining_reserved_amount
+              + consumed_amount
+              + released_amount
+            );
+    </sql>
+
+    <sql>
+      ALTER TABLE billing_reservation
+        ADD CONSTRAINT ck_billing_reservation_active_amount
+          CHECK (
+            status &lt;&gt; 'ACTIVE'
+              OR (
+              remaining_reserved_amount &gt; 0
+                AND consumed_amount = 0
+                AND released_amount = 0
+              )
+            );
+    </sql>
+
+    <createIndex
+      tableName="billing_reservation"
+      indexName="idx_billing_reservation_wallet">
+      <column name="wallet_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_reservation"
+      indexName="idx_billing_reservation_payment">
+      <column name="payment_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_reservation"
+      indexName="idx_billing_reservation_payment_transaction">
+      <column name="payment_transaction_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_reservation"
+      indexName="idx_billing_reservation_patient">
+      <column name="patient_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_reservation"
+      indexName="idx_billing_reservation_encounter">
+      <column name="encounter_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_reservation"
+      indexName="idx_billing_reservation_charge">
+      <column name="charge_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_reservation"
+      indexName="idx_billing_reservation_charge_line">
+      <column name="charge_line_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_reservation"
+      indexName="idx_billing_reservation_responsibility">
+      <column name="charge_responsibility_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_reservation"
+      indexName="idx_billing_reservation_psp">
+      <column name="patient_service_product_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_reservation"
+      indexName="idx_billing_reservation_status">
+      <column name="status"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_reservation"
+      indexName="idx_billing_reservation_wallet_status">
+      <column name="wallet_id"/>
+      <column name="status"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_reservation"
+      indexName="idx_billing_reservation_encounter_status">
+      <column name="encounter_id"/>
+      <column name="status"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_reservation"
+      indexName="idx_billing_reservation_charge_line_status">
+      <column name="charge_line_id"/>
+      <column name="status"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_reservation"
+      indexName="idx_billing_reservation_transaction_group">
+      <column name="transaction_group_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_reservation"
+      indexName="idx_billing_reservation_previous">
+      <column name="previous_reservation_id"/>
+    </createIndex>
+
+  </changeSet>
+
+</databaseChangeLog>
