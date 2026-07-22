@@ -330,6 +330,8 @@
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/notification/1781088043_S_NotificationTemplate.xml"
            relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/notification/1784544061_S_NotificationTemplate_whatsAppColumns.xml"
+           relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/notification/1781136609_S_Notification.xml"
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/notification/1781660466_S_NotificationEvent.xml"
