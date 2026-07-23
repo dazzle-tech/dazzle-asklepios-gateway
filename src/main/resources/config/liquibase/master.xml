@@ -355,6 +355,7 @@
   <include file="config/liquibase/changelog/patientMerge/06-patient-merge-validation-rules.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1782834120_S_UserBookableDepartments.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1783498968_S_EmailSettings.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1784720063_R_PatientSickLeave.xml" relativeToChangelogFile="false"/>
 
   <include file="config/liquibase/sql/patientDocument/hl7_create_patient_primary_document.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>
