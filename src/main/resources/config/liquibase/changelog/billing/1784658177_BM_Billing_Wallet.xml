@@ -68,7 +68,7 @@
 
   <addUniqueConstraint
     tableName="billing_wallet"
-    columnNames="patient_id,currency"
+    columnNames="patient_id"
     constraintName="uq_billing_wallet_patient_currency"/>
 
   <sql>
