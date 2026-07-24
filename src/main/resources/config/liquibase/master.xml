@@ -370,5 +370,5 @@
   <include file="config/liquibase/changelog/billing/1784714856_BM_Billing_Rule.xml" relativeToChangelogFile="false" />
   <include file="config/liquibase/changelog/billing/1784715102_BM_Add_Billing_Rule_ID_to_Billing_Item_Setup.xml" relativeToChangelogFile="false" />
   <include file="config/liquibase/changelog/billing/1784882393_B_add_price_source_to_billing_pricing_snapshot.xml" relativeToChangelogFile="false" />
-
+ <include file="config/liquibase/changelog/billing/1784922366_BM_Fix_Billing_Rule.xml" relativeToChangelogFile="false" />
 </databaseChangeLog>

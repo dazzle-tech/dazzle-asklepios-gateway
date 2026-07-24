@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="BM000000000060" author="BushraMashaiekh">
+
+    <preConditions onFail="MARK_RAN">
+      <tableExists tableName="billing_rule"/>
+      <not>
+        <columnExists tableName="billing_rule" columnName="is_default"/>
+      </not>
+    </preConditions>
+
+    <addColumn tableName="billing_rule">
+      <column name="is_default" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+    </addColumn>
+
+    <createIndex
+      tableName="billing_rule"
+      indexName="idx_billing_rule_item_type_default">
+      <column name="billing_item_type"/>
+      <column name="is_default"/>
+    </createIndex>
+
+  </changeSet>
+
+  <changeSet id="BM000000000061" author="BushraMashaiekh">
+
+    <preConditions onFail="HALT">
+      <tableExists tableName="billing_rule"/>
+      <columnExists tableName="billing_rule" columnName="is_default"/>
+    </preConditions>
+
+    <sql>
+      UPDATE billing_rule
+      SET is_default = FALSE
+      WHERE billing_item_type = 'SERVICE'
+        AND is_default = TRUE;
+    </sql>
+
+    <sql>
+      INSERT INTO billing_rule (
+        name,
+        billing_item_type,
+        billing_trigger,
+        is_default,
+        created_by,
+        created_date,
+        last_modified_by,
+        last_modified_date
+      )
+      SELECT
+        'Default Service Encounter Billing',
+        'SERVICE',
+        'ENCOUNTER_CREATED',
+        TRUE,
+        'system',
+        CURRENT_TIMESTAMP,
+        'system',
+        CURRENT_TIMESTAMP
+        WHERE NOT EXISTS (
+          SELECT 1
+            FROM billing_rule
+           WHERE billing_item_type = 'SERVICE'
+             AND billing_trigger = 'ENCOUNTER_CREATED'
+      );
+    </sql>
+
+    <sql>
+      UPDATE billing_rule
+      SET is_default = TRUE,
+          last_modified_by = 'system',
+          last_modified_date = CURRENT_TIMESTAMP
+      WHERE id = (
+        SELECT id
+        FROM billing_rule
+        WHERE billing_item_type = 'SERVICE'
+          AND billing_trigger = 'ENCOUNTER_CREATED'
+        ORDER BY id ASC
+        LIMIT 1
+        );
+    </sql>
+
+  </changeSet>
+
+</databaseChangeLog>
