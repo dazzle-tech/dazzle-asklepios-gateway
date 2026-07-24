@@ -1,0 +1,8 @@
+id;notification_header_id;channel;language;subject;title;body;to_recipient_rule;cc_recipient_rule;bcc_recipient_rule;phone_recipient_rule;is_active;created_by;created_date;last_modified_by;last_modified_date
+5006;5006;IN_APP;en;;High alert medication submitted;High alert medication submitted for patient {{patientName}}: {{highAlertMedications}}.;DEPARTMENT_USERS;;;;true;admin;2026-06-22 00:00:00;admin;2026-06-22 00:00:00
+5007;5007;IN_APP;en;;Urgent diagnostic order submitted;Urgent diagnostic order {{orderId}} submitted for patient {{patientName}}.;DEPARTMENT_USERS;;;;true;admin;2026-06-22 00:00:00;admin;2026-06-22 00:00:00
+5008;5008;IN_APP;en;;Consultation created;Consultation created for patient {{patientName}} and sent to department {{toDepartmentName}}.;DEPARTMENT_USERS;;;;true;admin;2026-06-22 00:00:00;admin;2026-06-22 00:00:00
+5009;5009;IN_APP;en;;Consultation submitted;Consultation response submitted for patient {{patientName}} by {{toDepartmentName}}.;DEPARTMENT_USERS;;;;true;admin;2026-06-22 00:00:00;admin;2026-06-22 00:00:00
+5010;5010;IN_APP;en;;Consultation rejected;Consultation rejected for patient {{patientName}} by {{toDepartmentName}}. Reason: {{rejectReason}};DEPARTMENT_USERS;;;;true;admin;2026-06-22 00:00:00;admin;2026-06-22 00:00:00
+5011;5011;IN_APP;en;;Abnormal lab result ready;Abnormal laboratory result ready for patient {{patientName}}. Marker: {{marker}}.;DEPARTMENT_USERS;;;;true;admin;2026-06-22 00:00:00;admin;2026-06-22 00:00:00
+5012;5012;IN_APP;en;;Severe radiology result ready;Severe radiology result ready for patient {{patientName}}. Level: {{resultLevel}}.;DEPARTMENT_USERS;;;;true;admin;2026-06-22 00:00:00;admin;2026-06-22 00:00:00

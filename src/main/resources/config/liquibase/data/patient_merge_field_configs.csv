@@ -1,0 +1,15 @@
+id,table_config_id,field_name,field_label,enabled,input_type,input_source
+1,2,sex_at_birth,Gender,true,ENUM,Gender
+2,2,preferred_way_of_contact,Preferred Way of Contact,true,ENUM,PreferredWayOfContact
+3,2,patient_classes,Patient Class,true,LOV,PATIENT_CLASS
+4,2,native_language,Native Language,true,LOV,LANG
+5,2,emergency_contact_relation,Emergency Contact Relation,true,LOV,RELATION
+6,2,role,Role,true,LOV,ER_CONTACTP_ROLE
+7,2,marital_status,Marital Status,true,LOV,MARI_STATUS
+8,2,nationality,Nationality,true,LOV,NAT
+9,2,religion,Religion,true,LOV,REL
+10,2,ethnicity,Ethnicity,true,LOV,ETH
+11,2,occupation,Occupation,true,LOV,OCCP
+12,2,responsible_party,Responsible Party,true,LOV,RESP_PARTY
+13,2,educational_level,Educational Level,true,LOV,EDU_LEVEL
+14,7,status,Status,true,ENUM,PatientAllergyStatus

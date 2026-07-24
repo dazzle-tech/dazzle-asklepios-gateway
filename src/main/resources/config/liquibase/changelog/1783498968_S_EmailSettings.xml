@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="H000000000000SetupEmailSettings1" author="SondosAbdAlaal">
+
+    <createTable tableName="email_settings" schemaName="notification">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="server_name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="host" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="description" type="varchar(500)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="smtp_port" type="int">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="from_address" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="password" type="text">
+        <constraints nullable="false"/>
+      </column>
+      <column name="protocol" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="tls" type="BOOLEAN" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+      <column name="email_prefix" type="varchar(255)"/>
+      <column name="email_footer" type="text"/>
+
+
+      <!-- auditing -->
+      <column name="created_date" type="timestamp" defaultValue="now()">
+        <constraints nullable="false" />
+      </column>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+
+    <createIndex tableName="email_settings" schemaName="notification" indexName="idx_email_settings_server_name">
+      <column name="server_name"/>
+    </createIndex>
+
+    <createIndex tableName="email_settings" schemaName="notification" indexName="idx_email_settings_host">
+      <column name="host"/>
+    </createIndex>
+
+  </changeSet>
+
+</databaseChangeLog>

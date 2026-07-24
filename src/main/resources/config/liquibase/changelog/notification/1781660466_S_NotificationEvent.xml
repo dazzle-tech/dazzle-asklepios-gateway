@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="NOTIF_00000000000005" author="Sondos-Abd-Alaal">
+
+    <createTable schemaName="notification" tableName="notification_event">
+
+      <column name="id" type="bigint" autoIncrement="true" startWith="5000">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+
+      <column name="notification_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="event_type" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="old_status" type="varchar(50)"/>
+
+      <column name="new_status" type="varchar(50)"/>
+
+      <column name="provider_name" type="varchar(100)"/>
+
+      <column name="provider_message_id" type="varchar(255)"/>
+
+      <column name="provider_status" type="varchar(100)"/>
+
+      <column name="message" type="text"/>
+
+      <column name="error_message" type="text"/>
+
+      <column name="event_payload" type="jsonb"/>
+
+      <column name="created_by" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(100)"/>
+
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableSchemaName="notification"
+      baseTableName="notification_event"
+      baseColumnNames="notification_id"
+      referencedTableSchemaName="notification"
+      referencedTableName="notification"
+      referencedColumnNames="id"
+      constraintName="fk_notification_event_notification"/>
+
+    <sql>
+      ALTER TABLE notification.notification_event
+        ADD CONSTRAINT chk_notification_event_type
+          CHECK (
+            event_type IN (
+                           'CREATED',
+                           'PROCESSING',
+                           'SENT_TO_PROVIDER',
+                           'SENT',
+                           'DELIVERED',
+                           'READ',
+                           'FAILED',
+                           'RETRY',
+                           'CANCELLED',
+                           'WEBHOOK_STATUS_UPDATE'
+              )
+            );
+    </sql>
+
+    <sql>
+      ALTER TABLE notification.notification_event
+        ADD CONSTRAINT chk_notification_event_old_status
+          CHECK (
+            old_status IS NULL
+              OR old_status IN (
+                                'PENDING',
+                                'PROCESSING',
+                                'SENT',
+                                'DELIVERED',
+                                'READ',
+                                'FAILED',
+                                'CANCELLED'
+              )
+            );
+    </sql>
+
+    <sql>
+      ALTER TABLE notification.notification_event
+        ADD CONSTRAINT chk_notification_event_new_status
+          CHECK (
+            new_status IS NULL
+              OR new_status IN (
+                                'PENDING',
+                                'PROCESSING',
+                                'SENT',
+                                'DELIVERED',
+                                'READ',
+                                'FAILED',
+                                'CANCELLED'
+              )
+            );
+    </sql>
+
+    <createIndex
+      schemaName="notification"
+      tableName="notification_event"
+      indexName="idx_notification_event_notification_id">
+      <column name="notification_id"/>
+    </createIndex>
+
+    <createIndex
+      schemaName="notification"
+      tableName="notification_event"
+      indexName="idx_notification_event_type">
+      <column name="event_type"/>
+    </createIndex>
+
+    <createIndex
+      schemaName="notification"
+      tableName="notification_event"
+      indexName="idx_notification_event_created_date">
+      <column name="created_date"/>
+    </createIndex>
+
+    <createIndex
+      schemaName="notification"
+      tableName="notification_event"
+      indexName="idx_notification_event_provider_message_id">
+      <column name="provider_message_id"/>
+    </createIndex>
+
+  </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+
+    <changeSet id="HL7_00000000000002" author="hanan253yahya">
+      <sql>
+        CREATE TABLE IF NOT EXISTS "HL7_INTEGRATION".hl7_event (
+                                                                 id varchar NOT NULL,
+                                                                 event_type varchar NOT NULL,
+                                                                 object_key varchar NOT NULL,
+                                                                 event_datetime timestamp NOT NULL,
+                                                                 CONSTRAINT hl7_event_pk PRIMARY KEY (id)
+          );
+      </sql>
+
+      <sql>
+        CREATE TABLE IF NOT EXISTS "HL7_INTEGRATION".hl7_event_processed (
+                                                                           id varchar NOT NULL,
+                                                                           event_type varchar NOT NULL,
+                                                                           object_key varchar NOT NULL,
+                                                                           event_datetime timestamp NOT NULL,
+                                                                           process_datetime timestamp NOT NULL,
+                                                                           process_status varchar NOT NULL,
+                                                                           error_message varchar NOT NULL
+        );
+      </sql>
+
+  </changeSet>
+
+</databaseChangeLog>

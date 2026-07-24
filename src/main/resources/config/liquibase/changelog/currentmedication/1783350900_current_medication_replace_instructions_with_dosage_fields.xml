@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="F00000000000008_current_medication_drop_instructions" author="Rawan-Yahya">
+    <dropColumn tableName="current_medication" columnName="instructions"/>
+  </changeSet>
+
+  <changeSet id="F00000000000008_current_medication_add_dosage_fields" author="Rawan-Yahya">
+    <addColumn tableName="current_medication">
+
+      <column name="dosage" type="DECIMAL(10,3)"/>
+
+      <column name="unit" type="varchar(50)"/>
+
+      <column name="frequency" type="varchar(100)"/>
+
+    </addColumn>
+  </changeSet>
+
+</databaseChangeLog>

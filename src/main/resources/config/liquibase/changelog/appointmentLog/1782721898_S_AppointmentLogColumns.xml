@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="APP_00000000000034_ADD_WAITING_FIELDS_TO_APPOINTMENT_LOG" author="Sondos">
+    <addColumn tableName="appointment_log">
+      <column name="booking_group_id" type="bigint"/>
+      <column name="waiting_list_id" type="bigint"/>
+      <column name="hl7_appointment_number" type="nvarchar(50)" >
+      </column>
+    </addColumn>
+
+    <addForeignKeyConstraint
+      baseTableName="appointment_log"
+      baseColumnNames="booking_group_id"
+      referencedTableName="appointment_booking_group"
+      referencedColumnNames="id"
+      constraintName="fk_appointment_log_booking_group"/>
+
+    <addForeignKeyConstraint
+      baseTableName="appointment_log"
+      baseColumnNames="waiting_list_id"
+      referencedTableName="appointment_waiting_list"
+      referencedColumnNames="id"
+      constraintName="fk_appointment_log_waiting_list"/>
+
+  </changeSet>
+
+</databaseChangeLog>

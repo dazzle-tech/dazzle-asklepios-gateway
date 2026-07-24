@@ -1,0 +1,43 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation=" http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="H-add-patient-merge-columns" author="hanan253yahya">
+    <addColumn tableName="patients">
+      <!--  ACTIVE / MERGED / INACTIVE if needed later  -->
+      <column name="patient_status" type="varchar(30)" defaultValue="ACTIVE">
+        <constraints nullable="false"/>
+      </column>
+      <!--  If this patient was merged, this points to the final/main patient  -->
+      <column name="merged_into_patient_id" type="bigint"/>
+      <column name="merged_at" type="timestamp"/>
+      <column name="merged_by" type="varchar(50)"/>
+      <!--  Optional: helps explain why this profile is hidden  -->
+      <column name="merge_note" type="varchar(1000)"/>
+    </addColumn>
+    <addForeignKeyConstraint baseTableName="patients" baseColumnNames="merged_into_patient_id" referencedTableName="patients" referencedColumnNames="id" constraintName="fk_patients_merged_into_patient"/>
+    <createIndex tableName="patients" indexName="idx_patients_patient_status">
+      <column name="patient_status"/>
+    </createIndex>
+    <createIndex tableName="patients" indexName="idx_patients_merged_into_patient_id">
+      <column name="merged_into_patient_id"/>
+    </createIndex>
+    <sql dbms="postgresql"><![CDATA[
+      ALTER TABLE patients
+        ADD CONSTRAINT chk_patients_merge_fields_when_merged
+          CHECK (
+            patient_status != 'MERGED'
+        OR (
+        merged_into_patient_id IS NOT NULL
+        AND merged_at IS NOT NULL
+        AND merged_by IS NOT NULL
+        )
+        );
+      ]]></sql>    <sql dbms="postgresql"><![CDATA[
+      ALTER TABLE patients
+        ADD CONSTRAINT chk_patients_cannot_merge_into_self
+          CHECK (
+            merged_into_patient_id IS NULL
+              OR merged_into_patient_id <> id
+            );
+      ]]></sql>  </changeSet>
+
+
+</databaseChangeLog>

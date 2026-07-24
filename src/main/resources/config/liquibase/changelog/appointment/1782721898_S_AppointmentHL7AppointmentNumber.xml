@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="APP_00000000000034_ADD_HL7_APP_NUMBER_APPOINTMENT" author="Sondos">
+    <addColumn tableName="appointment">
+      <column name="hl7_appointment_number" type="nvarchar(50)" >
+        <constraints unique="true"/>
+      </column>
+    </addColumn>
+
+    <createIndex tableName="appointment" indexName="idx_appointment_hl7_appointment_number">
+      <column name="hl7_appointment_number"/>
+    </createIndex>
+
+  </changeSet>
+  <include file="config/liquibase/sql/appointment/appointment_Log_v2.sql" relativeToChangelogFile="false"/>
+
+</databaseChangeLog>
