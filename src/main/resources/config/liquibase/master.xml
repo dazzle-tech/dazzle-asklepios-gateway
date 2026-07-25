@@ -380,7 +380,6 @@
   <include file="config/liquibase/changelog/1784548568_B_BillingConfiguration.xml"
            relativeToChangelogFile="false"/>
 
-
   <include file="config/liquibase/changelog/1784630001_BM_Discount_Setup.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/billing/1784658177_BM_Billing_Wallet.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/billing/1784659366_BM_Billing_Payment.xml" relativeToChangelogFile="false"/>
@@ -401,48 +400,16 @@
  <include file="config/liquibase/changelog/billing/1784922366_BM_Fix_Billing_Rule.xml" relativeToChangelogFile="false" />
   <include file="config/liquibase/changelog/billing/1784934297_B_ck_billing_charge_line_responsibility.xml" relativeToChangelogFile="false" />
 
-  <include file="/config/liquibase/changelog/notification/1781082967_S_NotificationSchema.xml"
-           relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/notification/1781084026_S_NotificationHeader.xml"
-           relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/notification/1781088043_S_NotificationTemplate.xml"
-           relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/notification/1784544061_S_NotificationTemplate_whatsAppColumns.xml"
-           relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/notification/1781136609_S_Notification.xml"
-           relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/notification/1781660466_S_NotificationEvent.xml"
-           relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/notification/Data/1782179241_S_NotificationData.xml"
-           relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/notification/Data/1782395753_S_NotificationData.xml"
-           relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/notification/Data/1783260527_S_NotificationData.xml"
-           relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/notification/Data/1783350851_S_NotificationData.xml"
-           relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/notification/Data/1784807071_S_SnakeCaseNotificationData.xml"
-           relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/facility/1782381912_S_facilityDefaultLabAndRad.xml"
-           relativeToChangelogFile="false"/>
 
-  <include file="config/liquibase/changelog/patientMerge/01-patient-merge-logs.xml" relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/patientMerge/02-patient-merge-item-logs.xml"
-           relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/patientMerge/03-patient-merge-table-configs.xml"
-           relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/patientMerge/04-patient-merge-master-decisions.xml"
-           relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/patientMerge/ 05-patient-merge-field-configs.xml"
-           relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/patientMerge/06-patient-merge-validation-rules.xml"
-           relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1782834120_S_UserBookableDepartments.xml" relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/1783498968_S_EmailSettings.xml" relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/notification/1784453283_S_WhatsAppSettings.xml"
-           relativeToChangelogFile="false"/>
   <include file="config/liquibase/sql/patientDocument/hl7_create_patient_primary_document.xml"
            relativeToChangelogFile="false"/>
+
+  <include file="config/liquibase/changelog/1785008795_BM_Financial_Document_Numbering.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1785008800_BM_Financial_Document_Sequence.xml"
+           relativeToChangelogFile="false"/>
+
 
 
 </databaseChangeLog>
