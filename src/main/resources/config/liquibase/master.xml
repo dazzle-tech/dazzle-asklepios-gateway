@@ -421,8 +421,7 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/invoice/1785014000_B_financial_document_item_adjustments.xml"
            relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/invoice/1785015000_B_financial_document_numbering_trigger_skip.xml"
-           relativeToChangelogFile="false"/>
+
 
 
 
