@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="B-financial-document-invoice-subtype" author="cursor">
+
+    <addColumn tableName="financial_documents">
+      <column name="document_subtype" type="varchar(50)" defaultValue="PATIENT">
+        <constraints nullable="false"/>
+      </column>
+      <column name="eligibility_reference" type="varchar(100)"/>
+      <column name="claim_reference" type="varchar(150)"/>
+    </addColumn>
+
+    <sql>
+      UPDATE financial_documents
+      SET document_subtype = 'PATIENT'
+      WHERE document_subtype IS NULL;
+    </sql>
+
+  </changeSet>
+
+</databaseChangeLog>

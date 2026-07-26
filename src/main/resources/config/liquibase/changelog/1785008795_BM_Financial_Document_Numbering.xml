@@ -7,8 +7,7 @@
         http://www.liquibase.org/xml/ns/dbchangelog
         https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
 
-  <changeSet
-    id="BM000000000062" author="BushraMashaiekh">
+  <changeSet id="BM000000000062" author="BushraMashaiekh">
 
     <createTable tableName="financial_document_numbering">
 

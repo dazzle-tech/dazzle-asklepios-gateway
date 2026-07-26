@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="B-financial-document-item-adjustments" author="cursor">
+
+    <addColumn tableName="financial_document_items">
+      <column name="billing_charge_line_id" type="bigint"/>
+      <column name="parent_document_item_id" type="bigint"/>
+      <column name="item_code" type="varchar(100)"/>
+      <column name="item_description" type="varchar(500)"/>
+      <column name="adjustment_action" type="varchar(50)"/>
+    </addColumn>
+
+    <addForeignKeyConstraint
+      baseTableName="financial_document_items"
+      baseColumnNames="billing_charge_line_id"
+      referencedTableName="billing_charge_line"
+      referencedColumnNames="id"
+      constraintName="fk_financial_document_item_charge_line"/>
+
+    <addForeignKeyConstraint
+      baseTableName="financial_document_items"
+      baseColumnNames="parent_document_item_id"
+      referencedTableName="financial_document_items"
+      referencedColumnNames="id"
+      constraintName="fk_financial_document_item_parent"/>
+
+    <createIndex
+      tableName="financial_document_items"
+      indexName="idx_financial_document_items_parent_item">
+      <column name="parent_document_item_id"/>
+    </createIndex>
+
+  </changeSet>
+
+</databaseChangeLog>

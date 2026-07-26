@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="B-sync-encounter-billing-status-from-closed-charge" author="cursor">
+
+    <sql>
+      UPDATE patient_encounters pe
+      SET billing_status = 'FINANCIALLY_CLOSED',
+          financially_closed_at = bc.closed_date,
+          financially_closed_by = 'checkout-sync'
+      FROM billing_charge bc
+      WHERE bc.encounter_id = pe.id
+        AND bc.status = 'CLOSED'
+        AND pe.billing_status = 'OPEN';
+    </sql>
+
+  </changeSet>
+
+</databaseChangeLog>
