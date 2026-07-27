@@ -258,6 +258,12 @@ spring:
             - Path=/api/notification/**
           filters:
             - StripPrefix=0
+        - id: auto-population
+          uri: ${services.auto-population-service-url}
+          predicates:
+            - Path=/api/ai/v1/auto-population/**
+          filters:
+            - RewritePath=/api/ai/v1/auto-population/(?<segment>.*),/api/v1/${segment}
 
       httpclient:
         pool:
