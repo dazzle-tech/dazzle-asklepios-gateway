@@ -253,6 +253,13 @@ spring:
             - Path=/api/notification/**
           filters:
             - StripPrefix=0
+
+        - id: ocr-parsing
+          uri: ${services.ocr-parsing-service-url}
+          predicates:
+            - Path=/api/ai/v1/ocr-parsing-service/**
+          filters:
+            - RewritePath=/api/ai/v1/ocr-parsing-service/(?<segment>.*),/api/v1/${segment}
       httpclient:
         pool:
           max-connections: 1000
