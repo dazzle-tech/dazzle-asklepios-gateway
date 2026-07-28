@@ -356,5 +356,4 @@
   <include file="config/liquibase/sql/patientMerge/hl7_patient_merge.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/sql/patientMerge/hl7_patient_merge_undo.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1782834120_S_UserBookableDepartments.xml" relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/1784784506_R_PatientSickLeave.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>
