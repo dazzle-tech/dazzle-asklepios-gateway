@@ -371,6 +371,4 @@
   <include file="config/liquibase/sql/patientDocument/hl7_create_patient_primary_document.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/notification/1784453283_S_WhatsAppSettings.xml"
            relativeToChangelogFile="false"/>
-  <include file="config/liquibase/sql/patientDocument/hl7_create_patient_primary_document.xml"
-           relativeToChangelogFile="false"/>
 </databaseChangeLog>
