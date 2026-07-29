@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="B-financial-document-item-pricing-snapshot" author="cursor">
+
+    <addColumn tableName="financial_document_items">
+      <column name="pricing_adjustment_snapshot" type="jsonb">
+        <constraints nullable="true"/>
+      </column>
+    </addColumn>
+
+  </changeSet>
+
+</databaseChangeLog>
