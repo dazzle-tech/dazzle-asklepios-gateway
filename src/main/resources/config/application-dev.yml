@@ -26,7 +26,7 @@ services:
   clinical-summary-service-url: http://clinical-summary-service:8003
   clinical-recommendations-service-url: http://localhost:8004
   ocr-parsing-service-url: http://ocr-parsing-service:8012
-  auto-population-service-url: http://localhost:8010
+  auto-population-service-url: http://auto-population-service:8010
   lab-result-interpreter-service-url: http://localhost:8010
 
 

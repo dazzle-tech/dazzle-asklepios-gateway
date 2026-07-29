@@ -28,7 +28,7 @@ services:
   medication-test-orders-validation-service-url: http://medication-test-orders-validation-service:8006
   clinical-summary-service-url: http://clinical-summary-service:8009
   clinical-recommendations-service-url: http://clinical-recommendations-service:8007
-  auto-population-service-url: http://ai-auto-population-service:8010
+  auto-population-service-url: http://auto-population-service:8010
   ocr-parsing-service-url: http://ocr-parsing-service:8012
   lab-result-interpreter-service-url: http://lab-result-interpreter-service:8003
 
@@ -303,7 +303,7 @@ asklepios:
         token-validity-in-seconds: 86400
         token-validity-in-seconds-for-remember-me: 2592000
   mail:
-    base-url: ,${asklepios_mail_base-url}
+    base-url: http://asklepios.nereuscloud.de
     username: cms.support.dimensions@gmail.com
     password: tohr slst gphb swwx
 
