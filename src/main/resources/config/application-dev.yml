@@ -23,10 +23,11 @@ services:
   dazzle-asklepios-notification-service-url: http://localhost:8090
 
   medication-test-orders-validation-service-url: http://localhost:8005
-  clinical-summary-service-url: http://localhost:8003
+  clinical-summary-service-url: http://clinical-summary-service:8003
   clinical-recommendations-service-url: http://localhost:8004
-  ocr-parsing-service-url: http://localhost:8012
-  auto-population-service-url: http://localhost:8010
+  ocr-parsing-service-url: http://ocr-parsing-service:8012
+  auto-population-service-url: http://auto-population-service:8010
+  lab-result-interpreter-service-url: http://localhost:8010
 
 
 spring:
@@ -42,7 +43,7 @@ spring:
   liquibase:
     # Remove 'faker' if you do not want the sample data to be loaded automatically
     contexts: dev, faker
-    url: jdbc:postgresql://localhost:5432/test
+    url: jdbc:postgresql://localhost:5433/postgres
   mail:
     host: localhost
     port: 25
@@ -51,10 +52,10 @@ spring:
   messages:
     cache-duration: PT1S # 1 second, see the ISO 8601 standard
   r2dbc:
-    url: r2dbc:postgresql://localhost:5432/test
+    url: r2dbc:postgresql://localhost:5433/postgres
     #    url: r2dbc:postgresql://host.docker.internal:5432/asklepios
     username: postgres
-    password: 123456
+    password: qse123H
   thymeleaf:
     cache: false
   cloud:
@@ -264,6 +265,12 @@ spring:
             - Path=/api/ai/v1/auto-population/**
           filters:
             - RewritePath=/api/ai/v1/auto-population/(?<segment>.*),/api/v1/${segment}
+        - id: lab-result-interpreter
+          uri: ${services.lab-result-interpreter-service-url}
+          predicates:
+            - Path=/api/ai/v1/lab-interpretation/**
+          filters:
+            - RewritePath=/api/ai/v1/lab-interpretation/(?<segment>.*),/api/v1/${segment}
 
       httpclient:
         pool:
