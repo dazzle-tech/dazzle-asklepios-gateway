@@ -423,6 +423,8 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/invoice/1785015000_B_financial_document_item_pricing_snapshot.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/preAuthorization_WaseelIntegration/1785495170_B_patient-insurance-eligibility-columns.xml"
+           relativeToChangelogFile="false"/>
 
 
 

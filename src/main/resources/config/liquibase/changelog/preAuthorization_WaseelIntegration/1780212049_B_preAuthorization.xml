@@ -98,7 +98,7 @@
       </column>
 
       <column name="outcome" type="varchar(100)"/>
-      <column name="message" type="varchar(1000)"/>
+      <column name="message" type="text"/>
       <column name="disposition" type="varchar(1000)"/>
       <column name="status_reason" type="varchar(1000)"/>
 
@@ -109,7 +109,7 @@
       <column name="cancel_reason" type="varchar(50)"/>
       <column name="cancel_status" type="varchar(100)"/>
       <column name="cancel_outcome" type="varchar(100)"/>
-      <column name="cancel_message" type="varchar(1000)"/>
+      <column name="cancel_message" type="text"/>
 
       <column name="request_json" type="text"/>
       <column name="response_json" type="text"/>
@@ -387,7 +387,7 @@
 
       <column name="status" type="varchar(100)"/>
       <column name="outcome" type="varchar(100)"/>
-      <column name="message" type="varchar(1000)"/>
+      <column name="message" type="text"/>
       <column name="disposition" type="varchar(1000)"/>
 
       <column name="transaction_id" type="bigint"/>
