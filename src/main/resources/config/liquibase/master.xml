@@ -238,6 +238,7 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1770475075_Diagnostic_Order_Reports_Log.xml"
            relativeToChangelogFile="false"/>
+
   <include file="config/liquibase/changelog/1770533403_R_patient_warnings.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1770151946_Q_Procedure.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1770533404_R_patient_allergies_log.xml" relativeToChangelogFile="false"/>
@@ -309,7 +310,7 @@
   <include file="/config/liquibase/changelog/1776164078_S_availability_template_interval_break.xml"
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1776673436_Q_Dental_Procedure.xml" relativeToChangelogFile="false"/>
-
+  <include file="/config/liquibase/changelog/diagnosticOrderTest/1785398722_H_Add_Accession_Number_field.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/sql/patient/hl7_patient_trigger.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/sql/encounter/hl7_discharge_encounter.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/sql/encounter/hl7_encounter_registration_trigger.xml"
