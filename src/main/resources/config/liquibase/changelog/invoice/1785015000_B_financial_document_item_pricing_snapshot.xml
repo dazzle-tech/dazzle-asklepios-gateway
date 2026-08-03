@@ -6,7 +6,7 @@
         http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-  <changeSet id="B-financial-document-item-pricing-snapshot" author="cursor">
+  <changeSet id="B-financial-document-item-pricing-snapshot" author="Batool">
 
     <addColumn tableName="financial_document_items">
       <column name="pricing_adjustment_snapshot" type="jsonb">

@@ -8,8 +8,8 @@
         https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
 
   <changeSet
-    id="20260720-01-create-dynamic-billing-configuration"
-    author="billing-team">
+    id="BM000000000064"
+    author="BushraMashaiekh">
 
     <createTable tableName="billing_configuration">
 

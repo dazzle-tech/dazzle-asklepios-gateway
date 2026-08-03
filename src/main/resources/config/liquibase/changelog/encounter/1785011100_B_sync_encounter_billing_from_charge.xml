@@ -6,7 +6,7 @@
         http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-  <changeSet id="B-sync-encounter-billing-status-from-closed-charge" author="cursor">
+  <changeSet id="B-sync-encounter-billing-status-from-closed-charge" author="Batool">
 
     <sql>
       UPDATE patient_encounters pe

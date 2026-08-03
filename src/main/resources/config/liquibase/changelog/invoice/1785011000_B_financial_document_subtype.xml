@@ -6,7 +6,7 @@
         http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-  <changeSet id="B-financial-document-invoice-subtype" author="cursor">
+  <changeSet id="B-financial-document-invoice-subtype" author="Batool">
 
     <addColumn tableName="financial_documents">
       <column name="document_subtype" type="varchar(50)" defaultValue="PATIENT">
