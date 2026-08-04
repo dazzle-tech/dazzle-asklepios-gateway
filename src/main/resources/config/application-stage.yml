@@ -31,6 +31,8 @@ services:
   auto-population-service-url: http://auto-population-service:8010
   ocr-parsing-service-url: http://ocr-parsing-service:8012
   lab-result-interpreter-service-url: http://lab-result-interpreter-service:8003
+  radiology-template-autofill-service-url: http://radiology-template-autofill-service:8022
+  radiology-report-filling-service-url: http://radiology-report-filling-service:8024
   sepsis-early-detection-service-url: http://sepsis-early-detection-service:8023
 
 spring:
@@ -274,6 +276,18 @@ spring:
             - Path=/api/ai/v1/lab-interpretation/**
           filters:
             - RewritePath=/api/ai/v1/lab-interpretation/(?<segment>.*),/api/v1/${segment}
+        - id: radiology-template-autofill
+          uri: ${services.radiology-template-autofill-service-url}
+          predicates:
+            - Path=/api/ai/v1/radiology-template/**
+          filters:
+            - RewritePath=/api/ai/v1/radiology-template/(?<segment>.*),/${segment}
+        - id: RadiologyReportFilling
+          uri: ${services.radiology-template-autofill-service-url}
+          predicates:
+            - Path=/api/ai/v1/medical-imaging/**
+          filters:
+            - RewritePath=/api/ai/v1/medical-imaging/(?<segment>.*),/${segment}
         - id: sepsis-early-detection
           uri: ${services.sepsis-early-detection-service-url}
           predicates:
