@@ -32,6 +32,7 @@ services:
   ocr-parsing-service-url: http://ocr-parsing-service:8012
   lab-result-interpreter-service-url: http://lab-result-interpreter-service:8003
   discharge-report-service-url: http://discharge-report-service:8005
+  quality-discharge-report-service-url: http://quality-discharge-report-service:8011
 
 spring:
   devtools:
@@ -280,6 +281,12 @@ spring:
             - Path=/api/ai/v1/discharge-report-service/**
           filters:
             - RewritePath=/api/ai/v1/discharge-report-service/(?<segment>.*),/${segment}
+        - id: quality-discharge-report
+          uri: ${services.quality-discharge-report-service-url}
+          predicates:
+            - Path=/api/ai/v1/quality-discharge-report-service/**
+          filters:
+            - RewritePath=/api/ai/v1/quality-discharge-report-service/(?<segment>.*),/${segment}
       httpclient:
         pool:
           max-connections: 1000

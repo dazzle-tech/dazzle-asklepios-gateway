@@ -29,6 +29,7 @@ services:
   auto-population-service-url: http://auto-population-service:8010
   lab-result-interpreter-service-url: http://localhost:8010
   discharge-report-service-url: http://localhost:8005
+  quality-discharge-report-service-url: http://localhost:8011
 
 
 spring:
@@ -278,6 +279,12 @@ spring:
             - Path=/api/ai/v1/discharge-report-service/**
           filters:
             - RewritePath=/api/ai/v1/discharge-report-service/(?<segment>.*),/${segment}
+        - id: quality-discharge-report
+          uri: ${services.quality-discharge-report-service-url}
+          predicates:
+            - Path=/api/ai/v1/quality-discharge-report-service/**
+          filters:
+            - RewritePath=/api/ai/v1/quality-discharge-report-service/(?<segment>.*),/${segment}
 
       httpclient:
         pool:
