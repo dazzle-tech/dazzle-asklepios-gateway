@@ -33,6 +33,8 @@ services:
   lab-result-interpreter-service-url: http://lab-result-interpreter-service:8003
   radiology-template-autofill-service-url: http://radiology-template-autofill-service:8022
   radiology-report-filling-service-url: http://radiology-report-filling-service:8024
+  sepsis-early-detection-service-url: http://sepsis-early-detection-service:8023
+
 spring:
   devtools:
     restart:
@@ -286,6 +288,12 @@ spring:
             - Path=/api/ai/v1/medical-imaging/**
           filters:
             - RewritePath=/api/ai/v1/medical-imaging/(?<segment>.*),/${segment}
+        - id: sepsis-early-detection
+          uri: ${services.sepsis-early-detection-service-url}
+          predicates:
+            - Path=/api/ai/v1/sepsis/**
+          filters:
+            - RewritePath=/api/ai/v1/sepsis/(?<segment>.*),/api/v1/${segment}
       httpclient:
         pool:
           max-connections: 1000

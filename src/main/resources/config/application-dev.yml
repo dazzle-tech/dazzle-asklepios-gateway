@@ -29,6 +29,8 @@ services:
   auto-population-service-url: http://auto-population-service:8010
   lab-result-interpreter-service-url: http://localhost:8010
   radiology-template-autofill-service-url: http://localhost:8022
+  sepsis-early-detection-service-url: http://localhost:8023
+
 
 spring:
   devtools:
@@ -277,6 +279,13 @@ spring:
             - Path=/api/ai/v1/radiology-template/**
           filters:
             - RewritePath=/api/ai/v1/radiology-template/(?<segment>.*),/${segment}
+
+        - id: sepsis-early-detection
+          uri: ${services.sepsis-early-detection-service-url}
+          predicates:
+            - Path=/api/ai/v1/sepsis/**
+          filters:
+            - RewritePath=/api/ai/v1/sepsis/(?<segment>.*),/api/v1/${segment}
 
       httpclient:
         pool:
