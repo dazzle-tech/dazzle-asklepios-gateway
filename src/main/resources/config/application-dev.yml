@@ -28,6 +28,7 @@ services:
   ocr-parsing-service-url: http://ocr-parsing-service:8012
   auto-population-service-url: http://auto-population-service:8010
   lab-result-interpreter-service-url: http://localhost:8010
+  smart-discharge-planner-service-url: http://smart-discharge-planner-service:8004
 
 
 spring:
@@ -43,7 +44,7 @@ spring:
   liquibase:
     # Remove 'faker' if you do not want the sample data to be loaded automatically
     contexts: dev, faker
-    url: jdbc:postgresql://localhost:5433/postgres
+    url: jdbc:postgresql://localhost:5432/postgres
   mail:
     host: localhost
     port: 25
@@ -52,10 +53,10 @@ spring:
   messages:
     cache-duration: PT1S # 1 second, see the ISO 8601 standard
   r2dbc:
-    url: r2dbc:postgresql://localhost:5433/postgres
+    url: r2dbc:postgresql://localhost:5432/postgres
     #    url: r2dbc:postgresql://host.docker.internal:5432/asklepios
     username: postgres
-    password: qse123H
+    password: Iwid@123
   thymeleaf:
     cache: false
   cloud:
@@ -237,6 +238,13 @@ spring:
             - Path=/api/ai/v1/clinical-recommendations/**
           filters:
             - RewritePath=/api/ai/v1/clinical-recommendations/(?<segment>.*),/api/v1/${segment}
+
+        - id: smart-discharge-planner
+          uri: ${services.smart-discharge-planner-service-url}
+          predicates:
+            - Path=/api/ai/v1/smart-discharge-planner/**
+          filters:
+            - RewritePath=/api/ai/v1/smart-discharge-planner/(?<segment>.*),/${segment}
 
         - id: ocr-parsing
           uri: ${services.ocr-parsing-service-url}

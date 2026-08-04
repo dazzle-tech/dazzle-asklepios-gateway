@@ -31,6 +31,7 @@ services:
   auto-population-service-url: http://auto-population-service:8010
   ocr-parsing-service-url: http://ocr-parsing-service:8012
   lab-result-interpreter-service-url: http://lab-result-interpreter-service:8003
+  smart-discharge-planner-service-url: http://smart-discharge-planner-service:8004
 
 spring:
   devtools:
@@ -242,6 +243,12 @@ spring:
             - Path=/api/ai/v1/clinical-recommendations/**
           filters:
             - RewritePath=/api/ai/v1/clinical-recommendations/(?<segment>.*),/api/v1/${segment}
+        - id: smart-discharge-planner
+          uri: ${services.smart-discharge-planner-service-url}
+          predicates:
+            - Path=/api/ai/v1/smart-discharge-planner/**
+          filters:
+            - RewritePath=/api/ai/v1/smart-discharge-planner/(?<segment>.*),/${segment}
         - id: analytics
           uri: ${services.dazzle-asklepios-analytics-service-url}
           predicates:

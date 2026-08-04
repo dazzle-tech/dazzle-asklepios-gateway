@@ -217,6 +217,12 @@ spring:
             - Path=/api/ai/v1/clinical-recommendations/**
           filters:
             - RewritePath=/api/ai/v1/clinical-recommendations/(?<segment>.*),/api/v1/${segment}
+        - id: smart-discharge-planner
+          uri: ${services.smart-discharge-planner-service-url}
+          predicates:
+            - Path=/api/ai/v1/smart-discharge-planner/**
+          filters:
+            - RewritePath=/api/ai/v1/smart-discharge-planner/(?<segment>.*),/${segment}
         - id: analytics
           uri: ${services.dazzle-asklepios-analytics-service-url}
           predicates:
