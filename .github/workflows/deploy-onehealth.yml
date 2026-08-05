@@ -1,0 +1,133 @@
+name: Deploy OneHealth Services (Manual)
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Target environment'
+        required: true
+        type: choice
+        default: 'TEST'
+        options:
+          - TEST
+          - PROD
+      namespace:
+        description: 'Kubernetes namespace'
+        required: true
+        default: 'cms-emr'
+        type: string
+      analytics_tag:
+        description: 'asklepios-analytics image tag (leave empty to skip)'
+        required: false
+        type: string
+      api_gateway_tag:
+        description: 'asklepios-api-gateway image tag (leave empty to skip)'
+        required: false
+        type: string
+      api_setup_tag:
+        description: 'asklepios-api-setup image tag (leave empty to skip)'
+        required: false
+        type: string
+      billing_tag:
+        description: 'asklepios-billing image tag (leave empty to skip)'
+        required: false
+        type: string
+      inventory_tag:
+        description: 'asklepios-inventory image tag (leave empty to skip)'
+        required: false
+        type: string
+      notification_tag:
+        description: 'asklepios-notification image tag (leave empty to skip)'
+        required: false
+        type: string
+      patient_tag:
+        description: 'asklepios-patient image tag (leave empty to skip)'
+        required: false
+        type: string
+      api_service_tag:
+        description: 'asklepios-api-service image tag → deploys to asklepios-service deployment (leave empty to skip)'
+        required: false
+        type: string
+      ui_tag:
+        description: 'asklepios-ui image tag (leave empty to skip)'
+        required: false
+        type: string
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: 'latest'
+
+      - name: Write kubeconfig for selected environment
+        run: |
+          if [ "${{ inputs.environment }}" = "TEST" ]; then
+            echo "${{ secrets.OH_HA_K8S_TEST_KUBECONFIG }}" | base64 -d > kubeconfig.yaml
+          else
+            echo "${{ secrets.OH_HA_K8S_PROD_KUBECONFIG }}" | base64 -d > kubeconfig.yaml
+          fi
+          echo "KUBECONFIG=$(pwd)/kubeconfig.yaml" >> "$GITHUB_ENV"
+
+      - name: Verify cluster connectivity
+        run: kubectl get nodes -n ${{ inputs.namespace }}
+
+      - name: Deploy asklepios-analytics
+        if: ${{ inputs.analytics_tag != '' }}
+        run: |
+          kubectl set image deployment/asklepios-analytics asklepios-analytics=swr.me-east-1.myhuaweicloud.com/cos/asklepios-analytics:${{ inputs.analytics_tag }} -n ${{ inputs.namespace }}
+          kubectl rollout status deployment/asklepios-analytics -n ${{ inputs.namespace }} --timeout=120s
+
+      - name: Deploy asklepios-api-gateway
+        if: ${{ inputs.api_gateway_tag != '' }}
+        run: |
+          kubectl set image deployment/asklepios-api-gateway asklepios-api-gateway=swr.me-east-1.myhuaweicloud.com/cos/asklepios-api-gateway:${{ inputs.api_gateway_tag }} -n ${{ inputs.namespace }}
+          kubectl rollout status deployment/asklepios-api-gateway -n ${{ inputs.namespace }} --timeout=120s
+
+      - name: Deploy asklepios-api-setup
+        if: ${{ inputs.api_setup_tag != '' }}
+        run: |
+          kubectl set image deployment/asklepios-api-setup asklepios-api-setup=swr.me-east-1.myhuaweicloud.com/cos/asklepios-api-setup:${{ inputs.api_setup_tag }} -n ${{ inputs.namespace }}
+          kubectl rollout status deployment/asklepios-api-setup -n ${{ inputs.namespace }} --timeout=120s
+
+      - name: Deploy asklepios-billing
+        if: ${{ inputs.billing_tag != '' }}
+        run: |
+          kubectl set image deployment/asklepios-billing asklepios-billing=swr.me-east-1.myhuaweicloud.com/cos/asklepios-billing:${{ inputs.billing_tag }} -n ${{ inputs.namespace }}
+          kubectl rollout status deployment/asklepios-billing -n ${{ inputs.namespace }} --timeout=120s
+
+      - name: Deploy asklepios-inventory
+        if: ${{ inputs.inventory_tag != '' }}
+        run: |
+          kubectl set image deployment/asklepios-inventory asklepios-inventory=swr.me-east-1.myhuaweicloud.com/cos/asklepios-inventory:${{ inputs.inventory_tag }} -n ${{ inputs.namespace }}
+          kubectl rollout status deployment/asklepios-inventory -n ${{ inputs.namespace }} --timeout=120s
+
+      #- name: Deploy asklepios-notification
+      #  if: ${{ inputs.notification_tag != '' }}
+      #  run: |
+      #    kubectl set image deployment/asklepios-notification asklepios-notification=swr.me-east-1.myhuaweicloud.com/cos/asklepios-notification:${{ inputs.notification_tag }} -n ${{ inputs.namespace }}
+      #    kubectl rollout status deployment/asklepios-notification -n ${{ inputs.namespace }} --timeout=120s
+
+      - name: Deploy asklepios-patient
+        if: ${{ inputs.patient_tag != '' }}
+        run: |
+          kubectl set image deployment/asklepios-patient asklepios-patient=swr.me-east-1.myhuaweicloud.com/cos/asklepios-patient:${{ inputs.patient_tag }} -n ${{ inputs.namespace }}
+          kubectl rollout status deployment/asklepios-patient -n ${{ inputs.namespace }} --timeout=120s
+
+      - name: Deploy asklepios-service (api-service image)
+        if: ${{ inputs.api_service_tag != '' }}
+        run: |
+          kubectl set image deployment/asklepios-service asklepios-service=swr.me-east-1.myhuaweicloud.com/cos/asklepios-api-service:${{ inputs.api_service_tag }} -n ${{ inputs.namespace }}
+          kubectl rollout status deployment/asklepios-service -n ${{ inputs.namespace }} --timeout=120s
+
+      - name: Deploy asklepios-ui
+        if: ${{ inputs.ui_tag != '' }}
+        run: |
+          kubectl set image deployment/asklepios-ui asklepios-ui=swr.me-east-1.myhuaweicloud.com/cos/asklepios-ui:${{ inputs.ui_tag }} -n ${{ inputs.namespace }}
+          kubectl rollout status deployment/asklepios-ui -n ${{ inputs.namespace }} --timeout=120s
+
+      - name: Cleanup kubeconfig
+        if: always()
+        run: rm -f kubeconfig.yaml
