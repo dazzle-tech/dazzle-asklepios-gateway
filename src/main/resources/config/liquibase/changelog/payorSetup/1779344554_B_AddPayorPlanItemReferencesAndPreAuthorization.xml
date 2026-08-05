@@ -8,12 +8,17 @@
 
   <changeSet id="bs000000000043" author="batool">
 
+    <!-- Pre-authorization flag -->
     <addColumn tableName="payor_plan_item">
-      <column name="pre_authorization" type="boolean" defaultValueBoolean="false">
+      <column
+        name="pre_authorization"
+        type="boolean"
+        defaultValueBoolean="false">
         <constraints nullable="false"/>
       </column>
     </addColumn>
 
+    <!-- Item reference columns -->
     <addColumn tableName="payor_plan_item">
       <column name="brand_medication_id" type="bigint"/>
     </addColumn>
@@ -30,6 +35,7 @@
       <column name="procedure_id" type="bigint"/>
     </addColumn>
 
+    <!-- Foreign keys -->
     <addForeignKeyConstraint
       baseTableName="payor_plan_item"
       baseColumnNames="brand_medication_id"
@@ -58,12 +64,15 @@
       referencedColumnNames="id"
       constraintName="fk_ppi_procedure"/>
 
+    <!--
+      NOT VALID ignores existing invalid rows.
+      New rows and updated rows must satisfy the constraint.
+    -->
     <sql dbms="postgresql">
-        <![CDATA[
+      <![CDATA[
       ALTER TABLE payor_plan_item
         ADD CONSTRAINT ck_ppi_item_reference_by_type
           CHECK (
-
             (
               item_type = 'MEDICATION'
                 AND brand_medication_id IS NOT NULL
@@ -101,11 +110,41 @@
                 AND service_id IS NULL
                 AND procedure_id IS NOT NULL
               )
-
-            );
+            ) NOT VALID;
       ]]>
     </sql>
 
+    <rollback>
+      ALTER TABLE payor_plan_item
+      DROP CONSTRAINT IF EXISTS ck_ppi_item_reference_by_type;
+
+      ALTER TABLE payor_plan_item
+      DROP CONSTRAINT IF EXISTS fk_ppi_brand_medication;
+
+      ALTER TABLE payor_plan_item
+      DROP CONSTRAINT IF EXISTS fk_ppi_diagnostic_test;
+
+      ALTER TABLE payor_plan_item
+      DROP CONSTRAINT IF EXISTS fk_ppi_service;
+
+      ALTER TABLE payor_plan_item
+      DROP CONSTRAINT IF EXISTS fk_ppi_procedure;
+
+      ALTER TABLE payor_plan_item
+      DROP COLUMN IF EXISTS pre_authorization;
+
+      ALTER TABLE payor_plan_item
+      DROP COLUMN IF EXISTS brand_medication_id;
+
+      ALTER TABLE payor_plan_item
+      DROP COLUMN IF EXISTS diagnostic_test_id;
+
+      ALTER TABLE payor_plan_item
+      DROP COLUMN IF EXISTS service_id;
+
+      ALTER TABLE payor_plan_item
+      DROP COLUMN IF EXISTS procedure_id;
+    </rollback>
 
   </changeSet>
 
