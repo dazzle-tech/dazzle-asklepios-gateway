@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+  <changeSet
+    id="BM000000000042" author="BushraMashaiekh">
+
+    <createTable tableName="tax">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="facility_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="code" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="name" type="varchar(150)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="tax_type" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="percentage"  type="decimal(10,4)"/>
+
+      <column name="fixed_amount" type="decimal(19,4)"/>
+
+      <column name="currency" type="varchar(50)"/>
+
+      <column name="calculation_type" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="applicable_on"  type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="valid_from" type="date">
+        <constraints nullable="false"/>
+      </column>
+
+      <column  name="valid_to" type="date"/>
+
+      <column name="is_default" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="active" type="boolean" defaultValueBoolean="true">
+      <constraints nullable="false"/>
+      </column>
+
+      <column name="description" type="text"/>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+
+    <addUniqueConstraint
+      tableName="tax"
+      columnNames="facility_id, code"
+      constraintName="uk_tax_facility_code"/>
+
+    <createIndex
+      tableName="tax"
+      indexName="idx_tax_facility">
+
+      <column name="facility_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="tax"
+      indexName="idx_tax_code">
+
+      <column name="code"/>
+    </createIndex>
+
+    <createIndex
+      tableName="tax"
+      indexName="idx_tax_active">
+
+      <column name="active"/>
+    </createIndex>
+
+    <createIndex
+      tableName="tax"
+      indexName="idx_tax_default">
+
+      <column name="is_default"/>
+    </createIndex>
+
+    <createIndex
+      tableName="tax"
+      indexName="idx_tax_validity">
+
+      <column name="valid_from"/>
+      <column name="valid_to"/>
+    </createIndex>
+
+    <addForeignKeyConstraint
+      constraintName="fk_tax_facility"
+      baseTableName="tax"
+      baseColumnNames="facility_id"
+      referencedTableName="facility"
+      referencedColumnNames="id"/>
+
+  </changeSet>
+
+</databaseChangeLog>

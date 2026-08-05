@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="BM000000000059" author="BushraMashaiekh">
+
+    <addColumn tableName="service">
+      <column name="billing_rule_id" type="bigint"/>
+    </addColumn>
+
+    <addColumn tableName="procedure">
+      <column name="billing_rule_id" type="bigint"/>
+    </addColumn>
+
+    <addColumn tableName="diagnostic_test">
+      <column name="billing_rule_id" type="bigint"/>
+    </addColumn>
+
+    <addColumn tableName="brand_medication">
+      <column name="billing_rule_id" type="bigint"/>
+    </addColumn>
+
+    <addForeignKeyConstraint
+      baseTableName="service"
+      baseColumnNames="billing_rule_id"
+      referencedTableName="billing_rule"
+      referencedColumnNames="id"
+      constraintName="fk_service_billing_rule"/>
+
+    <addForeignKeyConstraint
+      baseTableName="procedure"
+      baseColumnNames="billing_rule_id"
+      referencedTableName="billing_rule"
+      referencedColumnNames="id"
+      constraintName="fk_procedure_billing_rule"/>
+
+    <addForeignKeyConstraint
+      baseTableName="diagnostic_test"
+      baseColumnNames="billing_rule_id"
+      referencedTableName="billing_rule"
+      referencedColumnNames="id"
+      constraintName="fk_diagnostic_test_billing_rule"/>
+
+    <addForeignKeyConstraint
+      baseTableName="brand_medication"
+      baseColumnNames="billing_rule_id"
+      referencedTableName="billing_rule"
+      referencedColumnNames="id"
+      constraintName="fk_brand_medication_billing_rule"/>
+
+    <createIndex tableName="service" indexName="idx_service_billing_rule">
+      <column name="billing_rule_id"/>
+    </createIndex>
+
+    <createIndex tableName="procedure" indexName="idx_procedure_billing_rule">
+      <column name="billing_rule_id"/>
+    </createIndex>
+
+    <createIndex tableName="diagnostic_test" indexName="idx_diagnostic_test_billing_rule">
+      <column name="billing_rule_id"/>
+    </createIndex>
+
+    <createIndex tableName="brand_medication" indexName="idx_brand_medication_billing_rule">
+      <column name="billing_rule_id"/>
+    </createIndex>
+
+  </changeSet>
+</databaseChangeLog>

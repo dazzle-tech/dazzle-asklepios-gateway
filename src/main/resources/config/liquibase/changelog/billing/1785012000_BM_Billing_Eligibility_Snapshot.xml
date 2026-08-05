@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="BM000000000065" author="BushraMashaiekh">
+
+    <createTable tableName="billing_eligibility_snapshot">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="false" unique="true"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="patient_insurance_id" type="bigint"/>
+
+      <column name="waseel_eligibility_request_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="eligibility_response_id" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="member_id" type="varchar(100)"/>
+      <column name="policy_number" type="varchar(100)"/>
+      <column name="policy_holder" type="varchar(255)"/>
+      <column name="network" type="varchar(100)"/>
+      <column name="coverage_status" type="varchar(100)"/>
+      <column name="inforce" type="varchar(50)"/>
+
+      <column name="copayment_percent" type="numeric(19,6)"/>
+      <column name="copayment_cap" type="numeric(19,4)"/>
+
+      <column name="coverage_json" type="text"/>
+      <column name="response_json" type="text">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="frozen_at" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="frozen_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_eligibility_snapshot"
+      baseColumnNames="encounter_id"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"
+      constraintName="fk_billing_eligibility_snapshot_encounter"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_eligibility_snapshot"
+      baseColumnNames="patient_id"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+      constraintName="fk_billing_eligibility_snapshot_patient"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_eligibility_snapshot"
+      baseColumnNames="patient_insurance_id"
+      referencedTableName="patient_insurances"
+      referencedColumnNames="id"
+      constraintName="fk_billing_eligibility_snapshot_insurance"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_eligibility_snapshot"
+      baseColumnNames="waseel_eligibility_request_id"
+      referencedTableName="waseel_eligibility_request"
+      referencedColumnNames="id"
+      constraintName="fk_billing_eligibility_snapshot_waseel_request"/>
+
+    <createIndex
+      tableName="billing_eligibility_snapshot"
+      indexName="idx_billing_eligibility_snapshot_patient">
+      <column name="patient_id"/>
+    </createIndex>
+
+  </changeSet>
+
+</databaseChangeLog>

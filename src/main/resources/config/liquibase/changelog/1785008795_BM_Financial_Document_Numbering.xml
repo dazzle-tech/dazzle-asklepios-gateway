@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+  <changeSet id="BM000000000062" author="BushraMashaiekh">
+
+    <createTable tableName="financial_document_numbering">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="facility_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="document_type" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="prefix" type="varchar(20)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="sequence_length" type="int" defaultValueNumeric="6">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="include_year" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="include_facility_code" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="number_separator" type="varchar(5)" defaultValue="-">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="reset_frequency" type="varchar(20)" defaultValue="YEARLY">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="starting_number" type="bigint" defaultValueNumeric="1">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="status" type="varchar(30)" defaultValue="DRAFT">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+
+    <addUniqueConstraint
+      tableName="financial_document_numbering"
+      columnNames="facility_id, document_type"
+      constraintName="uk_financial_document_numbering_facility_type"/>
+
+    <createIndex
+      tableName="financial_document_numbering"
+      indexName="idx_financial_document_numbering_facility">
+
+      <column name="facility_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="financial_document_numbering"
+      indexName="idx_financial_document_numbering_scope">
+
+      <column name="facility_id"/>
+      <column name="status"/>
+    </createIndex>
+
+    <addForeignKeyConstraint
+      constraintName="fk_financial_document_numbering_facility"
+      baseTableName="financial_document_numbering"
+      baseColumnNames="facility_id"
+      referencedTableName="facility"
+      referencedColumnNames="id"/>
+
+  </changeSet>
+
+
+</databaseChangeLog>

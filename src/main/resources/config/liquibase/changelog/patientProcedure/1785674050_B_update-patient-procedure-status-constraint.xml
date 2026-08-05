@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="bs0000000000045"
+             author="BatoolSbaih">
+
+    <sql>
+            <![CDATA[
+      ALTER TABLE patient_procedure
+      DROP CONSTRAINT IF EXISTS ck_procedure_status_enum;
+      ]]>
+        </sql>
+
+    <sql>
+            <![CDATA[
+      ALTER TABLE patient_procedure
+        ADD CONSTRAINT ck_procedure_status_enum
+          CHECK (
+            status IN (
+                       'REQUESTED',
+                       'STARTED',
+                       'CANCELLED',
+                       'COMPLETED',
+                       'AWAITING_CONSENT',
+                       'IN_PROGRESS',
+                       'SUBMITTED',
+                       'RETURNED_TO_BED',
+                       'WAITING_PRE_AUTHORIZATION'
+              )
+            );
+      ]]>
+        </sql>
+
+    <rollback>
+      <sql>
+        <![CDATA[
+                ALTER TABLE patient_procedure
+                    DROP CONSTRAINT IF EXISTS ck_procedure_status_enum;
+                ]]>
+      </sql>
+
+      <sql>
+        <![CDATA[
+                ALTER TABLE patient_procedure
+                    ADD CONSTRAINT ck_procedure_status_enum
+                        CHECK (
+                            status IN (
+                                'REQUESTED',
+                                'STARTED',
+                                'CANCELLED',
+                                'COMPLETED',
+                                'AWAITING_CONSENT',
+                                'IN_PROGRESS',
+                                'SUBMITTED',
+                                'RETURNED_TO_BED'
+                            )
+                        );
+                ]]>
+      </sql>
+    </rollback>
+
+  </changeSet>
+
+</databaseChangeLog>

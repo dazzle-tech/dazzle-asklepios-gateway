@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="BM000000000057" author="BushraMashaiekh">
+
+    <createTable tableName="billing_ledger">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="ledger_number" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="transaction_group_id" type="uuid">
+        <constraints nullable="false"/>
+      </column>
+
+      <!-- Used to correlate API request, event, and async processing -->
+      <column name="correlation_id" type="varchar(150)"/>
+
+      <!-- Duplicate-event protection -->
+      <column name="idempotency_key" type="varchar(150)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="encounter_id" type="bigint"/>
+
+      <column name="wallet_id" type="bigint"/>
+
+      <column name="payment_id" type="bigint"/>
+
+      <column name="payment_transaction_id" type="bigint"/>
+
+      <column name="charge_id" type="bigint"/>
+
+      <column name="charge_line_id" type="bigint"/>
+
+      <column name="charge_responsibility_id" type="bigint"/>
+
+      <column name="reservation_id" type="bigint"/>
+
+      <column name="allocation_id" type="bigint"/>
+
+      <column name="debit_account_id" type="bigint"/>
+
+      <column name="debit_transaction_id" type="bigint"/>
+
+      <column name="refund_id" type="bigint"/>
+
+      <column name="transaction_type" type="varchar(60)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="ledger_scope" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="amount" type="numeric(19,4)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="currency" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+
+       <column name="available_change" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="reserved_change" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="consumed_change" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="refunded_change" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="debit_balance_change" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="allocated_change" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="outstanding_change" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="wallet_available_before" type="numeric(19,4)"/>
+
+      <column name="wallet_available_after" type="numeric(19,4)"/>
+
+      <column name="wallet_reserved_before" type="numeric(19,4)"/>
+
+      <column name="wallet_reserved_after" type="numeric(19,4)"/>
+
+      <column name="debit_balance_before" type="numeric(19,4)"/>
+
+      <column name="debit_balance_after" type="numeric(19,4)"/>
+
+      <column name="responsibility_outstanding_before"
+              type="numeric(19,4)"/>
+
+      <column name="responsibility_outstanding_after"
+              type="numeric(19,4)"/>
+
+      <column name="entry_direction" type="varchar(10)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="entry_category" type="varchar(30)" defaultValue="BUSINESS">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="reversed_ledger_id" type="bigint"/>
+
+      <column name="reference_type" type="varchar(50)"/>
+
+      <column name="reference_id" type="bigint"/>
+
+      <column name="reference_number" type="varchar(150)"/>
+
+      <column name="description" type="varchar(500)"/>
+
+      <column name="reason" type="varchar(500)"/>
+
+      <column name="transaction_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="source_channel" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_ledger"
+      baseColumnNames="patient_id"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+      constraintName="fk_billing_ledger_patient"/>
+
+
+    <addForeignKeyConstraint
+      baseTableName="billing_ledger"
+      baseColumnNames="encounter_id"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"
+      constraintName="fk_billing_ledger_encounter"/>
+
+
+    <addForeignKeyConstraint
+      baseTableName="billing_ledger"
+      baseColumnNames="wallet_id"
+      referencedTableName="billing_wallet"
+      referencedColumnNames="id"
+      constraintName="fk_billing_ledger_wallet"/>
+
+
+    <addForeignKeyConstraint
+      baseTableName="billing_ledger"
+      baseColumnNames="payment_id"
+      referencedTableName="billing_payment"
+      referencedColumnNames="id"
+      constraintName="fk_billing_ledger_payment"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_ledger"
+      baseColumnNames="payment_transaction_id"
+      referencedTableName="billing_payment_transaction"
+      referencedColumnNames="id"
+      constraintName="fk_billing_ledger_payment_transaction"/>
+
+
+    <addForeignKeyConstraint
+      baseTableName="billing_ledger"
+      baseColumnNames="charge_id"
+      referencedTableName="billing_charge"
+      referencedColumnNames="id"
+      constraintName="fk_billing_ledger_charge"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_ledger"
+      baseColumnNames="charge_line_id"
+      referencedTableName="billing_charge_line"
+      referencedColumnNames="id"
+      constraintName="fk_billing_ledger_charge_line"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_ledger"
+      baseColumnNames="charge_responsibility_id"
+      referencedTableName="billing_charge_responsibility"
+      referencedColumnNames="id"
+      constraintName="fk_billing_ledger_responsibility"/>
+
+
+    <addForeignKeyConstraint
+      baseTableName="billing_ledger"
+      baseColumnNames="reservation_id"
+      referencedTableName="billing_reservation"
+      referencedColumnNames="id"
+      constraintName="fk_billing_ledger_reservation"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_ledger"
+      baseColumnNames="allocation_id"
+      referencedTableName="billing_allocation"
+      referencedColumnNames="id"
+      constraintName="fk_billing_ledger_allocation"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_ledger"
+      baseColumnNames="debit_account_id"
+      referencedTableName="billing_debit_account"
+      referencedColumnNames="id"
+      constraintName="fk_billing_ledger_debit_account"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_ledger"
+      baseColumnNames="debit_transaction_id"
+      referencedTableName="billing_debit_transaction"
+      referencedColumnNames="id"
+      constraintName="fk_billing_ledger_debit_transaction"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_ledger"
+      baseColumnNames="refund_id"
+      referencedTableName="billing_refund"
+      referencedColumnNames="id"
+      constraintName="fk_billing_ledger_refund"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_ledger"
+      baseColumnNames="reversed_ledger_id"
+      referencedTableName="billing_ledger"
+      referencedColumnNames="id"
+      constraintName="fk_billing_ledger_reversed_ledger"/>
+
+    <addUniqueConstraint
+      tableName="billing_ledger"
+      columnNames="ledger_number"
+      constraintName="uq_billing_ledger_number"/>
+
+
+    <addUniqueConstraint
+      tableName="billing_ledger"
+      columnNames="idempotency_key"
+      constraintName="uq_billing_ledger_idempotency"/>
+
+
+    <sql>
+      ALTER TABLE billing_ledger
+        ADD CONSTRAINT ck_billing_ledger_amount
+          CHECK (
+            amount &gt; 0
+            );
+    </sql>
+
+    <sql>
+      ALTER TABLE billing_ledger
+        ADD CONSTRAINT ck_billing_ledger_not_self_reversed
+          CHECK (
+            reversed_ledger_id IS NULL
+              OR reversed_ledger_id &lt;&gt; id
+            );
+    </sql>
+
+    <sql>
+      ALTER TABLE billing_ledger
+        ADD CONSTRAINT ck_billing_ledger_has_movement
+          CHECK (
+            available_change &lt;&gt; 0
+              OR reserved_change &lt;&gt; 0
+              OR consumed_change &lt;&gt; 0
+              OR refunded_change &lt;&gt; 0
+              OR debit_balance_change &lt;&gt; 0
+              OR allocated_change &lt;&gt; 0
+              OR outstanding_change &lt;&gt; 0
+            );
+    </sql>
+
+    <sql>
+      ALTER TABLE billing_ledger
+        ADD CONSTRAINT ck_billing_ledger_wallet_available_snapshot
+          CHECK (
+            wallet_available_before IS NULL
+              OR wallet_available_after IS NULL
+              OR wallet_available_after =
+                 wallet_available_before + available_change
+            );
+    </sql>
+
+    <sql>
+      ALTER TABLE billing_ledger
+        ADD CONSTRAINT ck_billing_ledger_wallet_reserved_snapshot
+          CHECK (
+            wallet_reserved_before IS NULL
+              OR wallet_reserved_after IS NULL
+              OR wallet_reserved_after =
+                 wallet_reserved_before + reserved_change
+            );
+    </sql>
+
+    <sql>
+      ALTER TABLE billing_ledger
+        ADD CONSTRAINT ck_billing_ledger_debit_snapshot
+          CHECK (
+            debit_balance_before IS NULL
+              OR debit_balance_after IS NULL
+              OR debit_balance_after =
+                 debit_balance_before + debit_balance_change
+            );
+    </sql>
+
+    <sql>
+      ALTER TABLE billing_ledger
+        ADD CONSTRAINT ck_billing_ledger_responsibility_snapshot
+          CHECK (
+            responsibility_outstanding_before IS NULL
+              OR responsibility_outstanding_after IS NULL
+              OR responsibility_outstanding_after =
+                 responsibility_outstanding_before + outstanding_change
+            );
+    </sql>
+
+    <createIndex
+      tableName="billing_ledger"
+      indexName="idx_billing_ledger_patient">
+      <column name="patient_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_ledger"
+      indexName="idx_billing_ledger_encounter">
+      <column name="encounter_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_ledger"
+      indexName="idx_billing_ledger_wallet">
+      <column name="wallet_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_ledger"
+      indexName="idx_billing_ledger_payment">
+      <column name="payment_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_ledger"
+      indexName="idx_billing_ledger_payment_transaction">
+      <column name="payment_transaction_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_ledger"
+      indexName="idx_billing_ledger_charge">
+      <column name="charge_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_ledger"
+      indexName="idx_billing_ledger_charge_line">
+      <column name="charge_line_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_ledger"
+      indexName="idx_billing_ledger_responsibility">
+      <column name="charge_responsibility_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_ledger"
+      indexName="idx_billing_ledger_reservation">
+      <column name="reservation_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_ledger"
+      indexName="idx_billing_ledger_allocation">
+      <column name="allocation_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_ledger"
+      indexName="idx_billing_ledger_debit_account">
+      <column name="debit_account_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_ledger"
+      indexName="idx_billing_ledger_debit_transaction">
+      <column name="debit_transaction_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_ledger"
+      indexName="idx_billing_ledger_refund">
+      <column name="refund_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_ledger"
+      indexName="idx_billing_ledger_transaction_type">
+      <column name="transaction_type"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_ledger"
+      indexName="idx_billing_ledger_scope">
+      <column name="ledger_scope"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_ledger"
+      indexName="idx_billing_ledger_transaction_date">
+      <column name="transaction_date"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_ledger"
+      indexName="idx_billing_ledger_transaction_group">
+      <column name="transaction_group_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_ledger"
+      indexName="idx_billing_ledger_correlation">
+      <column name="correlation_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_ledger"
+      indexName="idx_billing_ledger_reversed">
+      <column name="reversed_ledger_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_ledger"
+      indexName="idx_billing_ledger_patient_date">
+      <column name="patient_id"/>
+      <column name="transaction_date"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_ledger"
+      indexName="idx_billing_ledger_wallet_date">
+      <column name="wallet_id"/>
+      <column name="transaction_date"/>
+    </createIndex>
+
+  </changeSet>
+
+</databaseChangeLog>

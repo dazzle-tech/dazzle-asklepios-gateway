@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!-- ===================================================== -->
+  <!-- Sequence -->
+  <!-- ===================================================== -->
+  <changeSet id="create_financial_document_sequence" author="batool">
+    <createSequence
+      sequenceName="financial_document_seq"
+      startValue="1"
+      incrementBy="1"/>
+  </changeSet>
+
+  <!-- ===================================================== -->
+  <!-- Financial Documents -->
+  <!-- ===================================================== -->
+  <changeSet id="bs00000000000055" author="batool">
+
+    <createTable tableName="financial_documents">
+
+      <column name="id" type="BIGSERIAL">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="document_number" type="varchar(50)">
+        <constraints nullable="false" unique="true"/>
+      </column>
+
+      <column name="document_type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="status" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="parent_document_id" type="bigint"/>
+
+      <column name="total_amount" type="numeric(19,4)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="currency" type="varchar(10)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date"
+              type="timestamp"
+              defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)"/>
+
+      <column name="last_modified_date" type="timestamp"/>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+
+    </createTable>
+
+  </changeSet>
+
+  <!-- ===================================================== -->
+  <!-- Trigger Function -->
+  <!-- ===================================================== -->
+  <changeSet id="create_financial_document_function" author="batool">
+
+    <sql splitStatements="false">
+
+      CREATE OR REPLACE FUNCTION fn_generate_financial_document_number()
+            RETURNS TRIGGER
+            AS
+            $$
+            DECLARE
+      v_prefix VARCHAR(10);
+      BEGIN
+
+                v_prefix :=
+                    CASE NEW.document_type
+                        WHEN 'INVOICE' THEN 'INV'
+                        WHEN 'CREDIT_NOTE' THEN 'CN'
+                        WHEN 'DEBIT_NOTE' THEN 'DN'
+                        WHEN 'RECEIPT' THEN 'RCT'
+                        WHEN 'REFUND' THEN 'RFD'
+                        ELSE 'DOC'
+      END;
+
+                NEW.document_number :=
+                        v_prefix || '-' ||
+                        LPAD(nextval('financial_document_seq')::TEXT, 8, '0');
+
+      RETURN NEW;
+
+      END;
+            $$ LANGUAGE plpgsql;
+
+    </sql>
+
+  </changeSet>
+
+  <!-- ===================================================== -->
+  <!-- Trigger -->
+  <!-- ===================================================== -->
+  <changeSet id="create_financial_document_trigger" author="batool">
+
+    <sql>
+
+      CREATE TRIGGER trg_generate_financial_document_number
+        BEFORE INSERT
+        ON financial_documents
+        FOR EACH ROW
+        EXECUTE FUNCTION fn_generate_financial_document_number();
+
+    </sql>
+
+  </changeSet>
+
+</databaseChangeLog>
