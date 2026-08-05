@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="bs00000000000060" author="batool">
+
+    <addColumn tableName="financial_document_items">
+
+      <column name="paid_amount" type="DECIMAL(21,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="remaining_amount" type="DECIMAL(21,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="insurance_paid_amount" type="DECIMAL(21,4)">
+        <constraints nullable="true"/>
+      </column>
+
+      <column name="insurance_remaining_amount" type="DECIMAL(21,4)">
+        <constraints nullable="true"/>
+      </column>
+
+      <column name="status" type="VARCHAR(50)">
+        <constraints nullable="true"/>
+      </column>
+
+      <column name="currency" type="VARCHAR(10)">
+        <constraints nullable="true"/>
+      </column>
+
+    </addColumn>
+
+  </changeSet>
+
+</databaseChangeLog>

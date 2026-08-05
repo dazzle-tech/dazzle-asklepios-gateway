@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+      http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="bs000000000040" author="batool">
+
+    <addColumn tableName="payor">
+
+      <column name="nphies_id" type="varchar(100)"/>
+
+      <column name="waseel_payer_id" type="varchar(100)"/>
+
+      <column name="tpa_nphies_id" type="varchar(100)"/>
+
+      <column name="is_waseel_enabled" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+    </addColumn>
+
+    <addUniqueConstraint
+      tableName="payor"
+      columnNames="nphies_id"
+      constraintName="uk_payor_nphies_id"/>
+
+    <createIndex tableName="payor" indexName="idx_payor_nphies_id">
+      <column name="nphies_id"/>
+    </createIndex>
+
+  </changeSet>
+
+</databaseChangeLog>

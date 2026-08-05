@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="1777198310-update-patient-insurances-waseel-columns" author="BushraMashaiekh">
+
+    <modifyDataType
+      tableName="patient_insurances"
+      columnName="policy_number"
+      newDataType="varchar(100)"/>
+
+    <modifyDataType
+      tableName="patient_insurances"
+      columnName="group_number"
+      newDataType="varchar(100)"/>
+
+    <addColumn tableName="patient_insurances">
+
+      <column name="member_card_id" type="varchar(100)"/>
+
+      <column name="payer_nphies_id" type="varchar(100)"/>
+
+      <column name="network_id" type="varchar(100)"/>
+
+      <column name="sponsor_number" type="varchar(100)"/>
+
+      <column name="coverage_type" type="varchar(50)"/>
+
+      <column name="relation_with_subscriber" type="varchar(50)"/>
+
+      <column name="policy_class_name" type="varchar(100)"/>
+
+      <column name="policy_holder_name" type="varchar(255)"/>
+
+      <column name="issue_date" type="date"/>
+
+      <column name="patient_share" type="numeric(19,2)"/>
+
+      <column name="max_limit" type="numeric(19,2)"/>
+
+      <column name="waseel_new_plan" type="boolean"/>
+
+    </addColumn>
+
+    <dropUniqueConstraint
+      tableName="patient_insurances"
+      constraintName="ux_patient_insurance_patient_payor"/>
+
+    <addUniqueConstraint
+      tableName="patient_insurances"
+      columnNames="patient_id, member_card_id, policy_number"
+      constraintName="ux_patient_insurance_patient_member_policy"/>
+
+  </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,75 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation=" http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="b00000000000050" author="BushraMashaiekh">
+    <preConditions onFail="MARK_RAN">
+      <tableExists tableName="patient_services_and_products"/>
+      <not>
+        <columnExists tableName="patient_services_and_products" columnName="payment_id"/>
+      </not>
+    </preConditions>
+    <addColumn tableName="patient_services_and_products">
+     <column name="payment_id" type="bigint"/>
+     <column name="payment_type" type="varchar(50)"/>
+      <column name="payment_status" type="varchar(50)" defaultValue="PENDING">
+        <constraints nullable="false"/>
+      </column>
+      <column name="coverage_status" type="varchar(50)" defaultValue="NOT_CHECKED">
+        <constraints nullable="false"/>
+      </column>
+     <column name="not_covered_reason" type="varchar(100)"/>
+      <column name="patient_insurance_id" type="bigint"/>
+    <column name="price_source" type="varchar(50)"/>
+      <column name="is_default_service" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="is_exempted" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+     <column name="gross_amount" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+      <column name="net_amount" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+      <column name="patient_share_amount" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+      <column name="insurance_share_amount" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+      <column name="paid_amount" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+      <column name="remaining_amount" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+      <column name="waseel_sbs_mapping_id" type="bigint"/>
+      <column name="waseel_sbs_code" type="varchar(100)"/>
+      <column name="pre_authorization_required" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="pre_authorization_request_id" type="bigint"/>
+      <column name="pre_authorization_reference_no" type="varchar(100)"/>
+    </addColumn>
+    <addForeignKeyConstraint baseTableName="patient_services_and_products" baseColumnNames="payment_id" referencedTableName="patient_payments" referencedColumnNames="id" constraintName="fk_psp_payment"/>
+    <addForeignKeyConstraint baseTableName="patient_services_and_products" baseColumnNames="patient_insurance_id" referencedTableName="patient_insurances" referencedColumnNames="id" constraintName="fk_psp_patient_insurance"/>
+    <createIndex tableName="patient_services_and_products" indexName="idx_psp_payment_id">
+      <column name="payment_id"/>
+    </createIndex>
+    <createIndex tableName="patient_services_and_products" indexName="idx_psp_encounter_payment_status">
+      <column name="encounter_id"/>
+      <column name="payment_status"/>
+    </createIndex>
+    <createIndex tableName="patient_services_and_products" indexName="idx_psp_pre_auth_status">
+      <column name="pre_authorization_status"/>
+    </createIndex>
+    <sql dbms="postgresql">
+<![CDATA[ UPDATE patient_services_and_products SET payment_status = COALESCE(payment_status, 'PENDING'), coverage_status = COALESCE(coverage_status, 'NOT_CHECKED'), is_default_service = COALESCE(is_default_service, false), is_exempted = COALESCE(is_exempted, false), gross_amount = COALESCE(gross_amount, total_amount, 0), net_amount = COALESCE(net_amount, total_amount, 0), patient_share_amount = COALESCE(patient_share_amount, 0), insurance_share_amount = COALESCE(insurance_share_amount, 0), paid_amount = COALESCE(paid_amount, 0), remaining_amount = COALESCE(remaining_amount, 0), pre_authorization_required = COALESCE(pre_authorization_required, false) WHERE payment_status IS NULL OR coverage_status IS NULL OR is_default_service IS NULL OR is_exempted IS NULL OR gross_amount IS NULL OR net_amount IS NULL OR patient_share_amount IS NULL OR insurance_share_amount IS NULL OR paid_amount IS NULL OR remaining_amount IS NULL OR pre_authorization_required IS NULL; ]]>
+</sql>
+    <sql dbms="postgresql">
+<![CDATA[ ALTER TABLE patient_services_and_products ADD CONSTRAINT ck_psp_payment_amounts_non_negative CHECK ( gross_amount >= 0 AND net_amount >= 0 AND patient_share_amount >= 0 AND insurance_share_amount >= 0 AND paid_amount >= 0 AND remaining_amount >= 0 ); ]]>
+</sql>
+    <sql dbms="postgresql">
+<![CDATA[ ALTER TABLE patient_services_and_products ADD CONSTRAINT ck_psp_pre_auth_payment_skip CHECK ( pre_authorization_required = false OR payment_status = 'SKIPPED_PENDING_PRE_AUTH' OR pre_authorization_status IN ('APPROVED', 'REJECTED') ); ]]>
+</sql>
+  </changeSet>
+</databaseChangeLog>

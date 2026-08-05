@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+  <changeSet id="bs-create-waseel-sbs-catalog" author="BushraMashaiekh">
+
+    <createTable tableName="waseel_sbs_catalog">
+      <column name="id" type="bigint" autoIncrement="true" startWith="3000">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="waseel_item_type" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="sbs_code" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="update_type" type="varchar(20)"/>
+
+      <column name="revision_details" type="text"/>
+
+      <column name="short_description" type="text"/>
+
+      <column name="long_description" type="text"/>
+
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="source_file_name" type="varchar(255)"/>
+
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addUniqueConstraint
+      tableName="waseel_sbs_catalog"
+      columnNames="sbs_code"
+      constraintName="uk_waseel_sbs_catalog_code"/>
+
+    <createIndex
+      tableName="waseel_sbs_catalog"
+      indexName="idx_waseel_sbs_catalog_code">
+      <column name="sbs_code"/>
+    </createIndex>
+
+    <createIndex
+      tableName="waseel_sbs_catalog"
+      indexName="idx_waseel_sbs_catalog_short_desc">
+      <column name="short_description"/>
+    </createIndex>
+
+  </changeSet>
+
+
+</databaseChangeLog>

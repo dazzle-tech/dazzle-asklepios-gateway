@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="BM000000000065" author="BushraMashaiekh">
+
+    <addColumn tableName="patient_encounters">
+      <column name="coverage_type" type="varchar(50)"/>
+      <column name="patient_insurance_id" type="bigint"/>
+    </addColumn>
+
+    <addForeignKeyConstraint
+      baseTableName="patient_encounters"
+      baseColumnNames="patient_insurance_id"
+      referencedTableName="patient_insurances"
+      referencedColumnNames="id"
+      constraintName="fk_patient_encounters_patient_insurance"/>
+
+    <createIndex
+      indexName="idx_patient_encounters_coverage_type"
+      tableName="patient_encounters">
+      <column name="coverage_type"/>
+    </createIndex>
+
+    <createIndex
+      indexName="idx_patient_encounters_patient_insurance_id"
+      tableName="patient_encounters">
+      <column name="patient_insurance_id"/>
+    </createIndex>
+
+    <sql>
+      UPDATE patient_encounters pe
+      SET coverage_type = CASE
+              WHEN pp.payment_type = 'INSURANCE_PLAN' THEN 'INSURANCE'
+              WHEN pp.payment_type = 'CASH' THEN 'SELF_PAY'
+              ELSE pe.coverage_type
+          END,
+          patient_insurance_id = CASE
+              WHEN pp.payment_type = 'INSURANCE_PLAN' THEN pp.plan_id
+              ELSE NULL
+          END
+      FROM (
+          SELECT DISTINCT ON (encounter_id)
+              encounter_id,
+              payment_type,
+              plan_id
+          FROM patient_payments
+          ORDER BY encounter_id, id DESC
+      ) pp
+      WHERE pe.id = pp.encounter_id
+        AND pe.coverage_type IS NULL;
+    </sql>
+
+    <rollback>
+      <dropForeignKeyConstraint
+        baseTableName="patient_encounters"
+        constraintName="fk_patient_encounters_patient_insurance"/>
+      <dropIndex indexName="idx_patient_encounters_coverage_type" tableName="patient_encounters"/>
+      <dropIndex indexName="idx_patient_encounters_patient_insurance_id" tableName="patient_encounters"/>
+      <dropColumn tableName="patient_encounters" columnName="coverage_type"/>
+      <dropColumn tableName="patient_encounters" columnName="patient_insurance_id"/>
+    </rollback>
+
+  </changeSet>
+
+</databaseChangeLog>

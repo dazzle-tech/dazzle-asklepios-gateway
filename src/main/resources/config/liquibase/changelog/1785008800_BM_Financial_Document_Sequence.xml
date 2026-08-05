@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+  <changeSet
+    id="BM000000000063" author="BushraMashaiekh">
+
+  <createTable tableName="financial_document_sequence">
+
+    <column name="id" type="bigint" autoIncrement="true">
+      <constraints primaryKey="true" nullable="false"/>
+    </column>
+
+    <column name="facility_id" type="bigint">
+      <constraints nullable="false"/>
+    </column>
+
+    <column name="document_type" type="varchar(30)">
+      <constraints nullable="false"/>
+    </column>
+
+    <column name="period_key" type="varchar(20)">
+      <constraints nullable="false"/>
+    </column>
+
+    <column name="last_number" type="bigint" defaultValueNumeric="0">
+      <constraints nullable="false"/>
+    </column>
+
+    <column name="version" type="bigint"/>
+
+    <column name="created_by" type="varchar(50)">
+      <constraints nullable="false"/>
+    </column>
+
+    <column name="created_date" type="timestamp">
+      <constraints nullable="false"/>
+    </column>
+
+    <column name="last_modified_by" type="varchar(50)"/>
+
+    <column name="last_modified_date" type="timestamp"/>
+
+  </createTable>
+
+  <addUniqueConstraint
+    tableName="financial_document_sequence"
+    columnNames="facility_id, document_type, period_key"
+    constraintName="uk_financial_document_sequence_facility_type_period"/>
+
+  <createIndex
+    tableName="financial_document_sequence"
+    indexName="idx_financial_document_sequence_facility_type">
+
+    <column name="facility_id"/>
+    <column name="document_type"/>
+  </createIndex>
+
+  <addForeignKeyConstraint
+    constraintName="fk_financial_document_sequence_facility"
+    baseTableName="financial_document_sequence"
+    baseColumnNames="facility_id"
+    referencedTableName="facility"
+    referencedColumnNames="id"/>
+
+</changeSet>
+
+</databaseChangeLog>

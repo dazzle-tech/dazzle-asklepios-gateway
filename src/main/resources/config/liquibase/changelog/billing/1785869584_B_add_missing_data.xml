@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+<changeSet id="BM000000000066" author="BushraMashaiekh">
+
+  <addColumn tableName="claim_request">
+    <column name="validation_errors_json" type="text"/>
+  </addColumn>
+
+  <addColumn tableName="billing_pricing_snapshot">
+    <column name="last_modified_by" type="varchar(50)"/>
+  </addColumn>
+
+  <addColumn tableName="billing_pricing_snapshot">
+    <column name="last_modified_date" type="timestamp"/>
+  </addColumn>
+
+  <addColumn tableName="billing_ledger">
+    <column name="last_modified_by" type="varchar(50)"/>
+  </addColumn>
+
+  <addColumn tableName="billing_ledger">
+    <column name="last_modified_date" type="timestamp"/>
+  </addColumn>
+
+  <update tableName="billing_pricing_snapshot">
+    <column name="last_modified_date" valueComputed="COALESCE(created_date, NOW())"/>
+  </update>
+
+  <update tableName="billing_pricing_snapshot">
+    <column name="last_modified_by" valueComputed="COALESCE(created_by, 'system')"/>
+  </update>
+
+</changeSet>
+</databaseChangeLog>
