@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!-- Align cpt_code with client Excel template columns -->
+
+  <changeSet id="1786020000-cpt-01-add-code-category" author="batool">
+    <preConditions onFail="MARK_RAN" onError="HALT">
+      <tableExists schemaName="public" tableName="cpt_code"/>
+      <not>
+        <columnExists schemaName="public" tableName="cpt_code" columnName="code_category"/>
+      </not>
+    </preConditions>
+
+    <addColumn schemaName="public" tableName="cpt_code">
+      <column name="code_category" type="varchar(50)"/>
+    </addColumn>
+
+    <rollback>
+      <dropColumn schemaName="public" tableName="cpt_code" columnName="code_category"/>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="1786020000-cpt-02-add-service-category" author="batool">
+    <preConditions onFail="MARK_RAN" onError="HALT">
+      <tableExists schemaName="public" tableName="cpt_code"/>
+      <not>
+        <columnExists schemaName="public" tableName="cpt_code" columnName="service_category"/>
+      </not>
+    </preConditions>
+
+    <addColumn schemaName="public" tableName="cpt_code">
+      <column name="service_category" type="varchar(200)"/>
+    </addColumn>
+
+    <rollback>
+      <dropColumn schemaName="public" tableName="cpt_code" columnName="service_category"/>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="1786020000-cpt-03-add-main-category" author="batool">
+    <preConditions onFail="MARK_RAN" onError="HALT">
+      <tableExists schemaName="public" tableName="cpt_code"/>
+      <not>
+        <columnExists schemaName="public" tableName="cpt_code" columnName="main_category"/>
+      </not>
+    </preConditions>
+
+    <addColumn schemaName="public" tableName="cpt_code">
+      <column name="main_category" type="varchar(200)"/>
+    </addColumn>
+
+    <rollback>
+      <dropColumn schemaName="public" tableName="cpt_code" columnName="main_category"/>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="1786020000-cpt-04-widen-service-category" author="batool">
+    <preConditions onFail="MARK_RAN" onError="HALT">
+      <tableExists schemaName="public" tableName="cpt_code"/>
+      <columnExists schemaName="public" tableName="cpt_code" columnName="service_category"/>
+    </preConditions>
+
+    <modifyDataType
+      schemaName="public"
+      tableName="cpt_code"
+      columnName="service_category"
+      newDataType="varchar(200)"/>
+  </changeSet>
+
+  <changeSet id="1786020000-cpt-05-migrate-category" author="batool">
+    <preConditions onFail="MARK_RAN" onError="HALT">
+      <tableExists schemaName="public" tableName="cpt_code"/>
+      <columnExists schemaName="public" tableName="cpt_code" columnName="category"/>
+      <columnExists schemaName="public" tableName="cpt_code" columnName="main_category"/>
+    </preConditions>
+
+    <sql>
+      UPDATE cpt_code
+      SET main_category = category
+      WHERE main_category IS NULL;
+    </sql>
+
+    <rollback>
+      <sql>UPDATE cpt_code SET main_category = NULL;</sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="1786020000-cpt-06-backfill-defaults" author="batool">
+    <preConditions onFail="MARK_RAN" onError="HALT">
+      <tableExists schemaName="public" tableName="cpt_code"/>
+      <columnExists schemaName="public" tableName="cpt_code" columnName="code_category"/>
+      <columnExists schemaName="public" tableName="cpt_code" columnName="service_category"/>
+      <columnExists schemaName="public" tableName="cpt_code" columnName="main_category"/>
+    </preConditions>
+
+    <sql>
+      UPDATE cpt_code SET code_category = 'CPT' WHERE code_category IS NULL;
+      UPDATE cpt_code
+      SET service_category = COALESCE(NULLIF(service_category, ''), main_category, 'Unknown')
+      WHERE service_category IS NULL OR service_category = '';
+      UPDATE cpt_code SET main_category = COALESCE(main_category, 'Unknown')
+      WHERE main_category IS NULL;
+    </sql>
+  </changeSet>
+
+  <changeSet id="1786020000-cpt-07-not-null" author="batool">
+    <preConditions onFail="MARK_RAN" onError="HALT">
+      <tableExists schemaName="public" tableName="cpt_code"/>
+      <columnExists schemaName="public" tableName="cpt_code" columnName="code_category"/>
+      <columnExists schemaName="public" tableName="cpt_code" columnName="service_category"/>
+      <columnExists schemaName="public" tableName="cpt_code" columnName="main_category"/>
+    </preConditions>
+
+    <addDefaultValue
+      schemaName="public"
+      tableName="cpt_code"
+      columnName="code_category"
+      defaultValue="CPT"/>
+
+    <addNotNullConstraint
+      schemaName="public"
+      tableName="cpt_code"
+      columnName="code_category"
+      columnDataType="varchar(50)"/>
+
+    <addNotNullConstraint
+      schemaName="public"
+      tableName="cpt_code"
+      columnName="service_category"
+      columnDataType="varchar(200)"/>
+
+    <addNotNullConstraint
+      schemaName="public"
+      tableName="cpt_code"
+      columnName="main_category"
+      columnDataType="varchar(200)"/>
+  </changeSet>
+
+  <changeSet id="1786020000-cpt-08-drop-category" author="batool">
+    <preConditions onFail="MARK_RAN" onError="HALT">
+      <tableExists schemaName="public" tableName="cpt_code"/>
+      <columnExists schemaName="public" tableName="cpt_code" columnName="category"/>
+    </preConditions>
+
+    <dropColumn schemaName="public" tableName="cpt_code" columnName="category"/>
+
+    <rollback>
+      <addColumn schemaName="public" tableName="cpt_code">
+        <column name="category" type="varchar(100)"/>
+      </addColumn>
+      <sql>
+        UPDATE cpt_code SET category = main_category WHERE category IS NULL;
+      </sql>
+    </rollback>
+  </changeSet>
+
+</databaseChangeLog>
