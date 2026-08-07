@@ -342,6 +342,7 @@
   <include file="config/liquibase/changelog/encounter/1785011100_B_sync_encounter_billing_from_charge.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/encounter/1785016000_B_encounter_coverage.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/billing/1785012000_BM_Billing_Eligibility_Snapshot.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/billing/1785870000_B_add_audit_columns_to_billing_debit_transaction.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/invoice/1785013000_B_financial_document_adjustment_reason.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/invoice/1785014000_B_financial_document_item_adjustments.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/invoice/1785015000_B_financial_document_item_pricing_snapshot.xml" relativeToChangelogFile="false"/>
