@@ -334,6 +334,7 @@
 
   <include file="config/liquibase/changelog/1785008795_BM_Financial_Document_Numbering.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1785008800_BM_Financial_Document_Sequence.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1786080700_B_financial_document_numbering_counter.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/encounter/1785010000_B_encounter_billing_status.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/invoice/1785011000_B_financial_document_subtype.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/encounter/1785011100_B_sync_encounter_billing_from_charge.xml" relativeToChangelogFile="false"/>
@@ -342,6 +343,7 @@
   <include file="config/liquibase/changelog/invoice/1785013000_B_financial_document_adjustment_reason.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/invoice/1785014000_B_financial_document_item_adjustments.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/invoice/1785015000_B_financial_document_item_pricing_snapshot.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/invoice/1785497000_B_financial_document_number_trigger.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/preAuthorization_WaseelIntegration/1785495170_B_patient-insurance-eligibility-columns.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/claim_WaseelIntegration/1785496000_B_claim.xml" relativeToChangelogFile="false"/>
 
