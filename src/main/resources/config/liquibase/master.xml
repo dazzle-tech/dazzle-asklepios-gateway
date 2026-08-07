@@ -334,6 +334,7 @@
 
   <include file="config/liquibase/changelog/1785008795_BM_Financial_Document_Numbering.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1785008800_BM_Financial_Document_Sequence.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1786080700_B_financial_document_numbering_counter.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/encounter/1785010000_B_encounter_billing_status.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/invoice/1785011000_B_financial_document_subtype.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/encounter/1785011100_B_sync_encounter_billing_from_charge.xml" relativeToChangelogFile="false"/>
