@@ -357,5 +357,6 @@
   <include file="/config/liquibase/changelog/1785151831_R_ProcedureResultColumn.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1786204800_BM_price_list_item_requires_pre_authorization.xml" relativeToChangelogFile="false"/>
 
+  <include file="config/liquibase/changelog/billing/1785869584_B_add_missing_data.xml" relativeToChangelogFile="false"/>
 
 </databaseChangeLog>
