@@ -362,6 +362,5 @@
 
   <include file="config/liquibase/changelog/billing/1785870000_B_add_audit_columns_to_billing_debit_transaction.xml" relativeToChangelogFile="false"/>
 
-  <include file="config/liquibase/changelog/1786204800_BM_price_list_item_requires_pre_authorization.xml" relativeToChangelogFile="false"/>
 
  </databaseChangeLog>
