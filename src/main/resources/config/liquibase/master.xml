@@ -355,6 +355,7 @@
 
   <include file="/config/liquibase/changelog/notification/1784453283_S_WhatsAppSettings.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1785151831_R_ProcedureResultColumn.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1786204800_BM_price_list_item_requires_pre_authorization.xml" relativeToChangelogFile="false"/>
 
 
 </databaseChangeLog>
