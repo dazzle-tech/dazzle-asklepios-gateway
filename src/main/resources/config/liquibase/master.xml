@@ -542,4 +542,7 @@
     file="config/liquibase/changelog/patientSatisfactionSurvey/1786321515_SA_patient_satisfaction_survey_response_answer.xml"
     relativeToChangelogFile="false"/>
 
+  <include file="/config/liquibase/changelog/priceListItems/1786376203_B_service_items_practitioner_id.xml"
+           relativeToChangelogFile="false"/>
+
 </databaseChangeLog>
