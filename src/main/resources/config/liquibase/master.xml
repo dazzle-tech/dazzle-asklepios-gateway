@@ -37,6 +37,7 @@
   <include file="config/liquibase/changelog/patient/add_patient_merge_columns.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/patient/1778679400_SA_patient.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/patient/1778679400_SA_patientPassword.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/patient/1786355077_SA_patientPin.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/patient/1778742616_Q_patient_blood_group_and_conditions.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/patient/1786009930_R_patients_email_not_required.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1774339192_BM_availability_template.xml" relativeToChangelogFile="false"/>
