@@ -365,6 +365,7 @@
   <include file="/config/liquibase/changelog/1776673436_Q_Dental_Procedure.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/diagnosticOrderTest/1785398722_H_Add_Accession_Number_field.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/diagnosticOrder/H_DIAG_ORDER_NUMBER_PREFIX.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/sql/patient/hl7_patient_trigger.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/sql/encounter/hl7_discharge_encounter.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/sql/encounter/hl7_encounter_registration_trigger.xml"
