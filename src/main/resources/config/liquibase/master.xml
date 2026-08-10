@@ -151,6 +151,7 @@
   <include file="config/liquibase/sql/orders/hl7_order_test_accept_test_trigger.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1767792976_H_diagnostic_order_test_technician_notes.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1767854260_H_Diagnostic_Order_Test_CollectSample.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/collectSample/H_DIAG_COLLECTED_SAMPLES_QUANTITY_NULLABLE.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1766065547_BM_Form_Template.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1766396407_BM_Form_Entries.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/formEntries/1780301523_form_entries.xml" relativeToChangelogFile="false"/>
