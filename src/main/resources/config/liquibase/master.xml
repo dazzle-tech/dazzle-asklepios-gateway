@@ -336,7 +336,7 @@
   <include
     file="/config/liquibase/changelog/prescription/1778073007_Q_patient_prescription_medications_edit_administration_instructions.xml"
     relativeToChangelogFile="false"/>
-
+ <include file="config/liquibase/changelog/prescription/H_PRESCRIPTION_NUMBER_PREFIX.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1769523307_B_referralRequests.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/referralRequest/1782634486_addAppontmentIdColumn.xml"
            relativeToChangelogFile="false"/>
@@ -552,5 +552,5 @@
   <include file="config/liquibase/changelog/billing/1786390000_B_financial_documents_add_foreign_keys.xml" relativeToChangelogFile="false"/>
 
   <include file="config/liquibase/changelog/billing/1786379710_BM_Fix_Modified_columns.xml" relativeToChangelogFile="false"/>
-  
+
 </databaseChangeLog>
