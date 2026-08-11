@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="BS000000000062" author="batool sbaih">
+
+    <addColumn tableName="service_items">
+      <column name="specialty" type="varchar(100)"/>
+    </addColumn>
+
+    <sql>
+      UPDATE service_items si
+      SET specialty = p.sub_specialty
+      FROM practitioner p
+      WHERE si.practitioner_id = p.id
+        AND si.practitioner_id IS NOT NULL
+        AND (si.specialty IS NULL OR TRIM(si.specialty) = '');
+    </sql>
+
+    <dropForeignKeyConstraint
+      baseTableName="service_items"
+      constraintName="fk_service_items_practitioner"/>
+
+    <sql>DROP INDEX IF EXISTS uk_service_items_with_practitioner;</sql>
+    <sql>DROP INDEX IF EXISTS uk_service_items_no_practitioner;</sql>
+
+    <dropColumn tableName="service_items" columnName="practitioner_id"/>
+
+    <sql>
+      CREATE UNIQUE INDEX uk_service_items_no_specialty
+        ON service_items (service_id, type, source_id)
+        WHERE specialty IS NULL;
+    </sql>
+
+    <sql>
+      CREATE UNIQUE INDEX uk_service_items_with_specialty
+        ON service_items (service_id, type, source_id, specialty)
+        WHERE specialty IS NOT NULL;
+    </sql>
+
+    <rollback>
+      <sql>DROP INDEX IF EXISTS uk_service_items_with_specialty;</sql>
+      <sql>DROP INDEX IF EXISTS uk_service_items_no_specialty;</sql>
+
+      <addColumn tableName="service_items">
+        <column name="practitioner_id" type="bigint">
+          <constraints nullable="true"
+                       foreignKeyName="fk_service_items_practitioner"
+                       references="practitioner(id)"/>
+        </column>
+      </addColumn>
+
+      <sql>
+        CREATE UNIQUE INDEX uk_service_items_no_practitioner
+          ON service_items (service_id, type, source_id)
+          WHERE practitioner_id IS NULL;
+      </sql>
+
+      <sql>
+        CREATE UNIQUE INDEX uk_service_items_with_practitioner
+          ON service_items (service_id, type, source_id, practitioner_id)
+          WHERE practitioner_id IS NOT NULL;
+      </sql>
+
+      <dropColumn tableName="service_items" columnName="specialty"/>
+    </rollback>
+
+  </changeSet>
+
+</databaseChangeLog>
