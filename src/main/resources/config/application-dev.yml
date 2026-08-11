@@ -24,7 +24,8 @@ services:
 
   medication-test-orders-validation-service-url: http://localhost:8005
   clinical-summary-service-url: http://localhost:8003
-  clinical-recommendations-service-url: http://localhost:8004
+  clinical-recommendations-service-url: http://localhost:8007
+  ocr-parsing-service-url: http://localhost:8012
 
 
 spring:
