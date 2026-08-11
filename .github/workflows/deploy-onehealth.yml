@@ -104,11 +104,11 @@ jobs:
           kubectl set image deployment/asklepios-inventory asklepios-inventory=swr.me-east-1.myhuaweicloud.com/cos/asklepios-inventory:${{ inputs.inventory_tag }} -n ${{ inputs.namespace }}
           kubectl rollout status deployment/asklepios-inventory -n ${{ inputs.namespace }} --timeout=120s
 
-      #- name: Deploy asklepios-notification
-      #  if: ${{ inputs.notification_tag != '' }}
-      #  run: |
-      #    kubectl set image deployment/asklepios-notification asklepios-notification=swr.me-east-1.myhuaweicloud.com/cos/asklepios-notification:${{ inputs.notification_tag }} -n ${{ inputs.namespace }}
-      #    kubectl rollout status deployment/asklepios-notification -n ${{ inputs.namespace }} --timeout=120s
+      - name: Deploy asklepios-notification
+        if: ${{ inputs.notification_tag != '' }}
+        run: |
+          kubectl set image deployment/asklepios-notification asklepios-notification=swr.me-east-1.myhuaweicloud.com/cos/asklepios-notification:${{ inputs.notification_tag }} -n ${{ inputs.namespace }}
+          kubectl rollout status deployment/asklepios-notification -n ${{ inputs.namespace }} --timeout=120s
 
       - name: Deploy asklepios-patient
         if: ${{ inputs.patient_tag != '' }}
