@@ -52,7 +52,7 @@ spring:
     url: r2dbc:postgresql://localhost:5433/postgres
     #    url: r2dbc:postgresql://host.docker.internal:5432/asklepios
     username: postgres
-    password: root
+    password: qse123H
   thymeleaf:
     cache: false
   cloud:
