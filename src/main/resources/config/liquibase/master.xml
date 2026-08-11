@@ -330,6 +330,7 @@
   <include file="/config/liquibase/changelog/1769596005_BM_Patient_Prescription.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1769071937_BM_Patient_Prescription_Medications.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patientPrescriptionMedication/1786472666_H_Add_Cancel_Reason.xml" relativeToChangelogFile="false"/>
   <include
     file="/config/liquibase/changelog/patientPrescriptionMedication/1777282256_S_PatientPrescriptionMedications.xml"
     relativeToChangelogFile="false"/>
