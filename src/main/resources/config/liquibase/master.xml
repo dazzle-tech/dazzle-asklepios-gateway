@@ -546,6 +546,9 @@
   <include file="/config/liquibase/changelog/priceListItems/1786376203_B_service_items_practitioner_id.xml"
            relativeToChangelogFile="false"/>
 
+  <include file="/config/liquibase/changelog/priceListItems/1786410000_B_service_items_specialty.xml"
+           relativeToChangelogFile="false"/>
+
   <include file="config/liquibase/changelog/billing/1786390000_B_financial_documents_add_foreign_keys.xml" relativeToChangelogFile="false"/>
 
   <include file="config/liquibase/changelog/billing/1786379710_BM_Fix_Modified_columns.xml" relativeToChangelogFile="false"/>
