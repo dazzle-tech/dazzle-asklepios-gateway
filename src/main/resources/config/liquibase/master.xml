@@ -330,14 +330,16 @@
   <include file="/config/liquibase/changelog/1769596005_BM_Patient_Prescription.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1769071937_BM_Patient_Prescription_Medications.xml"
            relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/patientPrescriptionMedication/1786472666_H_Add_Cancel_Reason.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patientPrescriptionMedication/1786472666_H_Add_Cancel_Reason.xml"
+           relativeToChangelogFile="false"/>
   <include
     file="/config/liquibase/changelog/patientPrescriptionMedication/1777282256_S_PatientPrescriptionMedications.xml"
     relativeToChangelogFile="false"/>
   <include
     file="/config/liquibase/changelog/prescription/1778073007_Q_patient_prescription_medications_edit_administration_instructions.xml"
     relativeToChangelogFile="false"/>
- <include file="config/liquibase/changelog/prescription/H_PRESCRIPTION_NUMBER_PREFIX.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/prescription/H_PRESCRIPTION_NUMBER_PREFIX.xml"
+           relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1769523307_B_referralRequests.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/referralRequest/1782634486_addAppontmentIdColumn.xml"
            relativeToChangelogFile="false"/>
@@ -366,7 +368,8 @@
   <include file="/config/liquibase/changelog/1776673436_Q_Dental_Procedure.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/diagnosticOrderTest/1785398722_H_Add_Accession_Number_field.xml"
            relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/diagnosticOrder/H_DIAG_ORDER_NUMBER_PREFIX.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/diagnosticOrder/H_DIAG_ORDER_NUMBER_PREFIX.xml"
+           relativeToChangelogFile="false"/>
   <include file="config/liquibase/sql/patient/hl7_patient_trigger.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/sql/encounter/hl7_discharge_encounter.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/sql/encounter/hl7_encounter_registration_trigger.xml"
@@ -550,8 +553,10 @@
   <include file="/config/liquibase/changelog/priceListItems/1786410000_B_service_items_specialty.xml"
            relativeToChangelogFile="false"/>
 
-  <include file="config/liquibase/changelog/billing/1786390000_B_financial_documents_add_foreign_keys.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/billing/1786390000_B_financial_documents_add_foreign_keys.xml"
+           relativeToChangelogFile="false"/>
 
-  <include file="config/liquibase/changelog/billing/1786379710_BM_Fix_Modified_columns.xml" relativeToChangelogFile="false"/>
-
+  <include file="config/liquibase/changelog/billing/1786379710_BM_Fix_Modified_columns.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1786610748_S_PatientOTP.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>
