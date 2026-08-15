@@ -27,13 +27,6 @@
     <column name="last_modified_date" type="timestamp"/>
   </addColumn>
 
-  <update tableName="billing_pricing_snapshot">
-    <column name="last_modified_date" valueComputed="COALESCE(created_date, NOW())"/>
-  </update>
-
-  <update tableName="billing_pricing_snapshot">
-    <column name="last_modified_by" valueComputed="COALESCE(created_by, 'system')"/>
-  </update>
 
 </changeSet>
 </databaseChangeLog>
