@@ -555,8 +555,5 @@
 
   <include file="config/liquibase/changelog/billing/1786390000_B_financial_documents_add_foreign_keys.xml"
            relativeToChangelogFile="false"/>
-
-  <include file="config/liquibase/changelog/billing/1786379710_BM_Fix_Modified_columns.xml"
-           relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1786610748_S_PatientOTP.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>
