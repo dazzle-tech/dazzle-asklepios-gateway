@@ -52,7 +52,19 @@ on:
         description: 'asklepios-ui image tag (leave empty to skip)'
         required: false
         type: string
-
+      recommendations_tag:
+        description: 'clinical-recommendations image tag (leave empty to skip)'
+        required: false
+        type: string
+      summary_tag:
+        description: 'clinical-summary image tag (leave empty to skip)'
+        required: false
+        type: string
+      medication_tag:
+        description: 'medication-test-order-validation image tag (leave empty to skip)'
+        required: false
+        type: string
+        
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -127,6 +139,24 @@ jobs:
         run: |
           kubectl set image deployment/asklepios-ui asklepios-ui=swr.me-east-1.myhuaweicloud.com/cos/asklepios-ui:${{ inputs.ui_tag }} -n ${{ inputs.namespace }}
           kubectl rollout status deployment/asklepios-ui -n ${{ inputs.namespace }} --timeout=120s
+
+      - name: Deploy clinical-recommendations-service
+        if: ${{ inputs.recommendations_tag != '' }}
+        run: |
+          kubectl set image deployment/clinical-recommendations-service clinical-recommendations-service=swr.me-east-1.myhuaweicloud.com/cos/clinical-recommendations-service:${{ inputs.recommendations_tag }} -n ${{ inputs.namespace }}
+          kubectl rollout status deployment/clinical-recommendations-service -n ${{ inputs.namespace }} --timeout=120s
+
+      - name: Deploy clinical-summary-service
+        if: ${{ inputs.summary_tag != '' }}
+        run: |
+          kubectl set image deployment/clinical-summary-service clinical-summary-service=swr.me-east-1.myhuaweicloud.com/cos/clinical-summary-service:${{ inputs.summary_tag }} -n ${{ inputs.namespace }}
+          kubectl rollout status deployment/clinical-summary-service -n ${{ inputs.namespace }} --timeout=120s
+
+      - name: Deploy medication-test-orders-validation-service
+        if: ${{ inputs.medication_tag != '' }}
+        run: |
+          kubectl set image deployment/medication-test-orders-validation-service medication-test-orders-validation-service=swr.me-east-1.myhuaweicloud.com/cos/medication-test-orders-validation-service:${{ inputs.medication_tag }} -n ${{ inputs.namespace }}
+          kubectl rollout status deployment/medication-test-orders-validation-service -n ${{ inputs.namespace }} --timeout=120s
 
       - name: Cleanup kubeconfig
         if: always()
