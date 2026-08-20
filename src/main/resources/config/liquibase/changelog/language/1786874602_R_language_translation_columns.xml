@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="LANGUAGE_TRANSLATION_COLUMNS_00000000000002" author="Rawan-Yahya">
+
+    <!-- Dynamic translation columns -->
+    <addColumn tableName="language_translation">
+
+      <column name="resource_type" type="varchar(100)"/>
+
+      <column name="resource_key" type="varchar(150)"/>
+
+      <column name="field_name" type="varchar(100)"/>
+
+      <column name="enum_type" type="varchar(150)"/>
+
+    </addColumn>
+
+    <!-- translation_key is only required for static translations -->
+    <dropNotNullConstraint
+      tableName="language_translation"
+      columnName="translation_key"
+      columnDataType="varchar(150)"/>
+
+    <!-- Remove the old normal UNIQUE constraint -->
+    <dropUniqueConstraint
+      tableName="language_translation"
+      constraintName="uq_lang_translation_key"/>
+
+    <!-- ========================================================= -->
+    <!-- STATIC TRANSLATIONS                                      -->
+    <!-- ========================================================= -->
+
+    <sql>
+      CREATE UNIQUE INDEX uq_static_translation
+      ON language_translation (lang_key, translation_key)
+      WHERE resource_type IS NULL;
+    </sql>
+
+    <!-- ========================================================= -->
+    <!-- ENTITY TRANSLATIONS                                      -->
+    <!-- ========================================================= -->
+
+    <sql>
+      CREATE UNIQUE INDEX uq_entity_translation
+      ON language_translation (
+      lang_key,
+      resource_type,
+      resource_key,
+      field_name
+      )
+      WHERE resource_type IS NOT NULL
+      AND enum_type IS NULL;
+    </sql>
+
+    <!-- ========================================================= -->
+    <!-- ENUM TRANSLATIONS                                        -->
+    <!-- ========================================================= -->
+
+    <sql>
+      CREATE UNIQUE INDEX uq_enum_translation
+      ON language_translation (
+      lang_key,
+      resource_type,
+      resource_key,
+      enum_type
+      )
+      WHERE resource_type IS NOT NULL
+      AND enum_type IS NOT NULL;
+    </sql>
+
+  </changeSet>
+
+</databaseChangeLog>
