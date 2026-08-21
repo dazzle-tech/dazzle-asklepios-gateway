@@ -11,29 +11,22 @@
     <column name="validation_errors_json" type="text"/>
   </addColumn>
 
-<!--  <addColumn tableName="billing_pricing_snapshot">-->
-<!--    <column name="last_modified_by" type="varchar(50)"/>-->
-<!--  </addColumn>-->
+  <addColumn tableName="billing_pricing_snapshot">
+    <column name="last_modified_by" type="varchar(50)"/>
+  </addColumn>
 
-<!--  <addColumn tableName="billing_pricing_snapshot">-->
-<!--    <column name="last_modified_date" type="timestamp"/>-->
-<!--  </addColumn>-->
+  <addColumn tableName="billing_pricing_snapshot">
+    <column name="last_modified_date" type="timestamp"/>
+  </addColumn>
 
-<!--  <addColumn tableName="billing_ledger">-->
-<!--    <column name="last_modified_by" type="varchar(50)"/>-->
-<!--  </addColumn>-->
+  <addColumn tableName="billing_ledger">
+    <column name="last_modified_by" type="varchar(50)"/>
+  </addColumn>
 
-<!--  <addColumn tableName="billing_ledger">-->
-<!--    <column name="last_modified_date" type="timestamp"/>-->
-<!--  </addColumn>-->
+  <addColumn tableName="billing_ledger">
+    <column name="last_modified_date" type="timestamp"/>
+  </addColumn>
 
-<!--  <update tableName="billing_pricing_snapshot">-->
-<!--    <column name="last_modified_date" valueComputed="COALESCE(created_date, NOW())"/>-->
-<!--  </update>-->
-
-<!--  <update tableName="billing_pricing_snapshot">-->
-<!--    <column name="last_modified_by" valueComputed="COALESCE(created_by, 'system')"/>-->
-<!--  </update>-->
 
 </changeSet>
 </databaseChangeLog>
