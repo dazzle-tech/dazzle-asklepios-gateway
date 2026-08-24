@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="language_Translation_Data" author="Rawan-Yahya">
+
+    <!-- Temporary table for CSV import -->
+    <createTable tableName="language_translation_staging">
+
+      <column name="lang_key" type="varchar(50)"/>
+
+      <column name="translation_key" type="varchar(150)"/>
+
+      <column name="translation_text" type="text"/>
+
+      <column name="verified" type="boolean"/>
+
+      <column name="translated" type="boolean"/>
+
+    </createTable>
+
+
+    <!-- Load CSV into staging table -->
+    <loadData
+      file="config/liquibase/data/more_language_translation.csv"
+      separator=","
+      tableName="language_translation_staging"
+      usePreparedStatements="true">
+
+      <column name="lang_key" type="varchar(50)"/>
+      <column name="translation_key" type="varchar(150)"/>
+      <column name="translation_text" type="text"/>
+      <column name="verified" type="boolean"/>
+      <column name="translated" type="boolean"/>
+
+    </loadData>
+
+
+    <!-- Insert only new translations -->
+    <sql>
+      INSERT INTO language_translation
+      (
+      lang_key,
+      translation_key,
+      translation_text,
+      verified,
+      translated
+      )
+      SELECT
+      lang_key,
+      translation_key,
+      translation_text,
+      verified,
+      translated
+      FROM language_translation_staging
+      ON CONFLICT (lang_key, translation_key)
+      DO NOTHING;
+    </sql>
+
+
+    <!-- Remove staging table -->
+    <dropTable tableName="language_translation_staging"/>
+
+  </changeSet>
+
+</databaseChangeLog>
