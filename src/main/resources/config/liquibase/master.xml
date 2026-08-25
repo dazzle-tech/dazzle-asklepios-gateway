@@ -558,4 +558,9 @@
   <include file="config/liquibase/changelog/1786610748_S_PatientOTP.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/notification/1786959776_SA_NotificationDevice.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1787474502_SA_DocumentDefinition.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1787475077_SA_DocumentVersion.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1787475621_SA_DocumentAssignment.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/encounterAttachment/1787476174_SA_EncounterAttachment_DocumentsColumns.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
