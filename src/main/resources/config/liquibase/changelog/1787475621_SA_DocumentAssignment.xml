@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.23.xsd">
+  <changeSet id="create-clinical-form-assignment" author="admin">
+
+    <createTable tableName="document_assignment">
+
+      <column name="id" type="BIGINT" autoIncrement="true">
+        <constraints primaryKey="true"
+                     primaryKeyName="pk_document_assignment"
+                     nullable="false"/>
+      </column>
+      <column name="document_definition_id" type="BIGINT">
+        <constraints nullable="false"
+                     foreignKeyName="fk_document_assignment_definition"
+                     referencedTableName="document_definition"
+                     referencedColumnNames="id"/>
+      </column>
+
+
+      <column name="target_type" type="VARCHAR(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="target_id" type="BIGINT"/>
+
+      <column name="trigger_type" type="VARCHAR(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="required" type="BOOLEAN"
+              defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="blocking" type="BOOLEAN"
+              defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="active" type="BOOLEAN"
+              defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="VARCHAR(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="TIMESTAMP">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="VARCHAR(100)"/>
+
+      <column name="last_modified_date" type="TIMESTAMP"/>
+
+    </createTable>
+
+    <createIndex indexName="idx_document_assignment_definition"
+                 tableName="document_assignment">
+      <column name="document_definition_id"/>
+    </createIndex>
+
+    <createIndex indexName="idx_document_assignment_target"
+                 tableName="document_assignment">
+      <column name="target_type"/>
+      <column name="target_id"/>
+    </createIndex>
+
+    <createIndex indexName="idx_document_assignment_trigger"
+                 tableName="document_assignment">
+      <column name="trigger_type"/>
+    </createIndex>
+
+    <createIndex indexName="idx_document_assignment_active"
+                 tableName="document_assignment">
+      <column name="active"/>
+    </createIndex>
+
+  </changeSet>
+</databaseChangeLog>
