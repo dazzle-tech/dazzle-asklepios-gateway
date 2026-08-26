@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="20260823001" author="hanan">
+
+    <createTable tableName="point_of_sale_configuration">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false"
+                     primaryKey="true"
+                     primaryKeyName="pk_pos_configuration"/>
+      </column>
+
+      <column name="name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="client_id" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="terminal_id" type="varchar(255)">
+        <constraints nullable="false"
+                     unique="true"/>
+      </column>
+
+      <column name="terminal_serial_no" type="varchar(255)"/>
+
+      <column name="terminal_type" type="varchar(100)"/>
+
+      <column name="counter_number" type="varchar(100)"/>
+
+      <column name="cash_register_no" type="varchar(255)"/>
+
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)"/>
+
+      <column name="created_date" type="timestamp"/>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+
+  </changeSet>
+
+</databaseChangeLog>

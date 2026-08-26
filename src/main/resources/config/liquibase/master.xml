@@ -558,4 +558,7 @@
   <include file="config/liquibase/changelog/1786610748_S_PatientOTP.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/notification/1786959776_SA_NotificationDevice.xml"
            relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/point-of-sale/pos-configuration.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/point-of-sale/pos-transaction.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/point-of-sale/pos-check-in.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>

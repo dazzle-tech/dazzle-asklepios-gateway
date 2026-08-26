@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="20260823003" author="hanan">
+
+    <createTable tableName="point_of_sale_check_in">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false"
+                     primaryKey="true"
+                     primaryKeyName="pk_point_of_sale_check_in"/>
+      </column>
+
+      <column name="user_login" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="configuration_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="active" type="boolean"
+              defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="check_in_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="check_out_date" type="timestamp"/>
+
+      <column name="created_by" type="varchar(50)"/>
+
+      <column name="created_date" type="timestamp"/>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="point_of_sale_check_in"
+      baseColumnNames="user_login"
+      referencedTableName="app_user"
+      referencedColumnNames="login"
+      constraintName="fk_pos_check_in_user"/>
+
+    <addForeignKeyConstraint
+      baseTableName="point_of_sale_check_in"
+      baseColumnNames="configuration_id"
+      referencedTableName="point_of_sale_configuration"
+      referencedColumnNames="id"
+      constraintName="fk_pos_check_in_configuration"/>
+
+
+    <createIndex
+      tableName="point_of_sale_check_in"
+      indexName="idx_pos_check_in_configuration">
+
+      <column name="configuration_id"/>
+
+    </createIndex>
+
+    <createIndex
+      tableName="point_of_sale_check_in"
+      indexName="idx_pos_check_in_active">
+
+      <column name="active"/>
+
+    </createIndex>
+
+  </changeSet>
+
+</databaseChangeLog>
