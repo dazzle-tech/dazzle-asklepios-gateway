@@ -370,6 +370,7 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/diagnosticOrder/H_DIAG_ORDER_NUMBER_PREFIX.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/diagnostic_test/H_add_short_name_column.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/sql/patient/hl7_patient_trigger.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/sql/encounter/hl7_discharge_encounter.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/sql/encounter/hl7_encounter_registration_trigger.xml"
