@@ -560,4 +560,6 @@
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/payorSetup/1787640000_B_AlterNphiesPayersInsuranceMasterData.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/billing/1787643600_BM_price_list_management.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
