@@ -562,4 +562,6 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/billing/1787643600_BM_price_list_management.xml"
            relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/payorSetup/1787810000_B_create_tpa_definitions.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>

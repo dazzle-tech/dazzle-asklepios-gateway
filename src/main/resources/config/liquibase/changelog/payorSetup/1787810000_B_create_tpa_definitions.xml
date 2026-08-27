@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="BS000000000063" author="BatoolSbaih">
+    <createTable tableName="tpa_definitions">
+      <column name="id" type="bigint" autoIncrement="true" startWith="1000">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="tpa_code" type="varchar(100)">
+        <constraints nullable="false" unique="true"/>
+      </column>
+
+      <column name="name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="guarantor_type" type="varchar(50)" defaultValue="TPA">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="activation_date" type="date">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="tax_registration_no" type="varchar(100)"/>
+
+      <column name="country_id" type="bigint"/>
+      <column name="city_id" type="bigint"/>
+
+      <column name="address" type="varchar(2000)"/>
+      <column name="phone" type="varchar(50)"/>
+      <column name="email" type="varchar(255)"/>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="tpa_definitions"
+      baseColumnNames="country_id"
+      referencedTableName="country"
+      referencedColumnNames="id"
+      constraintName="fk_tpa_definitions_country"/>
+
+    <addForeignKeyConstraint
+      baseTableName="tpa_definitions"
+      baseColumnNames="city_id"
+      referencedTableName="country_districts"
+      referencedColumnNames="id"
+      constraintName="fk_tpa_definitions_city"/>
+
+    <createIndex tableName="tpa_definitions" indexName="idx_tpa_definitions_tpa_code">
+      <column name="tpa_code"/>
+    </createIndex>
+
+    <createIndex tableName="tpa_definitions" indexName="idx_tpa_definitions_name">
+      <column name="name"/>
+    </createIndex>
+
+    <createIndex tableName="tpa_definitions" indexName="idx_tpa_definitions_country_id">
+      <column name="country_id"/>
+    </createIndex>
+
+    <createIndex tableName="tpa_definitions" indexName="idx_tpa_definitions_city_id">
+      <column name="city_id"/>
+    </createIndex>
+
+    <createIndex tableName="tpa_definitions" indexName="idx_tpa_definitions_is_active">
+      <column name="is_active"/>
+    </createIndex>
+
+    <createTable tableName="tpa_payor_companies">
+      <column name="tpa_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="nphies_payer_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+
+    <addPrimaryKey
+      tableName="tpa_payor_companies"
+      columnNames="tpa_id, nphies_payer_id"
+      constraintName="pk_tpa_payor_companies"/>
+
+    <addForeignKeyConstraint
+      baseTableName="tpa_payor_companies"
+      baseColumnNames="tpa_id"
+      referencedTableName="tpa_definitions"
+      referencedColumnNames="id"
+      constraintName="fk_tpa_payor_companies_tpa"
+      onDelete="CASCADE"/>
+
+    <addForeignKeyConstraint
+      baseTableName="tpa_payor_companies"
+      baseColumnNames="nphies_payer_id"
+      referencedTableName="nphies_payers"
+      referencedColumnNames="id"
+      constraintName="fk_tpa_payor_companies_nphies_payer"
+      onDelete="CASCADE"/>
+
+    <createIndex tableName="tpa_payor_companies" indexName="idx_tpa_payor_companies_nphies_payer_id">
+      <column name="nphies_payer_id"/>
+    </createIndex>
+
+  </changeSet>
+
+</databaseChangeLog>
