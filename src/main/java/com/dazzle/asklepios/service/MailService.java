@@ -95,6 +95,15 @@ public class MailService {
             new Object[]{ user.getFirstName() != null ? user.getFirstName() : user.getLogin() },
             locale
         ));
+        context.setVariable("userName", user.getLogin() != null ? user.getLogin() : "user");
+
+        context.setVariable("userNameLabel",
+            messageSource.getMessage(
+                "email.reset.userName",
+                null,
+                locale
+            )
+        );
         context.setVariable("text1", messageSource.getMessage("email.reset.text1", null, locale));
         context.setVariable("text2", messageSource.getMessage("email.reset.text2", null, locale));
         context.setVariable("text3", messageSource.getMessage("email.reset.text3", null, locale));
@@ -140,6 +149,15 @@ public class MailService {
             new Object[]{ user.getFirstName() != null ? user.getFirstName() : user.getLogin() },
             locale
         ));
+        context.setVariable("userName", user.getLogin() != null ? user.getLogin() : "user");
+
+        context.setVariable("userNameLabel",
+            messageSource.getMessage(
+                "email.setpassword.userName",
+                null,
+                locale
+            )
+        );
         context.setVariable("text1", messageSource.getMessage("email.setpassword.text1", null, locale));
         context.setVariable("text2", messageSource.getMessage("email.setpassword.text2", null, locale));
         context.setVariable("text3", messageSource.getMessage("email.setpassword.text3", null, locale));
