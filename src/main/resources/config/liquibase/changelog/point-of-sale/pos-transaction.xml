@@ -38,7 +38,6 @@
                      unique="true"/>
       </column>
 
-      <column name="external_transaction_code" type="varchar(255)"/>
       <column name="external_transaction_id" type="varchar(100)"/>
       <column name="transaction_type" type="varchar(50)">
         <constraints nullable="false"/>
@@ -81,6 +80,19 @@
       </column>
 
       <column name="original_transaction_id" type="bigint"/>
+      <column name="stan_no" type="varchar(100)"/>
+
+      <column name="product_info" type="varchar(255)"/>
+
+      <column name="merchant_name" type="varchar(500)"/>
+
+      <column name="merchant_address" type="varchar(500)"/>
+
+      <column name="ecr_transaction_reference_number"
+              type="varchar(255)"/>
+
+      <column name="application_version"
+              type="varchar(100)"/>
 
       <column name="raw_request" type="text"/>
 
