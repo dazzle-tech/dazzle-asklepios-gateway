@@ -564,4 +564,6 @@
   <include file="config/liquibase/changelog/1787475621_SA_DocumentAssignment.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/encounterAttachment/1787476174_SA_EncounterAttachment_DocumentsColumns.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1787990400_BM_price_list_item_non_standard_code.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
