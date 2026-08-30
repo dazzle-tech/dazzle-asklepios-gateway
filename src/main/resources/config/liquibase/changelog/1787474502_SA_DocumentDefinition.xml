@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.23.xsd">
+
+  <changeSet id="1787474502_Document_Definition" author="sondos">
+    <createTable tableName="document_definition">
+
+      <column name="id" type="BIGINT" autoIncrement="true">
+        <constraints primaryKey="true"
+                     primaryKeyName="pk_document_definition"
+                     nullable="false"/>
+      </column>
+
+      <column name="code" type="VARCHAR(100)">
+        <constraints nullable="false"
+                     unique="true"
+                     uniqueConstraintName="uk_document_definition_code"/>
+      </column>
+
+      <column name="name" type="VARCHAR(255)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="description" type="TEXT"/>
+
+      <column name="category" type="VARCHAR(100)"/>
+
+      <column name="status" type="VARCHAR(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="VARCHAR(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="TIMESTAMP">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="VARCHAR(100)"/>
+
+      <column name="last_modified_date" type="TIMESTAMP"/>
+
+    </createTable>
+  </changeSet>
+</databaseChangeLog>
