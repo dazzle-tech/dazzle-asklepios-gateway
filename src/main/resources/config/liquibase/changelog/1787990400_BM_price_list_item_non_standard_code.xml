@@ -6,14 +6,20 @@
         http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
 
-  <changeSet id="BS000000000063" author="Batool Sbaih">
+  <changeSet id="BS000000000064" author="Batool Sbaih">
 
-    <addColumn tableName="price_list_setup_item">
-      <column
-        name="non_standard_code"
-        type="varchar(100)"/>
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <columnExists
+          schemaName="public"
+          tableName="price_list_setup_item"
+          columnName="non_standard_code"/>
+      </not>
+    </preConditions>
+
+    <addColumn schemaName="public" tableName="price_list_setup_item">
+      <column name="non_standard_code" type="varchar(100)"/>
     </addColumn>
 
   </changeSet>
-
 </databaseChangeLog>
