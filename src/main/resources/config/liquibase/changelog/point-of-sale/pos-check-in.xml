@@ -7,7 +7,7 @@
         http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-  <changeSet id="20260823003" author="hanan">
+  <changeSet id="H_POINT_OF_SALE_CHECK_IN" author="hanan">
 
     <createTable tableName="point_of_sale_check_in">
 

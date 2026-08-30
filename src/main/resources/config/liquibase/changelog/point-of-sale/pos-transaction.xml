@@ -7,7 +7,7 @@
         http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-  <changeSet id="20260823002" author="hanan">
+  <changeSet id="H_POINT_OF_SALE_TRANSACTION" author="hanan">
 
     <createTable tableName="point_of_sale_transaction">
 
@@ -149,14 +149,6 @@
       indexName="idx_pos_transaction_rrn">
 
       <column name="rrn"/>
-
-    </createIndex>
-
-    <createIndex
-      tableName="point_of_sale_transaction"
-      indexName="idx_pos_transaction_external_transaction_code">
-
-      <column name="external_transaction_code"/>
 
     </createIndex>
 
