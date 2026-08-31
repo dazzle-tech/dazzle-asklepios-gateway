@@ -18,7 +18,7 @@ management:
       probability: 1.0
 
 services:
-  asklepios-general-service-url: http://asklepios-service:8081
+  asklepios-general-service-url: http://asklepiosdemo-service:8081
   asklepios-setup-service-url :  http://asklepiosdemo-api-setup-service:8082
   asklepios-patient-service-url :  http://asklepiosdemo-patient-service:8080
   asklepios-inventory-service-url :  http://asklepiosdemo-inventory-service:8080
