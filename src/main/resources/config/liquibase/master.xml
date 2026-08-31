@@ -219,6 +219,8 @@
   <include file="/config/liquibase/changelog/1768473866_Q_Surgical_History.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/surgicalhistory/1778668757_surgical_history_add_cancel_fields.xml"
            relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/surgicalhistory/1785853870_R_surgical_history_widen_complications.xml"
+           relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1768721356_Q_Social_History.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/socialhistory/1778663643_social_history_add_cancel_fields.xml"
            relativeToChangelogFile="false"/>
