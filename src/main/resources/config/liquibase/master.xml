@@ -570,5 +570,7 @@
   <include file="config/liquibase/changelog/1787990400_BM_price_list_item_non_standard_code.xml"
            relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/1788291540_SA_EncounterDischargeLog.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/claim_WaseelIntegration/1788292800_BM_claim_request_type.xml"
+           relativeToChangelogFile="false"/>
 
 </databaseChangeLog>
