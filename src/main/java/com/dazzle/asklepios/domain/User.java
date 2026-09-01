@@ -85,6 +85,14 @@ public class User extends AbstractAuditingEntity<Long> implements Serializable {
     @Column("birth_date")
     private java.time.LocalDate birthDate;
 
+    @Column("allow_ongoing_visit")
+    private boolean allowOngoingVisit;
+
+    @Column("can_un_discharge_urgent_care")
+    private boolean canUnDischargeUrgentCare;
+
+    @Column("can_un_complete_encounter")
+    private boolean canUnCompleteEncounter;
 
     @Column("gender")
     private Gender gender;

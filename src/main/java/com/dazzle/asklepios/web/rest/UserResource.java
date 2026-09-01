@@ -12,6 +12,7 @@ import com.dazzle.asklepios.web.rest.errors.BadRequestAlertException;
 import com.dazzle.asklepios.web.rest.errors.EmailAlreadyUsedException;
 import com.dazzle.asklepios.web.rest.errors.LoginAlreadyUsedException;
 import com.dazzle.asklepios.web.rest.util.HeaderUtil;
+import com.dazzle.asklepios.service.dto.UserEncountersAccessDTO;
 import com.dazzle.asklepios.web.rest.util.PaginationUtil;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
@@ -237,8 +238,6 @@ public class UserResource {
         @RequestParam(required = false) String name,
         @RequestParam(required = false) JobRole jobRole
     ) {
-
-
         Mono<Long> total = userRepository.countBasicUsers(login, email, name, jobRole);
 
         Flux<SimpleUserDTO> users =
@@ -263,6 +262,25 @@ public class UserResource {
         });
     }
 
+    @GetMapping("/users/{userId}/encounters-access")
+    public Mono<UserEncountersAccessDTO> getUserEncountersAccess(
+        @PathVariable Long userId
+    ) {
+        LOG.debug("REST request to get Encounters Access for User : {}", userId);
+
+        return userService.getUserEncountersAccess(userId);
+    }
+
+    @PutMapping("/users/{userId}/encounters-access")
+    public Mono<UserEncountersAccessDTO> updateUserEncountersAccess(
+        @PathVariable Long userId,
+        @RequestBody UserEncountersAccessDTO accessDTO
+    ) {
+        LOG.debug("REST request to update Encounters Access for User : {}", userId);
+
+        return userService.updateUserEncountersAccess(userId, accessDTO);
+    }
+
 
     private boolean isEmpty(String v) {
         return v == null || v.trim().isEmpty();
@@ -275,7 +293,6 @@ public class UserResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the "login" user, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/users/{login}")
-    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public Mono<AdminUserDTO> getUser(@PathVariable("login") String login) {
         LOG.debug("REST request to get User : {}", login);
         return userService
