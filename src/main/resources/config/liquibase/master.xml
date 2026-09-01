@@ -361,6 +361,7 @@
     file="/config/liquibase/changelog/currentmedication/1783350900_current_medication_replace_instructions_with_dosage_fields.xml"
     relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1776165512_BM_Appointment_Request.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/appUser/1788255133_FA_add_user_encounters_access.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/appointmentRequest/1779182296_S_appointment_request_preferred_date.xml"
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1776161006_H_Patient_Urgent_Care_Medication_Order.xml"
@@ -568,4 +569,6 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1787990400_BM_price_list_item_non_standard_code.xml"
            relativeToChangelogFile="false"/>
+
+
 </databaseChangeLog>
