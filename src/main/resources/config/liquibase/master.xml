@@ -26,6 +26,7 @@
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1760438060_BM_Language.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1760550923_BM_Language_Translation.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/languageTranslation/1787500388_R_Load_more_language_translation_data.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1760537415_H_medicalSheet.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1760537462 _H_medicalSheetsNurseStation.xml"
            relativeToChangelogFile="false"/>
@@ -112,6 +113,7 @@
   <include file="config/liquibase/changelog/1761641123_H_Diagnostic_Test.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/diagnostic_test/1779627074_H_add_modality_column.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/diagnostic_test/H_add_integration_code_column.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762159584_S_InventoryTransferAttachments.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762066546_B_LOINC_Code.xml" relativeToChangelogFile="false"/>
@@ -359,6 +361,7 @@
     file="/config/liquibase/changelog/currentmedication/1783350900_current_medication_replace_instructions_with_dosage_fields.xml"
     relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1776165512_BM_Appointment_Request.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/appUser/1788255133_FA_add_user_encounters_access.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/appointmentRequest/1779182296_S_appointment_request_preferred_date.xml"
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1776161006_H_Patient_Urgent_Care_Medication_Order.xml"
@@ -568,4 +571,9 @@
   <include file="/config/liquibase/changelog/point-of-sale/pos-configuration.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/point-of-sale/pos-transaction.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/point-of-sale/pos-check-in.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1787990400_BM_price_list_item_non_standard_code.xml"
+           relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/1788291540_SA_EncounterDischargeLog.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/claim_WaseelIntegration/1788292800_BM_claim_request_type.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>

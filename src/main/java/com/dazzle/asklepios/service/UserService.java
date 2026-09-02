@@ -1,5 +1,6 @@
 package com.dazzle.asklepios.service;
 
+import com.dazzle.asklepios.service.dto.UserEncountersAccessDTO;
 import com.dazzle.asklepios.config.Constants;
 import com.dazzle.asklepios.domain.Authority;
 import com.dazzle.asklepios.domain.User;
@@ -90,6 +91,40 @@ public class UserService {
             .flatMap(this::saveUser);
     }
 
+    @Transactional(readOnly = true)
+    public Mono<UserEncountersAccessDTO> getUserEncountersAccess(Long userId) {
+        return userRepository
+            .findById(userId)
+            .map(user -> new UserEncountersAccessDTO(
+                user.isAllowOngoingVisit(),
+                user.isCanUnDischargeUrgentCare(),
+                user.isCanUnCompleteEncounter()
+            ));
+    }
+
+
+    @Transactional
+    public Mono<UserEncountersAccessDTO> updateUserEncountersAccess(
+        Long userId,
+        UserEncountersAccessDTO accessDTO
+    ) {
+        return userRepository
+            .findById(userId)
+            .map(user -> {
+                user.setAllowOngoingVisit(accessDTO.isAllowOngoingVisit());
+                user.setCanUnDischargeUrgentCare(accessDTO.isCanUnDischargeUrgentCare());
+                user.setCanUnCompleteEncounter(accessDTO.isCanUnCompleteEncounter());
+
+                return user;
+            })
+            .flatMap(this::saveUser)
+            .map(user -> new UserEncountersAccessDTO(
+                user.isAllowOngoingVisit(),
+                user.isCanUnDischargeUrgentCare(),
+                user.isCanUnCompleteEncounter()
+            ));
+    }
+
     @Transactional
     public Mono<User> createUser(AdminUserDTO userDTO) {
         User user = new User();
@@ -156,9 +191,11 @@ public class UserService {
             .map(user -> {
                 user.setFirstName(userDTO.getFirstName());
                 user.setLastName(userDTO.getLastName());
+
                 if (userDTO.getEmail() != null) {
                     user.setEmail(userDTO.getEmail().toLowerCase());
                 }
+
                 user.setImageUrl(userDTO.getImageUrl());
                 user.setActivated(userDTO.isActivated());
                 user.setLangKey(userDTO.getLangKey());
@@ -166,11 +203,18 @@ public class UserService {
                 user.setBirthDate(userDTO.getBirthDate());
                 user.setGender(userDTO.getGender());
                 user.setJobRole(userDTO.getJobRole());
-                if(userDTO.getSecurityAccessLevel() ==null){
+
+                if (userDTO.getSecurityAccessLevel() == null) {
                     user.setSecurityAccessLevel(SecurityLevel.NORMAL_1);
                 }
+
+                user.setAllowOngoingVisit(userDTO.isAllowOngoingVisit());
+                user.setCanUnDischargeUrgentCare(userDTO.isCanUnDischargeUrgentCare());
+                user.setCanUnCompleteEncounter(userDTO.isCanUnCompleteEncounter());
+
                 Set<Authority> managedAuthorities = user.getAuthorities();
                 managedAuthorities.clear();
+
                 return user;
             })
             .flatMap(this::saveUser)
