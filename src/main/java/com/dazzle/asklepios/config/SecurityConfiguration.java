@@ -83,6 +83,10 @@ public class SecurityConfiguration {
                 .pathMatchers("/api/account/reset-password/init").permitAll()
                 .pathMatchers("/api/account/reset-password/finish").permitAll()
                 .pathMatchers("/v3/api-docs").authenticated()
+                .pathMatchers(
+                    HttpMethod.GET,
+                    "/api/admin/users/*"
+                ).authenticated()
                 .pathMatchers("/api/admin/**").hasAuthority(AuthoritiesConstants.ADMIN)
                 .pathMatchers("/services/*/management/health/readiness").permitAll()
                 .pathMatchers("/setup-service/v3/api-docs/**").authenticated()
