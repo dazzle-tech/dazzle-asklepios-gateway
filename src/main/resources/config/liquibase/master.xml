@@ -322,6 +322,8 @@
   <include
     file="/config/liquibase/changelog/PatientObservation/1777451067_B_PatientObservation_Complaints_BloodGroup.xml"
     relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patientObservationsComplaints/1788374576FA_patient_observations_complaints.xml" relativeToChangelogFile="false"/>
+
   <include file="/config/liquibase/changelog/1769266434_B_painAssessment.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1769277985_B_additionalMeasurements.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1770560484_B_vitalSignsLog.xml" relativeToChangelogFile="false"/>
