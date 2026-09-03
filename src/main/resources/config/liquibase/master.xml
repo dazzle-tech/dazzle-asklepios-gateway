@@ -330,7 +330,9 @@
   <include file="/config/liquibase/changelog/1770560484_B_vitalSignsLog.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1767772955_B_encounterVaccination.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1770017212_B_encounterAssessments.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1788442979_R_encounter_assessments_log.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1770024936_B_encounterPlan.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1788451226_R_Encounter_Plans_Audit.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1770108176_B_patientDiagnoses.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1769596005_BM_Patient_Prescription.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1769071937_BM_Patient_Prescription_Medications.xml"
