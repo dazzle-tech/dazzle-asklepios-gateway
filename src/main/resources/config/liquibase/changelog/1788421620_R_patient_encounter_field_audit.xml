@@ -33,7 +33,9 @@
         <constraints nullable="false"/>
       </column>
 
-      <column name="log_by" type="varchar(50)"/>
+      <column name="log_by" type="varchar(50)">
+      <constraints nullable="false"/>
+    </column>
 
     </createTable>
 
