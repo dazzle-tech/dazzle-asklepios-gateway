@@ -339,6 +339,8 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/patientPrescriptionMedication/1786472666_H_Add_Cancel_Reason.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patientPrescriptionMedication/1788544896_FA_add_other_medication_name_colum.xml"
+           relativeToChangelogFile="false"/>
   <include
     file="/config/liquibase/changelog/patientPrescriptionMedication/1777282256_S_PatientPrescriptionMedications.xml"
     relativeToChangelogFile="false"/>
