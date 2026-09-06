@@ -22,15 +22,7 @@ xsi:schemaLocation="
     columnName="surgery"
     columnDataType="varchar(255)"/>
 
-      tableName="surgical_history"
-      columnName="surgery"
-      columnDataType="varchar(255)"/>
-
     <dropNotNullConstraint
-      tableName="surgical_history"
-      columnName="date_of_surgery"
-      columnDataType="date"/>
-
       tableName="surgical_history"
       columnName="date_of_surgery"
       columnDataType="date"/>
@@ -40,15 +32,7 @@ xsi:schemaLocation="
       columnName="facility"
       columnDataType="varchar(255)"/>
 
-      tableName="surgical_history"
-      columnName="facility"
-      columnDataType="varchar(255)"/>
-
     <dropNotNullConstraint
-      tableName="surgical_history"
-      columnName="anesthesia_type"
-      columnDataType="varchar(100)"/>
-
       tableName="surgical_history"
       columnName="anesthesia_type"
       columnDataType="varchar(100)"/>
