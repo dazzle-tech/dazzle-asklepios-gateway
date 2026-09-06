@@ -548,7 +548,7 @@
   <include file="config/liquibase/changelog/1786204800_BM_price_list_item_requires_pre_authorization.xml"
            relativeToChangelogFile="false"/>
 
-  <include file="config/liquibase/changelog/billing/1785869584_B_add_missing_data.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/billing/1785869584_B_add_missing_data.xml" relativeToChangelogFile="false"/>
 
   <include file="config/liquibase/changelog/billing/1785870000_B_add_audit_columns_to_billing_debit_transaction.xml"
            relativeToChangelogFile="false"/>
@@ -580,5 +580,6 @@
 <include file="config/liquibase/changelog/1788291540_SA_EncounterDischargeLog.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/claim_WaseelIntegration/1788292800_BM_claim_request_type.xml"
            relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/surgicalhistory/1788721153_H_Add_Patient_Is_free.xml" relativeToChangelogFile="false"/>
 
 </databaseChangeLog>
