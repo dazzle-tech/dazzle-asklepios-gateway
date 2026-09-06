@@ -22,48 +22,65 @@ xsi:schemaLocation="
     columnName="surgery"
     columnDataType="varchar(255)"/>
 
-  <dropNotNullConstraint
-    tableName="surgical_history"
-    columnName="date_of_surgery"
-    columnDataType="date"/>
-
-  <dropNotNullConstraint
-    tableName="surgical_history"
-    columnName="facility"
-    columnDataType="varchar(255)"/>
-
-  <dropNotNullConstraint
-    tableName="surgical_history"
-    columnName="anesthesia_type"
-    columnDataType="varchar(100)"/>
-
-  <rollback>
-
-    <addNotNullConstraint
       tableName="surgical_history"
       columnName="surgery"
       columnDataType="varchar(255)"/>
 
-    <addNotNullConstraint
+    <dropNotNullConstraint
       tableName="surgical_history"
       columnName="date_of_surgery"
       columnDataType="date"/>
 
-    <addNotNullConstraint
+      tableName="surgical_history"
+      columnName="date_of_surgery"
+      columnDataType="date"/>
+
+    <dropNotNullConstraint
       tableName="surgical_history"
       columnName="facility"
       columnDataType="varchar(255)"/>
 
-    <addNotNullConstraint
+      tableName="surgical_history"
+      columnName="facility"
+      columnDataType="varchar(255)"/>
+
+    <dropNotNullConstraint
       tableName="surgical_history"
       columnName="anesthesia_type"
       columnDataType="varchar(100)"/>
 
-    <dropColumn tableName="surgical_history"
-                columnName="patient_is_free"/>
+      tableName="surgical_history"
+      columnName="anesthesia_type"
+      columnDataType="varchar(100)"/>
 
-  </rollback>
+    <rollback>
 
-</changeSet>
+      <addNotNullConstraint
+        tableName="surgical_history"
+        columnName="surgery"
+        columnDataType="varchar(255)"/>
+
+      <addNotNullConstraint
+        tableName="surgical_history"
+        columnName="date_of_surgery"
+        columnDataType="date"/>
+
+      <addNotNullConstraint
+        tableName="surgical_history"
+        columnName="facility"
+        columnDataType="varchar(255)"/>
+
+      <addNotNullConstraint
+        tableName="surgical_history"
+        columnName="anesthesia_type"
+        columnDataType="varchar(100)"/>
+
+      <dropColumn tableName="surgical_history"
+                  columnName="patient_is_free"/>
+
+    </rollback>
+
+  </changeSet>
+
 
 </databaseChangeLog>
