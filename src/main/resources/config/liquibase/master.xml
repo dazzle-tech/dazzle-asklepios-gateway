@@ -246,7 +246,7 @@
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/surgicalhistory/1785853870_R_surgical_history_widen_complications.xml"
            relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/surgicalhistory/H_Add_Patient_Is_free.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/surgicalhistory/1788721153_H_Add_Patient_Is_free.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1768721356_Q_Social_History.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/socialhistory/1778663643_social_history_add_cancel_fields.xml"
            relativeToChangelogFile="false"/>
