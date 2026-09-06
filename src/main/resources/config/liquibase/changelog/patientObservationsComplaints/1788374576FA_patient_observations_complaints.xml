@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+  <changeSet id="1788374576" author="Faroukdhelea">
+
+    <addColumn tableName="patient_observations_complaints">
+
+      <column
+        name="by_patient"
+        type="boolean"
+        defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <column
+        name="source_of_information"
+        type="varchar(50)"/>
+
+      <column
+        name="mode_of_arrival"
+        type="varchar(50)"/>
+
+    </addColumn>
+
+  </changeSet>
+
+</databaseChangeLog>
