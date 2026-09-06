@@ -1,68 +1,69 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <databaseChangeLog
-  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="
-        http://www.liquibase.org/xml/ns/dbchangelog
-        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-  <changeSet id="H000000000061" author="hanan253yahya">
+<changeSet id="H00000000000004_add_patient_is_free" author="hanan253yahya">
 
-    <addColumn tableName="surgical_history">
-      <column name="patient_is_free"
-              type="boolean"
-              defaultValueBoolean="false">
-        <constraints nullable="false"/>
-      </column>
-    </addColumn>
+  <addColumn tableName="surgical_history">
 
-    <dropNotNullConstraint
+    <column name="patient_is_free"
+            type="boolean"
+            defaultValueBoolean="false">
+      <constraints nullable="false"/>
+    </column>
+
+  </addColumn>
+  <dropNotNullConstraint
+    tableName="surgical_history"
+    columnName="surgery"
+    columnDataType="varchar(255)"/>
+
+  <dropNotNullConstraint
+    tableName="surgical_history"
+    columnName="date_of_surgery"
+    columnDataType="date"/>
+
+  <dropNotNullConstraint
+    tableName="surgical_history"
+    columnName="facility"
+    columnDataType="varchar(255)"/>
+
+  <dropNotNullConstraint
+    tableName="surgical_history"
+    columnName="anesthesia_type"
+    columnDataType="varchar(100)"/>
+
+  <rollback>
+
+    <addNotNullConstraint
       tableName="surgical_history"
       columnName="surgery"
       columnDataType="varchar(255)"/>
 
-    <dropNotNullConstraint
+    <addNotNullConstraint
       tableName="surgical_history"
       columnName="date_of_surgery"
       columnDataType="date"/>
 
-    <dropNotNullConstraint
+    <addNotNullConstraint
       tableName="surgical_history"
       columnName="facility"
       columnDataType="varchar(255)"/>
 
-    <dropNotNullConstraint
+    <addNotNullConstraint
       tableName="surgical_history"
       columnName="anesthesia_type"
       columnDataType="varchar(100)"/>
 
-    <rollback>
+    <dropColumn tableName="surgical_history"
+                columnName="patient_is_free"/>
 
-      <addNotNullConstraint
-        tableName="surgical_history"
-        columnName="surgery"
-        columnDataType="varchar(255)"/>
+  </rollback>
 
-      <addNotNullConstraint
-        tableName="surgical_history"
-        columnName="date_of_surgery"
-        columnDataType="date"/>
-
-      <addNotNullConstraint
-        tableName="surgical_history"
-        columnName="facility"
-        columnDataType="varchar(255)"/>
-
-      <addNotNullConstraint
-        tableName="surgical_history"
-        columnName="anesthesia_type"
-        columnDataType="varchar(100)"/>
-
-      <dropColumn tableName="surgical_history"
-                  columnName="patient_is_free"/>
-
-    </rollback>
-
-  </changeSet>
+</changeSet>
 
 </databaseChangeLog>
