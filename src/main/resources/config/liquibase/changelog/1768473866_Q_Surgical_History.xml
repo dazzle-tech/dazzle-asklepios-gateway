@@ -5,72 +5,43 @@
   xsi:schemaLocation="
         http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
-  <changeSet id="QA000000000012" author="qais">
 
-  <createTable tableName="surgical_history">
-    <column name="id" type="bigint" autoIncrement="true" startWith="1">
-      <constraints primaryKey="true" nullable="false"/>
-    </column>
+  <changeSet id="H000000000060" author="hanan">
 
-    <column name="patient_id" type="bigint">
-      <constraints
-        nullable="false"
-        foreignKeyName="fk_surgical_history_patient"
-        references="patients(id)"/>
-    </column>
+    <!-- Remove NOT NULL constraints -->
 
-    <column name="surgery" type="varchar(255)">
-      <constraints nullable="false"/>
-    </column>
+    <dropNotNullConstraint
+      tableName="surgical_history"
+      columnName="surgery"
+      columnDataType="varchar(255)"/>
 
-    <column name="date_of_surgery" type="date">
-      <constraints nullable="false"/>
-    </column>
+    <dropNotNullConstraint
+      tableName="surgical_history"
+      columnName="date_of_surgery"
+      columnDataType="date"/>
 
+    <dropNotNullConstraint
+      tableName="surgical_history"
+      columnName="facility"
+      columnDataType="varchar(255)"/>
 
-    <column name="facility" type="varchar(255)">
-      <constraints nullable="false"/>
-    </column>
+    <dropNotNullConstraint
+      tableName="surgical_history"
+      columnName="anesthesia_type"
+      columnDataType="varchar(100)"/>
 
+    <!-- Add new field -->
 
-    <column name="anesthesia_type" type="varchar(100)">
-      <constraints nullable="false"/>
-    </column>
+    <addColumn tableName="surgical_history">
+      <column
+        name="patient_is_free"
+        type="boolean"
+        defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+    </addColumn>
 
-
-    <column name="complications" type="varchar(255)"/>
-
-
-
-
-    <column name="adverse_reactions_to_anesthesia" type="varchar(1000)"/>
-
-    <column name="has_implants_or_devices" type="boolean" defaultValueBoolean="false">
-
-
-
-
-      <constraints nullable="false"/>
-    </column>
-
-    <column name="implants_or_devices_description" type="varchar(1000)"/>
-
-    <column name="created_by" type="varchar(50)">
-      <constraints nullable="false"/>
-    </column>
-
-    <column name="created_date" type="timestamp" defaultValueComputed="now()">
-      <constraints nullable="false"/>
-    </column>
-    <column name="last_modified_by" type="varchar(50)"/>
-    <column name="last_modified_date" type="timestamp"/>
-
-  </createTable>
-
-  <sql><![CDATA[
-      CREATE UNIQUE INDEX ux_surgical_history_patient_surgery_date_ci
-        ON surgical_history (patient_id, lower(surgery), date_of_surgery);
-      ]]></sql>
   </changeSet>
+
 </databaseChangeLog>
 
