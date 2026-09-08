@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="BS000000000070" author="bushra_batool">
+    <createTable tableName="coverage_pre_approval">
+      <column name="id" type="bigint" autoIncrement="true" startWith="1000">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="coverage_contract_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="approval_scope" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="facility_id" type="bigint"/>
+      <column name="department_id" type="bigint"/>
+      <column name="encounter_type" type="varchar(30)"/>
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="coverage_pre_approval"
+      baseColumnNames="coverage_contract_id"
+      referencedTableName="coverage_contract"
+      referencedColumnNames="id"
+      constraintName="fk_coverage_pre_approval_contract"
+      onDelete="CASCADE"/>
+    <addForeignKeyConstraint
+      baseTableName="coverage_pre_approval"
+      baseColumnNames="facility_id"
+      referencedTableName="facility"
+      referencedColumnNames="id"
+      constraintName="fk_coverage_pre_approval_facility"/>
+    <addForeignKeyConstraint
+      baseTableName="coverage_pre_approval"
+      baseColumnNames="department_id"
+      referencedTableName="department"
+      referencedColumnNames="id"
+      constraintName="fk_coverage_pre_approval_department"/>
+
+    <createIndex tableName="coverage_pre_approval" indexName="idx_coverage_pre_approval_contract">
+      <column name="coverage_contract_id"/>
+    </createIndex>
+  </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="BS000000000068" author="bushra_batool">
+    <createTable tableName="coverage_discount">
+      <column name="id" type="bigint" autoIncrement="true" startWith="1000">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="coverage_contract_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="target_type" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="service_category" type="varchar(50)"/>
+      <column name="service_id" type="bigint"/>
+      <column name="encounter_type" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="discount_type" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="discount_value" type="decimal(19,4)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="coverage_discount"
+      baseColumnNames="coverage_contract_id"
+      referencedTableName="coverage_contract"
+      referencedColumnNames="id"
+      constraintName="fk_coverage_discount_contract"
+      onDelete="CASCADE"/>
+    <addForeignKeyConstraint
+      baseTableName="coverage_discount"
+      baseColumnNames="service_id"
+      referencedTableName="service"
+      referencedColumnNames="id"
+      constraintName="fk_coverage_discount_service"/>
+
+    <createIndex tableName="coverage_discount" indexName="idx_coverage_discount_contract">
+      <column name="coverage_contract_id"/>
+    </createIndex>
+  </changeSet>
+</databaseChangeLog>

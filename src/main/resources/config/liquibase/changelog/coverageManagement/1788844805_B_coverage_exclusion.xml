@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="BS000000000069" author="bushra_batool">
+    <createTable tableName="coverage_exclusion">
+      <column name="id" type="bigint" autoIncrement="true" startWith="1000">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="coverage_contract_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="exclusion_type" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="service_category" type="varchar(50)"/>
+      <column name="service_id" type="bigint"/>
+      <column name="all_diagnoses" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="diagnosis_id" type="bigint"/>
+      <column name="encounter_type" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="excluded_result" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="coverage_exclusion"
+      baseColumnNames="coverage_contract_id"
+      referencedTableName="coverage_contract"
+      referencedColumnNames="id"
+      constraintName="fk_coverage_exclusion_contract"
+      onDelete="CASCADE"/>
+    <addForeignKeyConstraint
+      baseTableName="coverage_exclusion"
+      baseColumnNames="service_id"
+      referencedTableName="service"
+      referencedColumnNames="id"
+      constraintName="fk_coverage_exclusion_service"/>
+    <addForeignKeyConstraint
+      baseTableName="coverage_exclusion"
+      baseColumnNames="diagnosis_id"
+      referencedTableName="icd_diagnosis"
+      referencedColumnNames="id"
+      constraintName="fk_coverage_exclusion_diagnosis"/>
+
+    <createIndex tableName="coverage_exclusion" indexName="idx_coverage_exclusion_contract">
+      <column name="coverage_contract_id"/>
+    </createIndex>
+  </changeSet>
+</databaseChangeLog>

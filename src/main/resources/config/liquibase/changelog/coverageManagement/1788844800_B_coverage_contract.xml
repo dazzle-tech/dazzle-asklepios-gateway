@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="BS000000000072" author="bushra_batool">
+    <createTable tableName="coverage_contract">
+      <column name="id" type="bigint" autoIncrement="true" startWith="1000">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="guarantor_type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="company_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="code" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="policy_number" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="coverage_basis" type="varchar(20)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="insurance_payer_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="price_list_setup_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="parent_payer_id" type="bigint"/>
+      <column name="class_name" type="varchar(20)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addUniqueConstraint
+      tableName="coverage_contract"
+      columnNames="guarantor_type, company_id, code"
+      constraintName="uk_coverage_contract_company_code"/>
+
+    <addForeignKeyConstraint
+      baseTableName="coverage_contract"
+      baseColumnNames="insurance_payer_id"
+      referencedTableName="nphies_payers"
+      referencedColumnNames="id"
+      constraintName="fk_coverage_contract_insurance_payer"/>
+
+    <addForeignKeyConstraint
+      baseTableName="coverage_contract"
+      baseColumnNames="parent_payer_id"
+      referencedTableName="nphies_payers"
+      referencedColumnNames="id"
+      constraintName="fk_coverage_contract_parent_payer"/>
+
+    <addForeignKeyConstraint
+      baseTableName="coverage_contract"
+      baseColumnNames="price_list_setup_id"
+      referencedTableName="price_list_setup"
+      referencedColumnNames="id"
+      constraintName="fk_coverage_contract_price_list"/>
+
+    <createIndex tableName="coverage_contract" indexName="idx_coverage_contract_company">
+      <column name="guarantor_type"/>
+      <column name="company_id"/>
+    </createIndex>
+    <createIndex tableName="coverage_contract" indexName="idx_coverage_contract_policy">
+      <column name="policy_number"/>
+    </createIndex>
+    <createIndex tableName="coverage_contract" indexName="idx_coverage_contract_active">
+      <column name="is_active"/>
+    </createIndex>
+  </changeSet>
+</databaseChangeLog>

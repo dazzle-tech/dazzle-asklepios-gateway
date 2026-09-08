@@ -571,4 +571,21 @@
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/payorSetup/1787810000_B_create_tpa_definitions.xml"
            relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1788844800_B_coverage_contract.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1788844801_B_coverage_copayment.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1788844802_B_coverage_term.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1788844803_B_coverage_term_item.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1788844804_B_coverage_discount.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1788844805_B_coverage_exclusion.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1788844806_B_coverage_pre_approval.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1788844807_B_coverage_pre_approval_item.xml"
+           relativeToChangelogFile="false"/>
+
 </databaseChangeLog>
