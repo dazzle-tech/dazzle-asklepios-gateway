@@ -583,4 +583,6 @@
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/surgicalhistory/1788721153_H_Add_Patient_Is_free.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/patientproblems/1788723942_H_Add_Patient_is_Free.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/1788867600_B_icd_category_as_diagnosis.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
