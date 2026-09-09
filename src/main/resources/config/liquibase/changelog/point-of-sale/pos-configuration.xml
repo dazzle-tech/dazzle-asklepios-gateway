@@ -24,7 +24,9 @@
       <column name="client_id" type="varchar(255)">
         <constraints nullable="false"/>
       </column>
-
+      <column name="client_secret" type="varchar(150)">
+        <constraints nullable="false"/>
+      </column>
       <column name="terminal_id" type="varchar(255)">
         <constraints nullable="false"
                      unique="true"/>
