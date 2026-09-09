@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="20260909001-create-point-of-sale-webhook-log" author="hanan">
+    <createTable tableName="point_of_sale_webhook_log">
+
+      <column name="id" type="BIGINT" autoIncrement="true">
+        <constraints primaryKey="true"
+                     primaryKeyName="pk_point_of_sale_webhook_log"
+                     nullable="false"/>
+      </column>
+
+      <column name="point_of_sale_transaction_id" type="BIGINT"/>
+
+      <column name="external_transaction_id" type="VARCHAR(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="order_id" type="VARCHAR(100)"/>
+
+      <column name="response_code" type="VARCHAR(50)"/>
+
+      <column name="response_message" type="VARCHAR(500)"/>
+
+      <column name="transaction_status" type="VARCHAR(50)"/>
+
+      <column name="rrn" type="VARCHAR(100)"/>
+
+      <column name="auth_code" type="VARCHAR(100)"/>
+
+      <column name="terminal_id" type="VARCHAR(100)"/>
+
+      <column name="merchant_id" type="VARCHAR(100)"/>
+
+      <column name="batch_no" type="VARCHAR(100)"/>
+
+      <column name="stan_no" type="VARCHAR(100)"/>
+
+      <column name="scheme_label" type="VARCHAR(100)"/>
+
+      <column name="product_info" type="VARCHAR(500)"/>
+
+      <column name="merchant_name" type="VARCHAR(255)"/>
+
+      <column name="merchant_address" type="VARCHAR(500)"/>
+
+      <column name="application_version" type="VARCHAR(100)"/>
+
+      <column name="ecr_transaction_reference_number"
+              type="VARCHAR(100)"/>
+
+      <column name="processed"
+              type="BOOLEAN"
+              defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="processing_status"
+              type="VARCHAR(50)"/>
+
+      <column name="processing_error"
+              type="TEXT"/>
+
+      <column name="raw_payload"
+              type="TEXT"/>
+
+      <column name="created_by"
+              type="VARCHAR(50)"/>
+
+      <column name="created_date"
+              type="TIMESTAMP"/>
+
+      <column name="last_modified_by"
+              type="VARCHAR(50)"/>
+
+      <column name="last_modified_date"
+              type="TIMESTAMP"/>
+
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="point_of_sale_webhook_log"
+      baseColumnNames="point_of_sale_transaction_id"
+      constraintName="fk_pos_webhook_log_transaction"
+      referencedTableName="point_of_sale_transaction"
+      referencedColumnNames="id"/>
+
+
+
+  </changeSet>
+
+</databaseChangeLog>
