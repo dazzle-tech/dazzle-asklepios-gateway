@@ -31,23 +31,23 @@
       </column>
 
 
-      <column name="face_lov" type="varchar(100)">
+      <column name="face" type="varchar(100)">
         <constraints nullable="false"/>
       </column>
 
-      <column name="legs_lov" type="varchar(100)">
+      <column name="legs" type="varchar(100)">
         <constraints nullable="false"/>
       </column>
 
-      <column name="activity_lov" type="varchar(100)">
+      <column name="activity" type="varchar(100)">
         <constraints nullable="false"/>
       </column>
 
-      <column name="cry_lov" type="varchar(100)">
+      <column name="cry" type="varchar(100)">
         <constraints nullable="false"/>
       </column>
 
-      <column name="consolability_lov" type="varchar(100)">
+      <column name="consolability" type="varchar(100)">
         <constraints nullable="false"/>
       </column>
 
