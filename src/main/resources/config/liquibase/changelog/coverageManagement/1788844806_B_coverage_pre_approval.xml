@@ -11,9 +11,8 @@
       <column name="id" type="bigint" autoIncrement="true" startWith="1000">
         <constraints primaryKey="true" nullable="false"/>
       </column>
-      <column name="coverage_contract_id" type="bigint">
-        <constraints nullable="false"/>
-      </column>
+      <column name="coverage_contract_id" type="bigint"/>
+      <column name="tpa_definition_id" type="bigint"/>
       <column name="approval_scope" type="varchar(30)">
         <constraints nullable="false"/>
       </column>
@@ -42,6 +41,12 @@
       onDelete="CASCADE"/>
     <addForeignKeyConstraint
       baseTableName="coverage_pre_approval"
+      baseColumnNames="tpa_definition_id"
+      referencedTableName="tpa_definitions"
+      referencedColumnNames="id"
+      constraintName="fk_coverage_pre_approval_tpa"/>
+    <addForeignKeyConstraint
+      baseTableName="coverage_pre_approval"
       baseColumnNames="facility_id"
       referencedTableName="facility"
       referencedColumnNames="id"
@@ -55,6 +60,9 @@
 
     <createIndex tableName="coverage_pre_approval" indexName="idx_coverage_pre_approval_contract">
       <column name="coverage_contract_id"/>
+    </createIndex>
+    <createIndex tableName="coverage_pre_approval" indexName="idx_coverage_pre_approval_tpa">
+      <column name="tpa_definition_id"/>
     </createIndex>
   </changeSet>
 </databaseChangeLog>

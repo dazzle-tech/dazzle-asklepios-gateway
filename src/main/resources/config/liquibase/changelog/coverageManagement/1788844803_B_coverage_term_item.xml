@@ -17,8 +17,9 @@
       <column name="category_scope" type="varchar(30)">
         <constraints nullable="false"/>
       </column>
-      <column name="service_category" type="varchar(50)"/>
+      <column name="billing_item_type" type="varchar(50)"/>
       <column name="service_id" type="bigint"/>
+      <column name="item_name" type="varchar(255)"/>
       <column name="value_type" type="varchar(30)">
         <constraints nullable="false"/>
       </column>
@@ -45,12 +46,6 @@
       referencedColumnNames="id"
       constraintName="fk_coverage_term_item_term"
       onDelete="CASCADE"/>
-    <addForeignKeyConstraint
-      baseTableName="coverage_term_item"
-      baseColumnNames="service_id"
-      referencedTableName="service"
-      referencedColumnNames="id"
-      constraintName="fk_coverage_term_item_service"/>
 
     <createIndex tableName="coverage_term_item" indexName="idx_coverage_term_item_term">
       <column name="coverage_term_id"/>

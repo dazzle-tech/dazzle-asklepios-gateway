@@ -11,14 +11,14 @@
       <column name="id" type="bigint" autoIncrement="true" startWith="1000">
         <constraints primaryKey="true" nullable="false"/>
       </column>
-      <column name="coverage_contract_id" type="bigint">
-        <constraints nullable="false"/>
-      </column>
+      <column name="coverage_contract_id" type="bigint"/>
+      <column name="tpa_definition_id" type="bigint"/>
       <column name="exclusion_type" type="varchar(30)">
         <constraints nullable="false"/>
       </column>
-      <column name="service_category" type="varchar(50)"/>
+      <column name="billing_item_type" type="varchar(50)"/>
       <column name="service_id" type="bigint"/>
+      <column name="item_name" type="varchar(255)"/>
       <column name="all_diagnoses" type="boolean" defaultValueBoolean="false">
         <constraints nullable="false"/>
       </column>
@@ -51,10 +51,10 @@
       onDelete="CASCADE"/>
     <addForeignKeyConstraint
       baseTableName="coverage_exclusion"
-      baseColumnNames="service_id"
-      referencedTableName="service"
+      baseColumnNames="tpa_definition_id"
+      referencedTableName="tpa_definitions"
       referencedColumnNames="id"
-      constraintName="fk_coverage_exclusion_service"/>
+      constraintName="fk_coverage_exclusion_tpa"/>
     <addForeignKeyConstraint
       baseTableName="coverage_exclusion"
       baseColumnNames="diagnosis_id"
@@ -64,6 +64,9 @@
 
     <createIndex tableName="coverage_exclusion" indexName="idx_coverage_exclusion_contract">
       <column name="coverage_contract_id"/>
+    </createIndex>
+    <createIndex tableName="coverage_exclusion" indexName="idx_coverage_exclusion_tpa">
+      <column name="tpa_definition_id"/>
     </createIndex>
   </changeSet>
 </databaseChangeLog>
