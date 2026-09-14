@@ -19,6 +19,7 @@
   <include file="/config/liquibase/changelog/1758455979_S_departments.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/departments/1776667781_R_departments_working_days.xml"
            relativeToChangelogFile="false"/>
+
   <include file="/config/liquibase/changelog/1759823656_S_UserDepartments.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/userDepartment/1780583058_S_UserDepartmentAllowBookingFlag.xml"
            relativeToChangelogFile="false"/>
@@ -605,5 +606,7 @@
   <include file="config/liquibase/changelog/patientproblems/1788723942_H_Add_Patient_is_Free.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1788851627_R_FLACC_Pain_Scale.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1788867600_B_icd_category_as_diagnosis.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/departments/20260914_department_age_specific.xml"
            relativeToChangelogFile="false"/>
 </databaseChangeLog>
