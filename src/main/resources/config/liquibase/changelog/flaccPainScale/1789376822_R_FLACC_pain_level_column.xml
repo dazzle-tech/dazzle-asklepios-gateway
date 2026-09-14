@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="FLACC_Pain_Scale_Add_Pain_Level" author="Rawan-Yahya">
+
+    <addColumn tableName="patient_flacc_pain_scale">
+
+      <column name="pain_level" type="varchar(50)"/>
+
+    </addColumn>
+
+    <sql>
+      UPDATE patient_flacc_pain_scale
+      SET pain_level =
+      CASE
+      WHEN total_score = 0 THEN 'NO_PAIN'
+      WHEN total_score BETWEEN 1 AND 3 THEN 'MILD_PAIN'
+      WHEN total_score BETWEEN 4 AND 7 THEN 'MODERATE_PAIN'
+      WHEN total_score BETWEEN 8 AND 10 THEN 'SEVERE_PAIN'
+      END;
+    </sql>
+
+    <addNotNullConstraint
+      tableName="patient_flacc_pain_scale"
+      columnName="pain_level"
+      columnDataType="varchar(50)"/>
+
+  </changeSet>
+
+</databaseChangeLog>
