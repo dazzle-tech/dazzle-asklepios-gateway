@@ -384,6 +384,10 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/urgentCareMedicationOrder/H_Add_Actual_Administration_TIme.xml"
            relativeToChangelogFile="false"/>
+
+  <include file="config/liquibase/changelog/urgentCareMedicationOrder/1789305584_FA_FREQUANCY_RECORD.xml"
+           relativeToChangelogFile="false"/>
+
   <include file="/config/liquibase/changelog/1776164078_S_availability_template_interval_break.xml"
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1776673436_Q_Dental_Procedure.xml" relativeToChangelogFile="false"/>
