@@ -219,6 +219,8 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1767854260_H_Diagnostic_Order_Test_CollectSample.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/DiagnosticOrderTestCollectSample/1789293204_FA_Diagnostic_Order_Test_CollectSample.xml"
+           relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/collectSample/H_DIAG_COLLECTED_SAMPLES_QUANTITY_NULLABLE.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1766065547_BM_Form_Template.xml" relativeToChangelogFile="false"/>
