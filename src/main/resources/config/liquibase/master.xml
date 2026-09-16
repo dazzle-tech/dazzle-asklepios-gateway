@@ -587,5 +587,7 @@
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/coverageManagement/1788844807_B_coverage_pre_approval_item.xml"
            relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1788844808_B_approval_coverage_company.xml"
+           relativeToChangelogFile="false"/>
 
 </databaseChangeLog>
