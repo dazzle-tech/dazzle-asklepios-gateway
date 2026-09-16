@@ -39,6 +39,7 @@
       <column name="is_active" type="boolean" defaultValueBoolean="true">
         <constraints nullable="false"/>
       </column>
+      <column name="approval_coverage_company" type="varchar(20)"/>
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>
       </column>

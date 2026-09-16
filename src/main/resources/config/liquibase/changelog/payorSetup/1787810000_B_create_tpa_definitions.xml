@@ -40,6 +40,7 @@
       <column name="address" type="varchar(2000)"/>
       <column name="phone" type="varchar(50)"/>
       <column name="email" type="varchar(255)"/>
+      <column name="approval_coverage_company" type="varchar(20)"/>
 
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>
