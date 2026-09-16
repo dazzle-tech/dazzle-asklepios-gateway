@@ -232,9 +232,9 @@ spring:
         - id: discharge-report
           uri: ${services.discharge-report-service-url}
           predicates:
-            - Path=/api/ai/v1/discharge-report/**
+            - Path=/api/ai/v1/discharge-report-service/**
           filters:
-            - RewritePath=/api/ai/v1/discharge-report/(?<segment>.*),/api/v1/${segment}
+            - RewritePath=/api/ai/v1/discharge-report-service/(?<segment>.*),/${segment}
 
         - id: clinical-summary
           uri: ${services.clinical-summary-service-url}
