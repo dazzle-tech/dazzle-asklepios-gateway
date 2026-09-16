@@ -30,7 +30,7 @@ services:
   clinical-recommendations-service-url: http://clinical-recommendations-service:8007
   patient-timeline-service-url: http://patient-timeline-service:8001
   auto-population-service-url: http://auto-population-service:8010
-  discharge-report-service-url: http://discharge-report-service:8005
+  discharge-report-service-url: http://discharge-report-generator-service:8005
 spring:
   devtools:
     restart:

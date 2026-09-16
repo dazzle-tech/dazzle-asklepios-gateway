@@ -26,7 +26,7 @@ services:
   clinical-summary-service-url: http://localhost:8003
   clinical-recommendations-service-url: http://localhost:8004
   auto-population-service-url: http://auto-population-service:8010
-  discharge-report-service-url: http://discharge-report-service:8005
+  discharge-report-service-url: http://discharge-report-generator-service:8005
 
 spring:
   devtools:
