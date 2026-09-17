@@ -28,7 +28,7 @@ services:
   auto-population-service-url: http://auto-population-service:8010
   discharge-report-service-url: http://discharge-report-service:8005
   ocr-parsing-service-url: http://ocr-parsing-service:8012
-  lab-result-interpreter-service-url: http://lab-result-interpreter-service:8003
+  lab-result-interpreter-service-url: http://localhost:8003
 spring:
   devtools:
     restart:
