@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="H_POINT_OF_SALE_TRANSACTION" author="hanan">
+
+    <createTable tableName="point_of_sale_transaction">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false"
+                     primaryKey="true"
+                     primaryKeyName="pk_point_of_sale_transaction"/>
+      </column>
+
+      <column name="source_type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="source_reference_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="patient_payment_id" type="bigint"/>
+
+      <column name="configuration_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="order_id" type="varchar(255)">
+        <constraints nullable="false"
+                     unique="true"/>
+      </column>
+
+      <column name="external_transaction_id" type="varchar(100)"/>
+      <column name="transaction_type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="transaction_status" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="amount" type="numeric(21,2)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="currency_code" type="varchar(10)"/>
+
+      <column name="response_code" type="varchar(50)"/>
+
+      <column name="response_message" type="varchar(500)"/>
+
+      <column name="rrn" type="varchar(255)"/>
+
+      <column name="auth_code" type="varchar(255)"/>
+
+      <column name="terminal_id" type="varchar(255)"/>
+
+      <column name="merchant_id" type="varchar(255)"/>
+
+      <column name="batch_no" type="varchar(255)"/>
+
+      <column name="payment_method" type="varchar(100)"/>
+
+      <column name="scheme_label" type="varchar(100)"/>
+
+      <column name="transaction_date" type="timestamp"/>
+
+      <column name="webhook_received"
+              type="boolean"
+              defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="original_transaction_id" type="bigint"/>
+      <column name="stan_no" type="varchar(100)"/>
+
+      <column name="product_info" type="varchar(255)"/>
+
+      <column name="merchant_name" type="varchar(500)"/>
+
+      <column name="merchant_address" type="varchar(500)"/>
+
+      <column name="ecr_transaction_reference_number"
+              type="varchar(255)"/>
+
+      <column name="application_version"
+              type="varchar(100)"/>
+
+      <column name="raw_request" type="text"/>
+
+      <column name="raw_response" type="text"/>
+
+      <column name="created_by" type="varchar(50)"/>
+
+      <column name="created_date" type="timestamp"/>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="point_of_sale_transaction"
+      baseColumnNames="configuration_id"
+      referencedTableName="point_of_sale_configuration"
+      referencedColumnNames="id"
+      constraintName="fk_pos_transaction_configuration"/>
+
+    <addForeignKeyConstraint
+      baseTableName="point_of_sale_transaction"
+      baseColumnNames="original_transaction_id"
+      referencedTableName="point_of_sale_transaction"
+      referencedColumnNames="id"
+      constraintName="fk_pos_transaction_original"/>
+
+    <addForeignKeyConstraint
+      baseTableName="point_of_sale_transaction"
+      baseColumnNames="patient_payment_id"
+      referencedTableName="patient_payments"
+      referencedColumnNames="id"
+      constraintName="fk_pos_transaction_patient_payment"/>
+
+    <addForeignKeyConstraint
+      baseTableName="point_of_sale_transaction"
+      baseColumnNames="patient_id"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+      constraintName="fk_pos_transaction_patient"/>
+
+    <createIndex
+      tableName="point_of_sale_transaction"
+      indexName="idx_pos_transaction_order_id">
+
+      <column name="order_id"/>
+
+    </createIndex>
+
+    <createIndex
+      tableName="point_of_sale_transaction"
+      indexName="idx_pos_transaction_rrn">
+
+      <column name="rrn"/>
+
+    </createIndex>
+
+    <createIndex
+      tableName="point_of_sale_transaction"
+      indexName="idx_pos_transaction_source">
+
+      <column name="source_type"/>
+      <column name="source_reference_id"/>
+
+    </createIndex>
+
+
+  </changeSet>
+
+</databaseChangeLog>

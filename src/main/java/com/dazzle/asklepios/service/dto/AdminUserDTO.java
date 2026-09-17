@@ -74,7 +74,9 @@ public class AdminUserDTO implements Serializable {
     private JobRole jobRole;
     private SecurityLevel securityAccessLevel;
     private boolean isAdmin;
-
+    private boolean allowOngoingVisit;
+    private boolean canUnDischargeUrgentCare;
+    private boolean canUnCompleteEncounter;
 
     public AdminUserDTO() {
     }
@@ -105,6 +107,9 @@ public class AdminUserDTO implements Serializable {
         this.gender = user.getGender();
         this.jobRole = user.getJobRole();
         this.securityAccessLevel = user.getSecurityAccessLevel();
+        this.allowOngoingVisit = user.isAllowOngoingVisit();
+        this.canUnDischargeUrgentCare = user.isCanUnDischargeUrgentCare();
+        this.canUnCompleteEncounter = user.isCanUnCompleteEncounter();
     }
 
 }
