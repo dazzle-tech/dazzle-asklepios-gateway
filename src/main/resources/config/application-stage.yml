@@ -1,8 +1,11 @@
-
+request-trace:
+  file: logs/request-trace.log
 logging:
   level:
-    ROOT: INFO
-    com.dazzle.asklepios: INFO
+    ROOT: DEBUG
+    org.hibernate.SQL: DEBUG
+    com.dazzle.asklepios: DEBUG
+    com.dazzle.asklepios.requesttrace: INFO
 
 management:
   prometheus:
