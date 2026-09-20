@@ -247,6 +247,8 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1769941783_H_Diagnostic_Order_Test_Report.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/diagnosticOrderTest/1790000001_H_Diagnostic_Order_Test_Report_Radiologist_Fields.xml"
+           relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1769416461_Q_Consultation.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1768473866_Q_Surgical_History.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/surgicalhistory/1778668757_surgical_history_add_cancel_fields.xml"
