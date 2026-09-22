@@ -67,6 +67,8 @@ public class SecurityConfiguration {
                 .pathMatchers(HttpMethod.POST, "/api/account/create-password/finish").permitAll()
                 .pathMatchers(HttpMethod.GET,  "/api/patient/patient-satisfaction-survey/submit").permitAll()
                 .pathMatchers(HttpMethod.POST, "/api/patient/patient-satisfaction-survey/submit").permitAll()
+                .pathMatchers(HttpMethod.POST, "/api/patient/patient-portal/request-otp").permitAll()
+                .pathMatchers(HttpMethod.POST, "/api/patient/patient-portal/verify-login-otp").permitAll()
                 .pathMatchers(HttpMethod.POST , "/api/hl7-events").permitAll()
                 .pathMatchers("/api/authenticate").permitAll()
                 .pathMatchers("/api/register").permitAll()
