@@ -613,6 +613,8 @@
   <include file="config/liquibase/changelog/report/1788091195_SA_ReportTemplate.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/report/1789570816_SA_ReportTemplate_templateType.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/1790069901_SA_ReportTemplate_jobRoleAndUsers.xml"
+           relativeToChangelogFile="false"/>
 
   <include file="config/liquibase/changelog/1788291540_SA_EncounterDischargeLog.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/claim_WaseelIntegration/1788292800_BM_claim_request_type.xml"
