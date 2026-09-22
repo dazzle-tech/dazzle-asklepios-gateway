@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="BS000000000076" author="batool_bushra">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <tableExists tableName="coverage_class"/>
+      </not>
+    </preConditions>
+
+    <createTable tableName="coverage_class">
+      <column name="id" type="bigint" autoIncrement="true" startWith="1000">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="coverage_contract_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="name" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="coverage_class"
+      baseColumnNames="coverage_contract_id"
+      referencedTableName="coverage_contract"
+      referencedColumnNames="id"
+      constraintName="fk_coverage_class_contract"
+      onDelete="CASCADE"/>
+
+    <createIndex tableName="coverage_class" indexName="idx_coverage_class_contract">
+      <column name="coverage_contract_id"/>
+    </createIndex>
+    <addUniqueConstraint
+      tableName="coverage_class"
+      columnNames="coverage_contract_id, name"
+      constraintName="uk_coverage_class_contract_name"/>
+  </changeSet>
+</databaseChangeLog>

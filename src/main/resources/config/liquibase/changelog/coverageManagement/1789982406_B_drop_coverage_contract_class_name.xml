@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="BS000000000082" author="batool_bushra">
+    <preConditions onFail="MARK_RAN">
+      <columnExists tableName="coverage_contract" columnName="class_name"/>
+    </preConditions>
+
+    <dropColumn tableName="coverage_contract" columnName="class_name"/>
+  </changeSet>
+</databaseChangeLog>

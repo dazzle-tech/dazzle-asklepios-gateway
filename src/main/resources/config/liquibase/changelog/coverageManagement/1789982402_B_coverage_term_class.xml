@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="BS000000000078" author="batool_bushra">
+    <preConditions onFail="MARK_RAN">
+      <and>
+        <tableExists tableName="coverage_class"/>
+        <not>
+          <columnExists tableName="coverage_term" columnName="coverage_class_id"/>
+        </not>
+      </and>
+    </preConditions>
+
+    <addColumn tableName="coverage_term">
+      <column name="coverage_class_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+    </addColumn>
+
+    <addForeignKeyConstraint
+      baseTableName="coverage_term"
+      baseColumnNames="coverage_class_id"
+      referencedTableName="coverage_class"
+      referencedColumnNames="id"
+      constraintName="fk_coverage_term_class"
+      onDelete="CASCADE"/>
+
+    <createIndex tableName="coverage_term" indexName="idx_coverage_term_class_type">
+      <column name="coverage_class_id"/>
+      <column name="term_type"/>
+    </createIndex>
+
+    <dropForeignKeyConstraint baseTableName="coverage_term" constraintName="fk_coverage_term_contract"/>
+    <dropIndex tableName="coverage_term" indexName="idx_coverage_term_contract_type"/>
+    <dropColumn tableName="coverage_term" columnName="coverage_contract_id"/>
+  </changeSet>
+</databaseChangeLog>

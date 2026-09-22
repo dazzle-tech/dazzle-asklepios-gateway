@@ -612,6 +612,8 @@
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/payorSetup/1787810000_B_create_tpa_definitions.xml"
            relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/payorSetup/1789978860_B_create_nphies_payer_child_companies.xml"
+           relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/coverageManagement/1788844800_B_coverage_contract.xml"
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/coverageManagement/1788844801_B_coverage_copayment.xml"
@@ -629,6 +631,20 @@
   <include file="/config/liquibase/changelog/coverageManagement/1788844807_B_coverage_pre_approval_item.xml"
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/coverageManagement/1788844808_B_approval_coverage_company.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1789982400_B_coverage_class.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1789982401_B_coverage_copayment_class.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1789982402_B_coverage_term_class.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1789982403_B_coverage_discount_class.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1789982404_B_coverage_exclusion_class.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1789982405_B_coverage_pre_approval_class.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1789982406_B_drop_coverage_contract_class_name.xml"
            relativeToChangelogFile="false"/>
 
   <include file="config/liquibase/changelog/report/1781082967_S_ReportsSchema.xml" relativeToChangelogFile="false"/>
