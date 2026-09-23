@@ -16,7 +16,7 @@ management:
       probability: 1.0 # report 100% of traces
 
 services:
-  asklepios-general-service-url: http://localhost:9090
+  asklepios-general-service-url: http://localhost:8081
   asklepios-setup-service-url: http://localhost:8082
   asklepios-patient-service-url: http://localhost:8083
   asklepios-inventory-service-url: http://localhost:8084
