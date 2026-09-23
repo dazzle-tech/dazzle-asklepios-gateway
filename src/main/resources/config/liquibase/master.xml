@@ -232,6 +232,8 @@
   <include file="config/liquibase/changelog/1768295981_H_Diagnostic_Order_Test_Result.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/sql/Lab_Result_Log.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/diagnosticOrderTest/2026092301_R_Lab_Result_Log_Use_Row_Timestamp.xml"
+           relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1769608169_H_Diagnostic_Test_Result_Tecnition_Note.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1768892972_H_Diagnostic_Test_Request.xml" relativeToChangelogFile="false"/>
