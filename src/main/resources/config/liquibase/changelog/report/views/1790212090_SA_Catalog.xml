@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-catalog-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwcatalog AS
+      SELECT
+        c.id,
+        c.name,
+        c.description,
+        c.type,
+        c.facility_id,
+        c.department_id,
+        c.appointable,
+        c.parallel_capacity_value,
+        c.default_duration_minutes,
+        c.default_buffer_before_minutes,
+        c.default_buffer_after_minutes
+      FROM public.catalog c;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwcatalog;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-catalog-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwcatalog TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwcatalog FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

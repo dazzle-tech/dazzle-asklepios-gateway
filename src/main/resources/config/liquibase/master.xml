@@ -639,6 +639,24 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/report/views/1790249715_SA_WaseelEligibilityRequestView.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790211269_SA_AvailabilityGenerationBatchView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790211338_SA_AvailabilityTemplateView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790211395_SA_BookingGroupView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790211395_SA_ServiceView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790211478_SA_WaitingListView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790212058_SA_DiagnosticTestView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790212090_SA_Catalog.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790212114_SA_Room.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790215003_SA_BillingRuleView.xml"
+           relativeToChangelogFile="false"/>
 
   <include file="config/liquibase/changelog/1788291540_SA_EncounterDischargeLog.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/claim_WaseelIntegration/1788292800_BM_claim_request_type.xml"
