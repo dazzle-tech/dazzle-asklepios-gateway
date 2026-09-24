@@ -629,6 +629,17 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/report/views/1790179491_SA_FacilityView.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790248274_SA_PatientEncounterView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790248234_SA_PractitionerView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790248338_SA_AppointmentView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790248386_SA_PatientInsuranceView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790249715_SA_WaseelEligibilityRequestView.xml"
+           relativeToChangelogFile="false"/>
+
   <include file="config/liquibase/changelog/1788291540_SA_EncounterDischargeLog.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/claim_WaseelIntegration/1788292800_BM_claim_request_type.xml"
            relativeToChangelogFile="false"/>
