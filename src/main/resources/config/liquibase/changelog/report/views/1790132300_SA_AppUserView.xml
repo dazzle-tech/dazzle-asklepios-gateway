@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-app-user-view" author="sondos">
+
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwAppUser AS
+      SELECT
+        u.id,
+        u.login,
+        u.first_name,
+        u.last_name,
+        u.email,
+        u.image_url,
+        u.activated,
+        u.lang_key,
+        u.created_by,
+        u.created_date,
+        u.last_modified_by,
+        u.last_modified_date,
+        u.phone_number,
+        u.birth_date,
+        u.gender,
+        u.job_role,
+        u.security_access_level,
+        u.allow_ongoing_visit,
+        u.can_un_discharge_urgent_care,
+        u.can_un_complete_encounter
+      FROM public.app_user u;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwAppUser;
+      </sql>
+    </rollback>
+
+  </changeSet>
+
+  <changeSet id="grant-report-app-user-view-access" author="asklepios">
+
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwAppUser TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwAppUser FROM report_user;
+      </sql>
+    </rollback>
+
+  </changeSet>
+</databaseChangeLog>

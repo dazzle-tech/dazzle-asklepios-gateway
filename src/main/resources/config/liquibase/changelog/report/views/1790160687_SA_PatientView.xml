@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="create-report-patient-view" author="sondos">
+
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwPatient AS
+      SELECT
+        p.id,
+        p.medical_record_number,
+        p.first_name,
+        p.second_name,
+        p.third_name,
+        p.last_name,
+        p.sex_at_birth,
+        p.date_of_birth,
+        p.patient_classes,
+        p.is_private_patient,
+        p.first_name_secondary_lang,
+        p.second_name_secondary_lang,
+        p.third_name_secondary_lang,
+        p.last_name_secondary_lang,
+        p.primary_mobile_number,
+        p.receive_sms,
+        p.second_mobile_number,
+        p.home_phone,
+        p.work_phone,
+        p.email,
+        p.receive_email,
+        p.preferred_way_of_contact,
+        p.preferred_language,
+        p.emergency_contact_name,
+        p.emergency_contact_relation,
+        p.emergency_contact_phone,
+        p.role,
+        p.marital_status,
+        p.nationality,
+        p.religion,
+        p.ethnicity,
+        p.occupation,
+        p.responsible_party,
+        p.educational_level,
+        p.previous_id,
+        p.archiving_number,
+        p.details,
+        p.is_unknown,
+        p.is_verified,
+        p.is_completed_patient,
+        p.security_access_level,
+        p.created_by,
+        p.created_date,
+        p.last_modified_by,
+        p.last_modified_date,
+        p.is_cchi_patient,
+        p.document_id,
+        p.patient_status,
+        p.merged_into_patient_id,
+        p.merged_at,
+        p.merged_by,
+        p.merge_note,
+        p.blood_group,
+        p.patient_conditions
+      FROM public.patients p;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwPatient;
+      </sql>
+    </rollback>
+
+  </changeSet>
+
+  <changeSet id="grant-report-patient-view-access" author="sondos">
+
+    <sql>
+      GRANT USAGE ON SCHEMA reports
+        TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwPatient
+        TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwPatient
+        FROM report_user;
+      </sql>
+    </rollback>
+
+  </changeSet>
+
+</databaseChangeLog>

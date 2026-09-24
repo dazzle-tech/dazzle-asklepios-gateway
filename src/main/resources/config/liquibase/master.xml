@@ -249,8 +249,9 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1769941783_H_Diagnostic_Order_Test_Report.xml"
            relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/diagnosticOrderTest/1790000001_H_Diagnostic_Order_Test_Report_Radiologist_Fields.xml"
-           relativeToChangelogFile="false"/>
+  <include
+    file="config/liquibase/changelog/diagnosticOrderTest/1790000001_H_Diagnostic_Order_Test_Report_Radiologist_Fields.xml"
+    relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1769416461_Q_Consultation.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1768473866_Q_Surgical_History.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/surgicalhistory/1778668757_surgical_history_add_cancel_fields.xml"
@@ -617,7 +618,17 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/report/1790069901_SA_ReportTemplate_jobRoleAndUsers.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/1790155216_SA_ReportUserCreation.xml"
+           relativeToChangelogFile="false"/>
 
+  <include file="config/liquibase/changelog/report/views/1790160687_SA_PatientView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790132300_SA_AppUserView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790176678_SA_DepartmentView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790179491_SA_FacilityView.xml"
+           relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1788291540_SA_EncounterDischargeLog.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/claim_WaseelIntegration/1788292800_BM_claim_request_type.xml"
            relativeToChangelogFile="false"/>
