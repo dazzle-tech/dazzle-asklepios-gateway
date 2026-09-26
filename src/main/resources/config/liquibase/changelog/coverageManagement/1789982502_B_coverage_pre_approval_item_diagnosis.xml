@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="BS000000000085" author="بتول بشرى">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <tableExists tableName="coverage_pre_approval_item_diagnosis"/>
+      </not>
+    </preConditions>
+
+    <createTable tableName="coverage_pre_approval_item_diagnosis">
+      <column name="coverage_pre_approval_item_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="diagnosis_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="sort_idx" type="integer">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+
+    <addPrimaryKey
+      tableName="coverage_pre_approval_item_diagnosis"
+      columnNames="coverage_pre_approval_item_id, sort_idx"
+      constraintName="pk_coverage_pre_approval_item_diagnosis"/>
+    <addUniqueConstraint
+      tableName="coverage_pre_approval_item_diagnosis"
+      columnNames="coverage_pre_approval_item_id, diagnosis_id"
+      constraintName="uk_coverage_pre_approval_item_diagnosis"/>
+    <addForeignKeyConstraint
+      baseTableName="coverage_pre_approval_item_diagnosis"
+      baseColumnNames="coverage_pre_approval_item_id"
+      referencedTableName="coverage_pre_approval_item"
+      referencedColumnNames="id"
+      constraintName="fk_coverage_pre_approval_item_diagnosis_item"
+      onDelete="CASCADE"/>
+  </changeSet>
+</databaseChangeLog>

@@ -646,6 +646,12 @@
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/coverageManagement/1789982406_B_drop_coverage_contract_class_name.xml"
            relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1789982500_B_coverage_term_diagnosis.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1789982501_B_coverage_exclusion_diagnosis.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1789982502_B_coverage_pre_approval_item_diagnosis.xml"
+           relativeToChangelogFile="false"/>
 
   <include file="config/liquibase/changelog/report/1781082967_S_ReportsSchema.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/report/1788091195_SA_ReportTemplate.xml" relativeToChangelogFile="false"/>

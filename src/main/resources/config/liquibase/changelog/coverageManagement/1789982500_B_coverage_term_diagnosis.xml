@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="BS000000000083" author="بتول بشرى">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <tableExists tableName="coverage_term_diagnosis"/>
+      </not>
+    </preConditions>
+
+    <createTable tableName="coverage_term_diagnosis">
+      <column name="coverage_term_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="diagnosis_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="sort_idx" type="integer">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+
+    <addPrimaryKey
+      tableName="coverage_term_diagnosis"
+      columnNames="coverage_term_id, sort_idx"
+      constraintName="pk_coverage_term_diagnosis"/>
+    <addUniqueConstraint
+      tableName="coverage_term_diagnosis"
+      columnNames="coverage_term_id, diagnosis_id"
+      constraintName="uk_coverage_term_diagnosis"/>
+    <addForeignKeyConstraint
+      baseTableName="coverage_term_diagnosis"
+      baseColumnNames="coverage_term_id"
+      referencedTableName="coverage_term"
+      referencedColumnNames="id"
+      constraintName="fk_coverage_term_diagnosis_term"
+      onDelete="CASCADE"/>
+  </changeSet>
+</databaseChangeLog>
