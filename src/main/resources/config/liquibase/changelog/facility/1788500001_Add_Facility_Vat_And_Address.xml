@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="FACILITY_VAT_AND_SETUP_ADDRESS" author="bushra_batool">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <columnExists tableName="facility" columnName="vat_registration_number"/>
+      </not>
+    </preConditions>
+
+    <addColumn tableName="facility">
+      <column name="vat_registration_number" type="varchar(50)"/>
+      <column name="country_id" type="bigint"/>
+      <column name="district_id" type="bigint"/>
+      <column name="street_address" type="varchar(255)"/>
+      <column name="postal_code" type="varchar(50)"/>
+    </addColumn>
+
+    <addForeignKeyConstraint
+      baseTableName="facility"
+      baseColumnNames="country_id"
+      referencedTableName="country"
+      referencedColumnNames="id"
+      constraintName="fk_facility_country"/>
+
+    <addForeignKeyConstraint
+      baseTableName="facility"
+      baseColumnNames="district_id"
+      referencedTableName="country_districts"
+      referencedColumnNames="id"
+      constraintName="fk_facility_district"/>
+  </changeSet>
+
+</databaseChangeLog>

@@ -482,6 +482,8 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/facility/1788418270_H__Add_Column_ApprovingSettlePayment.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/facility/1788500001_Add_Facility_Vat_And_Address.xml"
+           relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1784630001_BM_Discount_Setup.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/billing/1784658177_BM_Billing_Wallet.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/billing/1784659366_BM_Billing_Payment.xml" relativeToChangelogFile="false"/>
