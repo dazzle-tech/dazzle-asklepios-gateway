@@ -44,65 +44,7 @@
   <changeSet id="1787643600-2-price-list-setup-item" author="asklepios">
     <addColumn tableName="price_list_setup_item">
       <column name="category" type="varchar(50)"/>
-      <column name="visit_type" type="varchar(30)"/>
-      <column name="cost" type="numeric(19,4)"/>
-      <column
-        name="visit_type_locked"
-        type="boolean"
-        defaultValueBoolean="false">
-        <constraints nullable="false"/>
-      </column>
     </addColumn>
-
-    <createIndex
-      tableName="price_list_setup_item"
-      indexName="idx_price_list_setup_item_source_visit">
-      <column name="price_list_setup_id"/>
-      <column name="item_type"/>
-      <column name="source_id"/>
-      <column name="visit_type"/>
-    </createIndex>
-  </changeSet>
-
-  <changeSet id="1787643600-3-drop-uk-price-list-item-code" author="asklepios">
-    <preConditions onFail="MARK_RAN">
-      <uniqueConstraintExists
-        tableName="price_list_setup_item"
-        constraintName="uk_price_list_item_code"/>
-    </preConditions>
-
-    <dropUniqueConstraint
-      tableName="price_list_setup_item"
-      constraintName="uk_price_list_item_code"/>
-  </changeSet>
-
-  <changeSet id="1787643600-4-uk-price-list-item-code-visit" author="asklepios">
-    <preConditions onFail="MARK_RAN">
-      <not>
-        <indexExists indexName="uk_price_list_item_code_visit"/>
-      </not>
-    </preConditions>
-
-    <sql dbms="postgresql">
-      CREATE UNIQUE INDEX uk_price_list_item_code_visit
-        ON price_list_setup_item (
-          price_list_setup_id,
-          item_code,
-          COALESCE(visit_type, 'ALL')
-        );
-    </sql>
-  </changeSet>
-
-  <changeSet id="1787643600-5-map-visit-type-to-encounter-type" author="asklepios">
-    <sql dbms="postgresql">
-      UPDATE price_list_setup_item
-         SET visit_type = 'CLINIC'
-       WHERE visit_type IN ('OUTPATIENT', 'HOME_CARE');
-
-      UPDATE price_list_setup_item
-         SET visit_type = NULL
-       WHERE visit_type = 'ALL';
-    </sql>
   </changeSet>
 
 </databaseChangeLog>
