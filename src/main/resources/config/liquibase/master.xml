@@ -690,6 +690,10 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/report/views/1790516686_SA_DiagnosticOrderTestReportImageStatusLogView.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790520942_DiagnosticOrderTestCollectedSampleView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790521004_DiagnosticOrderTestReportCommentView.xml"
+           relativeToChangelogFile="false"/>
 
   <include file="config/liquibase/changelog/1788291540_SA_EncounterDischargeLog.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/claim_WaseelIntegration/1788292800_BM_claim_request_type.xml"
