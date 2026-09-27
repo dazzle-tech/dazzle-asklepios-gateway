@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-diagnostic-test-laboratory-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwdiagnostictestlaboratory AS
+      SELECT
+        dtl.id,
+        dtl.test_id,
+        dtl.property,
+        dtl.system,
+        dtl.scale,
+        dtl.reagents,
+        dtl.method,
+        dtl.timing,
+        dtl.test_duration_time,
+        dtl.time_unit,
+        dtl.sample_container,
+        dtl.sample_volume,
+        dtl.sample_volume_unit,
+        dtl.tube_color,
+        dtl.test_description,
+        dtl.sample_handling,
+        dtl.turnaround_time,
+        dtl.turnaround_time_unit,
+        dtl.preparation_requirements,
+        dtl.medical_indications,
+        dtl.associated_risks,
+        dtl.test_instructions,
+        dtl.category,
+        dtl.tube_type
+      FROM public.diagnostic_test_laboratory dtl;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwdiagnostictestlaboratory;
+      </sql>
+    </rollback>
+  </changeSet>
+  <changeSet id="grant-report-diagnostic-test-laboratory-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwdiagnostictestlaboratory TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwdiagnostictestlaboratory FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

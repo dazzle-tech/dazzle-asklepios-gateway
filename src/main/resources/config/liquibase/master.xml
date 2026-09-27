@@ -658,6 +658,39 @@
   <include file="config/liquibase/changelog/report/views/1790215003_SA_BillingRuleView.xml"
            relativeToChangelogFile="false"/>
 
+  <include file="config/liquibase/changelog/report/views/1790467521_SA_DiagnosticTestProfileView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790468327_SA_DiagnosticTestCoding.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790469084_SA_DiagnosticTestNormalRangeLovView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790469048_SA_DiagnosticTestNormalRangeView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790501140_SA_DiagnosticOrderView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790501389_SA_DiagnosticOrderTestView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790503277_SA_IcdDiagnosisView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790509523_SA_DiagnosticTestLaboratory.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790510025_SA_DiagnosticTestRadiologyView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790514315_SA_DiagnosticTestReportTemplateView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790515156_SA_DiagnosticTestRequestView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790515762_SA_DiagnosticOrderTestResult.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790516460_SA_DiagnosticOrderTestTechnicianNoteView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790516572_SA_DiagnosticOrderTestResultTechnicianNoteView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790516634_SA_DiagnosticOrderTestReportView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790516686_SA_DiagnosticOrderTestReportImageStatusLogView.xml"
+           relativeToChangelogFile="false"/>
+
   <include file="config/liquibase/changelog/1788291540_SA_EncounterDischargeLog.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/claim_WaseelIntegration/1788292800_BM_claim_request_type.xml"
            relativeToChangelogFile="false"/>
