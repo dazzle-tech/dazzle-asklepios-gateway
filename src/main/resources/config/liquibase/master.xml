@@ -154,8 +154,7 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/diagnostic_test/2026092701_H_Diagnostic_Test_Normal_Range_Add_Profile_Result_Type.xml"
            relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/diagnostic_test/2026092702_H_Diagnostic_Test_Normal_Range_Add_Is_Active.xml"
-           relativeToChangelogFile="false"/>
+
   <include file="config/liquibase/changelog/1762698784_BM_PrescriptionInstructions.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762676555_H_Dental_Actions.xml" relativeToChangelogFile="false"/>
