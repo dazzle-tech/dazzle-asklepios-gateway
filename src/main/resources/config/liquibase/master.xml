@@ -152,10 +152,6 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762422091_H_Diagnostic_Test_Normal_Range.xml"
            relativeToChangelogFile="false"/>
-<<<<<<< Updated upstream
-=======
-  <include file="config/liquibase/changelog/diagnostic_test/2026092701_H_Diagnostic_Test_Normal_Range_Add_Profile_Result_Type.xml"
->>>>>>> Stashed changes
   <include file="config/liquibase/changelog/1762698784_BM_PrescriptionInstructions.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762676555_H_Dental_Actions.xml" relativeToChangelogFile="false"/>
