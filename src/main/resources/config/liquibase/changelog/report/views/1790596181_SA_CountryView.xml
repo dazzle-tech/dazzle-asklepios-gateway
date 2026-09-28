@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-country-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwcountry AS
+      SELECT
+        c.id,
+        c.name,
+        c.code,
+        c.is_active,
+        c.created_by,
+        c.created_date,
+        c.last_modified_by,
+        c.last_modified_date
+      FROM public.country c;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwcountry;
+      </sql>
+    </rollback>
+  </changeSet>
+  <changeSet id="grant-report-country-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwcountry TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwcountry FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>
