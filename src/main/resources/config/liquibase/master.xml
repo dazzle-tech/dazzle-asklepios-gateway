@@ -332,7 +332,7 @@
   <include file="/config/liquibase/changelog/1769002586_B_VitalSigns.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/vitalsigns/1790509356_FA_VitalSigns_add_fasting_blood_glucose.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1769005669_B_BodyMeasurements.xml" relativeToChangelogFile="false"/>
-  
+
   <include file="/config/liquibase/changelog/1769004404_B_PatientObservation_Complaints.xml"
            relativeToChangelogFile="false"/>
   <include
