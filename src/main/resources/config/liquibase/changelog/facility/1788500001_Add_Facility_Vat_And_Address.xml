@@ -9,12 +9,11 @@
   <changeSet id="FACILITY_VAT_AND_SETUP_ADDRESS" author="bushra_batool">
     <preConditions onFail="MARK_RAN">
       <not>
-        <columnExists tableName="facility" columnName="vat_registration_number"/>
+        <columnExists tableName="facility" columnName="street_address"/>
       </not>
     </preConditions>
 
     <addColumn tableName="facility">
-      <column name="vat_registration_number" type="varchar(50)"/>
       <column name="country_id" type="bigint"/>
       <column name="district_id" type="bigint"/>
       <column name="street_address" type="varchar(255)"/>
