@@ -6,7 +6,7 @@
     http://www.liquibase.org/xml/ns/dbchangelog
     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-  <changeSet id="FACILITY_VAT_AND_SETUP_ADDRESS" author="bushra_batool">
+  <changeSet id="FACILITY_SETUP_ADDRESS" author="bushra_batool">
     <preConditions onFail="MARK_RAN">
       <not>
         <columnExists tableName="facility" columnName="street_address"/>
