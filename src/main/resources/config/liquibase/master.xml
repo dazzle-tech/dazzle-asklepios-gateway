@@ -489,6 +489,8 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/facility/1788418270_H__Add_Column_ApprovingSettlePayment.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/facility/1788500001_Add_Facility_Vat_And_Address.xml"
+           relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1784630001_BM_Discount_Setup.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/billing/1784658177_BM_Billing_Wallet.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/billing/1784659366_BM_Billing_Payment.xml" relativeToChangelogFile="false"/>
@@ -638,5 +640,9 @@
   <include file="/config/liquibase/changelog/1788867600_B_icd_category_as_diagnosis.xml"
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/departments/20260914_department_age_specific.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/claim_WaseelIntegration/2026092901_claim_settlement_number.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/claim_WaseelIntegration/2026092902_claim_foreign_keys.xml"
            relativeToChangelogFile="false"/>
 </databaseChangeLog>
