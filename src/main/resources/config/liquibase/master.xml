@@ -736,6 +736,12 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/report/views/1790599921_SA_PatientRelationView.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790631721_SA_PatientServicesAndProductsView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790632062_SA_PatientSickLeaveView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790632561_SA_PatientWarningsView.xml"
+           relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1788291540_SA_EncounterDischargeLog.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/claim_WaseelIntegration/1788292800_BM_claim_request_type.xml"
            relativeToChangelogFile="false"/>
