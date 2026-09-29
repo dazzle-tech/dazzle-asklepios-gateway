@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-billing-payment-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwbillingpayment AS
+      SELECT
+        bp.id,
+        bp.payment_number,
+        bp.wallet_id,
+        bp.patient_id,
+        bp.encounter_id,
+        bp.payment_category,
+        bp.payer_type,
+        bp.payer_id,
+        bp.amount,
+        bp.currency,
+        bp.status,
+        bp.payment_date,
+        bp.receipt_number,
+        bp.external_reference,
+        bp.idempotency_key,
+        bp.notes,
+        bp.created_by,
+        bp.created_date,
+        bp.last_modified_by,
+        bp.last_modified_date
+      FROM public.billing_payment bp;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwbillingpayment;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-billing-payment-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwbillingpayment TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwbillingpayment FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

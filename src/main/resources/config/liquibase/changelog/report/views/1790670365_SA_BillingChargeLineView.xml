@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-billing-charge-line-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwbillingchargeline AS
+      SELECT
+        bcl.id,
+        bcl.charge_id,
+        bcl.patient_service_product_id,
+        bcl.patient_id,
+        bcl.encounter_id,
+        bcl.billing_item_type,
+        bcl.brand_medication_id,
+        bcl.diagnostic_test_id,
+        bcl.service_id,
+        bcl.procedure_id,
+        bcl.item_code,
+        bcl.item_description,
+        bcl.service_source,
+        bcl.source_id,
+        bcl.quantity,
+        bcl.unit_price,
+        bcl.gross_amount,
+        bcl.discount_amount,
+        bcl.exemption_amount,
+        bcl.tax_amount,
+        bcl.net_amount,
+        bcl.patient_responsibility_amount,
+        bcl.insurance_responsibility_amount,
+        bcl.other_payer_responsibility_amount,
+        bcl.allocated_amount,
+        bcl.outstanding_amount,
+        bcl.reserved_amount,
+        bcl.currency,
+        bcl.status,
+        bcl.current_pricing_snapshot_id,
+        bcl.patient_insurance_id,
+        bcl.pre_authorization_required,
+        bcl.pre_authorization_status,
+        bcl.pre_authorization_request_id,
+        bcl.pre_authorization_reference_no,
+        bcl.reversed_charge_line_id,
+        bcl.idempotency_key,
+        bcl.cancelled_date,
+        bcl.cancelled_by,
+        bcl.cancellation_reason,
+        bcl.notes,
+        bcl.created_by,
+        bcl.created_date,
+        bcl.last_modified_by,
+        bcl.last_modified_date
+      FROM public.billing_charge_line bcl;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwbillingchargeline;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-billing-charge-line-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwbillingchargeline TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwbillingchargeline FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

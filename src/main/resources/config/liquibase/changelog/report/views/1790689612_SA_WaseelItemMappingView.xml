@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-waseel-item-mapping-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwwaseelitemmapping AS
+      SELECT
+        wim.id,
+        wim.item_type,
+        wim.source_id,
+        wim.item_code,
+        wim.item_name,
+        wim.sbs_catalog_id,
+        wim.is_active,
+        wim.notes,
+        wim.created_date,
+        wim.created_by,
+        wim.last_modified_by,
+        wim.last_modified_date
+      FROM public.waseel_item_mapping wim;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwwaseelitemmapping;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-waseel-item-mapping-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwwaseelitemmapping TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwwaseelitemmapping FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

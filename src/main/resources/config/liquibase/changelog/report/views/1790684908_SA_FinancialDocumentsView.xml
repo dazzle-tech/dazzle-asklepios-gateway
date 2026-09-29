@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-financial-documents-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwfinancialdocuments AS
+      SELECT
+        fd.id,
+        fd.document_number,
+        fd.document_type,
+        fd.status,
+        fd.patient_id,
+        fd.encounter_id,
+        fd.parent_document_id,
+        fd.total_amount,
+        fd.currency,
+        fd.created_date,
+        fd.created_by,
+        fd.last_modified_date,
+        fd.last_modified_by,
+        fd.document_subtype,
+        fd.eligibility_reference,
+        fd.claim_reference,
+        fd.adjustment_reason
+      FROM public.financial_documents fd;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwfinancialdocuments;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-financial-documents-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwfinancialdocuments TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwfinancialdocuments FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-billing-debit-account-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwbillingdebitaccount AS
+      SELECT
+        bda.id,
+        bda.account_number,
+        bda.patient_id,
+        bda.currency,
+        bda.credit_limit,
+        bda.current_debit_balance,
+        bda.available_credit,
+        bda.total_debit_created,
+        bda.total_debit_settled,
+        bda.status,
+        bda.debit_allowed,
+        bda.approval_required,
+        bda.approved_by,
+        bda.approved_date,
+        bda.blocked_by,
+        bda.blocked_date,
+        bda.block_reason,
+        bda.expiry_date,
+        bda.notes,
+        bda.created_by,
+        bda.created_date,
+        bda.last_modified_by,
+        bda.last_modified_date
+      FROM public.billing_debit_account bda;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwbillingdebitaccount;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-billing-debit-account-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwbillingdebitaccount TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwbillingdebitaccount FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>
