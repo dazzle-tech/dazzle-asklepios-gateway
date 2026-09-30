@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-financial-document-numbering-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwfinancialdocumentnumbering AS
+      SELECT
+        fdn.id,
+        fdn.facility_id,
+        fdn.document_type,
+        fdn.prefix,
+        fdn.sequence_length,
+        fdn.include_year,
+        fdn.include_facility_code,
+        fdn.number_separator,
+        fdn.reset_frequency,
+        fdn.starting_number,
+        fdn.active,
+        fdn.status,
+        fdn.created_by,
+        fdn.created_date,
+        fdn.last_modified_by,
+        fdn.last_modified_date,
+        fdn.last_number,
+        fdn.current_period_key,
+        fdn.version
+      FROM public.financial_document_numbering fdn;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwfinancialdocumentnumbering;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-financial-document-numbering-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwfinancialdocumentnumbering TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwfinancialdocumentnumbering FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-visit-duration-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwvisitduration AS
+      SELECT
+        vd.id,
+        vd.visit_type,
+        vd.duration_in_minutes,
+        vd.resource_specific,
+        vd.created_by,
+        vd.created_date,
+        vd.last_modified_by,
+        vd.last_modified_date
+      FROM public.visit_duration vd;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwvisitduration;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-visit-duration-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwvisitduration TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwvisitduration FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

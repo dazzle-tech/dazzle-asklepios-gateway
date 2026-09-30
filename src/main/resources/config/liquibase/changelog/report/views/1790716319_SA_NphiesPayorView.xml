@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-nphies-payers-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwnphiespayers AS
+      SELECT
+        np.id,
+        np.nphies_id,
+        np.name_en,
+        np.name_ar,
+        np.is_active,
+        np.created_by,
+        np.created_date,
+        np.last_modified_by,
+        np.last_modified_date
+      FROM public.nphies_payers np;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwnphiespayers;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-nphies-payers-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwnphiespayers TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwnphiespayers FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

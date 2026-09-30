@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-dental-procedure-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwdentalprocedure AS
+      SELECT
+        dp.id,
+        dp.patient_id,
+        dp.encounter_id,
+        dp.service_id,
+        dp.procedure_id,
+        dp.tooth_number,
+        dp.surface,
+        dp.anesthesia_used,
+        dp.dose,
+        dp.unit,
+        dp.filling_material,
+        dp.cdt_code_id,
+        dp.notes,
+        dp.created_by,
+        dp.created_date,
+        dp.last_modified_by,
+        dp.last_modified_date,
+        dp.is_cancelled,
+        dp.cancelled_date,
+        dp.cancelled_by,
+        dp.cancellation_reason
+      FROM public.dental_procedure dp;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwdentalprocedure;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-dental-procedure-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwdentalprocedure TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwdentalprocedure FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

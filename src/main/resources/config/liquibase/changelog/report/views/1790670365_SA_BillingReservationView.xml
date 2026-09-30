@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-billing-reservation-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwbillingreservation AS
+      SELECT
+        br.id,
+        br.reservation_number,
+        br.wallet_id,
+        br.payment_id,
+        br.payment_transaction_id,
+        br.patient_id,
+        br.encounter_id,
+        br.charge_id,
+        br.charge_line_id,
+        br.charge_responsibility_id,
+        br.patient_service_product_id,
+        br.original_reserved_amount,
+        br.remaining_reserved_amount,
+        br.consumed_amount,
+        br.released_amount,
+        br.currency,
+        br.status,
+        br.reserved_date,
+        br.consumed_date,
+        br.released_date,
+        br.cancelled_date,
+        br.release_reason,
+        br.release_notes,
+        br.released_by,
+        br.cancelled_by,
+        br.cancellation_reason,
+        br.previous_reservation_id,
+        br.idempotency_key,
+        br.transaction_group_id,
+        br.created_by,
+        br.created_date,
+        br.last_modified_by,
+        br.last_modified_date
+      FROM public.billing_reservation br;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwbillingreservation;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-billing-reservation-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwbillingreservation TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwbillingreservation FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

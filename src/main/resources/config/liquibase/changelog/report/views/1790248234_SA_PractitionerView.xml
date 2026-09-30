@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-practitioner-view" author="sondos">
+
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwpractitioner AS
+      SELECT
+        p.id,
+        p.facility_id,
+        p.first_name,
+        p.last_name,
+        p.email,
+        p.phone_number,
+        p.specialty,
+        p.sub_specialty,
+        p.default_medical_license,
+        p.secondary_medical_license,
+        p.educational_level,
+        p.appointable,
+        p.user_id,
+        p.default_license_valid_until,
+        p.secondary_license_valid_until,
+        p.dob,
+        p.job_role,
+        p.gender,
+        p.parallel_capacity_value,
+        p.default_duration_minutes,
+        p.default_buffer_before_minutes,
+        p.default_buffer_after_minutes,
+        p.is_active,
+        p.created_date,
+        p.created_by,
+        p.last_modified_by,
+        p.last_modified_date,
+        p.working_days,
+        p.national_number
+      FROM public.practitioner p;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwpractitioner;
+      </sql>
+    </rollback>
+
+  </changeSet>
+  <changeSet id="grant-report-practitioner-view-access" author="sondos">
+
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwpractitioner TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwpractitioner FROM report_user;
+      </sql>
+    </rollback>
+
+  </changeSet>
+</databaseChangeLog>

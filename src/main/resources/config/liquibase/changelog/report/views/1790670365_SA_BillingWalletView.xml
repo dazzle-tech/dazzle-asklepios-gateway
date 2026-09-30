@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-billing-wallet-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwbillingwallet AS
+      SELECT
+        bw.id,
+        bw.patient_id,
+        bw.currency,
+        bw.credited_amount,
+        bw.available_balance,
+        bw.reserved_balance,
+        bw.consumed_amount,
+        bw.refunded_amount,
+        bw.status,
+        bw.created_by,
+        bw.created_date,
+        bw.last_modified_by,
+        bw.last_modified_date
+      FROM public.billing_wallet bw;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwbillingwallet;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-billing-wallet-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwbillingwallet TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwbillingwallet FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

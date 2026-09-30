@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-pre-authorization-supporting-info-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwpreauthorizationsupportinginfo AS
+      SELECT
+        pasi.id,
+        pasi.pre_authorization_id,
+        pasi.sequence,
+        pasi.category,
+        pasi.code,
+        pasi.from_date,
+        pasi.to_date,
+        pasi.value,
+        pasi.reason,
+        pasi.unit,
+        pasi.attachment,
+        pasi.attachment_name,
+        pasi.attachment_type,
+        pasi.attachment_date,
+        pasi.created_date,
+        pasi.created_by,
+        pasi.last_modified_by,
+        pasi.last_modified_date
+      FROM public.pre_authorization_supporting_info pasi;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwpreauthorizationsupportinginfo;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-pre-authorization-supporting-info-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwpreauthorizationsupportinginfo TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwpreauthorizationsupportinginfo FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

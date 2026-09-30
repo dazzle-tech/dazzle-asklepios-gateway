@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-general-assessment-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwgeneralassessment AS
+      SELECT
+        ga.id,
+        ga.patient_id,
+        ga.encounter_id,
+        ga.position_status,
+        ga.body_movements,
+        ga.level_of_consciousness,
+        ga.facial_expression,
+        ga.speech,
+        ga.mood_behavior,
+        ga.memory_remote,
+        ga.memory_recent,
+        ga.signs_of_agitation,
+        ga.signs_of_depression,
+        ga.signs_of_suicidal_ideation,
+        ga.signs_of_substance_use,
+        ga.is_triage,
+        ga.created_by,
+        ga.created_date,
+        ga.last_modified_by,
+        ga.last_modified_date
+      FROM public.general_assessment ga;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwgeneralassessment;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-general-assessment-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwgeneralassessment TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwgeneralassessment FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

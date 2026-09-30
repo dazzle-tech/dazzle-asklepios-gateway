@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-encounter-attachments-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwencounterattachments AS
+      SELECT
+        ea.id,
+        ea.encounter_id,
+        ea.created_by,
+        ea.space_key,
+        ea.filename,
+        ea.mime_type,
+        ea.size_bytes,
+        ea.created_date,
+        ea.deleted_at,
+        ea.type,
+        ea.details,
+        ea.source,
+        ea.source_id,
+        ea.last_modified_by,
+        ea.last_modified_date,
+        ea.document_definition_id,
+        ea.document_version_id
+      FROM public.encounter_attachments ea;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwencounterattachments;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-encounter-attachments-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwencounterattachments TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwencounterattachments FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+
+</databaseChangeLog>

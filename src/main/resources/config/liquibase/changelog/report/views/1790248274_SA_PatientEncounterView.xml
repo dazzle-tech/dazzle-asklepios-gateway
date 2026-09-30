@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-patient-encounters-view" author="sondos">
+
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwPatientEncounters AS
+      SELECT
+        pe.id,
+        pe.patient_id,
+        pe.encounter_number,
+        pe.facility_id,
+        pe.department_id,
+        pe.practitioner_id,
+        pe.appointment_id,
+        pe.encounter_type,
+        pe.encounter_reason,
+        pe.follow_up_encounter_id,
+        pe.priority,
+        pe.origin_type,
+        pe.origin_name,
+        pe.notes,
+        pe.status,
+        pe.department_daily_sequence_number,
+        pe.chief_complaint,
+        pe.discharge_type,
+        pe.discharge_at,
+        pe.encounter_date,
+        pe.started_by,
+        pe.started_date,
+        pe.created_by,
+        pe.created_date,
+        pe.last_modified_by,
+        pe.last_modified_date,
+        pe.history_of_present_illness,
+        pe.encounter_time,
+        pe.physical_examination_summery,
+        pe.completed_by,
+        pe.completed_at,
+        pe.encounter_status,
+        pe.billing_status,
+        pe.financially_closed_at,
+        pe.financially_closed_by,
+        pe.coverage_type,
+        pe.patient_insurance_id
+      FROM public.patient_encounters pe;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwPatientEncounters;
+      </sql>
+    </rollback>
+
+  </changeSet>
+
+  <changeSet id="grant-report-patient-encounters-view-access" author="sondos">
+
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwPatientEncounters TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwPatientEncounters FROM report_user;
+      </sql>
+    </rollback>
+
+  </changeSet>
+</databaseChangeLog>

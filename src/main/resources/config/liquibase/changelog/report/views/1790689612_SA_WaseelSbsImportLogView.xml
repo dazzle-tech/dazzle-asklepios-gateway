@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-waseel-sbs-import-log-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwwaseelsbsimportlog AS
+      SELECT
+        wsil.id,
+        wsil.file_name,
+        wsil.total_rows,
+        wsil.success_rows,
+        wsil.failed_rows,
+        wsil.error_details,
+        wsil.created_date,
+        wsil.created_by,
+        wsil.last_modified_by,
+        wsil.last_modified_date
+      FROM public.waseel_sbs_import_log wsil;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwwaseelsbsimportlog;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-waseel-sbs-import-log-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwwaseelsbsimportlog TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwwaseelsbsimportlog FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

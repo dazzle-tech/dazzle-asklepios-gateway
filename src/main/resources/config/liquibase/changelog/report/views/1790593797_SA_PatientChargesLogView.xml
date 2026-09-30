@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-patient-charges-log-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwpatientchargeslog AS
+      SELECT
+        pcl.id,
+        pcl.patient_charge_id,
+        pcl.patient_id,
+        pcl.encounter_id,
+        pcl.plan_id,
+        pcl.action,
+        pcl.due_amount,
+        pcl.remaining,
+        pcl.currency,
+        pcl.facility_default_currency,
+        pcl.created_date,
+        pcl.last_modified_date,
+        pcl.payload
+      FROM public.patient_charges_log pcl;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwpatientchargeslog;
+      </sql>
+    </rollback>
+  </changeSet>
+  <changeSet id="grant-report-patient-charges-log-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwpatientchargeslog TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwpatientchargeslog FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

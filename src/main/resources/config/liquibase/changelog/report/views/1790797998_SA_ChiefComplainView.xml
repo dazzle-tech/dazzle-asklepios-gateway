@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-chief-complain-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwchiefcomplain AS
+      SELECT
+        cc.id,
+        cc.patient_id,
+        cc.encounter_id,
+        cc.chief_complaint,
+        cc.provocation,
+        cc.palliation,
+        cc.quality,
+        cc.region,
+        cc.severity,
+        cc.onset_date_time,
+        cc.case_understanding,
+        cc.patient_condition,
+        cc.is_triage,
+        cc.created_by,
+        cc.created_date,
+        cc.last_modified_by,
+        cc.last_modified_date
+      FROM public.chief_complain cc;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwchiefcomplain;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-chief-complain-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwchiefcomplain TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwchiefcomplain FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>
