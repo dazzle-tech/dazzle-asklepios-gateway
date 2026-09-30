@@ -822,6 +822,32 @@
   <include file="config/liquibase/changelog/report/views/1790716319_SA_PriceListSetupView.xml"
            relativeToChangelogFile="false"/>
 
+  <include file="config/liquibase/changelog/report/views/1790720044_SA_EncounterAssessmentsView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790720044_SA_EncounterAssignToBedView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790720044_SA_EmergencyTriageView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790720044_SA_EncounterAttachmentsView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790720044_SA_EncounterDischargeLogView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790720044_SA_EncounterPlansView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790720044_SA_EncounterVaccinationView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790762857_SA_BedView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790762857_SA_DocumentDefinitionView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790762857_SA_DocumentVersionView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790762857_SA_VaccineBrandsView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790762857_SA_VaccineDosesView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790762857_SA_VaccineView.xml"
+           relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1788291540_SA_EncounterDischargeLog.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/claim_WaseelIntegration/1788292800_BM_claim_request_type.xml"
            relativeToChangelogFile="false"/>
