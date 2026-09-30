@@ -152,6 +152,9 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762422091_H_Diagnostic_Test_Normal_Range.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/diagnostic_test/2026092701_H_Diagnostic_Test_Normal_Range_Add_Profile_Result_Type.xml"
+           relativeToChangelogFile="false"/>
+
   <include file="config/liquibase/changelog/1762698784_BM_PrescriptionInstructions.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762676555_H_Dental_Actions.xml" relativeToChangelogFile="false"/>
@@ -233,6 +236,8 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/sql/Lab_Result_Log.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/diagnosticOrderTest/2026092301_R_Lab_Result_Log_Use_Row_Timestamp.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/diagnosticOrderTest/2026092501_H_Diagnostic_Order_Test_Result_Add_Result_Type_At_Entry.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1769608169_H_Diagnostic_Test_Result_Tecnition_Note.xml"
            relativeToChangelogFile="false"/>
@@ -329,7 +334,9 @@
   <include file="/config/liquibase/changelog/hospitalization/1778674502_hospitalization_add_cancel_fields.xml"
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1769002586_B_VitalSigns.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/vitalsigns/1790509356_FA_VitalSigns_add_fasting_blood_glucose.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1769005669_B_BodyMeasurements.xml" relativeToChangelogFile="false"/>
+
   <include file="/config/liquibase/changelog/1769004404_B_PatientObservation_Complaints.xml"
            relativeToChangelogFile="false"/>
   <include
@@ -482,6 +489,8 @@
   <include file="/config/liquibase/changelog/facility/1782381912_S_facilityDefaultLabAndRad.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/facility/1788418270_H__Add_Column_ApprovingSettlePayment.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/facility/1788500001_Add_Facility_Vat_And_Address.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1784630001_BM_Discount_Setup.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/billing/1784658177_BM_Billing_Wallet.xml" relativeToChangelogFile="false"/>
@@ -917,5 +926,9 @@
   <include file="/config/liquibase/changelog/1788867600_B_icd_category_as_diagnosis.xml"
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/departments/20260914_department_age_specific.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/claim_WaseelIntegration/2026092901_claim_settlement_number.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/claim_WaseelIntegration/2026092902_claim_foreign_keys.xml"
            relativeToChangelogFile="false"/>
 </databaseChangeLog>
