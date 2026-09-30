@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-glasgow-coma-scale-assessment-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwglasgowcomascaleassessment AS
+      SELECT
+        gcs.id,
+        gcs.patient_id,
+        gcs.encounter_id,
+        gcs.eye_opening,
+        gcs.eye_opening_score,
+        gcs.verbal_response,
+        gcs.verbal_response_score,
+        gcs.motor_response,
+        gcs.motor_response_score,
+        gcs.total_score,
+        gcs.score_interpretation,
+        gcs.created_by,
+        gcs.created_date,
+        gcs.last_modified_by,
+        gcs.last_modified_date,
+        gcs.cancelled_at,
+        gcs.cancelled_by,
+        gcs.cancellation_reason
+      FROM public.glasgow_coma_scale_assessment gcs;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwglasgowcomascaleassessment;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-glasgow-coma-scale-assessment-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwglasgowcomascaleassessment TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwglasgowcomascaleassessment FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

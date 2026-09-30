@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-prescription-instruction-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwprescriptioninstruction AS
+      SELECT
+        pi.id,
+        pi.category,
+        pi.dose,
+        pi.unit,
+        pi.rout,
+        pi.frequency
+      FROM public.prescription_instruction pi;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwprescriptioninstruction;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-prescription-instruction-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwprescriptioninstruction TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwprescriptioninstruction FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

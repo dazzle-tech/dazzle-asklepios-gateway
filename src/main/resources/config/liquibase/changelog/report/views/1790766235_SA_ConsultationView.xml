@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-consultation-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwconsultation AS
+      SELECT
+        c.id,
+        c.patient_id,
+        c.encounter_id,
+        c.from_facility_id,
+        c.to_facility_id,
+        c.from_department_id,
+        c.to_department_id,
+        c.consultation_number,
+        c.destination_type,
+        c.consultation_type,
+        c.consultant_speciality,
+        c.consultation_method,
+        c.practitioner_id,
+        c.consultation_level,
+        c.consultation_content,
+        c.notes,
+        c.extra_document,
+        c.approval_number,
+        c.status,
+        c.cancelled_date,
+        c.cancelled_by,
+        c.cancellation_reason,
+        c.response_date,
+        c.response_by,
+        c.response_text,
+        c.rejected_date,
+        c.rejected_by,
+        c.reject_reason,
+        c.confirmed_date,
+        c.confirmed_by,
+        c.submitted_date,
+        c.submitted_by,
+        c.created_by,
+        c.created_date,
+        c.last_modified_by,
+        c.last_modified_date
+      FROM public.consultation c;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwconsultation;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-consultation-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwconsultation TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwconsultation FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

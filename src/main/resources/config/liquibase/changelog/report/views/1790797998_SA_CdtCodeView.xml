@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-family-history-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwfamilyhistory AS
+      SELECT
+        fh.id,
+        fh.patient_id,
+        fh.condition,
+        fh.relation,
+        fh.inherited_diseases,
+        fh.created_by,
+        fh.created_date,
+        fh.last_modified_by,
+        fh.last_modified_date,
+        fh.status,
+        fh.cancelled_by,
+        fh.cancelled_date,
+        fh.cancellation_reason
+      FROM public.family_history fh;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwfamilyhistory;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-family-history-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwfamilyhistory TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwfamilyhistory FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>
