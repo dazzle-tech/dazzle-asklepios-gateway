@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-patient-satisfaction-survey-response-answer-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwpatientsatisfactionsurveyresponseanswer AS
+      SELECT
+        pssra.id,
+        pssra.response_id,
+        pssra.question_code,
+        pssra.answer,
+        pssra.score
+      FROM public.patient_satisfaction_survey_response_answer pssra;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwpatientsatisfactionsurveyresponseanswer;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-patient-satisfaction-survey-response-answer-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwpatientsatisfactionsurveyresponseanswer TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwpatientsatisfactionsurveyresponseanswer FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>
