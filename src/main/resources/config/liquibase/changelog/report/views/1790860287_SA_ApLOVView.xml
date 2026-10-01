@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-ap-lov-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwaplov AS
+      SELECT
+        al.key,
+        al.lov_code,
+        al.lov_name,
+        al.lov_description,
+        al.love_custom_code,
+        al.parent_lov,
+        al.auto_select_default,
+        al.default_value_id,
+        al.created_by,
+        al.updated_by,
+        al.deleted_by,
+        al.created_at,
+        al.updated_at,
+        al.deleted_at,
+        al.is_valid
+      FROM public.ap_lov al;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwaplov;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-ap-lov-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwaplov TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwaplov FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

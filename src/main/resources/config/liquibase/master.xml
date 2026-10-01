@@ -911,6 +911,28 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/report/views/1790797998_SA_AdditionalMeasurementsView.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790860287_SA_ApLOVValuesView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790860287_SA_ApLOVView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790860287_SA_AppointmentRequestView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790860287_SA_AppointmentRescheduleView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790860287_SA_Icd10CodeView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790860287_SA_IcdCategoryView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790860287_SA_PatientSatisfactionSurveyResponseView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790860287_SA_PatientSatisfactionSurveyResponseAnswerView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790860287_SA_PractitionerDepartmentView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790860287_SA_WaitingListBookingView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790860287_SA_WaitingListView.xml"
+           relativeToChangelogFile="false"/>
 
 
   <include file="config/liquibase/changelog/1788291540_SA_EncounterDischargeLog.xml" relativeToChangelogFile="false"/>

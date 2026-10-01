@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-ap-lov-values-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwaplovvalues AS
+      SELECT
+        alv.key,
+        alv.lov_key,
+        alv.lov_code,
+        alv.value_code,
+        alv.lov_display_vale,
+        alv.love_custom_code,
+        alv.value_description,
+        alv.value_color,
+        alv.value_icon,
+        alv.value_order,
+        alv.isdefault,
+        alv.seeded_data,
+        alv.for_internal_user,
+        alv.specific_for_screen_id,
+        alv.parent_value_id,
+        alv.created_by,
+        alv.updated_by,
+        alv.deleted_by,
+        alv.created_at,
+        alv.updated_at,
+        alv.deleted_at,
+        alv.is_valid,
+        alv.score
+      FROM public.ap_lov_values alv;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwaplovvalues;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-ap-lov-values-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwaplovvalues TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwaplovvalues FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

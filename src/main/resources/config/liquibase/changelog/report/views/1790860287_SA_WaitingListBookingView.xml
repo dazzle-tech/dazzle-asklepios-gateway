@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-appointment-waiting-list-booking-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwappointmentwaitinglistbooking AS
+      SELECT
+        awlb.id,
+        awlb.waiting_list_id,
+        awlb.booking_group_id,
+        awlb.appointment_id,
+        awlb.sequence_no,
+        awlb.start_datetime,
+        awlb.end_datetime,
+        awlb.source_status_before_booking,
+        awlb.booking_mode
+      FROM public.appointment_waiting_list_booking awlb;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwappointmentwaitinglistbooking;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-appointment-waiting-list-booking-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwappointmentwaitinglistbooking TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwappointmentwaitinglistbooking FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>
