@@ -953,4 +953,6 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/claim_WaseelIntegration/2026092902_claim_foreign_keys.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/diagnosticOrderTest/2026100401_H_Diagnostic_Order_Test_Add_Confirmed_By_At.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
