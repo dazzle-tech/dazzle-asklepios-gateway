@@ -1,27 +1,3 @@
---liquibase formatted sql
---changeset includeAll:raw runOnChange:true splitStatements:false stripComments:false
-
-CREATE OR REPLACE FUNCTION fn_vital_signs_set_defaults()
-RETURNS trigger
-LANGUAGE plpgsql
-AS $$
-DECLARE
-v_user text;
-BEGIN
-  v_user := current_setting('app.user', true);
-
-  IF NEW.created_date IS NULL THEN
-    NEW.created_date := now();
-END IF;
-
-  IF NEW.created_by IS NULL THEN
-    NEW.created_by := v_user;
-END IF;
-
-RETURN NEW;
-END;
-$$;
-
 CREATE OR REPLACE FUNCTION fn_vital_signs_audit_log()
 RETURNS trigger
 LANGUAGE plpgsql
@@ -118,12 +94,6 @@ END IF;
 RETURN NULL;
 END;
 $$;
-
-DROP TRIGGER IF EXISTS trg_vital_signs_set_defaults ON vital_signs;
-CREATE TRIGGER trg_vital_signs_set_defaults
-  BEFORE INSERT ON vital_signs
-  FOR EACH ROW
-  EXECUTE FUNCTION fn_vital_signs_set_defaults();
 
 DROP TRIGGER IF EXISTS trg_vital_signs_audit_log ON vital_signs;
 CREATE TRIGGER trg_vital_signs_audit_log

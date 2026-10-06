@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="
+                     http://www.liquibase.org/xml/ns/dbchangelog
+                     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="create-encounter-reopen-session" author="Faroukdhelea">
+
+    <createTable tableName="encounter_reopen_session">
+
+      <column name="id" type="BIGINT" autoIncrement="true">
+        <constraints primaryKey="true"
+                     primaryKeyName="pk_encounter_reopen_session"
+                     nullable="false"/>
+      </column>
+
+      <column name="encounter_id" type="BIGINT">
+        <constraints nullable="false"
+                     foreignKeyName="fk_encounter_reopen_session_encounter"
+                     referencedTableName="patient_encounters"
+                     referencedColumnNames="id"/>
+      </column>
+
+      <column name="session_number" type="INTEGER">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="reason" type="varchar(2000)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="original_treatment_status" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="reopened_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="reopened_at" type="TIMESTAMP">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="closed_by" type="varchar(50)"/>
+
+      <column name="closed_at" type="TIMESTAMP"/>
+
+      <column name="status" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <!--
+        Snapshots of values cleared from patient_encounters on reopen.
+        encounter_discharge_log does not store these losslessly.
+      -->
+      <column name="completed_by" type="varchar(50)"/>
+      <column name="completed_at" type="TIMESTAMP"/>
+      <column name="discharge_at" type="TIMESTAMP"/>
+      <column name="discharge_type" type="varchar(50)"/>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="TIMESTAMP" defaultValueDate="now()">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="TIMESTAMP"/>
+
+    </createTable>
+
+    <addUniqueConstraint tableName="encounter_reopen_session"
+                         columnNames="encounter_id, session_number"
+                         constraintName="ux_encounter_reopen_session_encounter_number"/>
+
+    <createIndex indexName="idx_encounter_reopen_session_encounter"
+                 tableName="encounter_reopen_session">
+      <column name="encounter_id"/>
+    </createIndex>
+
+    <createIndex indexName="idx_encounter_reopen_session_encounter_status"
+                 tableName="encounter_reopen_session">
+      <column name="encounter_id"/>
+      <column name="status"/>
+    </createIndex>
+
+    <sql dbms="postgresql">
+      <![CDATA[
+      ALTER TABLE encounter_reopen_session
+        ADD CONSTRAINT ck_encounter_reopen_session_number_positive
+          CHECK (session_number > 0);
+
+      ALTER TABLE encounter_reopen_session
+        ADD CONSTRAINT ck_encounter_reopen_session_reason_not_blank
+          CHECK (length(btrim(reason)) > 0);
+
+      ALTER TABLE encounter_reopen_session
+        ADD CONSTRAINT ck_encounter_reopen_session_status
+          CHECK (status IN ('OPEN', 'CLOSED'));
+
+      ALTER TABLE encounter_reopen_session
+        ADD CONSTRAINT ck_encounter_reopen_session_closed_fields
+          CHECK (
+            (status = 'OPEN' AND closed_by IS NULL AND closed_at IS NULL)
+              OR
+            (status = 'CLOSED' AND closed_by IS NOT NULL AND closed_at IS NOT NULL)
+          );
+
+      CREATE UNIQUE INDEX ux_encounter_reopen_session_one_open
+        ON encounter_reopen_session (encounter_id)
+        WHERE status = 'OPEN';
+      ]]>
+    </sql>
+
+  </changeSet>
+</databaseChangeLog>
