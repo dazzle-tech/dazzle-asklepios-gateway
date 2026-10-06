@@ -9,7 +9,6 @@
   <changeSet id="FA00000000020" author="faroukdhelea">
     <addColumn tableName="patient_encounters">
       <column name="cancellation_reason_type" type="varchar(50)"/>
-      <column name="cancellation_reason" type="text"/>
     </addColumn>
   </changeSet>
 
