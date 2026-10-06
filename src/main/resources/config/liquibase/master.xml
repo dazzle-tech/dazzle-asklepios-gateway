@@ -955,4 +955,6 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/diagnosticOrderTest/2026100401_H_Diagnostic_Order_Test_Add_Confirmed_By_At.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/encounter/2026100601_H_Patient_Encounter_Add_Cancellation_Fields.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
