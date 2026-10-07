@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="APP_Request_recurring_00000000000003" author="sondos">
+    <addColumn tableName="appointment_request">
+      <column name="recurring" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="recurrence_days" type="varchar(100)"/>
+      <column name="recurrence_start_date" type="date"/>
+      <column name="recurrence_period" type="integer"/>
+      <column name="recurrence_unit" type="varchar(10)"/>
+    </addColumn>
+  </changeSet>
+
+  <changeSet id="APP_Request_recurring_00000000000004" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwappointmentrequest AS
+      SELECT
+        ar.id,
+        ar.patient_id,
+        ar.facility_id,
+        ar.department_id,
+        ar.source_encounter_id,
+        ar.appointment_id,
+        ar.requested_resource_type,
+        ar.requested_resource_id,
+        ar.priority,
+        ar.reason,
+        ar.note,
+        ar.status,
+        ar.cancelled_at,
+        ar.cancel_reason,
+        ar.created_by,
+        ar.created_date,
+        ar.last_modified_by,
+        ar.last_modified_date,
+        ar.preferred_date,
+        ar.recurring,
+        ar.recurrence_days,
+        ar.recurrence_start_date,
+        ar.recurrence_period,
+        ar.recurrence_unit
+      FROM public.appointment_request ar;
+    </sql>
+  </changeSet>
+
+</databaseChangeLog>

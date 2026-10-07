@@ -940,6 +940,10 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/report/views/1790860287_SA_AppointmentRequestView.xml"
            relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/appointmentRequest/1791400000_appointment_request_recurrence.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/appointmentRequest/1791400001_appointment_request_preferred_time.xml"
+           relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/report/views/1790860287_SA_AppointmentRescheduleView.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/report/views/1790860287_SA_Icd10CodeView.xml"
