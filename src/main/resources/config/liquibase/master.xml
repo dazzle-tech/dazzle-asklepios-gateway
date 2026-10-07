@@ -71,6 +71,8 @@
   <include
     file="/config/liquibase/changelog/availabilityGenerationBatch/1782636302_S_AvailabilityGenerationBatchNotificationColumns.xml"
     relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/availabilityGenerationBatch/1791366719_S_AvailabilityGenerationBatchEndingSoonIntervalNotificationColumn.xml"
+           relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1774339459_BM_appointment.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1782644939_S_AppointmentBookingGroup.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1782645230_S_AppointmentWaitingList.xml" relativeToChangelogFile="false"/>
