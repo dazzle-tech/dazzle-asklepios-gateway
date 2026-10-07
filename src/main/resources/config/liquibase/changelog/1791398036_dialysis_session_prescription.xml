@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="FA0000000030" author="farouk">
+
+    <addColumn tableName="dialysis_session">
+      <column name="dialysis_duration" type="numeric(10,2)"/>
+      <column name="blood_flow_rate" type="numeric(10,2)"/>
+      <column name="dialysate_flow_rate" type="numeric(10,2)"/>
+      <column name="ultrafiltration_goal" type="numeric(10,2)"/>
+      <column name="dialysate_composition" type="varchar(500)"/>
+      <column name="sodium" type="numeric(10,2)"/>
+      <column name="potassium" type="numeric(10,2)"/>
+      <column name="calcium" type="numeric(10,2)"/>
+      <column name="dialysis_temperature" type="numeric(10,2)"/>
+      <column name="heparin_dose" type="numeric(10,2)"/>
+      <column name="anticoagulation" type="varchar(50)"/>
+      <column name="other_anticoagulation" type="varchar(500)"/>
+      <column name="target_dry_weight" type="numeric(10,2)"/>
+    </addColumn>
+
+  </changeSet>
+
+</databaseChangeLog>
