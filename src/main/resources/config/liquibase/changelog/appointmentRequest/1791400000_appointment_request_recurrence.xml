@@ -18,36 +18,5 @@
     </addColumn>
   </changeSet>
 
-  <changeSet id="APP_Request_recurring_00000000000004" author="sondos">
-    <sql splitStatements="false">
-      CREATE OR REPLACE VIEW reports.vwappointmentrequest AS
-      SELECT
-        ar.id,
-        ar.patient_id,
-        ar.facility_id,
-        ar.department_id,
-        ar.source_encounter_id,
-        ar.appointment_id,
-        ar.requested_resource_type,
-        ar.requested_resource_id,
-        ar.priority,
-        ar.reason,
-        ar.note,
-        ar.status,
-        ar.cancelled_at,
-        ar.cancel_reason,
-        ar.created_by,
-        ar.created_date,
-        ar.last_modified_by,
-        ar.last_modified_date,
-        ar.preferred_date,
-        ar.recurring,
-        ar.recurrence_days,
-        ar.recurrence_start_date,
-        ar.recurrence_period,
-        ar.recurrence_unit
-      FROM public.appointment_request ar;
-    </sql>
-  </changeSet>
 
 </databaseChangeLog>
