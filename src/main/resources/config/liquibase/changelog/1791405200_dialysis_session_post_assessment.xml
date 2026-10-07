@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="FA0000000034" author="farouk">
+
+    <addColumn tableName="dialysis_session">
+      <column name="post_weight" type="numeric(10,2)"/>
+      <column name="post_blood_pressure_systolic" type="integer"/>
+      <column name="post_blood_pressure_diastolic" type="integer"/>
+      <column name="post_pulse" type="integer"/>
+      <column name="post_temperature" type="numeric(5,2)"/>
+      <column name="total_uf_removed" type="numeric(10,2)"/>
+      <column name="actual_treatment_duration" type="numeric(10,2)"/>
+      <column name="post_access_condition" type="varchar(500)"/>
+      <column name="disposition" type="varchar(50)"/>
+      <column name="post_complications" type="varchar(500)"/>
+      <column name="patient_condition" type="varchar(500)"/>
+      <column name="target_uf" type="numeric(10,2)"/>
+      <column name="actual_uf" type="numeric(10,2)"/>
+      <column name="uf_difference" type="numeric(10,2)"/>
+    </addColumn>
+
+  </changeSet>
+
+</databaseChangeLog>

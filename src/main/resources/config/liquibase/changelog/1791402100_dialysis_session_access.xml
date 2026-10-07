@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="FA0000000032" author="farouk">
+
+    <addColumn tableName="dialysis_session">
+      <column name="access_type" type="varchar(50)"/>
+      <column name="access_site" type="varchar(50)"/>
+      <column name="other_access_site" type="varchar(500)"/>
+      <column name="infection" type="boolean"/>
+      <column name="bleeding" type="boolean"/>
+      <column name="thrill" type="varchar(500)"/>
+      <column name="bruit" type="varchar(500)"/>
+      <column name="dressing" type="varchar(500)"/>
+      <column name="catheter_condition" type="varchar(500)"/>
+    </addColumn>
+
+  </changeSet>
+
+</databaseChangeLog>

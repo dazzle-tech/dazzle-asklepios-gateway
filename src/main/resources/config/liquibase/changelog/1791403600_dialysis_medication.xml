@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="FA0000000033" author="farouk">
+
+    <createTable tableName="dialysis_medication">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="dialysis_session_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="active_ingredient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="dose" type="bigint"/>
+
+      <column name="dose_unit" type="varchar(100)"/>
+
+      <column name="created_by" type="varchar(50)"/>
+      <column name="created_date" type="timestamp"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+
+    <addForeignKeyConstraint
+      constraintName="fk_dialysis_medication_session_id"
+      baseTableName="dialysis_medication"
+      baseColumnNames="dialysis_session_id"
+      referencedTableName="dialysis_session"
+      referencedColumnNames="id"/>
+
+  </changeSet>
+
+</databaseChangeLog>
