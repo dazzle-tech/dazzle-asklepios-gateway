@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="CLAIM_ENCOUNTER_DIAGNOSIS_LOGS" author="Rawan-Yahya">
+
+    <createTable tableName="claim_encounter_diagnosis_logs">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="claim_encounter_diagnosis_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="operation_type" type="varchar(20)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="log_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="log_by" type="varchar(50)"/>
+
+      <column name="diagnosis_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="suspected" type="boolean">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="major" type="boolean">
+        <constraints nullable="false"/>
+      </column>
+
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="claim_encounter_diagnosis_logs"
+      baseColumnNames="claim_encounter_diagnosis_id"
+      constraintName="fk_claim_encounter_diagnosis_logs_diagnosis"
+      referencedTableName="claim_encounter_diagnoses"
+      referencedColumnNames="id"/>
+
+    <addForeignKeyConstraint
+      baseTableName="claim_encounter_diagnosis_logs"
+      baseColumnNames="diagnosis_id"
+      constraintName="fk_claim_encounter_diagnosis_logs_icd"
+      referencedTableName="icd_diagnosis"
+      referencedColumnNames="id"/>
+
+    <createIndex
+      tableName="claim_encounter_diagnosis_logs"
+      indexName="idx_claim_encounter_diagnosis_logs_diagnosis">
+      <column name="claim_encounter_diagnosis_id"/>
+    </createIndex>
+
+    <sqlFile
+      path="config/liquibase/sql/claim_encounter_diagnosis_log.sql"
+      relativeToChangelogFile="false"
+      splitStatements="false"
+      stripComments="false"/>
+
+  </changeSet>
+</databaseChangeLog>

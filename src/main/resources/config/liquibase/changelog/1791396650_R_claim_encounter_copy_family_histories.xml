@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet
+    id="create-claim-encounter-copy-family-history"
+    author="Rawan-Yahya">
+
+    <createTable tableName="claim_encounter_copy_family_histories">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints
+          primaryKey="true"
+          nullable="false"/>
+      </column>
+
+      <column
+        name="claim_encounter_copy_id"
+        type="bigint">
+        <constraints
+          nullable="false"
+          foreignKeyName="fk_claim_copy_family_history_copy"
+          references="claim_encounter_copies(id)"/>
+      </column>
+
+      <column
+        name="family_history_id"
+        type="bigint">
+        <constraints
+          nullable="true"
+          foreignKeyName="fk_claim_copy_family_history_source"
+          references="family_history(id)"/>
+      </column>
+
+      <column name="condition" type="varchar(255)"/>
+
+      <column name="relation" type="varchar(100)"/>
+
+      <column name="inherited_diseases" type="boolean"/>
+
+      <column
+        name="patient_is_free"
+        type="boolean"
+        defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="free_text" type="text"/>
+
+      <column
+        name="status"
+        type="varchar(50)"
+        defaultValue="ACTIVE">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="cancelled_by" type="varchar(50)"/>
+
+      <column name="cancelled_date" type="timestamp"/>
+
+      <column name="cancellation_reason" type="text"/>
+
+      <column name="created_by" type="varchar(50)"/>
+
+      <column name="created_date" type="timestamp"/>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+
+    <createIndex
+      indexName="idx_claim_copy_family_history_copy_id"
+      tableName="claim_encounter_copy_family_histories">
+
+      <column name="claim_encounter_copy_id"/>
+
+    </createIndex>
+
+    <createIndex
+      indexName="idx_claim_copy_family_history_source_id"
+      tableName="claim_encounter_copy_family_histories">
+
+      <column name="family_history_id"/>
+
+    </createIndex>
+
+  </changeSet>
+
+</databaseChangeLog>

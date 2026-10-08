@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="CLAIM_ENCOUNTER_COPY_SOCIAL_HISTORY" author="Rawan-Yahya">
+
+    <createTable tableName="claim_encounter_copy_social_histories">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="claim_encounter_copy_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="social_history_id" type="bigint" />
+
+      <column name="is_current_smoker" type="boolean"/>
+      <column name="smoke_start_date" type="date"/>
+      <column name="cigarette_amount" type="int"/>
+      <column name="cigarette_type" type="varchar(255)"/>
+
+      <column name="is_previous_smoker" type="boolean"/>
+      <column name="smoke_quit_date" type="date"/>
+
+      <column name="exposure_to_second_hand_smoke" type="boolean"/>
+
+      <column name="alcohol_consumption" type="boolean"/>
+      <column name="type_of_alcohol" type="varchar(255)"/>
+      <column name="alcohol_since_when" type="date"/>
+
+      <column name="substance_use" type="boolean"/>
+      <column name="route" type="varchar(50)"/>
+      <column name="frequency" type="varchar(50)"/>
+
+      <column name="physical_limitation" type="varchar(50)"/>
+      <column name="diagnosed_eating_disorders" type="varchar(50)"/>
+
+      <column name="patient_is_free" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="free_text" type="text"/>
+
+      <column name="status" type="varchar(50)" defaultValue="ACTIVE">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="cancelled_by" type="varchar(50)"/>
+      <column name="cancelled_date" type="timestamp"/>
+      <column name="cancellation_reason" type="text"/>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="claim_encounter_copy_social_histories"
+      baseColumnNames="claim_encounter_copy_id"
+      referencedTableName="claim_encounter_copies"
+      referencedColumnNames="id"
+      constraintName="fk_claim_copy_social_history_copy"
+    />
+
+    <addForeignKeyConstraint
+      baseTableName="claim_encounter_copy_social_histories"
+      baseColumnNames="social_history_id"
+      referencedTableName="social_history"
+      referencedColumnNames="id"
+      constraintName="fk_claim_copy_social_history_original"
+    />
+
+    <createIndex
+      tableName="claim_encounter_copy_social_histories"
+      indexName="idx_claim_copy_social_history_copy">
+      <column name="claim_encounter_copy_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="claim_encounter_copy_social_histories"
+      indexName="idx_claim_copy_social_history_original">
+      <column name="social_history_id"/>
+    </createIndex>
+
+  </changeSet>
+
+</databaseChangeLog>

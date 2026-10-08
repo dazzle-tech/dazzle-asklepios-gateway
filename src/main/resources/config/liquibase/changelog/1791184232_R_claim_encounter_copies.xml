@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+<changeSet id="create-claim-encounter-copies-table" author="Rawan-Yahya">
+
+  <createTable tableName="claim_encounter_copies">
+
+    <column name="id" type="BIGINT" autoIncrement="true">
+      <constraints primaryKey="true"
+                   nullable="false"
+                   primaryKeyName="pk_claim_encounter_copies"/>
+    </column>
+
+    <column name="encounter_id" type="BIGINT">
+      <constraints nullable="false"
+                   unique="true"
+                   uniqueConstraintName="uk_claim_encounter_copies_encounter"/>
+    </column>
+
+    <column name="chief_complaint" type="TEXT"/>
+
+    <column name="history_of_present_illness" type="TEXT"/>
+
+    <column name="physical_examination" type="TEXT"/>
+
+    <column name="treatment_plan" type="TEXT"/>
+
+    <column name="assessment" type="text"/>
+
+    <column name="pulse" type="INTEGER"/>
+
+    <column name="temperature" type="DECIMAL(5,2)"/>
+
+    <column name="respiratory_rate" type="INTEGER"/>
+
+    <column name="oxygen_saturation" type="DECIMAL(5,2)"/>
+
+    <column name="blood_pressure_systolic" type="INTEGER"/>
+
+    <column name="blood_pressure_diastolic" type="INTEGER"/>
+
+    <column name="height" type="DECIMAL(6,2)"/>
+
+    <column name="weight" type="DECIMAL(6,2)"/>
+
+    <column name="created_by" type="VARCHAR(255)"/>
+
+    <column name="created_date" type="TIMESTAMP"/>
+
+    <column name="last_modified_by" type="VARCHAR(255)"/>
+
+    <column name="last_modified_date" type="TIMESTAMP"/>
+
+  </createTable>
+
+  <addForeignKeyConstraint
+    baseTableName="claim_encounter_copies"
+    baseColumnNames="encounter_id"
+    referencedTableName="patient_encounters"
+    referencedColumnNames="id"
+    constraintName="fk_claim_encounter_copies_encounter"/>
+
+  <createIndex
+    indexName="idx_claim_encounter_copies_encounter"
+    tableName="claim_encounter_copies">
+
+    <column name="encounter_id"/>
+
+  </createIndex>
+
+</changeSet>
+</databaseChangeLog>
