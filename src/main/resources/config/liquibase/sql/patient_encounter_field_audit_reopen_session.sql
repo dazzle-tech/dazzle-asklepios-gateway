@@ -156,25 +156,6 @@ END IF;
         v_reopen_session_id
       );
 END IF;
-    IF OLD.assigned_nurse_id IS DISTINCT FROM NEW.assigned_nurse_id THEN
-      INSERT INTO public.patient_encounter_field_audit (
-        patient_encounter_id,
-        field_name,
-        operation_type,
-        old_value,
-        new_value,
-        log_date,
-        log_by
-      ) VALUES (
-        NEW.id,
-        'assignedNurseId',
-        'UPDATE',
-        OLD.assigned_nurse_id::text,
-        NEW.assigned_nurse_id::text,
-        now(),
-        COALESCE(NEW.last_modified_by, NEW.created_by, v_user)
-      );
-END IF;
 
 RETURN NEW;
 END IF;
