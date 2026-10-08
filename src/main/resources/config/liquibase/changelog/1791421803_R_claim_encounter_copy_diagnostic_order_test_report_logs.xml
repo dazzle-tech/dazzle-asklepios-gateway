@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet
+    id="create_claim_encounter_copy_diagnostic_order_test_report_logs_table"
+    author="Rawan-Yahya">
+
+    <createTable tableName="claim_encounter_copy_diagnostic_order_test_report_logs">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column
+        name="claim_encounter_copy_diagnostic_order_test_report_id"
+        type="bigint">
+
+        <constraints
+          nullable="false"
+          foreignKeyName="fk_claim_copy_diag_order_test_report_logs"
+          references="claim_encounter_copy_diagnostic_order_test_reports(id)"/>
+      </column>
+
+      <column name="operation_type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="log_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="log_by" type="varchar(50)"/>
+
+      <column name="claim_encounter_copy_id" type="bigint"/>
+      <column name="diagnostic_order_test_report_id" type="bigint"/>
+      <column name="order_test_id" type="bigint"/>
+
+      <column name="report" type="text"/>
+      <column name="radiologist_information" type="text"/>
+      <column name="critical_findings" type="text"/>
+      <column name="radiologist_comments" type="text"/>
+      <column name="severity" type="varchar(50)"/>
+
+      <column name="status" type="varchar(50)"/>
+
+      <column name="cancelled_by" type="varchar(50)"/>
+      <column name="cancelled_date" type="timestamp"/>
+      <column name="cancellation_reason" type="text"/>
+
+      <column name="created_by" type="varchar(50)"/>
+      <column name="created_date" type="timestamp"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+
+    <createIndex
+      tableName="claim_encounter_copy_diagnostic_order_test_report_logs"
+      indexName="idx_claim_copy_diag_order_test_report_logs">
+
+      <column name="claim_encounter_copy_diagnostic_order_test_report_id"/>
+
+    </createIndex>
+
+    <sqlFile
+      path="config/liquibase/sql/claim_encounter_copy_diagnostic_order_test_report_log.sql"
+      relativeToChangelogFile="false"
+      splitStatements="false"/>
+
+  </changeSet>
+
+</databaseChangeLog>

@@ -1046,4 +1046,12 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1791407902_R_claim_encounter_copy_current_medication_logs.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1791420000_R_claim_encounter_copy_diagnostic_order_test_results.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1791420601_R_claim_encounter_copy_diagnostic_order_test_result_logs.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1791421202_R_claim_encounter_copy_diagnostic_order_test_reports.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1791421803_R_claim_encounter_copy_diagnostic_order_test_report_logs.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>

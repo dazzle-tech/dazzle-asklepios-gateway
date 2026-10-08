@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="create-claim-encounter-copy-diagnostic-order-test-results" author="Rawan-Yahya">
+
+    <createTable tableName="claim_encounter_copy_diagnostic_order_test_results">
+
+      <column name="id" type="bigint" autoIncrement="true" startWith="1">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="claim_encounter_copy_id" type="bigint">
+        <constraints
+          nullable="false"
+          foreignKeyName="fk_claim_copy_diag_order_test_result_copy"
+          references="claim_encounter_copies(id)"/>
+      </column>
+
+      <column name="diagnostic_order_test_result_id" type="bigint">
+        <constraints
+          foreignKeyName="fk_claim_copy_diag_order_test_result_source"
+          references="diagnostic_order_tests_result(id)"/>
+      </column>
+
+      <column name="order_test_id" type="bigint">
+        <constraints
+          nullable="false"
+          foreignKeyName="fk_claim_copy_diag_order_test_result_order_test"
+          references="diagnostic_order_tests(id)"/>
+      </column>
+
+      <column name="profile_test_id" type="bigint"/>
+
+      <column name="result_value_number" type="DECIMAL(19,2)"/>
+
+      <column name="result_value_text" type="text"/>
+
+      <column name="marker" type="varchar(50)"/>
+
+      <column name="normal_range_value" type="varchar(150)"/>
+
+      <column name="result_type_at_entry" type="varchar(20)"/>
+
+      <column name="status" type="varchar(50)" defaultValue="ACTIVE">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="cancelled_by" type="varchar(50)"/>
+      <column name="cancelled_date" type="timestamp"/>
+      <column name="cancellation_reason" type="text"/>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+
+    <createIndex
+      tableName="claim_encounter_copy_diagnostic_order_test_results"
+      indexName="idx_claim_copy_diag_order_test_result_copy">
+      <column name="claim_encounter_copy_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="claim_encounter_copy_diagnostic_order_test_results"
+      indexName="idx_claim_copy_diag_order_test_result_source">
+      <column name="diagnostic_order_test_result_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="claim_encounter_copy_diagnostic_order_test_results"
+      indexName="idx_claim_copy_diag_order_test_result_order_test">
+      <column name="order_test_id"/>
+    </createIndex>
+
+  </changeSet>
+
+</databaseChangeLog>
