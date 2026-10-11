@@ -978,8 +978,6 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/encounter/1791158400_encounter_reopen_session.xml"
            relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/encounter/1791163000_encounter_reopen_session.xml"
-           relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/encounter/1791163100_encounter_amendment_change_log.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/encounter/1791162000_progress_notes_log_reopen_session.xml"

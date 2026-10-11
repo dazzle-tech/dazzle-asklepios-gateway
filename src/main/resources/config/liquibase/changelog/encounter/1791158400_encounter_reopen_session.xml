@@ -50,6 +50,8 @@
         <constraints nullable="false"/>
       </column>
 
+      <column name="type_of_reopen" type="varchar(50)"/>
+
       <!--
         Snapshots of values cleared from patient_encounters on reopen.
         encounter_discharge_log does not store these losslessly.
