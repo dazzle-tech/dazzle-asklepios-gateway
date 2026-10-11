@@ -45,13 +45,6 @@
       <column name="critical_findings" type="text"/>
       <column name="radiologist_comments" type="text"/>
       <column name="severity" type="varchar(50)"/>
-
-      <column name="status" type="varchar(50)"/>
-
-      <column name="cancelled_by" type="varchar(50)"/>
-      <column name="cancelled_date" type="timestamp"/>
-      <column name="cancellation_reason" type="text"/>
-
       <column name="created_by" type="varchar(50)"/>
       <column name="created_date" type="timestamp"/>
       <column name="last_modified_by" type="varchar(50)"/>

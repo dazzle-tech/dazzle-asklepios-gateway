@@ -46,13 +46,6 @@
       <column name="marker" type="varchar(50)"/>
       <column name="normal_range_value" type="varchar(150)"/>
       <column name="result_type_at_entry" type="varchar(20)"/>
-
-      <column name="status" type="varchar(50)"/>
-
-      <column name="cancelled_by" type="varchar(50)"/>
-      <column name="cancelled_date" type="timestamp"/>
-      <column name="cancellation_reason" type="text"/>
-
       <column name="created_by" type="varchar(50)"/>
       <column name="created_date" type="timestamp"/>
       <column name="last_modified_by" type="varchar(50)"/>
