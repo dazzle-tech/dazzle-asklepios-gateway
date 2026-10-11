@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="FA0000000037" author="farouk">
+
+    <!--
+      One active session per patient + encounter + treatment plan.
+      MySQL UNIQUE allows multiple NULLs for treatment_plan_id, so legacy
+      sessions without a plan remain valid; null-plan uniqueness is enforced
+      in the application layer.
+    -->
+    <createIndex
+      indexName="uk_dialysis_session_patient_encounter_plan"
+      tableName="dialysis_session"
+      unique="true">
+      <column name="patient_id"/>
+      <column name="encounter_id"/>
+      <column name="treatment_plan_id"/>
+    </createIndex>
+
+  </changeSet>
+
+</databaseChangeLog>
