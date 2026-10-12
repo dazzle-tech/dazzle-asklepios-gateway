@@ -164,4 +164,14 @@
 
   </changeSet>
 
+  <changeSet id="H_POINT_OF_SALE_TRANSACTION_PAN_NUMBER" author="hanan">
+
+    <addColumn tableName="point_of_sale_transaction">
+
+      <column name="pan_number" type="varchar(30)"/>
+
+    </addColumn>
+
+  </changeSet>
+
 </databaseChangeLog>
