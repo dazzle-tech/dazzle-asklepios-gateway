@@ -2,8 +2,19 @@ CREATE OR REPLACE FUNCTION public.trg_patient_encounter_field_audit_fn()
 RETURNS trigger AS $$
 DECLARE
 v_user text;
+v_reopen_session_raw text;
+v_reopen_session_id bigint;
 BEGIN
   v_user := current_setting('app.user', true);
+  v_reopen_session_raw := current_setting('app.reopen_session_id', true);
+
+  IF v_reopen_session_raw IS NULL OR btrim(v_reopen_session_raw) = '' THEN
+    v_reopen_session_id := NULL;
+  ELSIF v_reopen_session_raw ~ '^[0-9]+$' THEN
+    v_reopen_session_id := v_reopen_session_raw::bigint;
+  ELSE
+    v_reopen_session_id := NULL;
+  END IF;
 
   -- INSERT
   IF TG_OP = 'INSERT' THEN
@@ -16,7 +27,8 @@ BEGIN
         old_value,
         new_value,
         log_date,
-        log_by
+        log_by,
+        reopen_session_id
       ) VALUES (
         NEW.id,
         'chiefComplaint',
@@ -24,7 +36,8 @@ BEGIN
         NULL,
         NEW.chief_complaint,
         now(),
-        COALESCE(NEW.created_by, v_user)
+        COALESCE(NEW.created_by, v_user),
+        v_reopen_session_id
       );
 END IF;
 
@@ -36,7 +49,8 @@ END IF;
         old_value,
         new_value,
         log_date,
-        log_by
+        log_by,
+        reopen_session_id
       ) VALUES (
         NEW.id,
         'historyOfPresentIllness',
@@ -44,7 +58,8 @@ END IF;
         NULL,
         NEW.history_of_present_illness,
         now(),
-        COALESCE(NEW.created_by, v_user)
+        COALESCE(NEW.created_by, v_user),
+        v_reopen_session_id
       );
 END IF;
 
@@ -56,7 +71,8 @@ END IF;
         old_value,
         new_value,
         log_date,
-        log_by
+        log_by,
+        reopen_session_id
       ) VALUES (
         NEW.id,
         'physicalExaminationSummery',
@@ -64,7 +80,8 @@ END IF;
         NULL,
         NEW.physical_examination_summery,
         now(),
-        COALESCE(NEW.created_by, v_user)
+        COALESCE(NEW.created_by, v_user),
+        v_reopen_session_id
       );
 END IF;
 
@@ -82,7 +99,8 @@ END IF;
         old_value,
         new_value,
         log_date,
-        log_by
+        log_by,
+        reopen_session_id
       ) VALUES (
         NEW.id,
         'chiefComplaint',
@@ -90,7 +108,8 @@ END IF;
         OLD.chief_complaint,
         NEW.chief_complaint,
         now(),
-        COALESCE(NEW.last_modified_by, NEW.created_by, v_user)
+        COALESCE(NEW.last_modified_by, NEW.created_by, v_user),
+        v_reopen_session_id
       );
 END IF;
 
@@ -102,7 +121,8 @@ END IF;
         old_value,
         new_value,
         log_date,
-        log_by
+        log_by,
+        reopen_session_id
       ) VALUES (
         NEW.id,
         'historyOfPresentIllness',
@@ -110,7 +130,8 @@ END IF;
         OLD.history_of_present_illness,
         NEW.history_of_present_illness,
         now(),
-        COALESCE(NEW.last_modified_by, NEW.created_by, v_user)
+        COALESCE(NEW.last_modified_by, NEW.created_by, v_user),
+        v_reopen_session_id
       );
 END IF;
 
@@ -122,7 +143,8 @@ END IF;
         old_value,
         new_value,
         log_date,
-        log_by
+        log_by,
+        reopen_session_id
       ) VALUES (
         NEW.id,
         'physicalExaminationSummery',
@@ -130,7 +152,8 @@ END IF;
         OLD.physical_examination_summery,
         NEW.physical_examination_summery,
         now(),
-        COALESCE(NEW.last_modified_by, NEW.created_by, v_user)
+        COALESCE(NEW.last_modified_by, NEW.created_by, v_user),
+        v_reopen_session_id
       );
 END IF;
     IF OLD.assigned_nurse_id IS DISTINCT FROM NEW.assigned_nurse_id THEN

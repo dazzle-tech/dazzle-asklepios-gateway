@@ -25,8 +25,19 @@ LANGUAGE plpgsql
 AS $$
 DECLARE
 v_user text;
+v_reopen_session_raw text;
+v_reopen_session_id bigint;
 BEGIN
   v_user := current_setting('app.user', true);
+  v_reopen_session_raw := current_setting('app.reopen_session_id', true);
+
+  IF v_reopen_session_raw IS NULL OR btrim(v_reopen_session_raw) = '' THEN
+    v_reopen_session_id := NULL;
+  ELSIF v_reopen_session_raw ~ '^[0-9]+$' THEN
+    v_reopen_session_id := v_reopen_session_raw::bigint;
+  ELSE
+    v_reopen_session_id := NULL;
+  END IF;
 
   IF (TG_OP = 'INSERT') THEN
     INSERT INTO consultation_log(
@@ -36,7 +47,8 @@ BEGIN
       created_date,
       last_modified_by,
       last_modified_date,
-      payload
+      payload,
+      reopen_session_id
     )
     VALUES (
       NEW.id,
@@ -45,7 +57,8 @@ BEGIN
       now(),
       COALESCE(NEW.created_by, v_user),
       now(),
-      to_jsonb(NEW)
+      to_jsonb(NEW),
+      v_reopen_session_id
     );
 RETURN NEW;
 
@@ -57,7 +70,8 @@ ELSIF (TG_OP = 'UPDATE') THEN
       created_date,
       last_modified_by,
       last_modified_date,
-      payload
+      payload,
+      reopen_session_id
     )
     VALUES (
       NEW.id,
@@ -69,7 +83,8 @@ ELSIF (TG_OP = 'UPDATE') THEN
       jsonb_build_object(
         'old', to_jsonb(OLD),
         'new', to_jsonb(NEW)
-      )
+      ),
+      v_reopen_session_id
     );
 RETURN NEW;
 
@@ -81,7 +96,8 @@ ELSIF (TG_OP = 'DELETE') THEN
       created_date,
       last_modified_by,
       last_modified_date,
-      payload
+      payload,
+      reopen_session_id
     )
     VALUES (
       OLD.id,
@@ -90,7 +106,8 @@ ELSIF (TG_OP = 'DELETE') THEN
       now(),
       v_user,
       now(),
-      to_jsonb(OLD)
+      to_jsonb(OLD),
+      v_reopen_session_id
     );
 RETURN OLD;
 END IF;
