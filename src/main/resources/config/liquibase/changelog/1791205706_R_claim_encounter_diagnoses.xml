@@ -94,5 +94,16 @@
       <column name="diagnosis_id"/>
     </createIndex>
 
+    <sql>
+      CREATE UNIQUE INDEX ux_claim_encounter_diagnosis_primary_per_encounter
+      ON claim_encounter_diagnoses (encounter_id)
+      WHERE type = 'PRIMARY';
+    </sql>
+
+    <addUniqueConstraint
+      tableName="claim_encounter_diagnoses"
+      columnNames="diagnosis_id,type,suspected,major,claim_encounter_copy_id,encounter_id"
+      constraintName="ux_claim_encounter_diagnosis_diag_type_flags_copy_encounter"/>
+
   </changeSet>
 </databaseChangeLog>
