@@ -575,8 +575,6 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/encounter/1785016000_B_encounter_coverage.xml"
            relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/encounter/1790497036_R_encounter_assigned_nurse.xml"
-           relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/billing/1785012000_BM_Billing_Eligibility_Snapshot.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/invoice/1785013000_B_financial_document_adjustment_reason.xml"
@@ -1014,5 +1012,7 @@
   <include file="config/liquibase/changelog/diagnosticOrderTest/2026100401_H_Diagnostic_Order_Test_Add_Confirmed_By_At.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/encounter/2026100601_H_Patient_Encounter_Add_Cancellation_Fields.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/billing/1791331200_BM_Billing_Rule_Payment_Type.xml"
            relativeToChangelogFile="false"/>
 </databaseChangeLog>
