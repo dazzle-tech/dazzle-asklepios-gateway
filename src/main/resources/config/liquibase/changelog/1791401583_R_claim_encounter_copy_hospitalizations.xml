@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="create-claim-encounter-copy-hospitalizations" author="Rawan-Yahya">
+
+    <createTable tableName="claim_encounter_copy_hospitalizations">
+
+      <column name="id" type="bigint" autoIncrement="true" startWith="1">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="claim_encounter_copy_id" type="bigint">
+        <constraints
+          nullable="false"
+          foreignKeyName="fk_claim_encounter_copy_hospitalizations_copy"
+          references="claim_encounter_copies(id)"/>
+      </column>
+
+      <column name="hospitalization_id" type="bigint">
+        <constraints
+          foreignKeyName="fk_claim_encounter_copy_hospitalizations_source"
+          references="hospitalizations(id)"/>
+      </column>
+
+      <column name="facility" type="varchar(255)"/>
+      <column name="reason" type="varchar(255)"/>
+      <column name="admission_type" type="varchar(100)"/>
+      <column name="date_of_admission" type="date"/>
+      <column name="length_of_stay_days" type="int"/>
+      <column name="outcomes" type="varchar(255)"/>
+      <column name="medical_interventions_performed" type="varchar(1000)"/>
+
+      <column name="patient_is_free" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="free_text" type="text"/>
+
+      <column name="status" type="varchar(50)" defaultValue="ACTIVE">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="cancelled_by" type="varchar(50)"/>
+      <column name="cancelled_date" type="timestamp"/>
+      <column name="cancellation_reason" type="text"/>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+
+    <createIndex
+      tableName="claim_encounter_copy_hospitalizations"
+      indexName="idx_claim_encounter_copy_hospitalizations_copy">
+      <column name="claim_encounter_copy_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="claim_encounter_copy_hospitalizations"
+      indexName="idx_claim_encounter_copy_hospitalizations_source">
+      <column name="hospitalization_id"/>
+    </createIndex>
+
+    <sql><![CDATA[
+      CREATE UNIQUE INDEX ux_claim_encounter_copy_hospitalizations_copy_facility_date_reason
+        ON claim_encounter_copy_hospitalizations (
+          claim_encounter_copy_id,
+          lower(facility),
+          date_of_admission,
+          lower(reason)
+        )
+        WHERE status <> 'CANCELLED';
+    ]]></sql>
+
+  </changeSet>
+
+</databaseChangeLog>
