@@ -984,4 +984,8 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/encounter/1791162100_group_a_audit_reopen_session.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/encounter/1791163200_allergies_warnings_reopen_session.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/encounter/1791163300_group_b_amendment_audit_triggers.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
