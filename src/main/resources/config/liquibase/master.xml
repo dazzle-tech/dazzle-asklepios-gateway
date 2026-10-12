@@ -1013,6 +1013,18 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/encounter/2026100601_H_Patient_Encounter_Add_Cancellation_Fields.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/encounter/1791158400_encounter_reopen_session.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/encounter/1791163100_encounter_amendment_change_log.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/encounter/1791162000_progress_notes_log_reopen_session.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/encounter/1791162100_group_a_audit_reopen_session.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/encounter/1791163200_allergies_warnings_reopen_session.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/encounter/1791163300_group_b_amendment_audit_triggers.xml"
+           relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/billing/1791331200_BM_Billing_Rule_Payment_Type.xml"
            relativeToChangelogFile="false"/>
 </databaseChangeLog>
