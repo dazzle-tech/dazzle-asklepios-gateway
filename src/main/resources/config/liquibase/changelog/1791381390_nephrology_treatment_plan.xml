@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="FA0000000027" author="farouk">
+
+    <createTable tableName="nephrology_treatment_plan">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="treatment_type" type="varchar(50)"/>
+
+      <column name="frequency" type="integer"/>
+
+      <column name="schedule" type="json"/>
+
+      <column name="dialysis_duration" type="numeric(10,2)"/>
+
+      <column name="dry_weight" type="numeric(10,2)"/>
+
+      <column name="target_weight" type="numeric(10,2)"/>
+
+      <column name="dialysis_access" type="varchar(50)"/>
+
+      <column name="access_site" type="varchar(50)"/>
+
+      <column name="other_access_site" type="varchar(500)"/>
+
+      <column name="blood_flow_rate" type="numeric(10,2)"/>
+
+      <column name="dialysate_flow" type="numeric(10,2)"/>
+
+      <column name="dialysate" type="varchar(500)"/>
+
+      <column name="nephrologist_id" type="bigint"/>
+
+      <column name="start_date" type="date"/>
+
+      <column name="status" type="varchar(50)"/>
+
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)"/>
+
+      <column name="created_date" type="timestamp"/>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+
+  </changeSet>
+
+</databaseChangeLog>

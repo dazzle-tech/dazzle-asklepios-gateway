@@ -373,4 +373,15 @@ public class UserResource {
                 )
             );
     }
+
+    @GetMapping("/users-by-ids")
+    public Flux<SimpleUserDTO> getUsersByIds(
+        @RequestParam List<Long> ids
+    ) {
+        return userService
+            .findByIds(ids)
+            .map(SimpleUserDTO::new);
+    }
+
+
 }

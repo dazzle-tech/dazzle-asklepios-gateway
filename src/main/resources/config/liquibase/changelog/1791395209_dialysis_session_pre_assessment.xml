@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="FA0000000029" author="farouk">
+
+    <addColumn tableName="dialysis_session">
+      <column name="pre_weight" type="numeric(10,2)"/>
+      <column name="dry_weight" type="numeric(10,2)"/>
+      <column name="weight_gain" type="numeric(10,2)"/>
+      <column name="interdialytic_weight_gain" type="numeric(10,2)"/>
+      <column name="blood_pressure_systolic" type="integer"/>
+      <column name="blood_pressure_diastolic" type="integer"/>
+      <column name="heart_rate" type="integer"/>
+      <column name="temperature" type="numeric(5,2)"/>
+      <column name="respiratory_rate" type="integer"/>
+      <column name="oxygen_saturation" type="numeric(5,2)"/>
+      <column name="symptoms" type="varchar(500)"/>
+      <column name="edema" type="varchar(500)"/>
+      <column name="pre_access_condition" type="varchar(500)"/>
+      <column name="general_condition" type="varchar(500)"/>
+    </addColumn>
+
+  </changeSet>
+
+</databaseChangeLog>

@@ -71,6 +71,8 @@
   <include
     file="/config/liquibase/changelog/availabilityGenerationBatch/1782636302_S_AvailabilityGenerationBatchNotificationColumns.xml"
     relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/availabilityGenerationBatch/1791366719_S_AvailabilityGenerationBatchEndingSoonIntervalNotificationColumn.xml"
+           relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1774339459_BM_appointment.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1782644939_S_AppointmentBookingGroup.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1782645230_S_AppointmentWaitingList.xml" relativeToChangelogFile="false"/>
@@ -573,6 +575,8 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/encounter/1785016000_B_encounter_coverage.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/encounter/1790497036_R_encounter_assigned_nurse.xml"
+           relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/billing/1785012000_BM_Billing_Eligibility_Snapshot.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/invoice/1785013000_B_financial_document_adjustment_reason.xml"
@@ -878,6 +882,37 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/report/views/1790766235_SA_VitalSignsView.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/vitalsigns/1791374874_FA_VitalSigns_add_urine_output_edema_fluid_status.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1791374996_nephrology_kidney_assessment.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1791379683_nephrology_renal_function.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1791381390_nephrology_treatment_plan.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1791393745_dialysis_session.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1791395209_dialysis_session_pre_assessment.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1791398036_dialysis_session_prescription.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1791400430_dialysis_flow_reading.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1791402100_dialysis_session_access.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1791403600_dialysis_medication.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1791405200_dialysis_session_post_assessment.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1791406800_dialysis_session_complications.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1791451200_dialysis_session_treatment_plan_id.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1791454800_dialysis_session_plan_unique.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1791459000_dialysis_duration_type.xml"
+           relativeToChangelogFile="false"/>
+
   <include file="config/liquibase/changelog/report/views/1790766235_SA_VisitDurationView.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/report/views/1790766235_SA_CurrentMedicationView.xml"
@@ -935,6 +970,10 @@
   <include file="config/liquibase/changelog/report/views/1790860287_SA_ApLOVView.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/report/views/1790860287_SA_AppointmentRequestView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/appointmentRequest/1791400000_appointment_request_recurrence.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/appointmentRequest/1791400001_appointment_request_preferred_time.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/report/views/1790860287_SA_AppointmentRescheduleView.xml"
            relativeToChangelogFile="false"/>

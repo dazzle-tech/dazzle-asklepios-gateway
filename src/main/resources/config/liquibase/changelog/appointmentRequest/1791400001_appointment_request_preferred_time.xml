@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="APP_Request_preferred_time_00000000000005" author="sondos">
+    <addColumn tableName="appointment_request">
+      <column name="preferred_start_time" type="timestamp"/>
+      <column name="preferred_end_time" type="timestamp"/>
+    </addColumn>
+  </changeSet>
+
+</databaseChangeLog>
