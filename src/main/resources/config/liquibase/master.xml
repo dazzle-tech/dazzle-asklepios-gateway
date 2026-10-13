@@ -1017,6 +1017,4 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/appUser/2026101201_add_can_return_claim_for_resubmit.xml"
            relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/appUser/2026101202_restore_admin_role_authorities.xml"
-           relativeToChangelogFile="false"/>
 </databaseChangeLog>
