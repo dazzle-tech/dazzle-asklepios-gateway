@@ -1014,4 +1014,24 @@
   <include file="config/liquibase/changelog/appUser/2026101201_add_can_return_claim_for_resubmit.xml"
            relativeToChangelogFile="false"/>
 
+  <!-- DentalCare chart migration (patient-service): chart, teeth, actions, history, progress notes,
+       CDT/service attachments, planned treatments -->
+  <include file="config/liquibase/changelog/dentalChart/2026101201_dental_chart.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalChart/2026101202_dental_chart_tooth.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalChart/2026101203_tooth_action.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalChart/2026101204_tooth_action_log.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalChart/2026101205_dental_chart_progress_note.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalChart/2026101206_tooth_cdt.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalChart/2026101207_tooth_service.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalChart/2026101208_dental_planned_treatment.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalChart/2026101209_dental_chart_partial_unique_indexes.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>

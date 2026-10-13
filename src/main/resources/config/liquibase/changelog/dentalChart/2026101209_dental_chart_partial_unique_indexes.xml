@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!-- Partial unique indexes: a cancelled row's slot can be legitimately re-used,
+       so uniqueness only applies among active (not-cancelled) rows. Plain XML
+       createIndex has no WHERE-clause support, so these are raw SQL. -->
+  <changeSet id="dental_chart_partial_unique_indexes" author="hanan253yahya">
+    <sql>
+      CREATE UNIQUE INDEX uq_tooth_action_tooth_action_surface
+        ON tooth_action (tooth_id, dental_action_id, surface)
+        WHERE NOT is_cancelled;
+    </sql>
+    <sql>
+      CREATE UNIQUE INDEX uq_tooth_cdt_tooth_cdt_surface
+        ON tooth_cdt (tooth_id, cdt_code_id, surface)
+        WHERE NOT is_cancelled;
+    </sql>
+  </changeSet>
+
+</databaseChangeLog>
