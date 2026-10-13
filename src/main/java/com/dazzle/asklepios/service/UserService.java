@@ -98,7 +98,8 @@ public class UserService {
             .map(user -> new UserEncountersAccessDTO(
                 user.isAllowOngoingVisit(),
                 user.isCanUnDischargeUrgentCare(),
-                user.isCanUnCompleteEncounter()
+                user.isCanUnCompleteEncounter(),
+                user.isCanReturnClaimForResubmit()
             ));
     }
 
@@ -114,6 +115,7 @@ public class UserService {
                 user.setAllowOngoingVisit(accessDTO.isAllowOngoingVisit());
                 user.setCanUnDischargeUrgentCare(accessDTO.isCanUnDischargeUrgentCare());
                 user.setCanUnCompleteEncounter(accessDTO.isCanUnCompleteEncounter());
+                user.setCanReturnClaimForResubmit(accessDTO.isCanReturnClaimForResubmit());
 
                 return user;
             })
@@ -121,7 +123,8 @@ public class UserService {
             .map(user -> new UserEncountersAccessDTO(
                 user.isAllowOngoingVisit(),
                 user.isCanUnDischargeUrgentCare(),
-                user.isCanUnCompleteEncounter()
+                user.isCanUnCompleteEncounter(),
+                user.isCanReturnClaimForResubmit()
             ));
     }
 
