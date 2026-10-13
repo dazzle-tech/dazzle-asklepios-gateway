@@ -1,6 +1,18 @@
 CREATE OR REPLACE FUNCTION trg_encounter_plans_log_fn()
 RETURNS TRIGGER AS $$
+DECLARE
+v_reopen_session_raw text;
+v_reopen_session_id bigint;
 BEGIN
+    v_reopen_session_raw := current_setting('app.reopen_session_id', true);
+
+    IF v_reopen_session_raw IS NULL OR btrim(v_reopen_session_raw) = '' THEN
+        v_reopen_session_id := NULL;
+    ELSIF v_reopen_session_raw ~ '^[0-9]+$' THEN
+        v_reopen_session_id := v_reopen_session_raw::bigint;
+    ELSE
+        v_reopen_session_id := NULL;
+    END IF;
 
     IF TG_OP = 'INSERT' THEN
 
@@ -13,7 +25,8 @@ BEGIN
                 old_value,
                 new_value,
                 log_date,
-                log_by
+                log_by,
+                reopen_session_id
             )
             VALUES
             (
@@ -23,7 +36,8 @@ BEGIN
                 NULL,
                 NEW.goals,
                 NEW.created_date,
-                NEW.created_by
+                NEW.created_by,
+                v_reopen_session_id
             );
 END IF;
 
@@ -36,7 +50,8 @@ END IF;
                 old_value,
                 new_value,
                 log_date,
-                log_by
+                log_by,
+                reopen_session_id
             )
             VALUES
             (
@@ -46,7 +61,8 @@ END IF;
                 NULL,
                 NEW.treatment_plan,
                 NEW.created_date,
-                NEW.created_by
+                NEW.created_by,
+                v_reopen_session_id
             );
 END IF;
 
@@ -61,7 +77,8 @@ END IF;
                 old_value,
                 new_value,
                 log_date,
-                log_by
+                log_by,
+                reopen_session_id
             )
             VALUES
             (
@@ -71,7 +88,8 @@ END IF;
                 OLD.goals,
                 NEW.goals,
                 NEW.last_modified_date,
-                NEW.last_modified_by
+                NEW.last_modified_by,
+                v_reopen_session_id
             );
 END IF;
 
@@ -84,7 +102,8 @@ END IF;
                 old_value,
                 new_value,
                 log_date,
-                log_by
+                log_by,
+                reopen_session_id
             )
             VALUES
             (
@@ -94,7 +113,8 @@ END IF;
                 OLD.treatment_plan,
                 NEW.treatment_plan,
                 NEW.last_modified_date,
-                NEW.last_modified_by
+                NEW.last_modified_by,
+                v_reopen_session_id
             );
 END IF;
 

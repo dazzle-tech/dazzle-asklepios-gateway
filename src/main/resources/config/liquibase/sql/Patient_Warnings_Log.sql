@@ -2,7 +2,19 @@
 
 CREATE OR REPLACE FUNCTION public.trg_patient_warnings_log_fn()
 RETURNS trigger AS $$
+DECLARE
+  v_reopen_session_raw text;
+  v_reopen_session_id bigint;
 BEGIN
+  v_reopen_session_raw := current_setting('app.reopen_session_id', true);
+  IF v_reopen_session_raw IS NULL OR btrim(v_reopen_session_raw) = '' THEN
+    v_reopen_session_id := NULL;
+  ELSIF v_reopen_session_raw ~ '^[0-9]+$' THEN
+    v_reopen_session_id := v_reopen_session_raw::bigint;
+  ELSE
+    v_reopen_session_id := NULL;
+  END IF;
+
   -- INSERT: log full row snapshot.
   IF TG_OP = 'INSERT' THEN
     INSERT INTO public.patient_warnings_log (
@@ -30,7 +42,8 @@ BEGIN
       created_by,
       created_date,
       last_modified_by,
-      last_modified_date
+      last_modified_date,
+      reopen_session_id
     ) VALUES (
       NEW.id,
       'INSERT',
@@ -56,7 +69,8 @@ BEGIN
       NEW.created_by,
       NEW.created_date,
       NEW.last_modified_by,
-      NEW.last_modified_date
+      NEW.last_modified_date,
+      v_reopen_session_id
     );
 
     RETURN NEW;
@@ -90,7 +104,8 @@ BEGIN
         created_by,
         created_date,
         last_modified_by,
-        last_modified_date
+        last_modified_date,
+        reopen_session_id
       ) VALUES (
         NEW.id,
         'UPDATE',
@@ -116,7 +131,8 @@ BEGIN
         NEW.created_by,
         NEW.created_date,
         NEW.last_modified_by,
-        NEW.last_modified_date
+        NEW.last_modified_date,
+        v_reopen_session_id
       );
     END IF;
 

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="CLAIM_ENCOUNTER_PROGRESS_NOTES" author="Rawan-Yahya">
+
+    <createTable tableName="claim_encounter_progress_notes">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="claim_encounter_copy_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="progress_note_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="note_text" type="text">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="cancelled_by" type="varchar(50)"/>
+
+      <column name="cancelled_date" type="timestamp"/>
+
+      <column name="cancellation_reason" type="text"/>
+
+      <column name="created_by" type="varchar(50)"/>
+      <column name="created_date" type="timestamp"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="claim_encounter_progress_notes"
+      baseColumnNames="claim_encounter_copy_id"
+      constraintName="fk_claim_encounter_progress_notes_copy"
+      referencedTableName="claim_encounter_copies"
+      referencedColumnNames="id"
+    />
+
+    <addForeignKeyConstraint
+      baseTableName="claim_encounter_progress_notes"
+      baseColumnNames="encounter_id"
+      constraintName="fk_claim_encounter_progress_notes_encounter"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"
+    />
+
+    <addForeignKeyConstraint
+      baseTableName="claim_encounter_progress_notes"
+      baseColumnNames="progress_note_id"
+      constraintName="fk_claim_encounter_progress_notes_note"
+      referencedTableName="progress_notes"
+      referencedColumnNames="id"
+    />
+
+    <createIndex
+      tableName="claim_encounter_progress_notes"
+      indexName="idx_claim_encounter_progress_notes_copy">
+      <column name="claim_encounter_copy_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="claim_encounter_progress_notes"
+      indexName="idx_claim_encounter_progress_notes_encounter">
+      <column name="encounter_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="claim_encounter_progress_notes"
+      indexName="idx_claim_encounter_progress_notes_note">
+      <column name="progress_note_id"/>
+    </createIndex>
+
+  </changeSet>
+</databaseChangeLog>

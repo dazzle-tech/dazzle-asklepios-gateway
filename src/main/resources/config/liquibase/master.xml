@@ -575,6 +575,8 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/encounter/1785016000_B_encounter_coverage.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/encounter/1790497036_R_encounter_assigned_nurse.xml"
+           relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/billing/1785012000_BM_Billing_Eligibility_Snapshot.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/invoice/1785013000_B_financial_document_adjustment_reason.xml"
@@ -904,12 +906,6 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1791406800_dialysis_session_complications.xml"
            relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/1791451200_dialysis_session_treatment_plan_id.xml"
-           relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/1791454800_dialysis_session_plan_unique.xml"
-           relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/1791459000_dialysis_duration_type.xml"
-           relativeToChangelogFile="false"/>
 
   <include file="config/liquibase/changelog/report/views/1790766235_SA_VisitDurationView.xml"
            relativeToChangelogFile="false"/>
@@ -1017,4 +1013,5 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/appUser/2026101201_add_can_return_claim_for_resubmit.xml"
            relativeToChangelogFile="false"/>
+
 </databaseChangeLog>
