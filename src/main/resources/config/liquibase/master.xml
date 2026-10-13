@@ -1036,4 +1036,8 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/dentalChart/2026101209_dental_chart_partial_unique_indexes.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalChart/2026101302_dental_planned_treatment_drop_fees_discount.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalChart/2026101303_tooth_action_anesthesia_dose.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
