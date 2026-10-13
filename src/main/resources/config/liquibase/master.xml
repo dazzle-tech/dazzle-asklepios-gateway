@@ -1013,6 +1013,8 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/appUser/2026101201_add_can_return_claim_for_resubmit.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/1791880300_SA_UserDashboardDefault.xml"
+           relativeToChangelogFile="false"/>
 
   <!-- DentalCare chart migration (patient-service): chart, teeth, actions, history, progress notes,
        CDT/service attachments, planned treatments -->
