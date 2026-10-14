@@ -8,7 +8,7 @@
 
   <changeSet id="1791422000-1" author="hananyahya">
     <addColumn tableName="diagnostic_order_tests">
-      <column name="print_number" type="int"/>
+      <column name="print_number" type="varchar(100)"/>
     </addColumn>
   </changeSet>
 

@@ -9,15 +9,22 @@
         http://www.liquibase.org/xml/ns/dbchangelog-ext
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-  <changeSet id="1791421900-1" author="hananyahya">
+  <changeSet id="1791421900-1" author="hanan253yahya">
     <createTable tableName="analyzer">
       <column name="id" type="bigint" autoIncrement="true" startWith="1500">
         <constraints primaryKey="true" nullable="false"/>
       </column>
       <column name="code" type="varchar(100)">
-        <constraints nullable="false" unique="true" uniqueConstraintName="ux_analyzer_code"/>
+        <constraints nullable="false"/>
       </column>
-      <column name="type" type="varchar(100)"/>
+      <column name="type" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="facility_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_analyzer_facility"
+                     references="facility(id)"/>
+      </column>
       <column name="is_active" type="boolean" defaultValueBoolean="true">
         <constraints nullable="false"/>
       </column>
@@ -28,6 +35,7 @@
       <column name="last_modified_by" type="varchar(50)"/>
       <column name="last_modified_date" type="timestamp"/>
     </createTable>
+
   </changeSet>
 
 </databaseChangeLog>
