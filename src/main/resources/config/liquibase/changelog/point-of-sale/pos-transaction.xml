@@ -174,4 +174,18 @@
 
   </changeSet>
 
+  <changeSet id="H_POINT_OF_SALE_TRANSACTION_ENTRY_MODE" author="hanan">
+
+    <addColumn tableName="point_of_sale_transaction">
+
+      <column name="entry_mode"
+              type="varchar(20)"
+              defaultValue="TERMINAL">
+        <constraints nullable="false"/>
+      </column>
+
+    </addColumn>
+
+  </changeSet>
+
 </databaseChangeLog>
