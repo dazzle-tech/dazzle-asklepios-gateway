@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="1790000001-1" author="hanan">
+    <addColumn tableName="diagnostic_order_tests_report">
+      <column name="radiologist_information" type="text"/>
+      <column name="critical_findings" type="text"/>
+      <column name="radiologist_comments" type="text"/>
+    </addColumn>
+  </changeSet>
+
+</databaseChangeLog>
+
+
+
