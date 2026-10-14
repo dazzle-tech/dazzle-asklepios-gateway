@@ -268,7 +268,7 @@ server:
 
 asklepios:
   cors:
-    allowed-origins: 'http://his.tst.onehealth.com.sa,https://his.tst.onehealth.com.sa,http://localhost:3100,https://localhost:3100'
+    allowed-origins: 'http://his.tst.onehealth.com.sa,https://his.tst.onehealth.com.sa,http://localhost:3100,https://localhost:3100,https://his.onehealth.com.sa,http://his.onehealth.com.sa'
     allowed-origin-patterns: 'http://*.onehealth.com.sa,https://*.onehealth.com.sa'
     allowed-methods: '*'
     allowed-headers: '*'
