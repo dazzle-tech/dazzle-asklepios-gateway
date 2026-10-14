@@ -1103,4 +1103,10 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1791421803_R_claim_encounter_copy_diagnostic_order_test_report_logs.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1791421900_B_analyzer.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1791421950_H_diagnostic_test_laboratory_add_analyzer.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1791422000_H_diagnostic_order_tests_add_print_number.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
