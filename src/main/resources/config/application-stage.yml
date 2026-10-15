@@ -36,7 +36,7 @@ services:
   discharge-report-service-url: http://discharge-report-service:8005
   ocr-parsing-service-url: http://ocr-parsing-service:8012
   lab-result-interpreter-service-url: http://lab-result-interpreter-service:8003
-  clinical-summary-voice-service-url: http://clinical-summary-voice:8037
+  clinical-summary-voice-service-url: http://clinical-summary-voice-service:8037
 spring:
   devtools:
     restart:
