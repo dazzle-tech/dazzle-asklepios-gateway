@@ -267,7 +267,7 @@ asklepios:
     allowed-origin-patterns: 'https://*.asklepios.com'
     allowed-methods: '*'
     allowed-headers: '*'
-    exposed-headers: 'Authorization,Link,X-Total-Count,X-${asklepios.clientApp.name}-alert,X-${asklepios.clientApp.name}-error,X-${asklepios.clientApp.name}-params'
+    exposed-headers: 'Authorization,Link,X-Total-Count,X-Missing-Definition-Tests,X-${asklepios.clientApp.name}-alert,X-${asklepios.clientApp.name}-error,X-${asklepios.clientApp.name}-params'
     allow-credentials: true
     max-age: 1800
   security:

@@ -36,6 +36,7 @@ services:
   discharge-report-service-url: http://discharge-report-service:8005
   ocr-parsing-service-url: http://ocr-parsing-service:8012
   lab-result-interpreter-service-url: http://lab-result-interpreter-service:8003
+  clinical-summary-voice-service-url: http://clinical-summary-voice:8037
 spring:
   devtools:
     restart:
@@ -281,6 +282,14 @@ spring:
             - Path=/api/ai/v1/clinical-recommendations/**
           filters:
             - RewritePath=/api/ai/v1/clinical-recommendations/(?<segment>.*),/api/v1/${segment}
+
+        - id: clinical-summary-voice
+          uri: ${services.clinical-summary-voice-service-url}
+          predicates:
+            - Path=/api/ai/v1/clinical-summary-voice/**
+          filters:
+            - RewritePath=/api/ai/v1/clinical-summary-voice/(?<segment>.*),/api/v1/${segment}
+
         - id: analytics
           uri: ${services.dazzle-asklepios-analytics-service-url}
           predicates:
@@ -313,7 +322,7 @@ asklepios:
     allowed-origin-patterns: 'https://*.asklepios.com'
     allowed-methods: '*'
     allowed-headers: '*'
-    exposed-headers: 'Authorization,Link,X-Total-Count,X-${asklepios.clientApp.name}-alert,X-${asklepios.clientApp.name}-error,X-${asklepios.clientApp.name}-params,access_token'
+    exposed-headers: 'Authorization,Link,X-Total-Count,X-Missing-Definition-Tests,X-${asklepios.clientApp.name}-alert,X-${asklepios.clientApp.name}-error,X-${asklepios.clientApp.name}-params,access_token'
     allow-credentials: true
     max-age: 1800
   security:
