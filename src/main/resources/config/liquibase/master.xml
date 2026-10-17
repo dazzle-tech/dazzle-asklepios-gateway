@@ -1103,4 +1103,8 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1791421803_R_claim_encounter_copy_diagnostic_order_test_report_logs.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patientDashboard/1792224042_encounter_dashboard_preference.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patientDashboard/1792224043_encounter_dashboard_preference_widget.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>

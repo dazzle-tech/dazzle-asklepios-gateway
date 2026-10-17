@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="
+                     http://www.liquibase.org/xml/ns/dbchangelog
+                     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="1792224043-create-encounter-dashboard-preference-widget" author="farouk">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <tableExists tableName="encounter_dashboard_preference_widget"/>
+      </not>
+    </preConditions>
+
+    <createTable tableName="encounter_dashboard_preference_widget">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" primaryKey="true" primaryKeyName="pk_encounter_dashboard_preference_widget"/>
+      </column>
+      <column name="preference_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="widget_key" type="varchar(8)">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+
+    <addUniqueConstraint
+      tableName="encounter_dashboard_preference_widget"
+      columnNames="preference_id, widget_key"
+      constraintName="uk_encounter_dashboard_pref_widget"/>
+
+    <addForeignKeyConstraint
+      baseTableName="encounter_dashboard_preference_widget"
+      baseColumnNames="preference_id"
+      referencedTableName="encounter_dashboard_preference"
+      referencedColumnNames="id"
+      constraintName="fk_encounter_dashboard_pref_widget"
+      onDelete="CASCADE"/>
+  </changeSet>
+</databaseChangeLog>
