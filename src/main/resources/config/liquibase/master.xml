@@ -1109,4 +1109,10 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1791422000_H_diagnostic_order_tests_add_print_number.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patientproblems/1792227027_FA_Add_Diagnosis_Duration.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/hospitalization/1792227829_FA_hospitalization_add_admission_duration.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/currentmedication/1792227852_FA_current_medication_add_start_duration.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
