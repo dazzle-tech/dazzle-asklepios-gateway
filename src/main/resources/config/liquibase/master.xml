@@ -1068,4 +1068,6 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1791422000_H_diagnostic_order_tests_add_print_number.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/glasgowComaScale/1792316113_R_GCS_Total_Score_15_Normal.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
