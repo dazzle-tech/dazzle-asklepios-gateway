@@ -15,7 +15,7 @@
       <column name="gtin_code" type="varchar(50)"/>
       <column name="description_code" type="varchar(100)"/>
       <!-- Multi-select enum (PHARMACY, HOSPITAL) stored as comma-separated values -->
-      <column name="med_distribute_area" type="varchar(50)"/>
+      <column name="med_distribute_area" type="varchar(150)"/>
       <column name="price_base_uom_id" type="bigint"/>
       <column name="local_market" type="boolean" defaultValueBoolean="false">
         <constraints nullable="false"/>
