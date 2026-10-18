@@ -1084,4 +1084,6 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/patientPrescriptionMedication/1792322167_FA_patient_prescription_medications_duration_decimal.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/encounter/1792339153_encounter_promotion_fields.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
