@@ -1082,4 +1082,6 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/report/views/1792313549_R_BrandMedicationView_Add_Fields.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patientPrescriptionMedication/1792322167_FA_patient_prescription_medications_duration_decimal.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
