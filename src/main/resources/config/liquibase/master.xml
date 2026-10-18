@@ -1068,4 +1068,8 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1791422000_H_diagnostic_order_tests_add_print_number.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/brandMedication/1792302282_R_Brand_Medication_Add_Fields.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1792313549_R_BrandMedicationView_Add_Fields.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
