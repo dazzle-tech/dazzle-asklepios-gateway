@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="1792302282_R_BRAND_MEDICATION_ADD_FIELDS" author="Rawan-Yahya">
+
+    <addColumn tableName="brand_medication">
+      <column name="facility_id" type="bigint"/>
+      <column name="registration_number" type="varchar(100)"/>
+      <column name="integration_code" type="varchar(100)"/>
+      <column name="gtin_code" type="varchar(50)"/>
+      <column name="description_code" type="varchar(100)"/>
+      <!-- Multi-select enum (PHARMACY, HOSPITAL) stored as comma-separated values -->
+      <column name="med_distribute_area" type="varchar(150)"/>
+      <column name="price_base_uom_id" type="bigint"/>
+      <column name="local_market" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+    </addColumn>
+
+    <!-- 2) Existing records: Price Base UOM = current Base UOM -->
+    <update tableName="brand_medication">
+      <column name="price_base_uom_id" valueComputed="uom_group_unit_id"/>
+      <where>price_base_uom_id IS NULL</where>
+    </update>
+
+    <!-- 3) Existing records: Facility = smallest existing facility id -->
+    <update tableName="brand_medication">
+      <column name="facility_id" valueComputed="(SELECT MIN(f.id) FROM facility f)"/>
+      <where>facility_id IS NULL</where>
+    </update>
+
+    <addNotNullConstraint
+      tableName="brand_medication"
+      columnName="price_base_uom_id"
+      columnDataType="bigint"/>
+
+    <addNotNullConstraint
+      tableName="brand_medication"
+      columnName="facility_id"
+      columnDataType="bigint"/>
+
+    <addForeignKeyConstraint
+      baseTableName="brand_medication"
+      baseColumnNames="facility_id"
+      referencedTableName="facility"
+      referencedColumnNames="id"
+      constraintName="fk_bm_facility_id"/>
+
+    <addForeignKeyConstraint
+      baseTableName="brand_medication"
+      baseColumnNames="price_base_uom_id"
+      referencedTableName="uom_group_unit"
+      referencedColumnNames="id"
+      constraintName="fk_bm_price_base_uom_id"/>
+
+    <!--
+      6) Currency follows the facility's default currency
+         - existing records are synced now (create / update set it in setup-service)
+         - when a facility's default currency changes, its brand medications follow it
+         Note: only the currency label changes; prices are NOT converted.
+    -->
+    <sql splitStatements="false">
+      UPDATE brand_medication bm
+      SET currency = f.default_currency
+      FROM facility f
+      WHERE f.id = bm.facility_id
+        AND bm.currency IS DISTINCT FROM f.default_currency;
+
+      CREATE OR REPLACE FUNCTION fn_facility_currency_to_brand_medication()
+      RETURNS TRIGGER
+      AS
+      $$
+      BEGIN
+        UPDATE brand_medication
+           SET currency = NEW.default_currency
+         WHERE facility_id = NEW.id;
+
+        RETURN NEW;
+      END;
+      $$ LANGUAGE plpgsql;
+
+      DROP TRIGGER IF EXISTS trg_facility_currency_to_brand_medication ON facility;
+      CREATE TRIGGER trg_facility_currency_to_brand_medication
+        AFTER UPDATE OF default_currency ON facility
+        FOR EACH ROW
+        WHEN (OLD.default_currency IS DISTINCT FROM NEW.default_currency)
+        EXECUTE FUNCTION fn_facility_currency_to_brand_medication();
+    </sql>
+
+  </changeSet>
+
+</databaseChangeLog>
