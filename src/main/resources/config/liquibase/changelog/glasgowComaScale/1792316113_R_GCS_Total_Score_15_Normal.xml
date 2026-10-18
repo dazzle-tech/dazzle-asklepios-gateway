@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!--
+    GCS total score 15 is now interpreted as NORMAL (was MILD_TRAUMATIC_BRAIN_INJURY).
+    Existing records with total_score = 15 are updated to match.
+  -->
+  <changeSet id="1792316113_R_GCS_TOTAL_SCORE_15_NORMAL" author="Rawan-Yahya">
+    <sql splitStatements="false">
+      DO $$
+      DECLARE
+        v_has_audit_trigger boolean := EXISTS (
+          SELECT 1
+          FROM pg_trigger
+          WHERE tgname = 'trg_amendment_audit_glasgow_coma_scale_assessment'
+            AND tgrelid = 'public.glasgow_coma_scale_assessment'::regclass
+        );
+      BEGIN
+        IF v_has_audit_trigger THEN
+          ALTER TABLE public.glasgow_coma_scale_assessment
+            DISABLE TRIGGER trg_amendment_audit_glasgow_coma_scale_assessment;
+        END IF;
+
+        UPDATE public.glasgow_coma_scale_assessment
+        SET score_interpretation = CASE
+                                     WHEN score_interpretation ~ '^[0-9]+$' THEN '3'
+                                     ELSE 'NORMAL'
+                                   END
+        WHERE total_score = 15
+          AND score_interpretation IN ('0', 'MILD_TRAUMATIC_BRAIN_INJURY');
+
+        IF v_has_audit_trigger THEN
+          ALTER TABLE public.glasgow_coma_scale_assessment
+            ENABLE TRIGGER trg_amendment_audit_glasgow_coma_scale_assessment;
+        END IF;
+      END
+      $$;
+    </sql>
+
+    <rollback>
+      <sql splitStatements="false">
+        DO $$
+        DECLARE
+          v_has_audit_trigger boolean := EXISTS (
+            SELECT 1
+            FROM pg_trigger
+            WHERE tgname = 'trg_amendment_audit_glasgow_coma_scale_assessment'
+              AND tgrelid = 'public.glasgow_coma_scale_assessment'::regclass
+          );
+        BEGIN
+          IF v_has_audit_trigger THEN
+            ALTER TABLE public.glasgow_coma_scale_assessment
+              DISABLE TRIGGER trg_amendment_audit_glasgow_coma_scale_assessment;
+          END IF;
+
+          UPDATE public.glasgow_coma_scale_assessment
+          SET score_interpretation = CASE
+                                       WHEN score_interpretation ~ '^[0-9]+$' THEN '0'
+                                       ELSE 'MILD_TRAUMATIC_BRAIN_INJURY'
+                                     END
+          WHERE total_score = 15
+            AND score_interpretation IN ('3', 'NORMAL');
+
+          IF v_has_audit_trigger THEN
+            ALTER TABLE public.glasgow_coma_scale_assessment
+              ENABLE TRIGGER trg_amendment_audit_glasgow_coma_scale_assessment;
+          END IF;
+        END
+        $$;
+      </sql>
+    </rollback>
+  </changeSet>
+
+</databaseChangeLog>
