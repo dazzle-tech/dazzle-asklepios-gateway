@@ -1068,4 +1068,7 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1791422000_H_diagnostic_order_tests_add_print_number.xml"
            relativeToChangelogFile="false"/>
+  <include
+    file="config/liquibase/changelog/patientPrescriptionMedication/1792322167_FA_patient_prescription_medications_duration_decimal.xml"
+    relativeToChangelogFile="false"/>
 </databaseChangeLog>
