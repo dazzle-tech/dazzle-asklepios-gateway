@@ -1088,5 +1088,11 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/encounter/1792339153_encounter_promotion_fields.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patient/2026101901_add_is_citizen_to_patients.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/report/views/2026101902_BB_PatientView_add_is_citizen.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/2026101903_add_citizen_category_to_tax.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
 
