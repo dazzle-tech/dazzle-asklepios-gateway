@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+  <changeSet id="1791422100-1" author="hanan253yahya">
+    <createTable tableName="nahdi_integration_log">
+      <column name="id" type="bigint" autoIncrement="true" startWith="1500">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="endpoint" type="varchar(500)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="request_payload" type="text"/>
+      <column name="response_payload" type="text"/>
+      <column name="status" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="order_number" type="varchar(100)"/>
+      <column name="created_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+
+    <createIndex tableName="nahdi_integration_log" indexName="idx_nahdi_integration_log_status">
+      <column name="status"/>
+    </createIndex>
+  </changeSet>
+
+</databaseChangeLog>
