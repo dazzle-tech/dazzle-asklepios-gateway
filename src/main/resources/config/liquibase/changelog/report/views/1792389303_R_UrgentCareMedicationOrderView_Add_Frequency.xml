@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!--
+    Adds the new frequency column (changelog/urgentCareMedicationOrder/1792389302_R_UCC_Medication_Order_Frequency.xml)
+    to reports.vwurgentcaremedicationorder (created in 1790766235_SA_UrgentCareMedicationOrderView.xml).
+  -->
+  <changeSet id="1792389303_R_UCC_MEDICATION_ORDER_VIEW_ADD_FREQUENCY" author="Rawan-Yahya">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwurgentcaremedicationorder AS
+      SELECT
+        ucm.id,
+        ucm.patient_id,
+        ucm.encounter_id,
+        ucm.active_ingredient_id,
+        ucm.instruction_type,
+        ucm.instruction_text,
+        ucm.dose,
+        ucm.dose_unit,
+        ucm.route,
+        ucm.is_high_alert,
+        ucm.status,
+        ucm.submitted_date,
+        ucm.submitted_by,
+        ucm.administered_date,
+        ucm.administered_by,
+        ucm.double_checked_date,
+        ucm.double_checked_by,
+        ucm.discarded_date,
+        ucm.discarded_by,
+        ucm.discard_reason,
+        ucm.cancelled_date,
+        ucm.cancelled_by,
+        ucm.cancellation_reason,
+        ucm.created_by,
+        ucm.created_date,
+        ucm.last_modified_by,
+        ucm.last_modified_date,
+        ucm.actual_administer_time,
+        ucm.frequency_number,
+        ucm.frequency_unit,
+        ucm.duration,
+        ucm.start_time,
+        ucm.dose_time,
+        ucm.order_group_id,
+        ucm.frequency
+      FROM public.urgent_care_medication_order ucm;
+    </sql>
+
+    <!-- Back to the original view (columns cannot be removed with CREATE OR REPLACE) -->
+    <rollback>
+      <sql splitStatements="false">
+        DROP VIEW IF EXISTS reports.vwurgentcaremedicationorder;
+
+        CREATE VIEW reports.vwurgentcaremedicationorder AS
+        SELECT
+          ucm.id,
+          ucm.patient_id,
+          ucm.encounter_id,
+          ucm.active_ingredient_id,
+          ucm.instruction_type,
+          ucm.instruction_text,
+          ucm.dose,
+          ucm.dose_unit,
+          ucm.route,
+          ucm.is_high_alert,
+          ucm.status,
+          ucm.submitted_date,
+          ucm.submitted_by,
+          ucm.administered_date,
+          ucm.administered_by,
+          ucm.double_checked_date,
+          ucm.double_checked_by,
+          ucm.discarded_date,
+          ucm.discarded_by,
+          ucm.discard_reason,
+          ucm.cancelled_date,
+          ucm.cancelled_by,
+          ucm.cancellation_reason,
+          ucm.created_by,
+          ucm.created_date,
+          ucm.last_modified_by,
+          ucm.last_modified_date,
+          ucm.actual_administer_time,
+          ucm.frequency_number,
+          ucm.frequency_unit,
+          ucm.duration,
+          ucm.start_time,
+          ucm.dose_time,
+          ucm.order_group_id
+        FROM public.urgent_care_medication_order ucm;
+
+        GRANT SELECT ON reports.vwurgentcaremedicationorder TO report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+
+</databaseChangeLog>
