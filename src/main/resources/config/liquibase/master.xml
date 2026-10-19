@@ -1135,4 +1135,7 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1791422300_H_prescription_medications_add_pharmaceutical.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1791422400_H_patient_observations_add_pregnancy_lactation.xml"
+           relativeToChangelogFile="false"/>
+
 </databaseChangeLog>

@@ -22,6 +22,7 @@
       <column name="status" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
+      <column name="order_number" type="varchar(100)"/>
       <column name="created_date" type="timestamp">
         <constraints nullable="false"/>
       </column>
