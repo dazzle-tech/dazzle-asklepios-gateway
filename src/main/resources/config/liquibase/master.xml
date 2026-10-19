@@ -1088,5 +1088,7 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/encounter/1792339153_encounter_promotion_fields.xml"
            relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/departments/2026101901_department_parallel_capacity_appointable.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
 
