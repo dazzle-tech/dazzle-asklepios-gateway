@@ -1082,4 +1082,10 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/report/views/1792313549_R_BrandMedicationView_Add_Fields.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/urgentCareMedicationOrder/1792389302_R_UCC_Medication_Order_Frequency.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/urgentCareMedicationOrder/1792396779_R_UCC_Medication_Order_Drop_Is_Stat.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1792389303_R_UrgentCareMedicationOrderView_Add_Frequency.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
