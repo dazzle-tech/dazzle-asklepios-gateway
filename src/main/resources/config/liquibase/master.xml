@@ -1109,4 +1109,10 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1791422000_H_diagnostic_order_tests_add_print_number.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1791422100_H_nahdi_integration_log.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1791422200_H_pharmaceutical.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1791422300_H_prescription_medications_add_pharmaceutical.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
