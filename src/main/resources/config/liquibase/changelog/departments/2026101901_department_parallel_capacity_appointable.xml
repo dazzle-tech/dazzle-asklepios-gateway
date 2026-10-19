@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="2026101901_department_parallel_capacity_appointable" author="sondosabdalaal12">
+    <sql dbms="postgresql">
+      ALTER TABLE department
+        DROP CONSTRAINT IF EXISTS chk_department_parallel_capacity;
+
+      ALTER TABLE department
+        ADD CONSTRAINT chk_department_parallel_capacity
+          CHECK (
+            parallel_capacity_enabled = false
+              OR appointable IS NOT TRUE
+              OR (
+                parallel_capacity_enabled = true
+                  AND parallel_capacity_value IS NOT NULL
+                  AND parallel_capacity_value >= 1
+              )
+          );
+    </sql>
+
+    <rollback>
+      <sql dbms="postgresql">
+        ALTER TABLE department
+          DROP CONSTRAINT IF EXISTS chk_department_parallel_capacity;
+
+        ALTER TABLE department
+          ADD CONSTRAINT chk_department_parallel_capacity
+            CHECK (
+              parallel_capacity_enabled = false
+                OR (
+                  parallel_capacity_enabled = true
+                    AND parallel_capacity_value IS NOT NULL
+                    AND parallel_capacity_value >= 1
+                )
+            );
+      </sql>
+    </rollback>
+  </changeSet>
+
+</databaseChangeLog>
