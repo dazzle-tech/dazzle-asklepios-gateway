@@ -691,4 +691,8 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/claim_WaseelIntegration/2026092902_claim_foreign_keys.xml"
            relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/payorSetup/1792454400_B_create_insurance_company_policy.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1792531200_B_coverage_class_policy_link.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
