@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="1792540800_B_drop_coverage_contract_code" author="Batool_Bushra">
+    <preConditions onFail="MARK_RAN">
+      <columnExists tableName="coverage_contract" columnName="code"/>
+    </preConditions>
+    <sql dbms="postgresql">
+      ALTER TABLE coverage_contract DROP CONSTRAINT IF EXISTS uk_coverage_contract_company_code;
+      ALTER TABLE coverage_contract DROP COLUMN IF EXISTS code;
+    </sql>
+  </changeSet>
+
+  <changeSet id="1792540801_B_drop_nphies_payer_child_companies" author="Batool_Bushra">
+    <preConditions onFail="MARK_RAN">
+      <tableExists tableName="nphies_payer_child_companies"/>
+    </preConditions>
+    <dropTable tableName="nphies_payer_child_companies" cascadeConstraints="true"/>
+  </changeSet>
+
+</databaseChangeLog>

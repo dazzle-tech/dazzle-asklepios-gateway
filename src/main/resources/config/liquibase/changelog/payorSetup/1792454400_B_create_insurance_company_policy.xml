@@ -7,6 +7,11 @@
     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
   <changeSet id="1792454400_B_create_insurance_company_policy" author="Batool_Bushra">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <tableExists tableName="insurance_company_policy"/>
+      </not>
+    </preConditions>
     <createTable tableName="insurance_company_policy">
       <column name="id" type="bigint" autoIncrement="true" startWith="1000">
         <constraints primaryKey="true" nullable="false"/>

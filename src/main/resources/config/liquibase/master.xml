@@ -695,4 +695,8 @@
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/coverageManagement/1792531200_B_coverage_class_policy_link.xml"
            relativeToChangelogFile="false"/>
-</databaseChangeLog>
+  <include file="/config/liquibase/changelog/billing/1792531800_BM_price_list_payer_fk.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1792540800_B_drop_coverage_code_and_payer_children.xml"
+           relativeToChangelogFile="false"/>
+  </databaseChangeLog>
