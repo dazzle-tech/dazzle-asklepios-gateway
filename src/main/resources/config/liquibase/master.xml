@@ -1151,5 +1151,7 @@
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/departments/2026101901_department_parallel_capacity_appointable.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1792506333_FA_diagnostic_test_add_loinc_code_id.xml"
+           relativeToChangelogFile="false"/>
 
 </databaseChangeLog>
