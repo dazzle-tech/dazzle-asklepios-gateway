@@ -1153,6 +1153,8 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1792506333_FA_diagnostic_test_add_loinc_code_id.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/urgentCareMedicationOrder/1792501511_UCC_Medication_Order_Administer_Billing.xml"
+           relativeToChangelogFile="false"/>
 
   <include file="config/liquibase/changelog/1792413927_R_Med_Frequency_Setup.xml"
            relativeToChangelogFile="false"/>
