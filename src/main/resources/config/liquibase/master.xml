@@ -1152,4 +1152,9 @@
   <include file="/config/liquibase/changelog/departments/2026101901_department_parallel_capacity_appointable.xml"
            relativeToChangelogFile="false"/>
 
+  <include file="config/liquibase/changelog/1792413927_R_Med_Frequency_Setup.xml"
+           relativeToChangelogFile="false"/>
+
+  <include file="config/liquibase/changelog/languageTranslation/1792481456_R_Update_STAT_translation.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
