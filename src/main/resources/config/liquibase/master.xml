@@ -1163,4 +1163,6 @@
 
   <include file="config/liquibase/changelog/languageTranslation/1792481456_R_Update_STAT_translation.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/encounter/2026102101_encounter_ambient.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
