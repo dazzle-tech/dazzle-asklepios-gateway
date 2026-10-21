@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="1792454400_B_create_insurance_company_policy" author="Batool_Bushra">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <tableExists tableName="insurance_company_policy"/>
+      </not>
+    </preConditions>
+    <createTable tableName="insurance_company_policy">
+      <column name="id" type="bigint" autoIncrement="true" startWith="1000">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="nphies_payer_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="policy_name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="policy_number" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="policy_code" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="valid_from" type="date">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="valid_to" type="date">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="insurance_company_policy"
+      baseColumnNames="nphies_payer_id"
+      referencedTableName="nphies_payers"
+      referencedColumnNames="id"
+      constraintName="fk_ins_co_policy_nphies_payer"/>
+
+    <sql dbms="postgresql">
+      CREATE UNIQUE INDEX ux_ins_co_policy_payer_code
+        ON insurance_company_policy (nphies_payer_id, lower(policy_code));
+      CREATE UNIQUE INDEX ux_ins_co_policy_payer_number
+        ON insurance_company_policy (nphies_payer_id, lower(policy_number));
+      ALTER TABLE insurance_company_policy
+        ADD CONSTRAINT ck_ins_co_policy_valid_range CHECK (valid_to &gt;= valid_from);
+    </sql>
+  </changeSet>
+
+</databaseChangeLog>
