@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="1792700000_B_drop_copayment_discount_on_excluded" author="Batool_Bushra">
+    <preConditions onFail="MARK_RAN">
+      <columnExists tableName="coverage_copayment" columnName="discount_on_excluded"/>
+    </preConditions>
+    <dropColumn tableName="coverage_copayment" columnName="discount_on_excluded"/>
+  </changeSet>
+
+  <changeSet id="1792700001_B_drop_copayment_discount_on_cash" author="Batool_Bushra">
+    <preConditions onFail="MARK_RAN">
+      <columnExists tableName="coverage_copayment" columnName="discount_on_cash"/>
+    </preConditions>
+    <dropColumn tableName="coverage_copayment" columnName="discount_on_cash"/>
+  </changeSet>
+
+  <changeSet id="1792700002_B_drop_copayment_discount_on_exceeded_cash" author="Batool_Bushra">
+    <preConditions onFail="MARK_RAN">
+      <columnExists tableName="coverage_copayment" columnName="discount_on_exceeded_cash"/>
+    </preConditions>
+    <dropColumn tableName="coverage_copayment" columnName="discount_on_exceeded_cash"/>
+  </changeSet>
+</databaseChangeLog>
