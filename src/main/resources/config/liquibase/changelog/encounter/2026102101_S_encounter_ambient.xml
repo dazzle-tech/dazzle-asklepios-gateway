@@ -5,7 +5,7 @@
                      http://www.liquibase.org/xml/ns/dbchangelog
                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-  <changeSet id="2026102101-create-encounter-ambient" author="engso">
+  <changeSet id="2026102101-create-encounter-ambient" author="sondos">
     <preConditions onFail="MARK_RAN">
       <not>
         <tableExists tableName="encounter_ambient"/>
