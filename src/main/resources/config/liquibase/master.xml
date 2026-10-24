@@ -1166,4 +1166,7 @@
 
   <include file="config/liquibase/changelog/patientPrescriptionMedication/1792679233_FA_patient_prescription_medications_maximum_dose_decimal.xml"
            relativeToChangelogFile="false"/>
+
+  <include file="config/liquibase/changelog/2026102401_S_mobile_app_config.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
