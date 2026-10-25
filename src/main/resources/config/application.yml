@@ -121,6 +121,8 @@ spring:
     basename: i18n/messages
   main:
     allow-bean-definition-overriding: true
+  codec:
+    max-in-memory-size: 50MB
   webflux:
     problemdetails:
       enabled: true

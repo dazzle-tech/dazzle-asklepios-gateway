@@ -1163,6 +1163,12 @@
 
   <include file="config/liquibase/changelog/languageTranslation/1792481456_R_Update_STAT_translation.xml"
            relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/encounter/2026102101_S_encounter_ambient.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/2026102102_S_ambient_scribe_setup.xml"
+           relativeToChangelogFile="false"/>
+
+
 
   <include file="config/liquibase/changelog/patientPrescriptionMedication/1792679233_FA_patient_prescription_medications_maximum_dose_decimal.xml"
            relativeToChangelogFile="false"/>
