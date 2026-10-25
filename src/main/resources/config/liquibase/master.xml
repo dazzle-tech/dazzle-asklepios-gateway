@@ -701,4 +701,6 @@
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/coverageManagement/1792700000_B_drop_copayment_discount_flags.xml"
            relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1792800000_B_coverage_pre_approval_limit.xml"
+           relativeToChangelogFile="false"/>
   </databaseChangeLog>

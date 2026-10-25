@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="1792800000_B_coverage_pre_approval_value_type" author="Batool_Bushra">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <columnExists tableName="coverage_pre_approval" columnName="value_type"/>
+      </not>
+    </preConditions>
+    <addColumn tableName="coverage_pre_approval">
+      <column name="value_type" type="varchar(30)"/>
+    </addColumn>
+  </changeSet>
+
+  <changeSet id="1792800001_B_coverage_pre_approval_limit_value" author="Batool_Bushra">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <columnExists tableName="coverage_pre_approval" columnName="limit_value"/>
+      </not>
+    </preConditions>
+    <addColumn tableName="coverage_pre_approval">
+      <column name="limit_value" type="decimal(19,4)"/>
+    </addColumn>
+  </changeSet>
+</databaseChangeLog>
