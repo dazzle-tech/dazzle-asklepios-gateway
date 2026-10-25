@@ -1,5 +1,6 @@
 package com.dazzle.asklepios.web.filter.requesttrace;
 
+import com.dazzle.asklepios.web.filter.RequestIdWebFilter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -191,6 +192,7 @@ public class RequestTraceFilter implements GlobalFilter, Ordered {
             RequestTraceLogEntry entry =
             new RequestTraceLogEntry(
                 Instant.now(),
+                RequestIdWebFilter.getRequestId(exchange),
                 username,
                 method(exchange),
                 fullRequestUri(exchange.getRequest()),
