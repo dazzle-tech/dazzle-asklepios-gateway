@@ -63,6 +63,8 @@ public class SecurityConfiguration {
             )
             .authorizeExchange(authz -> authz
                 .pathMatchers(HttpMethod.GET, "/api/setup/system-config").permitAll()
+                .pathMatchers(HttpMethod.GET, "/api/setup/mobile-app-config/value").permitAll()
+                .pathMatchers(HttpMethod.GET, "/api/setup/mobile-app-config/value/**").permitAll()
                 .pathMatchers(HttpMethod.GET,  "/api/account/create-password/validate").permitAll()
                 .pathMatchers(HttpMethod.POST, "/api/account/create-password/finish").permitAll()
                 .pathMatchers(HttpMethod.GET,  "/api/patient/patient-satisfaction-survey/submit").permitAll()
