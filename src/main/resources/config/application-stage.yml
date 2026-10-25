@@ -37,6 +37,7 @@ services:
   ocr-parsing-service-url: http://ocr-parsing-service:8012
   lab-result-interpreter-service-url: http://lab-result-interpreter-service:8003
   clinical-summary-voice-service-url: http://clinical-summary-voice-service:8037
+  convo-voice-agent-service-url: http://convo-voice-agent:8036
 spring:
   devtools:
     restart:
@@ -289,6 +290,13 @@ spring:
             - Path=/api/ai/v1/clinical-summary-voice/**
           filters:
             - RewritePath=/api/ai/v1/clinical-summary-voice/(?<segment>.*),/api/v1/${segment}
+
+        - id: convo-voice-agent
+          uri: ${services.convo-voice-agent-service-url}
+          predicates:
+            - Path=/api/ai/v1/convo-voice-agent/**
+          filters:
+            - RewritePath=/api/ai/v1/convo-voice-agent/(?<segment>.*),/${segment}
 
         - id: analytics
           uri: ${services.dazzle-asklepios-analytics-service-url}
