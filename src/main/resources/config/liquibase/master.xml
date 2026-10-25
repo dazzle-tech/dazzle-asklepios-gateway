@@ -1169,4 +1169,7 @@
 
   <include file="config/liquibase/changelog/2026102401_S_mobile_app_config.xml"
            relativeToChangelogFile="false"/>
+
+  <include file="config/liquibase/changelog/2026102501_S_mobile_app_config_type.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
