@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+      http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!--
+    Statement of account header and invoice membership.
+    claim_settlement_seq already exists from 2026092901_claim_settlement_number
+    and is left unchanged so settlement numbers on older claims stay unique.
+    Existing claim_request rows are not updated.
+  -->
+
+  <changeSet id="2026102601_claim_settlement" author="asklepios">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <tableExists tableName="claim_settlement"/>
+      </not>
+    </preConditions>
+
+    <createTable tableName="claim_settlement">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false" primaryKeyName="pk_claim_settlement"/>
+      </column>
+      <column name="settlement_no" type="varchar(50)">
+        <constraints nullable="false" unique="true" uniqueConstraintName="uk_claim_settlement_no"/>
+      </column>
+      <column name="status" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="payor_id" type="bigint"/>
+      <column name="payer_nphies_id" type="varchar(100)"/>
+      <column name="payer_name" type="varchar(255)"/>
+      <column name="claim_type" type="varchar(50)"/>
+      <column name="claim_sub_type" type="varchar(50)"/>
+      <column name="invoice_count" type="integer" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+      <column name="total_invoice_amount" type="numeric(19,2)"/>
+      <column name="total_claim_amount" type="numeric(19,2)"/>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+  </changeSet>
+
+  <changeSet id="2026102601_claim_settlement_invoice" author="asklepios">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <tableExists tableName="claim_settlement_invoice"/>
+      </not>
+    </preConditions>
+
+    <createTable tableName="claim_settlement_invoice">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false" primaryKeyName="pk_claim_settlement_invoice"/>
+      </column>
+      <column name="settlement_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="financial_document_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="claim_request_id" type="bigint"/>
+      <column name="membership_status" type="varchar(20)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="release_reason" type="text"/>
+      <column name="released_at" type="timestamp"/>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="claim_settlement_invoice"
+      baseColumnNames="settlement_id"
+      constraintName="fk_claim_settlement_invoice_settlement"
+      referencedTableName="claim_settlement"
+      referencedColumnNames="id"/>
+
+    <addForeignKeyConstraint
+      baseTableName="claim_settlement_invoice"
+      baseColumnNames="financial_document_id"
+      constraintName="fk_claim_settlement_invoice_document"
+      referencedTableName="financial_documents"
+      referencedColumnNames="id"/>
+
+    <addForeignKeyConstraint
+      baseTableName="claim_settlement_invoice"
+      baseColumnNames="claim_request_id"
+      constraintName="fk_claim_settlement_invoice_claim"
+      referencedTableName="claim_request"
+      referencedColumnNames="id"/>
+
+    <createIndex tableName="claim_settlement_invoice" indexName="idx_claim_settlement_invoice_settlement">
+      <column name="settlement_id"/>
+    </createIndex>
+    <createIndex tableName="claim_settlement_invoice" indexName="idx_claim_settlement_invoice_document">
+      <column name="financial_document_id"/>
+    </createIndex>
+    <createIndex tableName="claim_settlement_invoice" indexName="idx_claim_settlement_invoice_claim">
+      <column name="claim_request_id"/>
+    </createIndex>
+
+    <sql>
+      CREATE UNIQUE INDEX IF NOT EXISTS uk_claim_settlement_invoice_active_document
+        ON claim_settlement_invoice (financial_document_id)
+        WHERE membership_status = 'ACTIVE';
+    </sql>
+  </changeSet>
+
+</databaseChangeLog>
