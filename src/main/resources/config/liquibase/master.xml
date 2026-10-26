@@ -703,4 +703,6 @@
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/coverageManagement/1792800000_B_coverage_pre_approval_limit.xml"
            relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1792920000_B_coverage_pre_approval_item_name.xml"
+           relativeToChangelogFile="false"/>
   </databaseChangeLog>

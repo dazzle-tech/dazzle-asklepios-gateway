@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="1792920000_drop_pre_approval_item_service_fk" author="asklepios">
+    <preConditions onFail="MARK_RAN">
+      <foreignKeyConstraintExists foreignKeyName="fk_coverage_pre_approval_item_service"/>
+    </preConditions>
+    <dropForeignKeyConstraint
+      baseTableName="coverage_pre_approval_item"
+      constraintName="fk_coverage_pre_approval_item_service"/>
+  </changeSet>
+
+  <changeSet id="1792920001_pre_approval_item_name" author="asklepios">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <columnExists tableName="coverage_pre_approval_item" columnName="item_name"/>
+      </not>
+    </preConditions>
+    <addColumn tableName="coverage_pre_approval_item">
+      <column name="item_name" type="varchar(255)"/>
+    </addColumn>
+  </changeSet>
+
+  <changeSet id="1792920002_pre_approval_item_name_backfill" author="asklepios">
+    <preConditions onFail="MARK_RAN">
+      <and>
+        <columnExists tableName="coverage_pre_approval_item" columnName="item_name"/>
+        <tableExists tableName="service"/>
+      </and>
+    </preConditions>
+    <sql>
+      UPDATE coverage_pre_approval_item item
+      SET item_name = service.name
+      FROM service
+      WHERE item.service_id = service.id
+        AND item.item_type = 'SERVICE'
+        AND (item.item_name IS NULL OR item.item_name = '');
+    </sql>
+  </changeSet>
+</databaseChangeLog>
