@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-patient-services-and-products-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwpatientservicesandproducts AS
+      SELECT
+        psp.id,
+        psp.patient_id,
+        psp.encounter_id,
+        psp.billing_item_type,
+        psp.brand_medication_id,
+        psp.diagnostic_test_id,
+        psp.service_id,
+        psp.procedure_id,
+        psp.service_source,
+        psp.source_id,
+        psp.quantity,
+        psp.unit_price,
+        psp.discount_amount,
+        psp.exemption_amount,
+        psp.tax_amount,
+        psp.total_amount,
+        psp.currency,
+        psp.is_billed,
+        psp.billing_invoice_id,
+        psp.billing_invoice_item_id,
+        psp.notes,
+        psp.created_by,
+        psp.created_date,
+        psp.last_modified_by,
+        psp.last_modified_date,
+        psp.pre_authorization_status,
+        psp.payment_id,
+        psp.payment_type,
+        psp.payment_status,
+        psp.coverage_status,
+        psp.not_covered_reason,
+        psp.patient_insurance_id,
+        psp.price_source,
+        psp.is_default_service,
+        psp.is_exempted,
+        psp.gross_amount,
+        psp.net_amount,
+        psp.patient_share_amount,
+        psp.insurance_share_amount,
+        psp.paid_amount,
+        psp.remaining_amount,
+        psp.waseel_sbs_mapping_id,
+        psp.waseel_sbs_code,
+        psp.pre_authorization_required,
+        psp.pre_authorization_request_id,
+        psp.pre_authorization_reference_no
+      FROM public.patient_services_and_products psp;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwpatientservicesandproducts;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-patient-services-and-products-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwpatientservicesandproducts TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwpatientservicesandproducts FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

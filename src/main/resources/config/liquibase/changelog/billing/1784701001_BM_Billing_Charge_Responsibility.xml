@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="BM000000000050" author="BushraMashaiekh">
+
+    <createTable tableName="billing_charge_responsibility">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="charge_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="charge_line_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="patient_service_product_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="responsible_party_type" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="responsibility_role" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="payer_id" type="bigint"/>
+
+      <column name="patient_insurance_id" type="bigint"/>
+
+      <column name="policy_number" type="varchar(100)"/>
+
+      <column name="member_number" type="varchar(100)"/>
+
+      <column name="responsibility_amount" type="numeric(19,4)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="allocated_amount" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="outstanding_amount" type="numeric(19,4)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="coverage_percentage" type="numeric(19,6)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="deductible_amount" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="copay_amount" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="coinsurance_amount" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="non_covered_amount" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="contractual_adjustment_amount"  type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="currency" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="status" type="varchar(30)" defaultValue="CALCULATED">
+        <constraints nullable="false"/>
+      </column>
+
+      <!-- Authorization / claim references -->
+      <column name="pre_authorization_required" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="pre_authorization_status" type="varchar(50)"/>
+
+      <column name="pre_authorization_reference_no"
+              type="varchar(100)"/>
+
+      <column name="claim_id" type="bigint"/>
+
+      <column name="claim_reference" type="varchar(150)"/>
+
+      <column name="superseded_responsibility_id" type="bigint"/>
+
+      <column name="adjustment_reason" type="varchar(500)"/>
+
+      <column name="effective_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="closed_date" type="timestamp"/>
+
+      <column name="idempotency_key" type="varchar(150)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_charge_responsibility"
+      baseColumnNames="charge_id"
+      referencedTableName="billing_charge"
+      referencedColumnNames="id"
+      constraintName="fk_billing_responsibility_charge"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_charge_responsibility"
+      baseColumnNames="charge_line_id"
+      referencedTableName="billing_charge_line"
+      referencedColumnNames="id"
+      constraintName="fk_billing_responsibility_charge_line"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_charge_responsibility"
+      baseColumnNames="patient_service_product_id"
+      referencedTableName="patient_services_and_products"
+      referencedColumnNames="id"
+      constraintName="fk_billing_responsibility_psp"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_charge_responsibility"
+      baseColumnNames="patient_id"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+      constraintName="fk_billing_responsibility_patient"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_charge_responsibility"
+      baseColumnNames="encounter_id"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"
+      constraintName="fk_billing_responsibility_encounter"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_charge_responsibility"
+      baseColumnNames="patient_insurance_id"
+      referencedTableName="patient_insurances"
+      referencedColumnNames="id"
+      constraintName="fk_billing_responsibility_patient_insurance"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_charge_responsibility"
+      baseColumnNames="superseded_responsibility_id"
+      referencedTableName="billing_charge_responsibility"
+      referencedColumnNames="id"
+      constraintName="fk_billing_responsibility_superseded"/>
+
+    <addUniqueConstraint
+      tableName="billing_charge_responsibility"
+      columnNames="idempotency_key"
+      constraintName="uq_billing_responsibility_idempotency"/>
+
+    <sql>
+      ALTER TABLE billing_charge_responsibility
+        ADD CONSTRAINT ck_billing_responsibility_non_negative
+          CHECK (
+            responsibility_amount &gt;= 0
+              AND allocated_amount &gt;= 0
+              AND outstanding_amount &gt;= 0
+              AND coverage_percentage &gt;= 0
+              AND deductible_amount &gt;= 0
+              AND copay_amount &gt;= 0
+              AND coinsurance_amount &gt;= 0
+              AND non_covered_amount &gt;= 0
+              AND contractual_adjustment_amount &gt;= 0
+            );
+    </sql>
+
+    <sql>
+      ALTER TABLE billing_charge_responsibility
+        ADD CONSTRAINT ck_billing_responsibility_balance
+          CHECK (
+            responsibility_amount =
+            allocated_amount
+              + outstanding_amount
+            );
+    </sql>
+
+    <sql>
+      ALTER TABLE billing_charge_responsibility
+        ADD CONSTRAINT ck_billing_responsibility_coverage_percentage
+          CHECK (
+            coverage_percentage &lt;= 100
+            );
+    </sql>
+
+    <createIndex
+      tableName="billing_charge_responsibility"
+      indexName="idx_billing_responsibility_charge">
+      <column name="charge_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_charge_responsibility"
+      indexName="idx_billing_responsibility_charge_line">
+      <column name="charge_line_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_charge_responsibility"
+      indexName="idx_billing_responsibility_psp">
+      <column name="patient_service_product_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_charge_responsibility"
+      indexName="idx_billing_responsibility_patient">
+      <column name="patient_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_charge_responsibility"
+      indexName="idx_billing_responsibility_encounter">
+      <column name="encounter_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_charge_responsibility"
+      indexName="idx_billing_responsibility_party_type">
+      <column name="responsible_party_type"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_charge_responsibility"
+      indexName="idx_billing_responsibility_payer">
+      <column name="payer_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_charge_responsibility"
+      indexName="idx_billing_responsibility_insurance">
+      <column name="patient_insurance_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_charge_responsibility"
+      indexName="idx_billing_responsibility_status">
+      <column name="status"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_charge_responsibility"
+      indexName="idx_billing_responsibility_line_status">
+      <column name="charge_line_id"/>
+      <column name="status"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_charge_responsibility"
+      indexName="idx_billing_responsibility_payer_status">
+      <column name="payer_id"/>
+      <column name="status"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_charge_responsibility"
+      indexName="idx_billing_responsibility_superseded">
+      <column name="superseded_responsibility_id"/>
+    </createIndex>
+
+  </changeSet>
+
+</databaseChangeLog>

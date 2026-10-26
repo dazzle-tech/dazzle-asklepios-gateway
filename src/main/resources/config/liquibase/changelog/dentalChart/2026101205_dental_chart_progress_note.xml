@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="dental_chart_progress_note_create" author="hanan253yahya">
+    <createTable tableName="dental_chart_progress_note">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+      <column name="chart_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="note" type="text">
+        <constraints nullable="false"/>
+      </column>
+      <column name="deleted_at" type="timestamp"/>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="dental_chart_progress_note"
+      baseColumnNames="chart_id"
+      referencedTableName="dental_chart"
+      referencedColumnNames="id"
+      constraintName="fk_dental_chart_progress_note_chart"/>
+
+    <createIndex indexName="idx_dental_chart_progress_note_chart_id" tableName="dental_chart_progress_note">
+      <column name="chart_id"/>
+    </createIndex>
+  </changeSet>
+
+</databaseChangeLog>

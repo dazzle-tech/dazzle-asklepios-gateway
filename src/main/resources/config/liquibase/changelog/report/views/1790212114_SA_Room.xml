@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-rooms-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwrooms AS
+      SELECT
+        r.id,
+        r.facility_id,
+        r.department_type,
+        r.department_id,
+        r.name,
+        r.type,
+        r.floor,
+        r.is_specific_gender,
+        r.gender,
+        r.created_date,
+        r.is_active,
+        r.created_by,
+        r.last_modified_by,
+        r.last_modified_date,
+        r.appointable,
+        r.parallel_capacity_value,
+        r.default_duration_minutes,
+        r.default_buffer_before_minutes,
+        r.default_buffer_after_minutes
+      FROM public.rooms r;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwrooms;
+      </sql>
+    </rollback>
+  </changeSet>
+  <changeSet id="grant-report-rooms-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwrooms TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON report.rooms FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

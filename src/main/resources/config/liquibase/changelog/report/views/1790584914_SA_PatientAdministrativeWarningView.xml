@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-patient-administrative-warnings-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwPatientAdministrativeWarnings AS
+      SELECT
+        paw.id,
+        paw.patient_id,
+        paw.warning_type,
+        paw.description,
+        paw.resolved,
+        paw.resolved_by,
+        paw.resolved_date,
+        paw.undo_resolved_by,
+        paw.undo_resolved_date,
+        paw.created_by,
+        paw.created_date,
+        paw.last_modified_by,
+        paw.last_modified_date
+      FROM public.patient_administrative_warnings paw;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwPatientAdministrativeWarnings ;
+      </sql>
+    </rollback>
+  </changeSet>
+  <changeSet id="grant-report-patient-administrative-warnings-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwPatientAdministrativeWarnings  TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwPatientAdministrativeWarnings  FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-referral-requests-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwreferralrequests AS
+      SELECT
+        rr.id,
+        rr.patient_id,
+        rr.encounter_id,
+        rr.from_facility_id,
+        rr.to_facility_id,
+        rr.from_department_id,
+        rr.to_department_id,
+        rr.referral_type,
+        rr.referral_reason,
+        rr.priority,
+        rr.status,
+        rr.rejected_date,
+        rr.rejected_by,
+        rr.reject_reason,
+        rr.accepted_date,
+        rr.accepted_by,
+        rr.created_date,
+        rr.created_by,
+        rr.last_modified_by,
+        rr.last_modified_date,
+        rr.appointment_id
+      FROM public.referral_requests rr;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwreferralrequests;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-referral-requests-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwreferralrequests TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwreferralrequests FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

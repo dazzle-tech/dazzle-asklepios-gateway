@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="
+                     http://www.liquibase.org/xml/ns/dbchangelog
+                     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-encounter-discharge-log" author="sondos">
+  <createTable tableName="encounter_discharge_log">
+
+    <column name="id" type="BIGINT" autoIncrement="true">
+      <constraints primaryKey="true"
+                   primaryKeyName="pk_encounter_discharge_log"
+                   nullable="false"/>
+    </column>
+
+    <column name="encounter_id" type="BIGINT">
+      <constraints nullable="false"
+                   foreignKeyName="fk_discharge_log_encounter"
+                   referencedTableName="patient_encounters"
+                   referencedColumnNames="id"/>
+    </column>
+
+    <column name="discharged_at" type="TIMESTAMP">
+      <constraints nullable="false"/>
+    </column>
+
+    <column name="discharged_by" type="varchar(50)">
+      <constraints nullable="false"/>
+    </column>
+
+    <column name="created_date" type="TIMESTAMP" defaultValueDate="now()">
+      <constraints nullable="false"/>
+    </column>
+    <column name="discharge_type" type="varchar(50)"/>
+
+  </createTable>
+
+  <createIndex indexName="idx_discharge_log_encounter"
+               tableName="encounter_discharge_log">
+    <column name="encounter_id"/>
+  </createIndex>
+
+  <createIndex indexName="idx_discharge_log_discharged_by"
+               tableName="encounter_discharge_log">
+    <column name="discharged_by"/>
+  </createIndex>
+
+</changeSet>
+</databaseChangeLog>

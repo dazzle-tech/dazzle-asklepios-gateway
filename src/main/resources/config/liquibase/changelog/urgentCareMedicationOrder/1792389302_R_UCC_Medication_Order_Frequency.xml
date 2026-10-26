@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!--
+    UCC medication order frequency is now chosen from the MedFrequency enum (STAT included),
+    replacing frequency_number / frequency_unit / duration / start_time for new orders.
+    The old columns are kept so existing orders still show their data.
+  -->
+  <changeSet id="1792389302_R_UCC_MEDICATION_ORDER_FREQUENCY" author="Rawan-Yahya">
+    <addColumn tableName="urgent_care_medication_order">
+      <column name="frequency" type="varchar(100)">
+        <constraints nullable="true"/>
+      </column>
+    </addColumn>
+  </changeSet>
+
+</databaseChangeLog>

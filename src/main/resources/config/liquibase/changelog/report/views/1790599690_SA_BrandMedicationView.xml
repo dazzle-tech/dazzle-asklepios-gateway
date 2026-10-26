@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-brand-medication-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwbrandmedication AS
+      SELECT
+        bm.id,
+        bm.name,
+        bm.code,
+        bm.manufacturer,
+        bm.dosage_form,
+        bm.usage_instructions,
+        bm.storage_requirements,
+        bm.price,
+        bm.currency,
+        bm.expires_after_opening,
+        bm.expires_after_opening_value,
+        bm.expires_after_opening_unit,
+        bm.single_patient_use,
+        bm.high_cost_medication,
+        bm.cost_category,
+        bm.roa,
+        bm.uom_group_id,
+        bm.uom_group_unit_id,
+        bm.is_active,
+        bm.created_by,
+        bm.created_date,
+        bm.last_modified_by,
+        bm.last_modified_date,
+        bm.billing_rule_id
+      FROM public.brand_medication bm;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwbrandmedication;
+      </sql>
+    </rollback>
+  </changeSet>
+  <changeSet id="grant-report-brand-medication-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwbrandmedication TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwbrandmedication FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet></databaseChangeLog>

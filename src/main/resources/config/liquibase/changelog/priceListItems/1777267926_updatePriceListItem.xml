@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="B000000000000Billing3" author="hanan253yahya">
+
+    <dropForeignKeyConstraint
+      baseTableName="price_list_item"
+      constraintName="fk_pl_item_product"/>
+
+    <dropColumn tableName="price_list_item" columnName="product_id"/>
+    <dropColumn tableName="price_list_item" columnName="product_type"/>
+
+    <addColumn tableName="price_list_item">
+
+      <column name="brand_medication_id" type="bigint"/>
+      <column name="diagnostic_test_id" type="bigint"/>
+      <column name="procedure_id" type="bigint"/>
+
+    </addColumn>
+
+    <addForeignKeyConstraint
+      baseTableName="price_list_item"
+      baseColumnNames="brand_medication_id"
+      referencedTableName="brand_medication"
+      referencedColumnNames="id"
+      constraintName="fk_pl_item_brand_medication"/>
+
+    <addForeignKeyConstraint
+      baseTableName="price_list_item"
+      baseColumnNames="diagnostic_test_id"
+      referencedTableName="diagnostic_test"
+      referencedColumnNames="id"
+      constraintName="fk_pl_item_diagnostic_test"/>
+
+    <addForeignKeyConstraint
+      baseTableName="price_list_item"
+      baseColumnNames="procedure_id"
+      referencedTableName="procedure"
+      referencedColumnNames="id"
+      constraintName="fk_pl_item_procedure"/>
+
+    <addUniqueConstraint
+      tableName="price_list_item"
+      columnNames="price_list_id, service_id"
+      constraintName="uq_pl_item_service"/>
+
+    <addUniqueConstraint
+      tableName="price_list_item"
+      columnNames="price_list_id, brand_medication_id"
+      constraintName="uq_pl_item_brand_medication"/>
+
+    <addUniqueConstraint
+      tableName="price_list_item"
+      columnNames="price_list_id, diagnostic_test_id"
+      constraintName="uq_pl_item_diagnostic_test"/>
+
+    <addUniqueConstraint
+      tableName="price_list_item"
+      columnNames="price_list_id, procedure_id"
+      constraintName="uq_pl_item_procedure"/>
+    <sql dbms="postgresql">
+      <![CDATA[
+      ALTER TABLE price_list_item
+        ADD CONSTRAINT ck_pl_item_reference_by_type
+          CHECK (
+            (
+              item_type = 'SERVICE'
+                AND service_id IS NOT NULL
+                AND brand_medication_id IS NULL
+                AND diagnostic_test_id IS NULL
+                AND procedure_id IS NULL
+              )
+              OR
+            (
+              item_type = 'MEDICATION'
+                AND brand_medication_id IS NOT NULL
+                AND service_id IS NULL
+                AND diagnostic_test_id IS NULL
+                AND procedure_id IS NULL
+              )
+              OR
+            (
+              item_type IN ('LABORATORY', 'RADIOLOGY', 'PATHOLOGY')
+                AND diagnostic_test_id IS NOT NULL
+                AND service_id IS NULL
+                AND brand_medication_id IS NULL
+                AND procedure_id IS NULL
+              )
+              OR
+            (
+              item_type = 'PROCEDURE'
+                AND procedure_id IS NOT NULL
+                AND service_id IS NULL
+                AND brand_medication_id IS NULL
+                AND diagnostic_test_id IS NULL
+              )
+            );
+      ]]>
+    </sql>
+
+  </changeSet>
+
+</databaseChangeLog>

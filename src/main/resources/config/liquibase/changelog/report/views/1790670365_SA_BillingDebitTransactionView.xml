@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-billing-debit-transaction-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwbillingdebittransaction AS
+      SELECT
+        bdt.id,
+        bdt.transaction_number,
+        bdt.debit_account_id,
+        bdt.patient_id,
+        bdt.encounter_id,
+        bdt.charge_responsibility_id,
+        bdt.charge_id,
+        bdt.charge_line_id,
+        bdt.patient_service_product_id,
+        bdt.payment_id,
+        bdt.payment_transaction_id,
+        bdt.parent_transaction_id,
+        bdt.transaction_type,
+        bdt.amount,
+        bdt.currency,
+        bdt.balance_before,
+        bdt.balance_after,
+        bdt.status,
+        bdt.transaction_date,
+        bdt.due_date,
+        bdt.settled_date,
+        bdt.reference_type,
+        bdt.reference_id,
+        bdt.reference_number,
+        bdt.reason,
+        bdt.approved_by,
+        bdt.approved_date,
+        bdt.idempotency_key,
+        bdt.transaction_group_id,
+        bdt.notes,
+        bdt.created_by,
+        bdt.created_date,
+        bdt.last_modified_by,
+        bdt.last_modified_date
+      FROM public.billing_debit_transaction bdt;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwbillingdebittransaction;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-billing-debit-transaction-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwbillingdebittransaction TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwbillingdebittransaction FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

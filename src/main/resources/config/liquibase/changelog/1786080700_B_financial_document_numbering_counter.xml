@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!-- Store document counters on financial_document_numbering instead of financial_document_sequence -->
+
+  <changeSet id="1786080700-fdn-01-add-last-number" author="batool">
+    <preConditions onFail="MARK_RAN" onError="HALT">
+      <tableExists schemaName="public" tableName="financial_document_numbering"/>
+      <not>
+        <columnExists schemaName="public" tableName="financial_document_numbering" columnName="last_number"/>
+      </not>
+    </preConditions>
+
+    <addColumn schemaName="public" tableName="financial_document_numbering">
+      <column name="last_number" type="bigint"/>
+    </addColumn>
+
+    <rollback>
+      <dropColumn schemaName="public" tableName="financial_document_numbering" columnName="last_number"/>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="1786080700-fdn-02-add-current-period-key" author="batool">
+    <preConditions onFail="MARK_RAN" onError="HALT">
+      <tableExists schemaName="public" tableName="financial_document_numbering"/>
+      <not>
+        <columnExists schemaName="public" tableName="financial_document_numbering" columnName="current_period_key"/>
+      </not>
+    </preConditions>
+
+    <addColumn schemaName="public" tableName="financial_document_numbering">
+      <column name="current_period_key" type="varchar(20)"/>
+    </addColumn>
+
+    <rollback>
+      <dropColumn schemaName="public" tableName="financial_document_numbering" columnName="current_period_key"/>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="1786080700-fdn-03-add-version" author="batool">
+    <preConditions onFail="MARK_RAN" onError="HALT">
+      <tableExists schemaName="public" tableName="financial_document_numbering"/>
+      <not>
+        <columnExists schemaName="public" tableName="financial_document_numbering" columnName="version"/>
+      </not>
+    </preConditions>
+
+    <addColumn schemaName="public" tableName="financial_document_numbering">
+      <column name="version" type="bigint" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+    </addColumn>
+
+    <rollback>
+      <dropColumn schemaName="public" tableName="financial_document_numbering" columnName="version"/>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="1786080700-fdn-04-migrate-legacy-sequence-counters" author="batool">
+    <preConditions onFail="MARK_RAN" onError="HALT">
+      <tableExists schemaName="public" tableName="financial_document_numbering"/>
+      <tableExists schemaName="public" tableName="financial_document_sequence"/>
+      <columnExists schemaName="public" tableName="financial_document_numbering" columnName="last_number"/>
+      <columnExists schemaName="public" tableName="financial_document_numbering" columnName="current_period_key"/>
+      <columnExists schemaName="public" tableName="financial_document_numbering" columnName="version"/>
+    </preConditions>
+
+    <sql>
+      UPDATE financial_document_numbering n
+      SET last_number = s.last_number,
+          current_period_key = s.period_key,
+          version = COALESCE(n.version, 0)
+      FROM financial_document_sequence s
+      WHERE s.facility_id = n.facility_id
+        AND s.document_type = n.document_type
+        AND n.last_number IS NULL
+        AND s.period_key = (
+            CASE n.reset_frequency
+                WHEN 'NEVER' THEN 'ALL'
+                WHEN 'YEARLY' THEN TO_CHAR(CURRENT_DATE, 'YYYY')
+                WHEN 'MONTHLY' THEN TO_CHAR(CURRENT_DATE, 'YYYY-MM')
+                WHEN 'DAILY' THEN TO_CHAR(CURRENT_DATE, 'YYYY-MM-DD')
+                ELSE TO_CHAR(CURRENT_DATE, 'YYYY')
+            END
+        );
+    </sql>
+  </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!-- STAT is an abbreviation: show it in capitals in English (was "Stat") -->
+  <changeSet id="1792481456-update-stat-translation" author="Rawan-Yahya">
+    <update tableName="language_translation">
+      <column name="translation_text" value="STAT"/>
+      <where>lang_key = 'en' AND translation_key = 'STAT'</where>
+    </update>
+  </changeSet>
+
+</databaseChangeLog>

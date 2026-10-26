@@ -1,0 +1,2 @@
+id;notification_header_id;channel;language;subject;title;body;to_recipient_rule;cc_recipient_rule;bcc_recipient_rule;phone_recipient_rule;is_active;created_by;created_date;last_modified_by;last_modified_date
+22;5020;IN_APP;en;;New Urgent Care Medication Order;Urgent Care Medication Order  for patient {{patient_name}}. Department: {{department_name}}.;NURSE_DEPARTMENT_USERS;;;;true;admin;2026-07-02 00:00:00;admin;2026-07-02 00:00:00

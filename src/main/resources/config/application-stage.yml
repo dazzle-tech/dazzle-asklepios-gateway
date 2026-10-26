@@ -1,8 +1,11 @@
-
+request-trace:
+  file: logs/request-trace.log
 logging:
   level:
-    ROOT: INFO
-    com.dazzle.asklepios: INFO
+    ROOT: DEBUG
+    org.hibernate.SQL: DEBUG
+    com.dazzle.asklepios: DEBUG
+    com.dazzle.asklepios.requesttrace: INFO
 
 management:
   prometheus:
@@ -11,7 +14,8 @@ management:
         enabled: false
   zipkin:
     tracing:
-      endpoint: http://localhost:9411/api/v2/spans
+      endpoint:
+        http://localhost:9411/api/v2/spans
   tracing:
     sampling:
       probability: 1.0
@@ -22,7 +26,18 @@ services:
   asklepios-patient-service-url :  http://asklepios-patient-service:8080
   asklepios-inventory-service-url :  http://asklepios-inventory-service:8080
   asklepios-billing-service-url :  http://asklepios-billing-service:8080
-
+  dazzle-asklepios-analytics-service-url : http://asklepios-analytics-service:8080
+  dazzle-asklepios-notification-service-url : http://asklepios-notification-service:8080
+  medication-test-orders-validation-service-url: http://medication-test-orders-validation-service:8006
+  clinical-summary-service-url: http://clinical-summary-service:8009
+  clinical-recommendations-service-url: http://clinical-recommendations-service:8007
+  patient-timeline-service-url: http://patient-timeline-service:8001
+  auto-population-service-url: http://auto-population-service:8010
+  discharge-report-service-url: http://discharge-report-service:8005
+  ocr-parsing-service-url: http://ocr-parsing-service:8012
+  lab-result-interpreter-service-url: http://lab-result-interpreter-service:8003
+  clinical-summary-voice-service-url: http://clinical-summary-voice-service:8037
+  convo-voice-agent-service-url: http://convo-voice-agent-service:8036
 spring:
   devtools:
     restart:
@@ -31,14 +46,15 @@ spring:
       enabled: false
   liquibase:
     contexts: stage
-    url: jdbc:postgresql://db-postgresql-nyc3-94186-do-user-10936078-0.j.db.ondigitalocean.com:25060/asklepios?sslmode=require
+    url: jdbc:postgresql://161.35.195.29:5432/asklepios
+
   mail:
     host: localhost
     port: 25
     username:
     password:
   r2dbc:
-    url: r2dbc:postgresql://db-postgresql-nyc3-94186-do-user-10936078-0.j.db.ondigitalocean.com:25060/asklepios?sslmode=require
+    url: r2dbc:postgresql://161.35.195.29:5432/asklepios
     username: asklepios
     password: AVNS_Dw0mJXT6mnivz3bN70_
     pool:
@@ -211,7 +227,89 @@ spring:
             - Path=/api/billing/**
           filters:
             - StripPrefix=0
-            
+
+        - id: medication-test-orders-validation
+          uri: ${services.medication-test-orders-validation-service-url}
+          predicates:
+            - Path=/api/ai/v1/medication-test-orders-validation/**
+          filters:
+            - RewritePath=/api/ai/v1/medication-test-orders-validation/(?<segment>.*),/api/v1/${segment}
+
+        - id: auto-population
+          uri: ${services.auto-population-service-url}
+          predicates:
+            - Path=/api/ai/v1/auto-population/**
+          filters:
+            - RewritePath=/api/ai/v1/auto-population/(?<segment>.*),/api/v1/${segment}
+
+        - id: discharge-report
+          uri: ${services.discharge-report-service-url}
+          predicates:
+            - Path=/api/ai/v1/discharge-report-service/**
+          filters:
+            - RewritePath=/api/ai/v1/discharge-report-service/(?<segment>.*),/${segment}
+
+        - id: ocr-parsing
+          uri: ${services.ocr-parsing-service-url}
+          predicates:
+            - Path=/api/ai/v1/ocr-parsing-service/**
+          filters:
+            - RewritePath=/api/ai/v1/ocr-parsing-service/(?<segment>.*),/api/v1/${segment}
+
+        - id: patient-timeline
+          uri: ${services.patient-timeline-service-url}
+          predicates:
+            - Path=/api/ai/v1/patient-timeline-service/**
+          filters:
+            - RewritePath=/api/ai/v1/patient-timeline-service/(?<segment>.*),/api/v1/${segment}
+
+        - id: lab-result-interpreter
+          uri: ${services.lab-result-interpreter-service-url}
+          predicates:
+            - Path=/api/ai/v1/lab-interpretation/**
+          filters:
+            - RewritePath=/api/ai/v1/lab-interpretation/(?<segment>.*),/api/v1/${segment}
+
+        - id: clinical-summary
+          uri: ${services.clinical-summary-service-url}
+          predicates:
+            - Path=/api/ai/v1/clinical-summary/**
+          filters:
+            - RewritePath=/api/ai/v1/clinical-summary/(?<segment>.*),/api/v1/${segment}
+
+        - id: clinical-recommendations
+          uri: ${services.clinical-recommendations-service-url}
+          predicates:
+            - Path=/api/ai/v1/clinical-recommendations/**
+          filters:
+            - RewritePath=/api/ai/v1/clinical-recommendations/(?<segment>.*),/api/v1/${segment}
+
+        - id: clinical-summary-voice
+          uri: ${services.clinical-summary-voice-service-url}
+          predicates:
+            - Path=/api/ai/v1/clinical-summary-voice/**
+          filters:
+            - RewritePath=/api/ai/v1/clinical-summary-voice/(?<segment>.*),/api/v1/${segment}
+
+        - id: convo-voice-agent
+          uri: ${services.convo-voice-agent-service-url}
+          predicates:
+            - Path=/api/ai/v1/convo-voice-agent/**
+          filters:
+            - RewritePath=/api/ai/v1/convo-voice-agent/(?<segment>.*),/api/v1/${segment}
+
+        - id: analytics
+          uri: ${services.dazzle-asklepios-analytics-service-url}
+          predicates:
+            - Path=/api/analytics/**
+          filters:
+            - StripPrefix=0
+        - id: notification
+          uri: ${services.dazzle-asklepios-notification-service-url}
+          predicates:
+            - Path=/api/notification/**
+          filters:
+            - StripPrefix=0
       httpclient:
         pool:
           max-connections: 1000
@@ -232,7 +330,7 @@ asklepios:
     allowed-origin-patterns: 'https://*.asklepios.com'
     allowed-methods: '*'
     allowed-headers: '*'
-    exposed-headers: 'Authorization,Link,X-Total-Count,X-${asklepios.clientApp.name}-alert,X-${asklepios.clientApp.name}-error,X-${asklepios.clientApp.name}-params,access_token'
+    exposed-headers: 'Authorization,Link,X-Total-Count,X-Missing-Definition-Tests,X-${asklepios.clientApp.name}-alert,X-${asklepios.clientApp.name}-error,X-${asklepios.clientApp.name}-params,access_token'
     allow-credentials: true
     max-age: 1800
   security:
@@ -242,6 +340,7 @@ asklepios:
         token-validity-in-seconds: 86400
         token-validity-in-seconds-for-remember-me: 2592000
   mail:
-    base-url: http://asklepios.nereuscloud.de/
-    username: systemask73@gmail.com
-    password: ocdh hvae hhsz cyxc
+    base-url: http://asklepios.nereuscloud.de
+    username: cms.support.dimensions@gmail.com
+    password: tohr slst gphb swwx
+

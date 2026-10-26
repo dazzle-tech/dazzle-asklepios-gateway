@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-encounter-assign-to-bed-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwencounterassigntobed AS
+      SELECT
+        eab.id,
+        eab.encounter_id,
+        eab.patient_id,
+        eab.room_id,
+        eab.bed_id,
+        eab.department_id,
+        eab.admission_reason,
+        eab.assigned_at,
+        eab.released_at,
+        eab.is_active,
+        eab.created_date,
+        eab.created_by,
+        eab.last_modified_by,
+        eab.last_modified_date
+      FROM public.encounter_assign_to_bed eab;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwencounterassigntobed;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-encounter-assign-to-bed-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwencounterassigntobed TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwencounterassigntobed FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+
+</databaseChangeLog>

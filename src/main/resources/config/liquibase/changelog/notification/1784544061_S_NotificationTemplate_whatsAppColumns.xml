@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="1784544061-WhatsAppNotificationTemplateColumns" author="SondosAbdAlaal">
+
+    <addColumn schemaName="notification" tableName="notification_template">
+      <column name="whatsapp_language_code" type="varchar(20)"/>
+    </addColumn>
+
+    <addColumn schemaName="notification" tableName="notification_template">
+      <column name="whatsapp_template_name" type="varchar(150)"/>
+    </addColumn>
+
+    <addColumn schemaName="notification" tableName="notification_template">
+      <column name="whatsapp_parameters" type="jsonb"/>
+    </addColumn>
+
+    <addColumn schemaName="notification" tableName="notification_template">
+      <column name="whatsapp_template_version" type="int"/>
+    </addColumn>
+    <addColumn schemaName="notification" tableName="notification_template">
+      <column name="whatsapp_template_category" type="varchar(50)"/>
+    </addColumn>
+    <addColumn schemaName="notification" tableName="notification_template">
+      <column name="whatsapp_template_status" type="varchar(50)"/>
+    </addColumn>
+    <addColumn schemaName="notification" tableName="notification_template">
+      <column name="whatsapp_meta_template_id" type="varchar(150)"/>
+    </addColumn>
+
+    <addColumn schemaName="notification" tableName="notification_template">
+      <column name="whatsapp_meta_template_footer" type="varchar(150)"/>
+    </addColumn>
+    <addColumn schemaName="notification" tableName="notification_template">
+      <column name="whatsapp_meta_template_buttons" type="jsonb"/>
+    </addColumn>
+
+    <addColumn schemaName="notification" tableName="notification_template">
+      <column name="whatsapp_header_type" type="varchar(50)"/>
+    </addColumn>
+  </changeSet>
+
+</databaseChangeLog>

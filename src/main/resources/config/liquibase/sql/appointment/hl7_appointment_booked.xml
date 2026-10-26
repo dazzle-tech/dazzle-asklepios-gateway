@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+      http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="H_APPOINTMENT_BOOKED_TRIGGER" author="hanan253yahya">
+
+    <sql dbms="postgresql" splitStatements="false">
+      <![CDATA[
+      CREATE OR REPLACE FUNCTION notify_hl7_appointment_booked()
+RETURNS TRIGGER AS $function$
+      BEGIN
+      INSERT INTO ${hl7.integrationSchema}.hl7_event (
+        id,
+        event_type,
+        object_key,
+        event_datetime
+      )
+      VALUES (
+               gen_random_uuid()::varchar,
+               '${hl7.events.appointmentCreated}',
+               NEW.id::varchar,
+               NOW()
+             );
+
+      RETURN NEW;
+      END;
+      $function$ LANGUAGE plpgsql;
+      ]]>
+    </sql>
+
+    <sql dbms="postgresql" splitStatements="false">
+      <![CDATA[
+      DROP TRIGGER IF EXISTS trg_hl7_appointment_booked ON appointment;
+
+      CREATE TRIGGER trg_hl7_appointment_booked
+        AFTER UPDATE OF status ON appointment
+        FOR EACH ROW
+        WHEN (
+        NEW.status = 'BOOKED'
+        AND OLD.status IS DISTINCT FROM NEW.status
+)
+EXECUTE FUNCTION notify_hl7_appointment_booked();
+      ]]>
+    </sql>
+
+    <rollback>
+      <sql dbms="postgresql" splitStatements="false">
+        <![CDATA[
+DROP TRIGGER IF EXISTS trg_hl7_appointment_booked ON appointment;
+DROP FUNCTION IF EXISTS notify_hl7_appointment_booked();
+        ]]>
+      </sql>
+    </rollback>
+
+  </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-appointment-reschedule-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwappointmentreschedule AS
+      SELECT
+        ar.id,
+        ar.old_appointment_id,
+        ar.new_appointment_id,
+        ar.reschedule_reason,
+        ar.created_by,
+        ar.created_date
+      FROM public.appointment_reschedule ar;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwappointmentreschedule;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-appointment-reschedule-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwappointmentreschedule TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwappointmentreschedule FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

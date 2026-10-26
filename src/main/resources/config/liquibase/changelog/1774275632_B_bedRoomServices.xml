@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="bs000000000034" author="batool">
+
+    <createTable tableName="bed_room_services">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="room_id" type="bigint">
+        <constraints nullable="false"
+                     referencedTableName="rooms"
+                     referencedColumnNames="id"
+                     foreignKeyName="fk_bed_room_service_room"/>
+      </column>
+
+      <column name="service_id" type="bigint">
+        <constraints nullable="false"
+                     referencedTableName="service"
+                     referencedColumnNames="id"
+                     foreignKeyName="fk_bed_room_service_service"/>
+      </column>
+
+      <column name="bed_specific" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="bed_id" type="bigint">
+        <constraints referencedTableName="beds"
+                     referencedColumnNames="id"
+                     foreignKeyName="fk_bed_room_service_bed"/>
+      </column>
+
+      <column name="rule" type="text"/>
+
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+
+    <createIndex tableName="bed_room_services" indexName="idx_bed_room_service_room">
+      <column name="room_id"/>
+    </createIndex>
+
+    <createIndex tableName="bed_room_services" indexName="idx_bed_room_service_service">
+      <column name="service_id"/>
+    </createIndex>
+
+    <createIndex tableName="bed_room_services" indexName="idx_bed_room_service_bed">
+      <column name="bed_id"/>
+    </createIndex>
+
+    <sql>
+      <![CDATA[
+      ALTER TABLE bed_room_services
+        ADD CONSTRAINT ck_bed_room_service_bed_required
+          CHECK (
+            bed_specific = false
+              OR bed_id IS NOT NULL
+            );
+      ]]>
+    </sql>
+
+    <sql>
+      <![CDATA[
+      CREATE UNIQUE INDEX uk_bed_room_service_room_service_no_bed
+        ON bed_room_services (room_id, service_id)
+        WHERE bed_id IS NULL;
+      ]]>
+    </sql>
+
+    <sql>
+      <![CDATA[
+      CREATE UNIQUE INDEX uk_bed_room_service_room_service_bed
+        ON bed_room_services (room_id, service_id, bed_id)
+        WHERE bed_id IS NOT NULL;
+      ]]>
+    </sql>
+
+  </changeSet>
+
+</databaseChangeLog>

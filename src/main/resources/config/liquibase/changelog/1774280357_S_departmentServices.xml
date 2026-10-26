@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="100000000000069_Department_Services" author="Sondos">
+
+    <createTable tableName="department_services">
+      <column name="id" type="bigint" autoIncrement="true" startWith="5000">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="department_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="service" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="department_services"
+      baseColumnNames="department_id"
+      constraintName="fk_department_services_department_id"
+      referencedTableName="department"
+      referencedColumnNames="id"/>
+
+    <addUniqueConstraint
+      tableName="department_services"
+      columnNames="department_id, service"
+      constraintName="uk_department_services_dep_service"/>
+
+  </changeSet>
+</databaseChangeLog>

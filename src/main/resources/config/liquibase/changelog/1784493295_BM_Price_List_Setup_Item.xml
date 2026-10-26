@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+  <changeSet id="BM00000000041" author="BushraMashaiekh">
+
+    <createTable tableName="price_list_setup_item">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="price_list_setup_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="waseel_item_mapping_id" type="bigint"/>
+
+      <column name="sbs_catalog_id" type="bigint"/>
+
+      <column name="item_type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="source_id" type="bigint"/>
+
+      <column name="item_code" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="item_name" type="varchar(1000)"/>
+
+      <column name="unit_price" type="numeric(19,4)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="discount_percentage" type="numeric(9,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+
+
+
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="price_list_setup_item"
+      baseColumnNames="price_list_setup_id"
+      constraintName="fk_price_list_item_header"
+      referencedTableName="price_list_setup"
+      referencedColumnNames="id"/>
+
+    <addForeignKeyConstraint
+      baseTableName="price_list_setup_item"
+      baseColumnNames="waseel_item_mapping_id"
+      constraintName="fk_price_list_item_mapping"
+      referencedTableName="waseel_item_mapping"
+      referencedColumnNames="id"/>
+
+    <addForeignKeyConstraint
+      baseTableName="price_list_setup_item"
+      baseColumnNames="sbs_catalog_id"
+      constraintName="fk_price_list_item_sbs"
+      referencedTableName="waseel_sbs_catalog"
+      referencedColumnNames="id"/>
+
+    <addUniqueConstraint
+      tableName="price_list_setup_item"
+      columnNames="price_list_setup_id,item_code"
+      constraintName="uk_price_list_item_code"/>
+
+    <createIndex
+      tableName="price_list_setup_item"
+      indexName="idx_price_list_item_mapping">
+
+      <column name="waseel_item_mapping_id"/>
+
+    </createIndex>
+
+    <createIndex
+      tableName="price_list_setup_item"
+      indexName="idx_price_list_item_sbs">
+
+      <column name="sbs_catalog_id"/>
+
+    </createIndex>
+
+    <createIndex
+      tableName="price_list_setup_item"
+      indexName="idx_price_list_item_source">
+
+      <column name="source_id"/>
+
+    </createIndex>
+
+    <createIndex
+      tableName="price_list_setup_item"
+      indexName="idx_price_list_item_type">
+
+      <column name="item_type"/>
+
+    </createIndex>
+
+    <sql>
+      ALTER TABLE price_list_setup_item
+        ADD CONSTRAINT ck_price_list_item_price
+          CHECK (unit_price >= 0);
+    </sql>
+
+    <sql>
+      ALTER TABLE price_list_setup_item
+        ADD CONSTRAINT ck_price_list_item_discount
+          CHECK (
+            discount_percentage >= 0
+              AND discount_percentage &lt;= 100
+            );
+    </sql>
+
+  </changeSet>
+
+</databaseChangeLog>

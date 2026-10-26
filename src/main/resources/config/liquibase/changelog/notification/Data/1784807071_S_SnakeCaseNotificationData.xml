@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="20260723-convert-template-variables-to-snake-case" author="sondos">
+    <sql splitStatements="false">
+      DO
+      $$
+        DECLARE
+      r RECORD;
+            txt text;
+            v text;
+      BEGIN
+      FOR r IN
+      SELECT id, subject, body
+      FROM notification.notification_template
+             LOOP
+        txt := r.subject;
+
+      FOR v IN
+      SELECT (regexp_matches(txt, '\{\{([a-zA-Z0-9]+)\}\}', 'g'))[1]
+                LOOP
+                    txt := replace(
+                        txt,
+                        '{{' || v || '}}',
+                        '{{' || lower(regexp_replace(v, '([a-z0-9])([A-Z])', '\1_\2', 'g')) || '}}'
+                    );
+      END LOOP;
+
+      UPDATE notification.notification_template
+      SET subject = txt
+      WHERE id = r.id;
+
+      txt := r.body;
+
+      FOR v IN
+      SELECT (regexp_matches(txt, '\{\{([a-zA-Z0-9]+)\}\}', 'g'))[1]
+                LOOP
+                    txt := replace(
+                        txt,
+                        '{{' || v || '}}',
+                        '{{' || lower(regexp_replace(v, '([a-z0-9])([A-Z])', '\1_\2', 'g')) || '}}'
+                    );
+      END LOOP;
+
+      UPDATE notification.notification_template
+      SET body = txt
+      WHERE id = r.id;
+      END LOOP;
+      END
+        $$;
+    </sql>
+  </changeSet>
+</databaseChangeLog>

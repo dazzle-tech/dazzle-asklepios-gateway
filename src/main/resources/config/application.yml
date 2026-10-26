@@ -82,6 +82,26 @@ spring:
   application:
     name: gateway
 
+  liquibase:
+    parameters:
+      hl7.integrationSchema: '"HL7_INTEGRATION"'
+      hl7.events.patientRegistered: PATIENT_REGISTERED
+      hl7.events.patientVisitCreated: PATIENT_VISIT_CREATED
+      hl7.events.patientAdmitted: PATIENT_ADMITTED
+      hl7.events.patientTransferred: PATIENT_TRANSFERRED
+      hl7.events.patientDischarged: PATIENT_DISCHARGED
+      hl7.events.patientMerged: PATIENT_MERGED
+      hl7.events.patientUpdated: PATIENT_UPDATED
+      hl7.events.orderCreated: ORDER_CREATED
+      hl7.events.orderAssigned: ORDER_ASSIGNED
+      hl7.events.appointmentCreated: APPOINTMENT_CREATED
+      hl7.events.orderAccepted: ACCEPT_TEST
+      hl7.events.appointmentCancelled: APPOINTMENT_CANCELLED
+      hl7.events.appointmentRescheduled: APPOINTMENT_RESCHEDULED
+      hl7.events.practitionerCreated: PRACTITIONER_CREATED
+      hl7.events.patientMergedUndo: PATIENT_MERGED_UNDO
+      hl7.events.patientDocumentCreated: PATIENT_DOCUMENT_CREATED
+
 
 
   profiles:
@@ -101,6 +121,8 @@ spring:
     basename: i18n/messages
   main:
     allow-bean-definition-overriding: true
+  codec:
+    max-in-memory-size: 50MB
   webflux:
     problemdetails:
       enabled: true
@@ -147,10 +169,10 @@ asklepios:
     name: 'gatewayApp'
 #   By default CORS is disabled. Uncomment to enable.
   cors:
-    allowed-origins: "http://localhost:8100,http://localhost:9000,http://localhost:3100"
+    allowed-origins: "http://localhost:8100,http://localhost:9000,http://localhost:3100,http://asklepios.nereuscloud.de,https://asklepios.nereuscloud.de"
     allowed-methods: "*"
     allowed-headers: "*"
-    exposed-headers: "Authorization,Link,X-Total-Count,X-${asklepios.clientApp.name}-alert,X-${asklepios.clientApp.name}-error,X-${asklepios.clientApp.name}-params"
+    exposed-headers: "Authorization,Link,X-Total-Count,X-Missing-Definition-Tests,X-${asklepios.clientApp.name}-alert,X-${asklepios.clientApp.name}-error,X-${asklepios.clientApp.name}-params"
     allow-credentials: true
     max-age: 1800
   mail:

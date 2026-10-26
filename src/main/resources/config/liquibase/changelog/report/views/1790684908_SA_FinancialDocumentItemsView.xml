@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-financial-document-items-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwfinancialdocumentitems AS
+      SELECT
+        fdi.id,
+        fdi.document_id,
+        fdi.patient_service_product_id,
+        fdi.quantity,
+        fdi.unit_price,
+        fdi.gross_amount,
+        fdi.discount_amount,
+        fdi.tax_amount,
+        fdi.net_amount,
+        fdi.patient_share_amount,
+        fdi.insurance_share_amount,
+        fdi.created_by,
+        fdi.created_date,
+        fdi.last_modified_by,
+        fdi.last_modified_date,
+        fdi.paid_amount,
+        fdi.remaining_amount,
+        fdi.insurance_paid_amount,
+        fdi.insurance_remaining_amount,
+        fdi.status,
+        fdi.currency,
+        fdi.billing_charge_line_id,
+        fdi.parent_document_item_id,
+        fdi.item_code,
+        fdi.item_description,
+        fdi.adjustment_action,
+        fdi.pricing_adjustment_snapshot
+      FROM public.financial_document_items fdi;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwfinancialdocumentitems;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-financial-document-items-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwfinancialdocumentitems TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwfinancialdocumentitems FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

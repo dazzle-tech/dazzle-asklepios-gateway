@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-hospitalizations-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwhospitalizations AS
+      SELECT
+        h.id,
+        h.patient_id,
+        h.facility,
+        h.reason,
+        h.admission_type,
+        h.date_of_admission,
+        h.length_of_stay_days,
+        h.outcomes,
+        h.medical_interventions_performed,
+        h.created_by,
+        h.created_date,
+        h.last_modified_by,
+        h.last_modified_date,
+        h.status,
+        h.cancelled_by,
+        h.cancelled_date,
+        h.cancellation_reason
+      FROM public.hospitalizations h;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwhospitalizations;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-hospitalizations-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwhospitalizations TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwhospitalizations FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="100000000000060" author="Sondos">
+    <createTable tableName="organization_definition">
+      <column name="id" type="bigint" autoIncrement="true" startWith="5000">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <!-- Information -->
+      <column name="name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="description" type="text"/>
+      <column name="address" type="varchar(500)"/>
+
+      <!-- Contact -->
+      <column name="contact_name" type="varchar(255)"/>
+      <column name="contact_address" type="varchar(500)"/>
+      <column name="contact_email" type="varchar(255)"/>
+      <column name="contact_mobile" type="varchar(50)"/>
+      <column name="contact_land_number" type="varchar(50)"/>
+
+      <!-- Tax -->
+      <column name="tax_value" type="decimal(5,2)">
+        <constraints nullable="false"/>
+      </column>
+
+      <!-- Default Timezone and Language-->
+      <column name="default_time_zone" type="varchar(100)" defaultValue="ASIA_AMMAN">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="default_language_id" type="bigint" >
+        <constraints nullable="false"/>
+      </column>
+
+      <!-- Working days as JSON -->
+      <column name="working_days" type="json">
+        <constraints nullable="false"/>
+      </column>
+
+      <!-- Audit -->
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="organization_definition"
+      baseColumnNames="default_language_id"
+      constraintName="fk_org_definition_language"
+      referencedTableName="language"
+      referencedColumnNames="id"/>
+  </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-wallet-transactions-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwwallettransactions AS
+      SELECT
+        wt.id,
+        wt.patient_id,
+        wt.type,
+        wt.amount,
+        wt.reference_id,
+        wt.created_date
+      FROM public.wallet_transactions wt;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwwallettransactions;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-wallet-transactions-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwwallettransactions TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwwallettransactions FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

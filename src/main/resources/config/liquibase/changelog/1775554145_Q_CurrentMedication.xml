@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd"
+>
+
+  <changeSet id="QA000000000020" author="qais">
+    <createTable tableName="current_medication">
+
+      <column name="id" type="bigint" autoIncrement="true" startWith="1">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints
+          nullable="false"
+          foreignKeyName="fk_current_medication_patient"
+          references="patients(id)"/>
+      </column>
+
+      <column name="active_ingredient_id" type="bigint">
+        <constraints
+          nullable="false"
+          foreignKeyName="fk_current_medication_active_ingredient"
+          references="active_ingredients(id)"/>
+      </column>
+
+      <column name="instructions" type="text"/>
+
+      <column name="start_date" type="date">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+  </changeSet>
+
+  <changeSet id="QA000000000020_idx_01" author="qais">
+    <createIndex tableName="current_medication" indexName="idx_current_medication_patient">
+      <column name="patient_id"/>
+    </createIndex>
+  </changeSet>
+
+  <changeSet id="QA000000000020_idx_02" author="qais">
+    <createIndex tableName="current_medication" indexName="idx_current_medication_active_ingredient">
+      <column name="active_ingredient_id"/>
+    </createIndex>
+  </changeSet>
+
+</databaseChangeLog>

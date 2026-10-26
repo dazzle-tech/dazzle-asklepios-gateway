@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-patient-procedure-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwpatientprocedure AS
+      SELECT
+        pp.id,
+        pp.procedure_id,
+        pp.patient_id,
+        pp.encounter_id,
+        pp.from_facility_id,
+        pp.to_facility_id,
+        pp.from_department_id,
+        pp.to_department_id,
+        pp.indication_id,
+        pp.procedure_level,
+        pp.priority,
+        pp.body_part,
+        pp.side,
+        pp.scheduled_date_time,
+        pp.notes,
+        pp.extra_documentation,
+        pp.status,
+        pp.cancelled_date,
+        pp.cancelled_by,
+        pp.cancellation_reason,
+        pp.created_by,
+        pp.created_date,
+        pp.last_modified_by,
+        pp.last_modified_date,
+        pp.result
+      FROM public.patient_procedure pp;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwpatientprocedure;
+      </sql>
+    </rollback>
+  </changeSet>
+  <changeSet id="grant-report-patient-procedure-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwpatientprocedure TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwpatientprocedure FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-pre-authorization-request-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwpreauthorizationrequest AS
+      SELECT
+        par.id,
+        par.patient_id,
+        par.encounter_id,
+        par.patient_insurance_id,
+        par.payor_id,
+        par.payor_plan_id,
+        par.provider_id,
+        par.provider_nphies_id,
+        par.transaction_id,
+        par.outgoing_transaction_id,
+        par.approval_request_id,
+        par.approval_response_id,
+        par.pre_auth_ref_no,
+        par.eligibility_response_id,
+        par.eligibility_response_url,
+        par.eligibility_offline_id,
+        par.eligibility_offline_date,
+        par.date_ordered,
+        par.payee_id,
+        par.payee_type,
+        par.preauth_type,
+        par.preauth_sub_type,
+        par.episode_id,
+        par.prescription,
+        par.transfer,
+        par.is_new_born,
+        par.destination_id,
+        par.encounter_status,
+        par.encounter_class,
+        par.service_type,
+        par.service_event_type,
+        par.service_provider,
+        par.encounter_start_date,
+        par.encounter_end_date,
+        par.total_net,
+        par.status,
+        par.outcome,
+        par.message,
+        par.disposition,
+        par.status_reason,
+        par.is_cancelled,
+        par.cancel_reason,
+        par.cancel_status,
+        par.cancel_outcome,
+        par.cancel_message,
+        par.request_json,
+        par.response_json,
+        par.search_response_json,
+        par.cancel_request_json,
+        par.cancel_response_json,
+        par.created_date,
+        par.created_by,
+        par.last_modified_by,
+        par.last_modified_date
+      FROM public.pre_authorization_request par;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwpreauthorizationrequest;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-pre-authorization-request-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwpreauthorizationrequest TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwpreauthorizationrequest FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

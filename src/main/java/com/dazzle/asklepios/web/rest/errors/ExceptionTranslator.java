@@ -2,6 +2,7 @@ package com.dazzle.asklepios.web.rest.errors;
 
 import com.dazzle.asklepios.config.Constants;
 import com.dazzle.asklepios.security.UserNotActivatedException;
+import com.dazzle.asklepios.web.filter.RequestIdWebFilter;
 import com.dazzle.asklepios.web.rest.util.HeaderUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,6 +13,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
+import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConversionException;
 import org.springframework.lang.Nullable;
@@ -80,6 +82,10 @@ public class ExceptionTranslator extends ResponseEntityExceptionHandler implemen
         ServerWebExchange request
     ) {
         body = body == null ? wrapAndCustomizeProblem((Throwable) ex, (ServerWebExchange) request) : body;
+        String requestId = RequestIdWebFilter.getRequestId(request);
+        if (body instanceof ProblemDetail problem && StringUtils.isNotBlank(requestId)) {
+            problem.setProperty(RequestIdWebFilter.REQUEST_ID, requestId);
+        }
         if (request.getResponse().isCommitted()) {
             return Mono.error(ex);
         }

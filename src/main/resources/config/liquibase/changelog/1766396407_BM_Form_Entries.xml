@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+  <changeSet id="BM0000000000030" author="BushraMashaiekh">
+    <createTable tableName="form_entries">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="title" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="template_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="facility_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="department_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="data_json" type="clob">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp"/>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="form_entries"
+      baseColumnNames="template_id"
+      referencedTableName="form_template"
+      referencedColumnNames="id"
+      constraintName="fk_form_entries_template"/>
+
+    <addForeignKeyConstraint
+      baseTableName="form_entries"
+      baseColumnNames="facility_id"
+      referencedTableName="facility"
+      referencedColumnNames="id"
+      constraintName="fk_form_entries_facility"/>
+
+    <addForeignKeyConstraint
+      baseTableName="form_entries"
+      baseColumnNames="department_id"
+      referencedTableName="department"
+      referencedColumnNames="id"
+      constraintName="fk_form_entries_department"/>
+
+    <dropDefaultValue tableName="form_entries"
+                      columnName="created_date"
+                      columnDataType="timestamp"/>
+  </changeSet>
+</databaseChangeLog>

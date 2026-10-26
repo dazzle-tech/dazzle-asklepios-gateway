@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+
+
+
+  <changeSet id="01-patient-merge-logs" author="hanan253yahya">
+
+    <createTable tableName="patient_merge_logs">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="transaction_number" type="varchar(30)">
+        <constraints nullable="false" unique="true"/>
+      </column>
+      <column name="from_patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="to_patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="merge_status" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="merged_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="merged_at" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="undo_by" type="varchar(50)"/>
+      <column name="undo_at" type="timestamp"/>
+
+      <column name="reason" type="varchar(500)">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+    <createIndex tableName="patient_merge_logs" indexName="idx_patient_merge_logs_transaction_number" unique="true">
+      <column name="transaction_number"/>
+    </createIndex>
+    <addForeignKeyConstraint
+      baseTableName="patient_merge_logs"
+      baseColumnNames="from_patient_id"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+      constraintName="fk_patient_merge_logs_from_patient"/>
+
+    <addForeignKeyConstraint
+      baseTableName="patient_merge_logs"
+      baseColumnNames="to_patient_id"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+      constraintName="fk_patient_merge_logs_to_patient"/>
+
+
+  </changeSet>
+
+
+</databaseChangeLog>

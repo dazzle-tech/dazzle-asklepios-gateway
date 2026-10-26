@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="H-05-patient-merge-field-configs" author="hanan253yahya">
+
+    <createTable tableName="patient_merge_field_configs">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="table_config_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="field_name" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="field_label" type="varchar(150)">
+        <constraints nullable="false"/>
+      </column>
+
+
+      <column name="enabled" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="input_type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="input_source" type="varchar(100)"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="patient_merge_field_configs"
+      baseColumnNames="table_config_id"
+      referencedTableName="patient_merge_table_configs"
+      referencedColumnNames="id"
+      constraintName="fk_patient_merge_field_configs_table_config"/>
+
+    <addUniqueConstraint
+      tableName="patient_merge_field_configs"
+      columnNames="table_config_id, field_name"
+      constraintName="uq_patient_merge_field_configs_table_field"/>
+
+    <createIndex tableName="patient_merge_field_configs"
+                 indexName="idx_patient_merge_field_configs_table_config_id">
+      <column name="table_config_id"/>
+    </createIndex>
+
+    <createIndex tableName="patient_merge_field_configs"
+                 indexName="idx_patient_merge_field_configs_enabled">
+      <column name="enabled"/>
+    </createIndex>
+    <loadData
+      tableName="patient_merge_field_configs"
+      file="config/liquibase/data/patient_merge_field_configs.csv"
+      separator=","
+      encoding="UTF-8">
+
+      <column name="id" type="NUMERIC"/>
+      <column name="table_config_id" type="NUMERIC"/>
+      <column name="field_name" type="STRING"/>
+      <column name="field_label" type="STRING"/>
+      <column name="enabled" type="BOOLEAN"/>
+      <column name="input_type" type="STRING"/>
+      <column name="input_source" type="STRING"/>
+
+    </loadData>
+
+  </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="1786355077-patientPinColumn" author="SondosAbdAlaal">
+
+    <addColumn tableName="patients">
+      <column name="pin" type="varchar(4)"/>
+    </addColumn>
+
+    <sql>
+      ALTER TABLE patients
+        ADD CONSTRAINT chk_patients_pin_4_digits
+          CHECK (pin IS NULL OR pin ~ '^[0-9]{4}$');
+    </sql>
+
+  </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="APP_000000000000_TEMPLATE_INTERVAL_ENDED_NOTIFY_01" author="Sondos">
+    <addColumn tableName="availability_generation_batch">
+      <column name="interval_ended_notification_sent" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="interval_ended_notification_sent_at" type="timestamp"/>
+    </addColumn>
+
+    <createIndex
+      tableName="availability_generation_batch"
+      indexName="idx_availability_batch_interval_end_notify">
+      <column name="apply_end_date_time"/>
+      <column name="interval_ended_notification_sent"/>
+      <column name="execution_status"/>
+    </createIndex>
+  </changeSet>
+
+</databaseChangeLog>

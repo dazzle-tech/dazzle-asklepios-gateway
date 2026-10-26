@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="H000000000000MD_DIAG_ORDER_NUMBER_PREFIX" author="hanan253yahya">
+
+    <modifyDataType
+      tableName="diagnostic_orders"
+      columnName="order_number"
+      newDataType="varchar(20)"/>
+
+    <sql>
+      UPDATE diagnostic_orders
+      SET order_number = 'DOR-' || order_number
+      WHERE order_number NOT LIKE 'DOR-%';
+    </sql>
+
+    <sql>
+      ALTER TABLE diagnostic_orders
+        ALTER COLUMN order_number
+          SET DEFAULT ('DOR-' || nextval('seq_diagnostic_order_number'));
+    </sql>
+
+  </changeSet>
+
+</databaseChangeLog>

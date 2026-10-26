@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-billing-configuration-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwbillingconfiguration AS
+      SELECT
+        bc.id,
+        bc.facility_id,
+        bc.configuration_key,
+        bc.value_type,
+        bc.configuration_value,
+        bc.enum_code,
+        bc.description,
+        bc.active,
+        bc.status,
+        bc.created_by,
+        bc.created_date,
+        bc.last_modified_by,
+        bc.last_modified_date
+      FROM public.billing_configuration bc;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwbillingconfiguration;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-billing-configuration-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwbillingconfiguration TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwbillingconfiguration FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

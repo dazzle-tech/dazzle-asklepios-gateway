@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="20260810-01" author="sondos">
+
+    <createTable tableName="patient_satisfaction_survey_response">
+
+      <column name="id" type="BIGINT" autoIncrement="true">
+        <constraints
+          primaryKey="true"
+          primaryKeyName="pk_pss_response"
+          nullable="false"/>
+      </column>
+
+      <column name="patient_name" type="VARCHAR(255)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="status" type="VARCHAR(30)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="started_at"
+              type="TIMESTAMP WITH TIME ZONE">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="completed_at"
+              type="TIMESTAMP WITH TIME ZONE"/>
+
+      <column name="overall_score"
+              type="DECIMAL(10,2)"/>
+
+      <column name="overall_percentage"
+              type="DECIMAL(5,2)"/>
+
+      <column name="created_date"
+              type="TIMESTAMP WITH TIME ZONE">
+        <constraints nullable="false"/>
+      </column>
+
+    </createTable>
+
+  </changeSet>
+
+</databaseChangeLog>

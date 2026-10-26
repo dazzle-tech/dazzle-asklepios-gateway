@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="BM000000000054" author="BushraMashaiekh">
+
+    <createTable tableName="billing_debit_transaction">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="transaction_number" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="debit_account_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="encounter_id" type="bigint"/>
+
+      <column name="charge_responsibility_id" type="bigint"/>
+
+      <column name="charge_id" type="bigint"/>
+
+      <column name="charge_line_id" type="bigint"/>
+
+      <column name="patient_service_product_id" type="bigint"/>
+
+      <column name="payment_id" type="bigint"/>
+
+      <column name="payment_transaction_id" type="bigint"/>
+
+      <column name="parent_transaction_id" type="bigint"/>
+
+      <column name="transaction_type" type="varchar(40)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="amount" type="numeric(19,4)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="currency" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="balance_before"
+              type="numeric(19,4)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="balance_after"
+              type="numeric(19,4)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="status" type="varchar(30)" defaultValue="COMPLETED">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="transaction_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="due_date" type="date"/>
+
+      <column name="settled_date" type="timestamp"/>
+
+      <column name="reference_type" type="varchar(50)"/>
+
+      <column name="reference_id" type="bigint"/>
+
+      <column name="reference_number" type="varchar(150)"/>
+
+      <column name="reason" type="varchar(500)"/>
+
+      <column name="approved_by" type="varchar(50)"/>
+
+      <column name="approved_date" type="timestamp"/>
+
+      <column name="idempotency_key" type="varchar(150)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="transaction_group_id" type="uuid">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="notes" type="text"/>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_debit_transaction"
+      baseColumnNames="debit_account_id"
+      referencedTableName="billing_debit_account"
+      referencedColumnNames="id"
+      constraintName="fk_billing_debit_transaction_account"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_debit_transaction"
+      baseColumnNames="patient_id"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+      constraintName="fk_billing_debit_transaction_patient"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_debit_transaction"
+      baseColumnNames="encounter_id"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"
+      constraintName="fk_billing_debit_transaction_encounter"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_debit_transaction"
+      baseColumnNames="charge_responsibility_id"
+      referencedTableName="billing_charge_responsibility"
+      referencedColumnNames="id"
+      constraintName="fk_billing_debit_transaction_responsibility"/>
+
+
+    <addForeignKeyConstraint
+      baseTableName="billing_debit_transaction"
+      baseColumnNames="charge_id"
+      referencedTableName="billing_charge"
+      referencedColumnNames="id"
+      constraintName="fk_billing_debit_transaction_charge"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_debit_transaction"
+      baseColumnNames="charge_line_id"
+      referencedTableName="billing_charge_line"
+      referencedColumnNames="id"
+      constraintName="fk_billing_debit_transaction_charge_line"/>
+
+
+    <addForeignKeyConstraint
+      baseTableName="billing_debit_transaction"
+      baseColumnNames="patient_service_product_id"
+      referencedTableName="patient_services_and_products"
+      referencedColumnNames="id"
+      constraintName="fk_billing_debit_transaction_psp"/>
+
+
+    <addForeignKeyConstraint
+      baseTableName="billing_debit_transaction"
+      baseColumnNames="payment_id"
+      referencedTableName="billing_payment"
+      referencedColumnNames="id"
+      constraintName="fk_billing_debit_transaction_payment"/>
+
+
+    <addForeignKeyConstraint
+      baseTableName="billing_debit_transaction"
+      baseColumnNames="payment_transaction_id"
+      referencedTableName="billing_payment_transaction"
+      referencedColumnNames="id"
+      constraintName="fk_billing_debit_transaction_payment_transaction"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_debit_transaction"
+      baseColumnNames="parent_transaction_id"
+      referencedTableName="billing_debit_transaction"
+      referencedColumnNames="id"
+      constraintName="fk_billing_debit_transaction_parent"/>
+
+    <addUniqueConstraint
+      tableName="billing_debit_transaction"
+      columnNames="transaction_number"
+      constraintName="uq_billing_debit_transaction_number"/>
+
+
+    <addUniqueConstraint
+      tableName="billing_debit_transaction"
+      columnNames="idempotency_key"
+      constraintName="uq_billing_debit_transaction_idempotency"/>
+
+    <sql>
+      ALTER TABLE billing_debit_transaction
+        ADD CONSTRAINT ck_billing_debit_transaction_non_negative
+          CHECK (
+            amount &gt; 0
+              AND balance_before &gt;= 0
+              AND balance_after &gt;= 0
+            );
+    </sql>
+
+    <createIndex
+      tableName="billing_debit_transaction"
+      indexName="idx_billing_debit_transaction_account">
+      <column name="debit_account_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_debit_transaction"
+      indexName="idx_billing_debit_transaction_patient">
+      <column name="patient_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_debit_transaction"
+      indexName="idx_billing_debit_transaction_encounter">
+      <column name="encounter_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_debit_transaction"
+      indexName="idx_billing_debit_transaction_responsibility">
+      <column name="charge_responsibility_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_debit_transaction"
+      indexName="idx_billing_debit_transaction_charge">
+      <column name="charge_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_debit_transaction"
+      indexName="idx_billing_debit_transaction_charge_line">
+      <column name="charge_line_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_debit_transaction"
+      indexName="idx_billing_debit_transaction_psp">
+      <column name="patient_service_product_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_debit_transaction"
+      indexName="idx_billing_debit_transaction_payment">
+      <column name="payment_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_debit_transaction"
+      indexName="idx_billing_debit_transaction_payment_tx">
+      <column name="payment_transaction_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_debit_transaction"
+      indexName="idx_billing_debit_transaction_parent">
+      <column name="parent_transaction_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_debit_transaction"
+      indexName="idx_billing_debit_transaction_type">
+      <column name="transaction_type"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_debit_transaction"
+      indexName="idx_billing_debit_transaction_status">
+      <column name="status"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_debit_transaction"
+      indexName="idx_billing_debit_transaction_date">
+      <column name="transaction_date"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_debit_transaction"
+      indexName="idx_billing_debit_transaction_due_date">
+      <column name="due_date"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_debit_transaction"
+      indexName="idx_billing_debit_transaction_account_status">
+      <column name="debit_account_id"/>
+      <column name="status"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_debit_transaction"
+      indexName="idx_billing_debit_transaction_transaction_group">
+      <column name="transaction_group_id"/>
+    </createIndex>
+
+  </changeSet>
+
+</databaseChangeLog>

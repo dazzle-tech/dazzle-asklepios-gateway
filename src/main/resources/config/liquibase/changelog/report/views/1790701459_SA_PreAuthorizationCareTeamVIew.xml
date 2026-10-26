@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-pre-authorization-care-team-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwpreauthorizationcareteam AS
+      SELECT
+        pact.id,
+        pact.pre_authorization_id,
+        pact.sequence,
+        pact.practitioner_name,
+        pact.physician_code,
+        pact.practitioner_role,
+        pact.care_team_role,
+        pact.speciality,
+        pact.speciality_code,
+        pact.qualification_code,
+        pact.created_date,
+        pact.created_by,
+        pact.last_modified_by,
+        pact.last_modified_date
+      FROM public.pre_authorization_care_team pact;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwpreauthorizationcareteam;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-pre-authorization-care-team-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwpreauthorizationcareteam TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwpreauthorizationcareteam FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

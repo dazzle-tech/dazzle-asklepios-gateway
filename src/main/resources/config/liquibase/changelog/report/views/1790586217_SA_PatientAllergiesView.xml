@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-patient-allergies-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwpatientallergies AS
+      SELECT
+        pa.id,
+        pa.patient_id,
+        pa.encounter_id,
+        pa.allergen_type,
+        pa.allergen_id,
+        pa.severity,
+        pa.medication_class_id,
+        pa.criticality,
+        pa.certainty,
+        pa.treatment_strategy,
+        pa.onset,
+        pa.onset_date_undefined,
+        pa.onset_date,
+        pa.type_of_propensity,
+        pa.by_patient,
+        pa.source_of_information,
+        pa.allergic_reactions,
+        pa.note,
+        pa.status,
+        pa.resolved_by,
+        pa.resolved_date,
+        pa.cancelled_by,
+        pa.cancelled_date,
+        pa.cancellation_reason,
+        pa.created_by,
+        pa.created_date,
+        pa.last_modified_by,
+        pa.last_modified_date,
+        pa.allergen_name
+      FROM public.patient_allergies pa;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwpatientallergies;
+      </sql>
+    </rollback>
+  </changeSet>
+  <changeSet id="grant-report-patient-allergies-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwpatientallergies TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwpatientallergies FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

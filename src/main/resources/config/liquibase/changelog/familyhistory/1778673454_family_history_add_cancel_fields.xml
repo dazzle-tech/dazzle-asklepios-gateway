@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="F00000000000005_add_cancel_fields_to_family_history" author="farouk">
+
+    <addColumn tableName="family_history">
+
+      <column name="status" type="varchar(50)" defaultValue="ACTIVE">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="cancelled_by" type="varchar(50)"/>
+
+      <column name="cancelled_date" type="timestamp"/>
+
+      <column name="cancellation_reason" type="text"/>
+
+    </addColumn>
+
+    <sql><![CDATA[
+      ALTER TABLE family_history
+      DROP CONSTRAINT IF EXISTS ux_patientId_condition_relation;
+      ]]></sql>
+
+    <sql><![CDATA[
+      CREATE UNIQUE INDEX ux_patientId_condition_relation
+        ON family_history (
+                           patient_id,
+                           lower(condition),
+                           lower(relation)
+          )
+        WHERE status <> 'CANCELLED';
+      ]]></sql>
+
+  </changeSet>
+
+</databaseChangeLog>

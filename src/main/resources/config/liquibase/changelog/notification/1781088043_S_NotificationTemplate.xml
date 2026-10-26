@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="NOTIF_00000000000003" author="Sondos-Abd-Alaal">
+
+    <createTable schemaName="notification" tableName="notification_template">
+      <column name="id" type="bigint" autoIncrement="true" startWith="5000">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+
+      <column name="notification_header_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="channel" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="language" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="subject" type="varchar(255)"/>
+
+      <column name="title" type="varchar(255)"/>
+
+      <column name="body" type="text"/>
+
+      <!-- Dynamic recipient routing rules -->
+      <column name="to_recipient_rule" type="varchar(1000)"/>
+
+      <column name="cc_recipient_rule" type="varchar(1000)"/>
+
+      <column name="bcc_recipient_rule" type="varchar(1000)"/>
+
+      <column name="phone_recipient_rule" type="varchar(1000)"/>
+
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(100)"/>
+
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableSchemaName="notification"
+      baseTableName="notification_template"
+      baseColumnNames="notification_header_id"
+      referencedTableSchemaName="notification"
+      referencedTableName="notification_header"
+      referencedColumnNames="id"
+      constraintName="fk_notification_template_header"/>
+
+    <addUniqueConstraint
+      schemaName="notification"
+      tableName="notification_template"
+      columnNames="notification_header_id, channel, language"
+      constraintName="uq_notification_template_header_channel_language"/>
+
+    <addForeignKeyConstraint
+      baseTableSchemaName="notification"
+      baseTableName="notification_template"
+      baseColumnNames="language"
+      referencedTableSchemaName="public"
+      referencedTableName="language"
+      referencedColumnNames="lang_key"
+      constraintName="fk_notification_template_language"/>
+
+    <createIndex
+      schemaName="notification"
+      tableName="notification_template"
+      indexName="idx_notification_template_lookup">
+      <column name="notification_header_id"/>
+      <column name="channel"/>
+      <column name="language"/>
+      <column name="is_active"/>
+    </createIndex>
+    <sql>
+      ALTER TABLE notification.notification_template
+        ADD CONSTRAINT chk_notification_template_channel_required_fields
+          CHECK (
+            (
+              channel &lt;&gt; 'EMAIL'
+                OR (
+                to_recipient_rule IS NOT NULL
+                  AND btrim(to_recipient_rule) &lt;&gt; ''
+                  AND subject IS NOT NULL
+                  AND btrim(subject) &lt;&gt; ''
+                  AND body IS NOT NULL
+                  AND btrim(body) &lt;&gt; ''
+                )
+              )
+              AND
+            (
+              channel NOT IN ('SMS', 'WHATSAPP')
+                OR (
+                phone_recipient_rule IS NOT NULL
+                  AND btrim(phone_recipient_rule) &lt;&gt; ''
+                )
+              )
+              AND
+            (
+              channel &lt;&gt; 'SMS'
+                OR (
+                body IS NOT NULL
+                  AND btrim(body) &lt;&gt; ''
+                )
+              )
+              AND
+            (
+              channel NOT IN ('IN_APP', 'PUSH')
+                OR (
+                title IS NOT NULL
+                  AND btrim(title) &lt;&gt; ''
+                  AND body IS NOT NULL
+                  AND btrim(body) &lt;&gt; ''
+                )
+              )
+            );
+    </sql>
+    <sql>
+      ALTER TABLE notification.notification_template
+        ADD CONSTRAINT chk_notification_template_channel_body
+          CHECK (
+            channel NOT IN ('EMAIL', 'SMS', 'IN_APP', 'PUSH')
+              OR (
+              body IS NOT NULL
+                AND btrim(body) &lt;&gt; ''
+              )
+            );
+    </sql>
+    <loadData
+      file="config/liquibase/data/notification/notification_template_default.csv"
+      separator=";"
+      tableName="notification_template"
+      schemaName="notification"
+    >
+
+      <column name="id" type="NUMERIC"/>
+      <column name="notification_header_id" type="NUMERIC"/>
+      <column name="channel" type="STRING"/>
+      <column name="language" type="STRING"/>
+      <column name="subject" type="STRING"/>
+      <column name="title" type="STRING"/>
+      <column name="body" type="STRING"/>
+      <column name="to_recipient_rule" type="STRING"/>
+      <column name="cc_recipient_rule" type="STRING"/>
+      <column name="bcc_recipient_rule" type="STRING"/>
+      <column name="phone_recipient_rule" type="STRING"/>
+      <column name="is_active" type="BOOLEAN"/>
+      <column name="created_by" type="STRING"/>
+      <column name="last_modified_by" type="STRING"/>
+    </loadData>
+  </changeSet>
+
+</databaseChangeLog>

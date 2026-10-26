@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-active-ingredients-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwactiveingredients AS
+      SELECT
+        ai.id,
+        ai.name,
+        ai.drug_class_id,
+        ai.atc_code,
+        ai.otc,
+        ai.has_synonyms,
+        ai.antimicrobial,
+        ai.high_alert,
+        ai.abortive_medication,
+        ai.labor_inducing_med,
+        ai.is_controlled,
+        ai.controlled,
+        ai.has_black_box_warning,
+        ai.black_box_warning,
+        ai."is_look-alike-sound-alike",
+        ai.created_by,
+        ai.created_date,
+        ai.last_modified_by,
+        ai.last_modified_date,
+        ai.is_active,
+        ai.toxicity_maximum_dose,
+        ai.toxicity_maximum_dose_per_unit,
+        ai.toxicity_details,
+        ai.mechanism_of_action,
+        ai.pharma_absorption,
+        ai.pharma_route_of_elimination,
+        ai.pharma_volume_of_distribution,
+        ai.pharma_half_life,
+        ai.pharma_protein_binding,
+        ai.pharma_clearance,
+        ai.pharma_metabolism,
+        ai.pregnancy_category,
+        ai.pregnancy_notes,
+        ai.lactation_risk,
+        ai.lactation_risk_notes,
+        ai.dose_adjustment_renal,
+        ai.dose_adj_renal_one,
+        ai.dose_adj_renal_two,
+        ai.dose_adj_renal_three,
+        ai.dose_adj_renal_four,
+        ai.dose_adjustment_hepatic,
+        ai.dose_adj_pug_a,
+        ai.dose_adj_pug_b,
+        ai.dose_adj_pug_c
+      FROM public.active_ingredients ai;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwactiveingredients;
+      </sql>
+    </rollback>
+  </changeSet>
+  <changeSet id="grant-report-active-ingredients-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwactiveingredients TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwactiveingredients FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

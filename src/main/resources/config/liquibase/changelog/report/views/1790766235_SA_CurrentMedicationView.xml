@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-current-medication-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwcurrentmedication AS
+      SELECT
+        cm.id,
+        cm.patient_id,
+        cm.active_ingredient_id,
+        cm.start_date,
+        cm.created_by,
+        cm.created_date,
+        cm.last_modified_by,
+        cm.last_modified_date,
+        cm.status,
+        cm.cancelled_by,
+        cm.cancelled_date,
+        cm.cancellation_reason,
+        cm.dosage,
+        cm.unit,
+        cm.frequency
+      FROM public.current_medication cm;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwcurrentmedication;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-current-medication-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwcurrentmedication TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwcurrentmedication FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

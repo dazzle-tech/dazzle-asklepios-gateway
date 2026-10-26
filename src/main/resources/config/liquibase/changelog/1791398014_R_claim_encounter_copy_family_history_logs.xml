@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="create-claim-encounter-copy-family-history-logs" author="Rawan-Yahya">
+
+    <createTable tableName="claim_encounter_copy_family_history_logs">
+
+      <column name="id" type="bigint" autoIncrement="true" startWith="1">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="claim_encounter_copy_family_history_id" type="bigint">
+        <constraints
+          nullable="false"
+          foreignKeyName="fk_claim_copy_family_history_log"
+          references="claim_encounter_copy_family_histories(id)"/>
+      </column>
+
+      <column name="operation_type" type="varchar(20)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="log_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="log_by" type="varchar(50)"/>
+
+      <column name="condition" type="varchar(255)"/>
+
+      <column name="relation" type="varchar(100)"/>
+
+      <column name="inherited_diseases" type="boolean"/>
+
+      <column name="patient_is_free" type="boolean"/>
+
+      <column name="free_text" type="text"/>
+
+      <column name="status" type="varchar(50)"/>
+
+      <column name="cancelled_by" type="varchar(50)"/>
+
+      <column name="cancelled_date" type="timestamp"/>
+
+      <column name="cancellation_reason" type="text"/>
+
+      <column name="created_by" type="varchar(50)"/>
+
+      <column name="created_date" type="timestamp"/>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+
+    <createIndex
+      indexName="idx_claim_copy_family_history_log_id"
+      tableName="claim_encounter_copy_family_history_logs">
+      <column name="claim_encounter_copy_family_history_id"/>
+    </createIndex>
+
+    <sqlFile
+      path="config/liquibase/sql/claim_encounter_copy_family_history_log.sql"
+      relativeToChangelogFile="false"
+      splitStatements="false"
+      stripComments="false"/>
+
+  </changeSet>
+
+</databaseChangeLog>

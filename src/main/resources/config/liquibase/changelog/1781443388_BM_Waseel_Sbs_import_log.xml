@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+<changeSet id="bs-create-waseel-sbs-import-log" author="BushraMashaiekh">
+
+<createTable tableName="waseel_sbs_import_log">
+  <column name="id" type="bigint" autoIncrement="true" startWith="3000">
+    <constraints primaryKey="true" nullable="false"/>
+  </column>
+
+  <column name="file_name" type="text"/>
+
+  <column name="total_rows" type="bigint"/>
+
+  <column name="success_rows" type="bigint"/>
+
+  <column name="failed_rows" type="bigint"/>
+
+  <column name="error_details" type="text"/>
+
+
+  <column name="created_date" type="timestamp" defaultValueComputed="now()">
+    <constraints nullable="false"/>
+  </column>
+
+  <column name="created_by" type="varchar(50)">
+    <constraints nullable="false"/>
+  </column>
+
+  <column name="last_modified_by" type="varchar(50)"/>
+
+  <column name="last_modified_date" type="timestamp"/>
+</createTable>
+
+<createIndex
+  tableName="waseel_sbs_import_log"
+  indexName="idx_waseel_sbs_import_log_created_date">
+  <column name="created_date"/>
+</createIndex>
+
+</changeSet>
+
+</databaseChangeLog>

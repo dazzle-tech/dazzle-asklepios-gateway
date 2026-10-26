@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-patient_preferred_health_professional-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwpatientpreferredhealthprofessional AS
+      SELECT
+        pphp.id,
+        pphp.patient_id,
+        pphp.practitioner_id,
+        pphp.network_affiliation,
+        pphp.related_with,
+        pphp.created_by,
+        pphp.created_date,
+        pphp.last_modified_by,
+        pphp.last_modified_date
+      FROM public.patient_preferred_health_professional pphp;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwpatientpreferredhealthprofessional;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-patient_preferred_health_professional-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwpatientpreferredhealthprofessional TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwpatientpreferredhealthprofessional FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,3 @@
+id;facility_id;code;name;description;module;category;priority;is_active;created_by;created_date;last_modified_by;last_modified_date
+5016;;CRITICAL_LABORATORY_RESULT;Critical Laboratory Result;Notify destination created by user when a new critical laboratory result arrives;ENCOUNTER;CRITICAL_LABORATORY_RESULT;CRITICAL;true;admin;2026-06-22 00:00:00;admin;2026-06-22 00:00:00
+5017;;EMERGENCY_RESUSCITATION_ALERT;Resuscitation emergency level alert ;Notify destination department's users when a new resuscitation emergency level arrives;ENCOUNTER;EMERGENCY_ALERT;CRITICAL;true;admin;2026-06-22 00:00:00;admin;2026-06-22 00:00:00

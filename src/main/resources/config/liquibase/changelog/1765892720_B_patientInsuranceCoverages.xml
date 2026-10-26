@@ -1,0 +1,31 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation=" http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+  <changeSet id="bs0000000000025" author="batool">
+    <createTable tableName="patient_insurance_coverages">
+      <column name="id" type="bigint" autoIncrement="true" startWith="3000">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="insurance_id" type="bigint">
+        <constraints nullable="false" foreignKeyName="fk_patient_insurance_coverage_insurance" referencedTableName="patient_insurances" referencedColumnNames="id"/>
+      </column>
+      <column name="item_type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="coverage_type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="amount" type="numeric(19,2)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+    <addUniqueConstraint tableName="patient_insurance_coverages" columnNames="insurance_id, item_type, coverage_type" constraintName="ux_insurance_coverage_ins_item_cov"/>
+    <createIndex tableName="patient_insurance_coverages" indexName="ix_insurance_coverage_insurance_id">
+      <column name="insurance_id"/>
+    </createIndex>
+  </changeSet>
+</databaseChangeLog>

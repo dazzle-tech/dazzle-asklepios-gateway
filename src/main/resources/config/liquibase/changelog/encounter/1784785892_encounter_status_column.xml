@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="H-encounter-status" author="hanan">
+
+    <addColumn tableName="patient_encounters">
+      <column name="encounter_status" type="varchar(50)"/>
+    </addColumn>
+
+    <sql>
+      UPDATE patient_encounters
+      SET encounter_status =
+            CASE
+              WHEN status IN ('NEW', 'PENDING_PAYMENT', 'WAITING_TRIAGE')
+                THEN 'OPEN'
+
+              WHEN status IN ('TRIAGE_STARTED', 'ONGOING', 'DISCHARGED', 'ASSIGENS_TO_BED')
+                THEN 'IN_PROGRESS'
+
+              WHEN status = 'CANCELLED'
+                THEN 'CANCELLED'
+
+
+
+              ELSE 'OPEN'
+              END;
+    </sql>
+
+    <addNotNullConstraint
+      tableName="patient_encounters"
+      columnName="encounter_status"
+      columnDataType="varchar(50)"/>
+
+  </changeSet>
+
+</databaseChangeLog>

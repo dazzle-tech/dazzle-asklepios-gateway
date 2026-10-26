@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-allergens-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwallergens AS
+      SELECT
+        a.id,
+        a.name,
+        a.is_active,
+        a.type,
+        a.description,
+        a.created_by,
+        a.created_date,
+        a.last_modified_by,
+        a.last_modified_date
+      FROM public.allergens a;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS report.allergens;
+      </sql>
+    </rollback>
+  </changeSet>
+  <changeSet id="grant-report-allergens-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwallergens TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON report.allergens FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

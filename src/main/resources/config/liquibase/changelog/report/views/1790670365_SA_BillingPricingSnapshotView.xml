@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-billing-pricing-snapshot-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwbillingpricingsnapshot AS
+      SELECT
+        bps.id,
+        bps.charge_line_id,
+        bps.patient_service_product_id,
+        bps.patient_id,
+        bps.encounter_id,
+        bps.price_list_id,
+        bps.price_list_item_id,
+        bps.billing_configuration_id,
+        bps.discount_id,
+        bps.tax_id,
+        bps.pricing_source,
+        bps.pricing_version,
+        bps.price_list_code,
+        bps.price_list_name,
+        bps.price_list_item_code,
+        bps.quantity,
+        bps.base_unit_price,
+        bps.gross_amount,
+        bps.discount_type,
+        bps.discount_rate,
+        bps.discount_amount,
+        bps.discount_reason,
+        bps.discount_approved_by,
+        bps.exemption_type,
+        bps.exemption_rate,
+        bps.exemption_amount,
+        bps.exemption_reason,
+        bps.tax_type,
+        bps.tax_rate,
+        bps.taxable_amount,
+        bps.tax_amount,
+        bps.net_amount,
+        bps.currency,
+        bps.calculation_order,
+        bps.rounding_mode,
+        bps.rounding_scale,
+        bps.patient_responsibility_amount,
+        bps.insurance_responsibility_amount,
+        bps.other_payer_responsibility_amount,
+        bps.calculation_payload,
+        bps.status,
+        bps.effective_date,
+        bps.superseded_date,
+        bps.superseded_by_snapshot_id,
+        bps.pricing_reason,
+        bps.override_reason,
+        bps.idempotency_key,
+        bps.created_by,
+        bps.created_date,
+        bps.price_source,
+        bps.setup_source_id,
+        bps.last_modified_by,
+        bps.last_modified_date
+      FROM public.billing_pricing_snapshot bps;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwbillingpricingsnapshot;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-billing-pricing-snapshot-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwbillingpricingsnapshot TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwbillingpricingsnapshot FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

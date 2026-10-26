@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-price-list-setup-item-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwpricelistsetupitem AS
+      SELECT
+        plsi.id,
+        plsi.price_list_setup_id,
+        plsi.waseel_item_mapping_id,
+        plsi.sbs_catalog_id,
+        plsi.item_type,
+        plsi.source_id,
+        plsi.item_code,
+        plsi.item_name,
+        plsi.unit_price,
+        plsi.discount_percentage,
+        plsi.is_active,
+        plsi.created_by,
+        plsi.created_date,
+        plsi.last_modified_by,
+        plsi.last_modified_date,
+        plsi.requires_pre_authorization,
+        plsi.non_standard_code
+      FROM public.price_list_setup_item plsi;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwpricelistsetupitem;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-price-list-setup-item-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwpricelistsetupitem TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwpricelistsetupitem FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-billing-payment-transaction-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwbillingpaymenttransaction AS
+      SELECT
+        bpt.id,
+        bpt.transaction_number,
+        bpt.payment_id,
+        bpt.parent_transaction_id,
+        bpt.transaction_type,
+        bpt.payment_method_id,
+        bpt.payment_method_code,
+        bpt.amount,
+        bpt.currency,
+        bpt.status,
+        bpt.transaction_date,
+        bpt.external_reference,
+        bpt.authorization_code,
+        bpt.processor_reference,
+        bpt.card_last_four,
+        bpt.bank_reference,
+        bpt.cash_register_id,
+        bpt.failure_code,
+        bpt.failure_reason,
+        bpt.processor_response,
+        bpt.idempotency_key,
+        bpt.notes,
+        bpt.created_by,
+        bpt.created_date,
+        bpt.last_modified_by,
+        bpt.last_modified_date
+      FROM public.billing_payment_transaction bpt;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwbillingpaymenttransaction;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-billing-payment-transaction-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwbillingpaymenttransaction TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwbillingpaymenttransaction FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

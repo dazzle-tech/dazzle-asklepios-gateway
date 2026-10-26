@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="R00000000000010PatientSickLeave" author="Rawan-Yahya200">
+
+    <createTable tableName="patient_sick_leave">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="start_date" type="date">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="end_date" type="date">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="notes" type="text">
+        <constraints nullable="true"/>
+      </column>
+
+      <column name="language" type="varchar(20)" defaultValue="en">
+        <constraints nullable="true"/>
+      </column>
+
+      <!-- auditing -->
+      <column name="created_date" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <!-- FK patient -->
+    <addForeignKeyConstraint
+      baseTableName="patient_sick_leave"
+      baseColumnNames="patient_id"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+      constraintName="fk_patient_sick_leave_patient_id"/>
+
+    <!-- FK encounter -->
+    <addForeignKeyConstraint
+      baseTableName="patient_sick_leave"
+      baseColumnNames="encounter_id"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"
+      constraintName="fk_patient_sick_leave_encounter"/>
+
+    <createIndex tableName="patient_sick_leave" indexName="idx_patient_sick_leave_patient">
+      <column name="patient_id"/>
+    </createIndex>
+
+    <createIndex tableName="patient_sick_leave" indexName="idx_patient_sick_leave_encounter">
+      <column name="encounter_id"/>
+    </createIndex>
+
+  </changeSet>
+
+</databaseChangeLog>

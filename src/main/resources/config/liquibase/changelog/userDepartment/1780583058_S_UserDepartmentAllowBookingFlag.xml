@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="UD_00000000000001" author="Sondos Abd Alaal">
+    <addColumn tableName="user_departments">
+      <column name="appointment_booking_allowed" type="boolean"/>
+    </addColumn>
+  </changeSet>
+
+  <changeSet id="UD_Appointment_00000000000002" author="Rawan-Yahya">
+    <addDefaultValue
+      tableName="user_departments"
+      columnName="appointment_booking_allowed"
+      defaultValueBoolean="false"/>
+
+    <update tableName="user_departments">
+      <column name="appointment_booking_allowed" valueBoolean="false"/>
+      <where>appointment_booking_allowed IS NULL</where>
+    </update>
+
+    <addNotNullConstraint
+      tableName="user_departments"
+      columnName="appointment_booking_allowed"
+      columnDataType="boolean"/>
+    <createIndex
+      tableName="user_departments"
+      indexName="idx_user_departments_appointment_booking_allowed">
+      <column name="appointment_booking_allowed"/>
+    </createIndex>
+  </changeSet>
+
+</databaseChangeLog>

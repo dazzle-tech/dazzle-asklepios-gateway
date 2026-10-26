@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="create-report-department-view" author="sondos">
+
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwDepartment AS
+      SELECT
+        d.id,
+        d.facility_id,
+        d.name,
+        d.created_by,
+        d.created_date,
+        d.type,
+        d.last_modified_by,
+        d.last_modified_date,
+        d.appointable,
+        d.code,
+        d.phone_number,
+        d.email,
+        d.encounter_type,
+        d.is_active,
+        d.has_medical_sheets,
+        d.has_nurse_medical_sheets,
+        d.parallel_capacity_enabled,
+        d.parallel_capacity_value,
+        d.default_duration_minutes,
+        d.default_buffer_before_minutes,
+        d.default_buffer_after_minutes,
+        d.require_practitioner,
+        d.require_billing,
+        d.require_pre_assessment,
+        d.working_days
+      FROM public.department d;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwDepartment;
+      </sql>
+    </rollback>
+
+  </changeSet>
+  <changeSet id="grant-report-department-view-access" author="sondos">
+
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwDepartment TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwDepartment FROM report_user;
+      </sql>
+    </rollback>
+
+  </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-progress-notes-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwprogressnotes AS
+      SELECT
+        pn.id,
+        pn.patient_id,
+        pn.encounter_id,
+        pn.note_text,
+        pn.created_by,
+        pn.created_date,
+        pn.last_modified_by,
+        pn.last_modified_date,
+        pn.cancelled_by,
+        pn.cancelled_date,
+        pn.cancellation_reason
+      FROM public.progress_notes pn;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwprogressnotes;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-progress-notes-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwprogressnotes TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwprogressnotes FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

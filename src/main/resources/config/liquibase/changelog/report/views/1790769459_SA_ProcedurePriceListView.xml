@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-procedure-price-list-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwprocedurepricelist AS
+      SELECT
+        ppl.id,
+        ppl.procedure_id,
+        ppl.price,
+        ppl.currency,
+        ppl.created_by,
+        ppl.created_date,
+        ppl.last_modified_by,
+        ppl.last_modified_date
+      FROM public.procedure_price_list ppl;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwprocedurepricelist;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-procedure-price-list-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwprocedurepricelist TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwprocedurepricelist FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

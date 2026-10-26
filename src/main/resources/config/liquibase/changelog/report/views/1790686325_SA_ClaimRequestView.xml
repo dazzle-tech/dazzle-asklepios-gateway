@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-claim-request-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwclaimrequest AS
+      SELECT
+        cr.id,
+        cr.patient_id,
+        cr.encounter_id,
+        cr.financial_document_id,
+        cr.pre_authorization_id,
+        cr.patient_insurance_id,
+        cr.upload_name,
+        cr.upload_id,
+        cr.prov_claim_no,
+        cr.claim_reference,
+        cr.pre_auth_ref_no,
+        cr.approval_response_id,
+        cr.total_net,
+        cr.status,
+        cr.outcome,
+        cr.message,
+        cr.request_json,
+        cr.response_json,
+        cr.submitted_at,
+        cr.created_by,
+        cr.created_date,
+        cr.last_modified_by,
+        cr.last_modified_date,
+        cr.validation_errors_json,
+        cr.claim_type,
+        cr.claim_sub_type
+      FROM public.claim_request cr;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwclaimrequest;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-claim-request-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwclaimrequest TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwclaimrequest FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

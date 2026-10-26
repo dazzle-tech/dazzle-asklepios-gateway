@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-additional-measurements-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwadditionalmeasurements AS
+      SELECT
+        am.id,
+        am.patient_id,
+        am.encounter_id,
+        am.age_group,
+        am.hearing_test,
+        am.dehydration,
+        am.nasal_flaring,
+        am.response_to_light,
+        am.pupil_response,
+        am.ability_to_follow_target,
+        am.color_testing,
+        am.fall_risk,
+        am.vision_problems_affecting_function,
+        am.hearing_problems_affecting_function,
+        am.details,
+        am.action_to_take,
+        am.is_active,
+        am.created_by,
+        am.created_date,
+        am.last_modified_by,
+        am.last_modified_date
+      FROM public.additional_measurements am;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwadditionalmeasurements;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-additional-measurements-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwadditionalmeasurements TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwadditionalmeasurements FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

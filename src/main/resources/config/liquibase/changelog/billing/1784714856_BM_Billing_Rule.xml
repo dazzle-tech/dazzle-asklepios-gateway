@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="BM000000000058" author="BushraMashaiekh">
+
+    <createTable tableName="billing_rule">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="name" type="varchar(150)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="billing_item_type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="billing_trigger" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+
+    <addUniqueConstraint
+      tableName="billing_rule"
+      columnNames="name,billing_item_type"
+      constraintName="uq_billing_rule_name_item_type"/>
+
+
+    <createIndex tableName="billing_rule" indexName="idx_billing_rule_item_type">
+      <column name="billing_item_type"/>
+    </createIndex>
+
+    <createIndex tableName="billing_rule" indexName="idx_billing_rule_trigger">
+      <column name="billing_trigger"/>
+    </createIndex>
+
+  </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-price-list-setup-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwpricelistsetup AS
+      SELECT
+        pls.id,
+        pls.facility_id,
+        pls.type,
+        pls.payer_id,
+        pls.name,
+        pls.version_number,
+        pls.effective_from,
+        pls.effective_to,
+        pls.status,
+        pls.currency,
+        pls.description,
+        pls.is_active,
+        pls.created_by,
+        pls.created_date,
+        pls.last_modified_by,
+        pls.last_modified_date
+      FROM public.price_list_setup pls;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwpricelistsetup;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-price-list-setup-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwpricelistsetup TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwpricelistsetup FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

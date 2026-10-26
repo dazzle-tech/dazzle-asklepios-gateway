@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-pain-assessment-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwpainassessment AS
+      SELECT
+        pa.id,
+        pa.patient_id,
+        pa.encounter_id,
+        pa.pain_degree,
+        pa.pain_level,
+        pa.pain_description,
+        pa.pain_pattern,
+        pa.is_active,
+        pa.created_by,
+        pa.created_date,
+        pa.last_modified_by,
+        pa.last_modified_date,
+        pa.pain_assessment_type
+      FROM public.pain_assessment pa;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwpainassessment;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-pain-assessment-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwpainassessment TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwpainassessment FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="H_ADD_NATIONAL_ID_TO_PRACTITIONER" author="hanan253yahya">
+
+    <addColumn tableName="practitioner">
+      <column name="national_number" type="varchar(50)">
+        <constraints nullable="true"/>
+      </column>
+    </addColumn>
+
+    <rollback>
+      <dropColumn
+        tableName="practitioner"
+        columnName="national_number"/>
+    </rollback>
+
+  </changeSet>
+
+</databaseChangeLog>

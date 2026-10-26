@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-billing-charge-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwbillingcharge AS
+      SELECT
+        bc.id,
+        bc.charge_number,
+        bc.patient_id,
+        bc.encounter_id,
+        bc.charge_type,
+        bc.currency,
+        bc.gross_amount,
+        bc.discount_amount,
+        bc.exemption_amount,
+        bc.tax_amount,
+        bc.net_amount,
+        bc.allocated_amount,
+        bc.outstanding_amount,
+        bc.line_count,
+        bc.status,
+        bc.charge_date,
+        bc.confirmed_date,
+        bc.closed_date,
+        bc.cancelled_date,
+        bc.cancelled_by,
+        bc.cancellation_reason,
+        bc.reversed_charge_id,
+        bc.idempotency_key,
+        bc.source_type,
+        bc.source_id,
+        bc.source_reference,
+        bc.notes,
+        bc.created_by,
+        bc.created_date,
+        bc.last_modified_by,
+        bc.last_modified_date
+      FROM public.billing_charge bc;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwbillingcharge;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-billing-charge-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwbillingcharge TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwbillingcharge FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

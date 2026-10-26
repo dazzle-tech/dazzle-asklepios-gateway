@@ -1,0 +1,2 @@
+id;facility_id;code;name;description;module;category;priority;is_active;created_by;created_date;last_modified_by;last_modified_date
+5020;;URGENT_CARE_MEDICATION_ORDER_CREATED;Urgent Care Medication Order Created For Nurse Department Notification;Notify destination nurse department users when a new urgent care medication order arrives;URGENT_CARE;URGENT_CARE_MEDICATION_ORDER;CRITICAL;true;admin;2026-06-22 00:00:00;admin;2026-06-22 00:00:00

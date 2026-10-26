@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="BM000000000047" author="BushraMashaiekh">
+
+    <createTable tableName="billing_charge_line">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="charge_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="patient_service_product_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+
+      <column name="billing_item_type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="brand_medication_id" type="bigint"/>
+
+      <column name="diagnostic_test_id" type="bigint"/>
+
+      <column name="service_id" type="bigint"/>
+
+      <column name="procedure_id" type="bigint"/>
+
+      <column name="item_code" type="varchar(100)"/>
+
+      <column name="item_description" type="varchar(500)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="service_source" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="source_id" type="bigint"/>
+
+      <column name="quantity" type="numeric(19,4)" defaultValueNumeric="1">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="unit_price" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="gross_amount" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="discount_amount" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="exemption_amount" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="tax_amount" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="net_amount" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="patient_responsibility_amount" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="insurance_responsibility_amount" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="other_payer_responsibility_amount" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="allocated_amount" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="outstanding_amount" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="reserved_amount" type="numeric(19,4)"  defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="currency" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="status" type="varchar(30)"  defaultValue="DRAFT">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="current_pricing_snapshot_id" type="bigint"/>
+
+      <column name="patient_insurance_id" type="bigint"/>
+
+      <column name="pre_authorization_required"
+              type="boolean"
+              defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="pre_authorization_status" type="varchar(50)"/>
+
+      <column name="pre_authorization_request_id" type="bigint"/>
+
+      <column name="pre_authorization_reference_no"
+              type="varchar(100)"/>
+
+      <column name="reversed_charge_line_id" type="bigint"/>
+
+      <column name="idempotency_key" type="varchar(150)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="cancelled_date" type="timestamp"/>
+
+      <column name="cancelled_by" type="varchar(50)"/>
+
+      <column name="cancellation_reason" type="varchar(500)"/>
+
+      <column name="notes" type="text"/>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+
+
+    <addForeignKeyConstraint
+      baseTableName="billing_charge_line"
+      baseColumnNames="charge_id"
+      referencedTableName="billing_charge"
+      referencedColumnNames="id"
+      constraintName="fk_billing_charge_line_charge"/>
+
+
+    <addForeignKeyConstraint
+      baseTableName="billing_charge_line"
+      baseColumnNames="patient_service_product_id"
+      referencedTableName="patient_services_and_products"
+      referencedColumnNames="id"
+      constraintName="fk_billing_charge_line_psp"/>
+
+
+    <addForeignKeyConstraint
+      baseTableName="billing_charge_line"
+      baseColumnNames="patient_id"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+      constraintName="fk_billing_charge_line_patient"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_charge_line"
+      baseColumnNames="encounter_id"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"
+      constraintName="fk_billing_charge_line_encounter"/>
+
+
+    <addForeignKeyConstraint
+      baseTableName="billing_charge_line"
+      baseColumnNames="brand_medication_id"
+      referencedTableName="brand_medication"
+      referencedColumnNames="id"
+      constraintName="fk_billing_charge_line_medication"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_charge_line"
+      baseColumnNames="diagnostic_test_id"
+      referencedTableName="diagnostic_test"
+      referencedColumnNames="id"
+      constraintName="fk_billing_charge_line_diagnostic_test"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_charge_line"
+      baseColumnNames="service_id"
+      referencedTableName="service"
+      referencedColumnNames="id"
+      constraintName="fk_billing_charge_line_service"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_charge_line"
+      baseColumnNames="procedure_id"
+      referencedTableName="procedure"
+      referencedColumnNames="id"
+      constraintName="fk_billing_charge_line_procedure"/>
+
+
+    <addForeignKeyConstraint
+      baseTableName="billing_charge_line"
+      baseColumnNames="patient_insurance_id"
+      referencedTableName="patient_insurances"
+      referencedColumnNames="id"
+      constraintName="fk_billing_charge_line_patient_insurance"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_charge_line"
+      baseColumnNames="reversed_charge_line_id"
+      referencedTableName="billing_charge_line"
+      referencedColumnNames="id"
+      constraintName="fk_billing_charge_line_reversed_line"/>
+
+
+    <addUniqueConstraint
+      tableName="billing_charge_line"
+      columnNames="idempotency_key"
+      constraintName="uq_billing_charge_line_idempotency"/>
+
+    <sql>
+      ALTER TABLE billing_charge_line
+        ADD CONSTRAINT ck_billing_charge_line_non_negative
+          CHECK (
+            quantity &gt; 0
+              AND unit_price &gt;= 0
+              AND gross_amount &gt;= 0
+              AND discount_amount &gt;= 0
+              AND exemption_amount &gt;= 0
+              AND tax_amount &gt;= 0
+              AND net_amount &gt;= 0
+              AND patient_responsibility_amount &gt;= 0
+              AND insurance_responsibility_amount &gt;= 0
+              AND other_payer_responsibility_amount &gt;= 0
+              AND allocated_amount &gt;= 0
+              AND outstanding_amount &gt;= 0
+              AND reserved_amount &gt;= 0
+            );
+    </sql>
+
+
+    <sql>
+      ALTER TABLE billing_charge_line
+        ADD CONSTRAINT ck_billing_charge_line_gross_amount
+          CHECK (
+            gross_amount = ROUND(quantity * unit_price, 4)
+            );
+    </sql>
+
+
+    <sql>
+      ALTER TABLE billing_charge_line
+        ADD CONSTRAINT ck_billing_charge_line_net_amount
+          CHECK (
+            net_amount =
+            gross_amount
+              - discount_amount
+              - exemption_amount
+              + tax_amount
+            );
+    </sql>
+
+
+    <sql>
+      ALTER TABLE billing_charge_line
+        ADD CONSTRAINT ck_billing_charge_line_responsibility
+          CHECK (
+            net_amount =
+            patient_responsibility_amount
+              + insurance_responsibility_amount
+              + other_payer_responsibility_amount
+            );
+    </sql>
+
+
+    <sql>
+      ALTER TABLE billing_charge_line
+        ADD CONSTRAINT ck_billing_charge_line_allocation_balance
+          CHECK (
+            net_amount =
+            allocated_amount
+              + outstanding_amount
+            );
+    </sql>
+
+
+    <sql>
+      ALTER TABLE billing_charge_line
+        ADD CONSTRAINT ck_billing_charge_line_reserved_limit
+          CHECK (
+            reserved_amount &lt;=
+            patient_responsibility_amount
+              - allocated_amount
+            );
+    </sql>
+
+
+    <sql>
+      ALTER TABLE billing_charge_line
+        ADD CONSTRAINT ck_billing_charge_line_item_reference
+          CHECK (
+            (
+              billing_item_type = 'MEDICATION'
+                AND brand_medication_id IS NOT NULL
+                AND diagnostic_test_id IS NULL
+                AND service_id IS NULL
+                AND procedure_id IS NULL
+              )
+              OR
+            (
+              billing_item_type IN (
+                                    'LABORATORY',
+                                    'RADIOLOGY',
+                                    'PATHOLOGY'
+                )
+                AND brand_medication_id IS NULL
+                AND diagnostic_test_id IS NOT NULL
+                AND service_id IS NULL
+                AND procedure_id IS NULL
+              )
+              OR
+            (
+              billing_item_type = 'SERVICE'
+                AND brand_medication_id IS NULL
+                AND diagnostic_test_id IS NULL
+                AND service_id IS NOT NULL
+                AND procedure_id IS NULL
+              )
+              OR
+            (
+              billing_item_type = 'PROCEDURE'
+                AND brand_medication_id IS NULL
+                AND diagnostic_test_id IS NULL
+                AND service_id IS NULL
+                AND procedure_id IS NOT NULL
+              )
+            );
+    </sql>
+
+    <sql>
+      ALTER TABLE billing_charge_line
+        ADD CONSTRAINT ck_billing_charge_line_not_self_reversed
+          CHECK (
+            reversed_charge_line_id IS NULL
+              OR reversed_charge_line_id &lt;&gt; id
+            );
+    </sql>
+
+    <sql>
+      ALTER TABLE billing_charge_line
+        ADD CONSTRAINT ck_billing_charge_line_cancellation
+          CHECK (
+            status &lt;&gt; 'CANCELLED'
+              OR (
+              cancelled_date IS NOT NULL
+                AND cancelled_by IS NOT NULL
+                AND cancellation_reason IS NOT NULL
+              )
+            );
+    </sql>
+
+    <sql>
+      ALTER TABLE billing_charge_line
+        ADD CONSTRAINT ck_billing_charge_line_reversal_reference
+          CHECK (
+            status &lt;&gt; 'REVERSED'
+              OR reversed_charge_line_id IS NOT NULL
+            );
+    </sql>
+
+    <sql>
+      CREATE UNIQUE INDEX uq_billing_charge_line_psp_active
+        ON billing_charge_line (patient_service_product_id)
+        WHERE status NOT IN ('CANCELLED', 'REVERSED');
+    </sql>
+
+    <createIndex
+      tableName="billing_charge_line"
+      indexName="idx_billing_charge_line_charge">
+      <column name="charge_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_charge_line"
+      indexName="idx_billing_charge_line_psp">
+      <column name="patient_service_product_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_charge_line"
+      indexName="idx_billing_charge_line_patient">
+      <column name="patient_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_charge_line"
+      indexName="idx_billing_charge_line_encounter">
+      <column name="encounter_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_charge_line"
+      indexName="idx_billing_charge_line_status">
+      <column name="status"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_charge_line"
+      indexName="idx_billing_charge_line_charge_status">
+      <column name="charge_id"/>
+      <column name="status"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_charge_line"
+      indexName="idx_billing_charge_line_encounter_status">
+      <column name="encounter_id"/>
+      <column name="status"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_charge_line"
+      indexName="idx_billing_charge_line_item_type">
+      <column name="billing_item_type"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_charge_line"
+      indexName="idx_billing_charge_line_patient_insurance">
+      <column name="patient_insurance_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_charge_line"
+      indexName="idx_billing_charge_line_reversed_line">
+      <column name="reversed_charge_line_id"/>
+    </createIndex>
+
+  </changeSet>
+
+</databaseChangeLog>

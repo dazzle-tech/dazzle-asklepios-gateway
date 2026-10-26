@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="2026100401_H_DIAG_ORDER_TESTS_CONFIRMED_BY_AT" author="hanan">
+    <addColumn tableName="diagnostic_order_tests">
+      <column name="confirmed_by" type="varchar(50)">
+        <constraints nullable="true"/>
+      </column>
+      <column name="confirmed_at" type="timestamp">
+        <constraints nullable="true"/>
+      </column>
+    </addColumn>
+  </changeSet>
+
+</databaseChangeLog>

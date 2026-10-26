@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="APP_00000000000030_ADD_WALK_IN_FLAG_TO_TEMPLATE" author="Sondos">
+    <addColumn tableName="availability_template">
+      <column name="allow_walk_in_booking" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+    </addColumn>
+
+    <createIndex tableName="availability_template" indexName="idx_availability_template_walk_in">
+      <column name="facility_id"/>
+      <column name="department_id"/>
+      <column name="allow_walk_in_booking"/>
+      <column name="status"/>
+    </createIndex>
+  </changeSet>
+</databaseChangeLog>

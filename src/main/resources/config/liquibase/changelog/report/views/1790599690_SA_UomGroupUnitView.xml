@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-uom-group-unit-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwuomgroupunit AS
+      SELECT
+        ugu.id,
+        ugu.uom,
+        ugu.uom_order,
+        ugu.uom_group_id
+      FROM public.uom_group_unit ugu;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwuomgroupunit;
+      </sql>
+    </rollback>
+  </changeSet>
+  <changeSet id="grant-report-uom-group-unit-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwuomgroupunit TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwuomgroupunit FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

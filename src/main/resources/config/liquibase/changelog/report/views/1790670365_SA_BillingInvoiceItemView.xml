@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-billing-invoice-item-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwbillinginvoiceitem AS
+      SELECT
+        bii.id,
+        bii.invoice_id,
+        bii.nurse_service_product_id,
+        bii.code,
+        bii.quantity,
+        bii.unit_price,
+        bii.total_price,
+        bii.currency,
+        bii.created_by,
+        bii.created_date,
+        bii.last_modified_by,
+        bii.last_modified_date
+      FROM public.billing_invoice_item bii;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwbillinginvoiceitem;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-billing-invoice-item-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwbillinginvoiceitem TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwbillinginvoiceitem FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

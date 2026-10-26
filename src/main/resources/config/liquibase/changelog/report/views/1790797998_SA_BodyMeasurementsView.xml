@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-body-measurements-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwbodymeasurements AS
+      SELECT
+        bm.id,
+        bm.patient_id,
+        bm.encounter_id,
+        bm.weight,
+        bm.height,
+        bm.head_circumference,
+        bm.is_active,
+        bm.created_by,
+        bm.created_date,
+        bm.last_modified_by,
+        bm.last_modified_date
+      FROM public.body_measurements bm;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwbodymeasurements;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-body-measurements-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwbodymeasurements TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwbodymeasurements FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

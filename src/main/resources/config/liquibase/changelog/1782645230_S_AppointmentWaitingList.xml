@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="APP_00000000000032_CREATE_APPOINTMENT_WAITING_LIST" author="Sondos">
+    <createTable tableName="appointment_waiting_list" >
+      <column name="id" type="bigint" autoIncrement="true" startWith="1">
+        <constraints primaryKey="true" nullable="false" primaryKeyName="pk_appointment_waiting_list"/>
+      </column>
+
+      <column name="facility_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="department_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="service_id" type="bigint"/>
+
+      <column name="practitioner_id" type="bigint"/>
+
+      <column name="priority" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="status" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="preferred_date" type="date"/>
+
+      <column name="expected_duration_minutes" type="integer">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="reason" type="varchar(1000)"/>
+
+      <column name="notes" type="varchar(1000)"/>
+
+      <column name="booking_group_id" type="bigint"/>
+
+      <column name="booked_at" type="timestamp"/>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp" defaultValue="now()">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="appointment_waiting_list"
+      baseColumnNames="booking_group_id"
+      referencedTableName="appointment_booking_group"
+      referencedColumnNames="id"
+      constraintName="fk_waiting_list_booking_group"/>
+    <addForeignKeyConstraint
+      baseTableName="appointment_waiting_list"
+      baseColumnNames="facility_id"
+      referencedTableName="facility"
+      referencedColumnNames="id"
+      constraintName="fk_appointment_waiting_list_facility"/>
+
+    <addForeignKeyConstraint
+      baseTableName="appointment_waiting_list"
+      baseColumnNames="department_id"
+      referencedTableName="department"
+      referencedColumnNames="id"
+      constraintName="fk_appointment_waiting_list_department"/>
+
+
+    <addForeignKeyConstraint
+      baseTableName="appointment_waiting_list"
+      baseColumnNames="patient_id"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+      constraintName="fk_appointment_waiting_list_patient"/>
+    <addForeignKeyConstraint
+      baseTableName="appointment_waiting_list"
+      baseColumnNames="practitioner_id"
+      referencedTableName="practitioner"
+      referencedColumnNames="id"
+      constraintName="fk_appointment_waiting_list_practitioner"/>
+
+    <addForeignKeyConstraint
+      baseTableName="appointment_waiting_list"
+      baseColumnNames="service_id"
+      referencedTableName="service"
+      referencedColumnNames="id"
+      constraintName="fk_appointment_waiting_list_service"/>
+
+    <createIndex tableName="appointment_waiting_list" indexName="idx_waiting_list_status">
+      <column name="facility_id"/>
+      <column name="department_id"/>
+      <column name="status"/>
+      <column name="created_date"/>
+    </createIndex>
+
+    <createIndex tableName="appointment_waiting_list" indexName="idx_waiting_list_patient">
+      <column name="patient_id"/>
+    </createIndex>
+  </changeSet>
+
+</databaseChangeLog>

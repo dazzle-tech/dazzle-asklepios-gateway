@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-diagnostic-order-test-result-technician-notes-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwdiagnosticordertestresulttechniciannotes AS
+      SELECT
+        dotrn.id,
+        dotrn.order_test_id,
+        dotrn.result_id,
+        dotrn.note,
+        dotrn.created_date,
+        dotrn.created_by,
+        dotrn.last_modified_by,
+        dotrn.last_modified_date
+      FROM public.diagnostic_order_test_result_technician_notes dotrn;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwdiagnosticordertestresulttechniciannotes;
+      </sql>
+    </rollback>
+  </changeSet>
+  <changeSet id="grant-report-diagnostic-order-test-result-technician-notes-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwdiagnosticordertestresulttechniciannotes TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwdiagnosticordertestresulttechniciannotes FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

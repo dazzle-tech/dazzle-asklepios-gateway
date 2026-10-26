@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="2026092902_claim_foreign_keys" author="Batool Sbaih">
+    <preConditions onFail="MARK_RAN">
+      <and>
+        <tableExists tableName="claim_request"/>
+        <tableExists tableName="claim_item"/>
+        <not>
+          <foreignKeyConstraintExists foreignKeyName="fk_claim_request_patient"/>
+        </not>
+      </and>
+    </preConditions>
+
+    <addForeignKeyConstraint
+      baseTableName="claim_request"
+      baseColumnNames="patient_id"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+      constraintName="fk_claim_request_patient"/>
+
+    <addForeignKeyConstraint
+      baseTableName="claim_request"
+      baseColumnNames="encounter_id"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"
+      constraintName="fk_claim_request_encounter"/>
+
+    <addForeignKeyConstraint
+      baseTableName="claim_request"
+      baseColumnNames="financial_document_id"
+      referencedTableName="financial_documents"
+      referencedColumnNames="id"
+      constraintName="fk_claim_request_financial_document"/>
+
+    <addForeignKeyConstraint
+      baseTableName="claim_request"
+      baseColumnNames="pre_authorization_id"
+      referencedTableName="pre_authorization_request"
+      referencedColumnNames="id"
+      constraintName="fk_claim_request_pre_authorization"/>
+
+    <addForeignKeyConstraint
+      baseTableName="claim_request"
+      baseColumnNames="patient_insurance_id"
+      referencedTableName="patient_insurances"
+      referencedColumnNames="id"
+      constraintName="fk_claim_request_patient_insurance"/>
+
+    <addForeignKeyConstraint
+      baseTableName="claim_item"
+      baseColumnNames="claim_request_id"
+      referencedTableName="claim_request"
+      referencedColumnNames="id"
+      constraintName="fk_claim_item_claim_request"
+      onDelete="CASCADE"/>
+
+    <addForeignKeyConstraint
+      baseTableName="claim_item"
+      baseColumnNames="patient_service_product_id"
+      referencedTableName="patient_services_and_products"
+      referencedColumnNames="id"
+      constraintName="fk_claim_item_patient_service_product"/>
+
+    <addForeignKeyConstraint
+      baseTableName="claim_item"
+      baseColumnNames="financial_document_item_id"
+      referencedTableName="financial_document_items"
+      referencedColumnNames="id"
+      constraintName="fk_claim_item_financial_document_item"/>
+
+    <addForeignKeyConstraint
+      baseTableName="claim_item"
+      baseColumnNames="billing_charge_line_id"
+      referencedTableName="billing_charge_line"
+      referencedColumnNames="id"
+      constraintName="fk_claim_item_billing_charge_line"/>
+  </changeSet>
+
+</databaseChangeLog>

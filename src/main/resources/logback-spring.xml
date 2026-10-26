@@ -5,8 +5,29 @@
     <conversionRule conversionWord="crlf" converterClass="com.dazzle.asklepios.config.CRLFLogConverter" />
     <property name="CONSOLE_LOG_PATTERN" value="${CONSOLE_LOG_PATTERN:-%clr(%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd'T'HH:mm:ss.SSSXXX}}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %crlf(%m){red} %n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
 
+    <springProperty scope="context" name="REQUEST_TRACE_LOG_FILE" source="request-trace.file" defaultValue="logs/request-trace.log" />
+    <springProperty scope="context" name="REQUEST_TRACE_LOG_PATTERN" source="logging.pattern.file" defaultValue="%msg%n" />
+
     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
     <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
+
+    <appender name="REQUEST_TRACE_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${REQUEST_TRACE_LOG_FILE}</file>
+        <append>true</append>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>logs/request-trace.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+            <maxFileSize>50MB</maxFileSize>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>2GB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${REQUEST_TRACE_LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="com.dazzle.asklepios.requesttrace" level="INFO" additivity="false">
+        <appender-ref ref="REQUEST_TRACE_FILE" />
+    </logger>
 
     <logger name="com.dazzle.asklepios" level="INFO"/>
 

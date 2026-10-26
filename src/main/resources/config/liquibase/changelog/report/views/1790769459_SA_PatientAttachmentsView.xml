@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-patient-attachments-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwpatientattachments AS
+      SELECT
+        pa.id,
+        pa.patient_id,
+        pa.created_by,
+        pa.space_key,
+        pa.filename,
+        pa.mime_type,
+        pa.size_bytes,
+        pa.created_date,
+        pa.deleted_at,
+        pa.type,
+        pa.details,
+        pa.source,
+        pa.last_modified_by,
+        pa.last_modified_date
+      FROM public.patient_attachments pa;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwpatientattachments;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-patient-attachments-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwpatientattachments TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwpatientattachments FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

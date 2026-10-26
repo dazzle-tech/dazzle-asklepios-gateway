@@ -24,8 +24,11 @@
         <constraints nullable="false" unique="true"/>
       </column>
 
-      <column name="patient_key" type="varchar(50)"/>
-      <column name="encounter_key" type="varchar(50)"/>
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_billing_invoice_patient"
+                     references="patients(id)"/>
+      </column>
       <column name="facility_id" type="bigint">
         <constraints nullable="false"
                      foreignKeyName="fk_billing_invoice_facility"
@@ -53,14 +56,11 @@
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
-      <column name="created_date" type="timestamp"/>
+      <column name="created_date" type="timestamp" defaultValue="now()"/>
       <column name="last_modified_by" type="varchar(50)"/>
       <column name="last_modified_date" type="timestamp"/>
     </createTable>
 
-    <dropDefaultValue tableName="billing_invoice"
-                      columnName="created_date"
-                      columnDataType="timestamp"/>
   </changeSet>
 
 </databaseChangeLog>

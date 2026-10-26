@@ -30,7 +30,7 @@
         <constraints nullable="false"/>
       </column>
 
-
+      <column name="patient_id" type="bigint" />
 
 
       <column name="color" type="varchar(30)" />
@@ -47,6 +47,12 @@
       referencedTableName="app_user"
       referencedColumnNames="id"
       constraintName="fk_user_sticky_notes"/>
+    <addForeignKeyConstraint
+      baseTableName="user_sticky_notes"
+      baseColumnNames="patient_id"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+      constraintName="fk_user_sticky_notes_patient_id"/>
 
 
   </changeSet>

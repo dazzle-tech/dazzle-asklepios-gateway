@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-service-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwservice AS
+      SELECT
+        s.id,
+        s.name,
+        s.abbreviation,
+        s.code,
+        s.category,
+        s.price,
+        s.currency,
+        s.is_active,
+        s.facility_id,
+        s.appointable,
+        s.parallel_capacity_value,
+        s.default_duration_minutes,
+        s.default_buffer_before_minutes,
+        s.default_buffer_after_minutes,
+        s.created_by,
+        s.created_date,
+        s.last_modified_by,
+        s.last_modified_date,
+        s.billing_rule_id
+      FROM public.service s;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwservice;
+      </sql>
+    </rollback>
+  </changeSet>
+  <changeSet id="grant-report-service-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwservice TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwservice FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

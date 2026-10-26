@@ -6,6 +6,7 @@ import com.dazzle.asklepios.domain.User;
 import com.dazzle.asklepios.domain.enumeration.Gender;
 import com.dazzle.asklepios.domain.enumeration.JobRole;
 import com.dazzle.asklepios.domain.enumeration.SecurityLevel;
+import com.dazzle.asklepios.security.AuthoritiesConstants;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -69,9 +70,14 @@ public class AdminUserDTO implements Serializable {
     private java.time.LocalDate birthDate;
 
     private Gender gender;
+    @NotNull(message = "Job Role can not to be Null")
     private JobRole jobRole;
-    private SecurityLevel securityAccessLeve;
-
+    private SecurityLevel securityAccessLevel;
+    private boolean isAdmin;
+    private boolean allowOngoingVisit;
+    private boolean canUnDischargeUrgentCare;
+    private boolean canUnCompleteEncounter;
+    private boolean canReturnClaimForResubmit;
 
     public AdminUserDTO() {
     }
@@ -89,13 +95,23 @@ public class AdminUserDTO implements Serializable {
         this.createdDate = user.getCreatedDate();
         this.lastModifiedBy = user.getLastModifiedBy();
         this.lastModifiedDate = user.getLastModifiedDate();
-        this.authorities = user.getAuthorities().stream().map(Authority::getName).collect(Collectors.toSet());
+
+        this.authorities = user.getAuthorities()
+            .stream()
+            .map(Authority::getName)
+            .collect(Collectors.toSet());
+
+        this.isAdmin = this.authorities.contains(AuthoritiesConstants.ADMIN);
 
         this.phoneNumber = user.getPhoneNumber();
         this.birthDate = user.getBirthDate();
         this.gender = user.getGender();
-        this.jobRole=user.getJobRole();
-        this.securityAccessLeve=user.getSecurityAccessLeve();
-
+        this.jobRole = user.getJobRole();
+        this.securityAccessLevel = user.getSecurityAccessLevel();
+        this.allowOngoingVisit = user.isAllowOngoingVisit();
+        this.canUnDischargeUrgentCare = user.isCanUnDischargeUrgentCare();
+        this.canUnCompleteEncounter = user.isCanUnCompleteEncounter();
+        this.canReturnClaimForResubmit = user.isCanReturnClaimForResubmit();
     }
+
 }

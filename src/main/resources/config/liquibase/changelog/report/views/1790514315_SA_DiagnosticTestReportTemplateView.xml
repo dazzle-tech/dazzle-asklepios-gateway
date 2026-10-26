@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-diagnostic-test-report-template-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwdiagnostictestreporttemplate AS
+      SELECT
+        drt.id,
+        drt.diagnostic_test_id,
+        drt.name,
+        drt.template_value,
+        drt.is_active,
+        drt.created_date,
+        drt.created_by,
+        drt.last_modified_by,
+        drt.last_modified_date
+      FROM public.diagnostic_test_report_template drt;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwdiagnostictestreporttemplate;
+      </sql>
+    </rollback>
+  </changeSet>
+  <changeSet id="grant-report-diagnostic-test-report-template-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwdiagnostictestreporttemplate TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwdiagnostictestreporttemplate FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

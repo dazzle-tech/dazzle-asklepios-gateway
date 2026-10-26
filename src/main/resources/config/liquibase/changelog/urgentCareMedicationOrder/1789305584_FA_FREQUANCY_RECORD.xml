@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="1789305584_FA_FREQUANCY_RECORD" author="faroukdhelea">
+
+    <!-- Re-create old column so the migration can remove it cleanly -->
+    <addColumn tableName="urgent_care_medication_order">
+      <column name="frequency_number" type="int"/>
+      <column name="frequency_unit" type="varchar(20)"/>
+      <column name="duration" type="int"/>
+      <column name="start_time" type="time"/>
+      <column name="dose_time" type="timestamp"/>
+
+      <column name="order_group_id" type="BIGINT"/>
+
+    </addColumn>
+
+    <dropColumn
+      tableName="urgent_care_medication_order"
+      columnName="frequency"/>
+
+    <createIndex
+      indexName="idx_urgent_care_medication_order_group_id"
+      tableName="urgent_care_medication_order">
+      <column name="order_group_id"/>
+    </createIndex>
+
+  </changeSet>
+
+</databaseChangeLog>

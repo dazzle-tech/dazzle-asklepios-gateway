@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-patient-insurances-view" author="sondos">
+
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwpatientinsurances AS
+      SELECT
+        pi.id,
+        pi.patient_id,
+        pi.payor_id,
+        pi.plan_id,
+        pi.policy_holder_id,
+        pi.policy_number,
+        pi.group_number,
+        pi.expiration_date,
+        pi.remaining_benefits,
+        pi.remaining_deductibles,
+        pi.is_primary,
+        pi.created_by,
+        pi.created_date,
+        pi.last_modified_by,
+        pi.last_modified_date,
+        pi.payer_name,
+        pi.tpa_nphies_id,
+        pi.tpa_name,
+        pi.member_card_id,
+        pi.payer_nphies_id,
+        pi.network_id,
+        pi.sponsor_number,
+        pi.coverage_type,
+        pi.relation_with_subscriber,
+        pi.policy_class_name,
+        pi.policy_holder_name,
+        pi.issue_date,
+        pi.patient_share,
+        pi.max_limit,
+        pi.waseel_new_plan,
+        pi.group_name,
+        pi.plan_code,
+        pi.eligibility_status,
+        pi.site_eligibility,
+        pi.inforce,
+        pi.gp_visit_copay,
+        pi.specialist_visits_limit,
+        pi.eligibility_benefits_json,
+        pi.last_eligibility_request_id,
+        pi.last_eligibility_synced_at,
+        pi.default_copayment_percent,
+        pi.default_maximum_copayment,
+        pi.benefit_start_date,
+        pi.benefit_end_date
+      FROM public.patient_insurances pi;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwpatientinsurances;
+      </sql>
+    </rollback>
+
+  </changeSet>
+  <changeSet id="grant-report-patient-insurances-view-access" author="sondos">
+
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwpatientinsurances TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwpatientinsurances FROM report_user;
+      </sql>
+    </rollback>
+
+  </changeSet>
+</databaseChangeLog>

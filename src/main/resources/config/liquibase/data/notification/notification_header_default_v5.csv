@@ -1,0 +1,3 @@
+id;facility_id;code;name;description;module;category;priority;is_active;created_by;created_date;last_modified_by;last_modified_date
+5018;;DEPARTMENT_URGENT_CONSULTATION_CREATED;Urgent Consultation Request Created For Department Notification;Notify destination department users when a new urgent consultation arrives;ENCOUNTER;CONSULTATION_CREATED;CRITICAL;true;admin;2026-06-22 00:00:00;admin;2026-06-22 00:00:00
+5019;;PRACTITIONER_URGENT_CONSULTATION_CREATED;Urgent Consultation Request Created For Practitioner Notification;Notify destination physician department users when a new urgent consultation arrives;ENCOUNTER;CONSULTATION_CREATED;CRITICAL;true;admin;2026-06-22 00:00:00;admin;2026-06-22 00:00:00

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+
+<changeSet id="1786390000_B_financial_documents_add_foreign_keys" author="batool">
+
+  <addForeignKeyConstraint
+    baseTableName="financial_documents"
+    baseColumnNames="patient_id"
+    referencedTableName="patients"
+    referencedColumnNames="id"
+    constraintName="fk_financial_documents_patient"/>
+
+  <addForeignKeyConstraint
+    baseTableName="financial_documents"
+    baseColumnNames="encounter_id"
+    referencedTableName="patient_encounters"
+    referencedColumnNames="id"
+    constraintName="fk_financial_documents_encounter"/>
+
+</changeSet>
+
+</databaseChangeLog>

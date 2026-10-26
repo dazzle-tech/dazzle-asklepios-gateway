@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="BM000000000064" author="BushraMashaiekh">
+
+    <addColumn tableName="patient_encounters">
+      <column name="billing_status" type="varchar(50)" defaultValue="OPEN">
+        <constraints nullable="false"/>
+      </column>
+      <column name="financially_closed_at" type="timestamp"/>
+      <column name="financially_closed_by" type="varchar(50)"/>
+    </addColumn>
+
+    <sql>
+      UPDATE patient_encounters pe
+      SET billing_status = 'INVOICED'
+      WHERE EXISTS (
+        SELECT 1
+        FROM financial_documents fd
+        WHERE fd.encounter_id = pe.id
+          AND fd.document_type = 'INVOICE'
+          AND fd.status IN ('ISSUED', 'PARTIALLY_PAID', 'PAID', 'POSTED')
+      );
+    </sql>
+
+  </changeSet>
+
+</databaseChangeLog>

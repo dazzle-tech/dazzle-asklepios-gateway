@@ -1,0 +1,8 @@
+id;facility_id;code;name;description;module;category;priority;is_active;created_by;created_date;last_modified_by;last_modified_date
+5006;;PRESCRIPTION_HIGH_ALERT_MEDICATION_SUBMITTED;High Alert Medication Submitted;Notify department users when prescription with high alert medication is submitted;ENCOUNTER;HIGH_ALERT_MEDICATION;HIGH;true;admin;2026-06-22 00:00:00;admin;2026-06-22 00:00:00
+5007;;URGENT_DIAGNOSTIC_ORDER_SUBMITTED;Urgent Diagnostic Order Submitted;Notify department users when urgent diagnostic order is submitted;ENCOUNTER;URGENT_ORDER;HIGH;true;admin;2026-06-22 00:00:00;admin;2026-06-22 00:00:00
+5008;;CONSULTATION_CREATED;Consultation Created;Notify destination department users when consultation is created;ENCOUNTER;CONSULTATION_CREATED;HIGH;true;admin;2026-06-22 00:00:00;admin;2026-06-22 00:00:00
+5009;;CONSULTATION_SUBMITTED;Consultation Submitted;Notify requesting department users when consultation is submitted;ENCOUNTER;CONSULTATION_SUBMITTED;HIGH;true;admin;2026-06-22 00:00:00;admin;2026-06-22 00:00:00
+5010;;CONSULTATION_REJECTED;Consultation Rejected;Notify requesting department users when consultation is rejected;ENCOUNTER;CONSULTATION_REJECTED;HIGH;true;admin;2026-06-22 00:00:00;admin;2026-06-22 00:00:00
+5011;;DIAGNOSTIC_LAB_ABNORMAL_RESULT_READY;Diagnostic Lab Abnormal Result Ready;Notify department users when abnormal laboratory result is approved;ENCOUNTER;RESULT_READY;HIGH;true;admin;2026-06-22 00:00:00;admin;2026-06-22 00:00:00
+5012;;RADIOLOGY_SEVERE_RESULT_READY;Radiology Severe Result Ready;Notify department users when severe radiology result is approved;ENCOUNTER;RESULT_READY;HIGH;true;admin;2026-06-22 00:00:00;admin;2026-06-22 00:00:00

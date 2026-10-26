@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="FLACC_Pain_Scale" author="Rawan-Yahya">
+
+    <createTable tableName="patient_flacc_pain_scale">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true"
+                     nullable="false"/>
+      </column>
+
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"
+                     referencedTableName="patients"
+                     referencedColumnNames="id"
+                     foreignKeyName="fk_flacc_patient"/>
+      </column>
+
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="false"
+                     referencedTableName="patient_encounters"
+                     referencedColumnNames="id"
+                     foreignKeyName="fk_flacc_encounter"/>
+      </column>
+
+
+      <column name="face" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="legs" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="activity" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="cry" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="consolability" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="total_score" type="integer">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="status" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="cancellation_reason" type="varchar(255)"/>
+
+      <column name="cancelled_at" type="timestamp"/>
+      <column name="cancelled_by" type="varchar(50)"/>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date"
+              type="timestamp"
+              defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+
+      <column name="last_modified_date" type="timestamp"/>
+
+
+
+    </createTable>
+
+  </changeSet>
+
+</databaseChangeLog>

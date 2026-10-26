@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-billing-charge-responsibility-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwbillingchargeresponsibility AS
+      SELECT
+        bcr.id,
+        bcr.charge_id,
+        bcr.charge_line_id,
+        bcr.patient_service_product_id,
+        bcr.patient_id,
+        bcr.encounter_id,
+        bcr.responsible_party_type,
+        bcr.responsibility_role,
+        bcr.payer_id,
+        bcr.patient_insurance_id,
+        bcr.policy_number,
+        bcr.member_number,
+        bcr.responsibility_amount,
+        bcr.allocated_amount,
+        bcr.outstanding_amount,
+        bcr.coverage_percentage,
+        bcr.deductible_amount,
+        bcr.copay_amount,
+        bcr.coinsurance_amount,
+        bcr.non_covered_amount,
+        bcr.contractual_adjustment_amount,
+        bcr.currency,
+        bcr.status,
+        bcr.pre_authorization_required,
+        bcr.pre_authorization_status,
+        bcr.pre_authorization_reference_no,
+        bcr.claim_id,
+        bcr.claim_reference,
+        bcr.superseded_responsibility_id,
+        bcr.adjustment_reason,
+        bcr.effective_date,
+        bcr.closed_date,
+        bcr.idempotency_key,
+        bcr.created_by,
+        bcr.created_date,
+        bcr.last_modified_by,
+        bcr.last_modified_date
+      FROM public.billing_charge_responsibility bcr;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwbillingchargeresponsibility;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-billing-charge-responsibility-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwbillingchargeresponsibility TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwbillingchargeresponsibility FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

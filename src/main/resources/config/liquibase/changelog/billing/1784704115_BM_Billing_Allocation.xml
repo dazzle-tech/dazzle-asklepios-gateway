@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="BM000000000052" author="BushraMashaiekh">
+
+    <createTable tableName="billing_allocation">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="allocation_number" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="charge_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="charge_line_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="charge_responsibility_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="patient_service_product_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="allocation_source_type" type="varchar(40)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="reservation_id" type="bigint"/>
+
+      <column name="payment_id" type="bigint"/>
+
+      <column name="payment_transaction_id" type="bigint"/>
+
+      <column name="debit_transaction_id" type="bigint"/>
+
+      <column name="source_reference_type" type="varchar(50)"/>
+
+      <column name="source_reference_id" type="bigint"/>
+
+      <column name="source_reference_number" type="varchar(150)"/>
+
+      <column name="allocated_amount" type="numeric(19,4)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="remaining_allocated_amount" type="numeric(19,4)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="reversed_amount" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="currency" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="status" type="varchar(30)" defaultValue="ACTIVE">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="allocation_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="reversed_date" type="timestamp"/>
+
+      <column name="reversed_by" type="varchar(50)"/>
+
+      <column name="reversal_reason" type="varchar(500)"/>
+
+      <column name="original_allocation_id" type="bigint"/>
+
+      <column name="idempotency_key" type="varchar(150)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="transaction_group_id" type="uuid">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="notes" type="text"/>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+
+
+    <addForeignKeyConstraint
+      baseTableName="billing_allocation"
+      baseColumnNames="charge_id"
+      referencedTableName="billing_charge"
+      referencedColumnNames="id"
+      constraintName="fk_billing_allocation_charge"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_allocation"
+      baseColumnNames="charge_line_id"
+      referencedTableName="billing_charge_line"
+      referencedColumnNames="id"
+      constraintName="fk_billing_allocation_charge_line"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_allocation"
+      baseColumnNames="charge_responsibility_id"
+      referencedTableName="billing_charge_responsibility"
+      referencedColumnNames="id"
+      constraintName="fk_billing_allocation_responsibility"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_allocation"
+      baseColumnNames="patient_service_product_id"
+      referencedTableName="patient_services_and_products"
+      referencedColumnNames="id"
+      constraintName="fk_billing_allocation_psp"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_allocation"
+      baseColumnNames="patient_id"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+      constraintName="fk_billing_allocation_patient"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_allocation"
+      baseColumnNames="encounter_id"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"
+      constraintName="fk_billing_allocation_encounter"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_allocation"
+      baseColumnNames="reservation_id"
+      referencedTableName="billing_reservation"
+      referencedColumnNames="id"
+      constraintName="fk_billing_allocation_reservation"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_allocation"
+      baseColumnNames="payment_id"
+      referencedTableName="billing_payment"
+      referencedColumnNames="id"
+      constraintName="fk_billing_allocation_payment"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_allocation"
+      baseColumnNames="payment_transaction_id"
+      referencedTableName="billing_payment_transaction"
+      referencedColumnNames="id"
+      constraintName="fk_billing_allocation_payment_transaction"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_allocation"
+      baseColumnNames="original_allocation_id"
+      referencedTableName="billing_allocation"
+      referencedColumnNames="id"
+      constraintName="fk_billing_allocation_original"/>
+
+    <addUniqueConstraint
+      tableName="billing_allocation"
+      columnNames="allocation_number"
+      constraintName="uq_billing_allocation_number"/>
+
+    <addUniqueConstraint
+      tableName="billing_allocation"
+      columnNames="idempotency_key"
+      constraintName="uq_billing_allocation_idempotency"/>
+
+    <sql>
+      ALTER TABLE billing_allocation
+        ADD CONSTRAINT ck_billing_allocation_non_negative
+          CHECK (
+            allocated_amount &gt; 0
+              AND remaining_allocated_amount &gt;= 0
+              AND reversed_amount &gt;= 0
+            );
+    </sql>
+
+    <sql>
+      ALTER TABLE billing_allocation
+        ADD CONSTRAINT ck_billing_allocation_balance
+          CHECK (
+            allocated_amount =
+            remaining_allocated_amount
+              + reversed_amount
+            );
+    </sql>
+
+    <createIndex
+      tableName="billing_allocation"
+      indexName="idx_billing_allocation_charge">
+      <column name="charge_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_allocation"
+      indexName="idx_billing_allocation_charge_line">
+      <column name="charge_line_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_allocation"
+      indexName="idx_billing_allocation_responsibility">
+      <column name="charge_responsibility_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_allocation"
+      indexName="idx_billing_allocation_psp">
+      <column name="patient_service_product_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_allocation"
+      indexName="idx_billing_allocation_patient">
+      <column name="patient_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_allocation"
+      indexName="idx_billing_allocation_encounter">
+      <column name="encounter_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_allocation"
+      indexName="idx_billing_allocation_reservation">
+      <column name="reservation_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_allocation"
+      indexName="idx_billing_allocation_payment">
+      <column name="payment_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_allocation"
+      indexName="idx_billing_allocation_payment_transaction">
+      <column name="payment_transaction_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_allocation"
+      indexName="idx_billing_allocation_debit_transaction">
+      <column name="debit_transaction_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_allocation"
+      indexName="idx_billing_allocation_source_type">
+      <column name="allocation_source_type"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_allocation"
+      indexName="idx_billing_allocation_status">
+      <column name="status"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_allocation"
+      indexName="idx_billing_allocation_line_status">
+      <column name="charge_line_id"/>
+      <column name="status"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_allocation"
+      indexName="idx_billing_allocation_responsibility_status">
+      <column name="charge_responsibility_id"/>
+      <column name="status"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_allocation"
+      indexName="idx_billing_allocation_transaction_group">
+      <column name="transaction_group_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_allocation"
+      indexName="idx_billing_allocation_original">
+      <column name="original_allocation_id"/>
+    </createIndex>
+
+  </changeSet>
+
+</databaseChangeLog>

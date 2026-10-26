@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-diagnostic-order-tests-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwdiagnosticordertests AS
+      SELECT
+        dot.id,
+        dot.status,
+        dot.order_id,
+        dot.test_id,
+        dot.received_department_id,
+        dot.reason,
+        dot.notes,
+        dot.processing_status,
+        dot.submit_date,
+        dot.accepted_date,
+        dot.rejected_date,
+        dot.cancelled_date,
+        dot.patient_arrived_date,
+        dot.ready_date,
+        dot.approved_date,
+        dot.order_type,
+        dot.accepted_by,
+        dot.rejected_by,
+        dot.cancelled_by,
+        dot.rejected_reason,
+        dot.patient_arrived_note_rad,
+        dot.cancellation_reason,
+        dot.undo_accept_reason,
+        dot.undo_accept_by,
+        dot.undo_accept_date,
+        dot.icd_diagnosis_id,
+        dot.created_date,
+        dot.created_by,
+        dot.last_modified_by,
+        dot.last_modified_date
+      FROM public.diagnostic_order_tests dot;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwdiagnosticordertests;
+      </sql>
+    </rollback>
+  </changeSet>
+  <changeSet id="grant-report-diagnostic-order-tests-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwdiagnosticordertests TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwdiagnosticordertests FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="bs00000000000049" author="batool">
+
+    <createTable tableName="nphies_payers">
+
+      <column name="id" type="bigint" autoIncrement="true" startWith="1000">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="nphies_id" type="varchar(100)">
+        <constraints nullable="false" unique="true"/>
+      </column>
+
+      <column name="name_en" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="name_ar" type="varchar(255)"/>
+
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+
+    <createIndex
+      tableName="nphies_payers"
+      indexName="idx_nphies_payers_nphies_id">
+      <column name="nphies_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="nphies_payers"
+      indexName="idx_nphies_payers_name_en">
+      <column name="name_en"/>
+    </createIndex>
+
+  </changeSet>
+
+</databaseChangeLog>
