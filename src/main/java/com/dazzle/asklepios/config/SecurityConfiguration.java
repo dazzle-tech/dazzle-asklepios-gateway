@@ -79,6 +79,7 @@ public class SecurityConfiguration {
                 .pathMatchers(HttpMethod.GET, "/api/setup/facility/active").permitAll()
                 .pathMatchers(HttpMethod.GET, "/api/setup/languages").permitAll()
                 .pathMatchers(HttpMethod.GET, "/api/setup/department/internalJob/**").permitAll()
+                .pathMatchers(HttpMethod.GET, "/api/setup/ambient-scribe/internalJob").permitAll()
                 .pathMatchers(HttpMethod.GET, "/api/setup/user-department/department/internalJob/*").permitAll()
                 .pathMatchers(HttpMethod.POST, "/api/notification/notifications").permitAll()
                 .pathMatchers("/api/setup/**").authenticated()
