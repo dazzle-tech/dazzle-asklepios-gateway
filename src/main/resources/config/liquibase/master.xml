@@ -1178,4 +1178,7 @@
 
   <include file="config/liquibase/changelog/2026102501_S_mobile_app_config_type.xml"
            relativeToChangelogFile="false"/>
+
+  <include file="config/liquibase/changelog/vaccine/2026102601_H_vaccine_brand_facility_price.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
