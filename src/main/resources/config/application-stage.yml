@@ -296,7 +296,7 @@ spring:
           predicates:
             - Path=/api/ai/v1/convo-voice-agent/**
           filters:
-            - RewritePath=/api/ai/v1/convo-voice-agent/(?<segment>.*),/${segment}
+            - RewritePath=/api/ai/v1/convo-voice-agent/(?<segment>.*),/api/v1/${segment}
 
         - id: analytics
           uri: ${services.dazzle-asklepios-analytics-service-url}
