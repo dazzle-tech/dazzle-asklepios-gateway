@@ -1186,4 +1186,7 @@
 
   <include file="config/liquibase/changelog/vaccine/2026102601_H_vaccine_brand_facility_price.xml"
            relativeToChangelogFile="false"/>
+
+  <include file="config/liquibase/changelog/point-of-sale/pos-configuration-webhook-token.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
