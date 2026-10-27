@@ -1197,4 +1197,7 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/report/views/1793024167_R_PatientSatisfactionSurveyV2ResponseAnswerView.xml"
            relativeToChangelogFile="false"/>
+
+  <include file="config/liquibase/changelog/point-of-sale/pos-configuration-webhook-token.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>

@@ -73,6 +73,7 @@ public class SecurityConfiguration {
                 .pathMatchers(HttpMethod.POST, "/api/patient/patient-portal/request-otp").permitAll()
                 .pathMatchers(HttpMethod.POST, "/api/patient/patient-portal/verify-login-otp").permitAll()
                 .pathMatchers(HttpMethod.POST, "/api/patient/external").permitAll()
+                .pathMatchers(HttpMethod.POST, "/api/patient/point-of-sale-transactions/webhook").permitAll()
                 .pathMatchers(HttpMethod.GET,"/api/setup/country/external/active").permitAll()
                 .pathMatchers(HttpMethod.POST , "/api/hl7-events").permitAll()
                 .pathMatchers("/api/authenticate").permitAll()
