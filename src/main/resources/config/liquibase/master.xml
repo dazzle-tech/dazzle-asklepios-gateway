@@ -1186,4 +1186,13 @@
 
   <include file="config/liquibase/changelog/vaccine/2026102601_H_vaccine_brand_facility_price.xml"
            relativeToChangelogFile="false"/>
+
+  <include file="config/liquibase/changelog/patientComplaint/1793097700_FA_patient_complaint.xml"
+           relativeToChangelogFile="false"/>
+
+  <include file="config/liquibase/changelog/patientComplaint/1793097701_FA_patient_complaint_action.xml"
+           relativeToChangelogFile="false"/>
+
+  <include file="config/liquibase/changelog/patientComplaint/1793109580_FA_patient_complaint_attachment.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
