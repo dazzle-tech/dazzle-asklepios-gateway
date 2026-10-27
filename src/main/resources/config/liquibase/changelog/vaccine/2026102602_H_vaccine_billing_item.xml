@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!--
+    VACCINE billing item: an administered vaccination adds its vaccine brand
+    to the encounter's services and products (and its billing charge line).
+  -->
+  <changeSet id="2026102602_H_VACCINE_BILLING_ITEM" author="hanan">
+
+    <addColumn tableName="patient_services_and_products">
+      <column name="vaccine_brand_id" type="bigint"/>
+    </addColumn>
+
+    <addColumn tableName="billing_charge_line">
+      <column name="vaccine_brand_id" type="bigint"/>
+    </addColumn>
+
+    <sql dbms="postgresql">
+      <![CDATA[
+      ALTER TABLE patient_services_and_products
+        DROP CONSTRAINT IF EXISTS ck_psp_item_reference_by_type;
+
+      ALTER TABLE patient_services_and_products
+        ADD CONSTRAINT ck_psp_item_reference_by_type
+          CHECK (
+            (
+              billing_item_type = 'MEDICATION'
+                AND brand_medication_id IS NOT NULL
+                AND diagnostic_test_id IS NULL
+                AND service_id IS NULL
+                AND procedure_id IS NULL
+                AND vaccine_brand_id IS NULL
+              )
+              OR
+            (
+              billing_item_type IN ('LABORATORY', 'RADIOLOGY', 'PATHOLOGY')
+                AND brand_medication_id IS NULL
+                AND diagnostic_test_id IS NOT NULL
+                AND service_id IS NULL
+                AND procedure_id IS NULL
+                AND vaccine_brand_id IS NULL
+              )
+              OR
+            (
+              billing_item_type = 'SERVICE'
+                AND brand_medication_id IS NULL
+                AND diagnostic_test_id IS NULL
+                AND service_id IS NOT NULL
+                AND procedure_id IS NULL
+                AND vaccine_brand_id IS NULL
+              )
+              OR
+            (
+              billing_item_type = 'PROCEDURE'
+                AND brand_medication_id IS NULL
+                AND diagnostic_test_id IS NULL
+                AND service_id IS NULL
+                AND procedure_id IS NOT NULL
+                AND vaccine_brand_id IS NULL
+              )
+              OR
+            (
+              billing_item_type = 'VACCINE'
+                AND brand_medication_id IS NULL
+                AND diagnostic_test_id IS NULL
+                AND service_id IS NULL
+                AND procedure_id IS NULL
+                AND vaccine_brand_id IS NOT NULL
+              )
+            );
+
+      ALTER TABLE billing_charge_line
+        DROP CONSTRAINT IF EXISTS ck_billing_charge_line_item_reference;
+
+      ALTER TABLE billing_charge_line
+        ADD CONSTRAINT ck_billing_charge_line_item_reference
+          CHECK (
+            (
+              billing_item_type = 'MEDICATION'
+                AND brand_medication_id IS NOT NULL
+                AND diagnostic_test_id IS NULL
+                AND service_id IS NULL
+                AND procedure_id IS NULL
+                AND vaccine_brand_id IS NULL
+              )
+              OR
+            (
+              billing_item_type IN ('LABORATORY', 'RADIOLOGY', 'PATHOLOGY')
+                AND brand_medication_id IS NULL
+                AND diagnostic_test_id IS NOT NULL
+                AND service_id IS NULL
+                AND procedure_id IS NULL
+                AND vaccine_brand_id IS NULL
+              )
+              OR
+            (
+              billing_item_type = 'SERVICE'
+                AND brand_medication_id IS NULL
+                AND diagnostic_test_id IS NULL
+                AND service_id IS NOT NULL
+                AND procedure_id IS NULL
+                AND vaccine_brand_id IS NULL
+              )
+              OR
+            (
+              billing_item_type = 'PROCEDURE'
+                AND brand_medication_id IS NULL
+                AND diagnostic_test_id IS NULL
+                AND service_id IS NULL
+                AND procedure_id IS NOT NULL
+                AND vaccine_brand_id IS NULL
+              )
+              OR
+            (
+              billing_item_type = 'VACCINE'
+                AND brand_medication_id IS NULL
+                AND diagnostic_test_id IS NULL
+                AND service_id IS NULL
+                AND procedure_id IS NULL
+                AND vaccine_brand_id IS NOT NULL
+              )
+            );
+      ]]>
+    </sql>
+
+    <!-- A vaccination is charged when it is saved: without a default rule it could not be saved at all -->
+    <sql>
+      INSERT INTO billing_rule (
+        name,
+        billing_item_type,
+        billing_trigger,
+        is_default,
+        created_by,
+        created_date,
+        last_modified_by,
+        last_modified_date
+      )
+      SELECT
+        'Default Vaccine Billing',
+        'VACCINE',
+        'ORDERED',
+        TRUE,
+        'system',
+        CURRENT_TIMESTAMP,
+        'system',
+        CURRENT_TIMESTAMP
+        WHERE NOT EXISTS (
+          SELECT 1
+            FROM billing_rule
+           WHERE billing_item_type = 'VACCINE'
+      );
+    </sql>
+
+  </changeSet>
+
+</databaseChangeLog>
