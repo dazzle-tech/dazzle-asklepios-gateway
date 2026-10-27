@@ -709,4 +709,6 @@
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/coverageManagement/1793010100_B_coverage_term_item_subcategory.xml"
            relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1793020000_B_pre_authorization_alert_close.xml"
+           relativeToChangelogFile="false"/>
   </databaseChangeLog>
