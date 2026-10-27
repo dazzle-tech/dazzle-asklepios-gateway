@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="1793010000_B_coverage_pre_approval_target_level" author="Batool_Bushra">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <columnExists tableName="coverage_pre_approval" columnName="target_level"/>
+      </not>
+    </preConditions>
+    <addColumn tableName="coverage_pre_approval">
+      <column name="target_level" type="varchar(30)"/>
+    </addColumn>
+  </changeSet>
+
+  <changeSet id="1793010001_B_coverage_pre_approval_source" author="Batool_Bushra">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <columnExists tableName="coverage_pre_approval" columnName="source"/>
+      </not>
+    </preConditions>
+    <addColumn tableName="coverage_pre_approval">
+      <column name="source" type="varchar(50)"/>
+    </addColumn>
+  </changeSet>
+
+  <changeSet id="1793010002_B_coverage_pre_approval_source_id" author="Batool_Bushra">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <columnExists tableName="coverage_pre_approval" columnName="source_id"/>
+      </not>
+    </preConditions>
+    <addColumn tableName="coverage_pre_approval">
+      <column name="source_id" type="bigint"/>
+    </addColumn>
+  </changeSet>
+
+  <changeSet id="1793010003_B_coverage_pre_approval_subcategory_key" author="Batool_Bushra">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <columnExists tableName="coverage_pre_approval" columnName="subcategory_key"/>
+      </not>
+    </preConditions>
+    <addColumn tableName="coverage_pre_approval">
+      <column name="subcategory_key" type="varchar(100)"/>
+    </addColumn>
+  </changeSet>
+</databaseChangeLog>
