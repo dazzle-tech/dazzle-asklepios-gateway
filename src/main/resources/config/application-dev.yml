@@ -298,6 +298,8 @@ spring:
             - StripPrefix=0
 
       httpclient:
+        connect-timeout: 10000
+        response-timeout: 1200s
         pool:
           max-connections: 1000
 
