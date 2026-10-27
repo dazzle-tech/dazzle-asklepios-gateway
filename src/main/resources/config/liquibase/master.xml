@@ -1187,6 +1187,17 @@
   <include file="config/liquibase/changelog/vaccine/2026102601_H_vaccine_brand_facility_price.xml"
            relativeToChangelogFile="false"/>
 
+  <include
+    file="config/liquibase/changelog/1793003590_R_patient_satisfaction_survey_v2_response.xml"
+    relativeToChangelogFile="false"/>
+  <include
+    file="config/liquibase/changelog/1793003705_R_patient_satisfaction_survey_v2_response_answer.xml"
+    relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1793024167_R_PatientSatisfactionSurveyV2ResponseView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1793024167_R_PatientSatisfactionSurveyV2ResponseAnswerView.xml"
+           relativeToChangelogFile="false"/>
+
   <include file="config/liquibase/changelog/point-of-sale/pos-configuration-webhook-token.xml"
            relativeToChangelogFile="false"/>
 </databaseChangeLog>
