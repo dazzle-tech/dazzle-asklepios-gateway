@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!--
+    Tax share flags (insurance visits only):
+      patient_copayment = apply the tax on the patient share
+      claim_share       = apply the tax on the insurance (claim) share
+    Both default to true so existing taxes keep the current behavior.
+  -->
+  <changeSet id="2026102701_add_share_flags_to_tax" author="Batool_Bushra">
+    <addColumn tableName="tax">
+      <column name="patient_copayment" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+      <column name="claim_share" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+    </addColumn>
+  </changeSet>
+
+  <!-- Flags captured on the pricing snapshot so responsibility refreshes use the same rule. -->
+  <changeSet id="2026102702_add_tax_share_flags_to_billing_pricing_snapshot" author="Batool_Bushra">
+    <addColumn tableName="billing_pricing_snapshot">
+      <column name="tax_on_patient_copayment" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+      <column name="tax_on_claim_share" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+    </addColumn>
+  </changeSet>
+</databaseChangeLog>
