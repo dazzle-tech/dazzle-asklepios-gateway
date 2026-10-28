@@ -1194,6 +1194,8 @@
            relativeToChangelogFile="false"/>
 
   <include file="config/liquibase/changelog/patientComplaint/1793109580_FA_patient_complaint_attachment.xml"
+           relativeToChangelogFile="false"/>
+
   <include file="config/liquibase/changelog/vaccine/2026102602_H_vaccine_billing_item.xml"
            relativeToChangelogFile="false"/>
 
