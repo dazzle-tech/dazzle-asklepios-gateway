@@ -33,6 +33,7 @@ services:
   lab-result-interpreter-service-url: http://localhost:8003
   clinical-summary-voice-service-url: http://clinical-summary-voice:8037
   convo-voice-agent-service-url: http://convo-voice-agent:8036
+  live-visit-scribe-service-url: http://localhost:8037
 spring:
   devtools:
     restart:
@@ -46,7 +47,7 @@ spring:
   liquibase:
     # Remove 'faker' if you do not want the sample data to be loaded automatically
     contexts: dev, faker
-    url: jdbc:postgresql://localhost:5433/postgres
+    url: jdbc:postgresql://localhost:5432/test
   mail:
     host: localhost
     port: 25
@@ -55,10 +56,10 @@ spring:
   messages:
     cache-duration: PT1S # 1 second, see the ISO 8601 standard
   r2dbc:
-    url: r2dbc:postgresql://localhost:5433/postgres
+    url: r2dbc:postgresql://localhost:5432/test
     #    url: r2dbc:postgresql://host.docker.internal:5432/asklepios
     username: postgres
-    password: qse123H
+    password: 123456
   thymeleaf:
     cache: false
   cloud:
@@ -283,6 +284,13 @@ spring:
           filters:
             - RewritePath=/api/ai/v1/convo-voice-agent/(?<segment>.*),/${segment}
 
+        - id: live-visit-scribe
+          uri: ${services.live-visit-scribe-service-url}
+          predicates:
+            - Path=/api/ai/v1/live-visit-scribe/**
+          filters:
+            - RewritePath=/api/ai/v1/live-visit-scribe/(?<segment>.*),/api/v1/${segment}
+
         - id: analytics
           uri: ${services.dazzle-asklepios-analytics-service-url}
           predicates:
@@ -298,6 +306,8 @@ spring:
             - StripPrefix=0
 
       httpclient:
+        connect-timeout: 10000
+        response-timeout: 1200s
         pool:
           max-connections: 1000
 
