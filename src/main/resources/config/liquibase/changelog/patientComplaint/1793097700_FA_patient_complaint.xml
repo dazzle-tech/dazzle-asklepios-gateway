@@ -23,6 +23,9 @@
         <constraints nullable="false"/>
       </column>
 
+      <!-- Nullable link for authenticated mobile submissions; public/anonymous rows stay null. -->
+      <column name="patient_id" type="BIGINT"/>
+
       <column name="patient_name" type="VARCHAR(255)"/>
 
       <column name="patient_identifier" type="VARCHAR(100)"/>
@@ -136,6 +139,18 @@
     <createIndex tableName="patient_complaint" indexName="idx_patient_complaint_incident_date">
       <column name="incident_date"/>
     </createIndex>
+
+    <createIndex tableName="patient_complaint" indexName="idx_patient_complaint_patient_id">
+      <column name="patient_id"/>
+    </createIndex>
+
+    <addForeignKeyConstraint
+      baseTableName="patient_complaint"
+      baseColumnNames="patient_id"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+      constraintName="fk_patient_complaint_patient"
+      onDelete="SET NULL"/>
   </changeSet>
 
 </databaseChangeLog>
