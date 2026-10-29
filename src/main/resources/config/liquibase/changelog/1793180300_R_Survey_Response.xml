@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="1793180300_R_SURVEY_RESPONSE" author="Rawan-Yahya">
+    <createTable tableName="survey_response">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <!-- Empty when the patient answered without their name -->
+      <column name="patient_id" type="bigint">
+        <constraints nullable="true"
+                     foreignKeyName="fk_survey_response_patient"
+                     references="patients(id)"/>
+      </column>
+      <column name="started_at" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+      <column name="completed_at" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+      <!-- Sum of the scale answers -->
+      <column name="overall_score" type="decimal(10,2)"/>
+      <!-- overall_score out of the max value of every answered scale question -->
+      <column name="overall_percentage" type="decimal(5,2)"/>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <createIndex tableName="survey_response" indexName="idx_survey_response_patient">
+      <column name="patient_id"/>
+    </createIndex>
+  </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="1793172986_R_SURVEY_SECTION" author="Rawan-Yahya">
+    <createTable tableName="survey_section">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="name_en" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="name_ar" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="display_order" type="int">
+        <constraints nullable="false"/>
+      </column>
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+  </changeSet>
+
+  <!-- Sections of the V2 survey sheet; they keep the ids 1 to 11 so survey_question.csv can point at them -->
+  <changeSet id="1793172986_R_SURVEY_SECTION_DATA" author="Rawan-Yahya">
+    <!-- Skipped when sections were already added (e.g. from the setup screen) -->
+    <preConditions onFail="MARK_RAN">
+      <sqlCheck expectedResult="0">SELECT COUNT(*) FROM survey_section</sqlCheck>
+    </preConditions>
+
+    <loadData
+      file="config/liquibase/data/survey_section.csv"
+      separator=";"
+      tableName="survey_section"
+      usePreparedStatements="true">
+      <column name="id" type="numeric"/>
+      <column name="name_en" type="string"/>
+      <column name="name_ar" type="string"/>
+      <column name="display_order" type="numeric"/>
+      <column name="is_active" type="boolean"/>
+      <column name="created_by" type="string"/>
+      <column name="created_date" type="computed"/>
+    </loadData>
+
+    <!-- The ids above were given by hand: new sections from the setup screen continue after them -->
+    <sql>SELECT setval(pg_get_serial_sequence('survey_section', 'id'), (SELECT MAX(id) FROM survey_section))</sql>
+  </changeSet>
+
+</databaseChangeLog>
