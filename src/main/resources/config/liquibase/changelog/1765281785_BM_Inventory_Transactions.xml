@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="BM000000000069" author="BushraMashaiekh">
+
+    <createTable tableName="inventory_transactions">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="warehouse_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="source" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="source_id" type="bigint"/>
+
+      <column name="type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="reason" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="remarks" type="text"/>
+
+      <column name="is_active" type="boolean"
+              defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="document_number" type="bigint"/>
+
+      <column name="vendor" type="varchar(50)"/>
+
+      <column name="serial_number" type="varchar(50)"/>
+
+      <column name="invoice_number" type="varchar(50)"/>
+
+      <column name="approved_by" type="varchar(50)"/>
+
+      <column name="approval_status" type="varchar(50)"/>
+
+      <!-- AbstractAuditingEntity fields -->
+      <column name="created_by" type="varchar(50)"/>
+      <column name="created_date" type="timestamp"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="inventory_transactions"
+      baseColumnNames="warehouse_id"
+      referencedTableName="warehouse"
+      referencedColumnNames="id"
+      constraintName="fk_itw_warehouse_id"
+      deferrable="false"
+      initiallyDeferred="false"/>
+
+    <rollback>
+      <dropTable tableName="inventory_transactions"/>
+    </rollback>
+
+  </changeSet>
+
+</databaseChangeLog>

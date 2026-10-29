@@ -335,6 +335,9 @@
   <include file="config/liquibase/changelog/1765137717_BM_Warehouse_Product_details.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1765281767_BM_Inventory_Transfer.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1765708188_BM_Inventory_Transfer_Product.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1765281785_BM_Inventory_Transactions.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1765708190_BM_Inventory_Transactions_Product.xml" relativeToChangelogFile="false"/>
+
   <include file="config/liquibase/changelog/1768307386_B_PatientProblems.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/patientproblems/1778670079_patient_problems_add_cancel_fields.xml"
            relativeToChangelogFile="false"/>
