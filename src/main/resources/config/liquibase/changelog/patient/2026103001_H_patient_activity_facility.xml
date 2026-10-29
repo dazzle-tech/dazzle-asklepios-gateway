@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!-- The facility a task was raised in; Team Tasks and All Tasks show one facility at a time -->
+  <changeSet id="2026103001_H_patient_activity_facility" author="hanan253yahya">
+    <addColumn tableName="patient_activity">
+      <column name="facility_id" type="bigint"/>
+    </addColumn>
+
+    <!-- Existing rows take the facility of their encounter, or else of their appointment -->
+    <sql dbms="postgresql">
+      UPDATE patient_activity pa
+         SET facility_id = pe.facility_id
+        FROM patient_encounters pe
+       WHERE pe.id = pa.encounter_id
+         AND pa.facility_id IS NULL;
+
+      UPDATE patient_activity pa
+         SET facility_id = a.facility_id
+        FROM appointment a
+       WHERE a.id = pa.appointment_id
+         AND pa.facility_id IS NULL;
+    </sql>
+
+    <createIndex indexName="idx_patient_activity_facility_status" tableName="patient_activity">
+      <column name="facility_id"/>
+      <column name="status"/>
+      <column name="due_at"/>
+    </createIndex>
+  </changeSet>
+
+</databaseChangeLog>
