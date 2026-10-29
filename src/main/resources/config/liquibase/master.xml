@@ -1225,5 +1225,8 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/patient/2026103001_H_patient_activity_facility.xml"
            relativeToChangelogFile="false"/>
+
+  <include file="config/liquibase/changelog/2026102901_S_mobile_app_config_description.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
 

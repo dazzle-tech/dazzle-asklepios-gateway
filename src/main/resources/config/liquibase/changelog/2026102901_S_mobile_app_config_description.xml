@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="2026102901_S_MOBILE_APP_CONFIG_DESCRIPTION" author="engso">
+    <addColumn tableName="mobile_app_config">
+      <column name="description" type="varchar(1000)"/>
+    </addColumn>
+  </changeSet>
+
+</databaseChangeLog>
