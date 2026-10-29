@@ -1205,6 +1205,16 @@
   <include file="config/liquibase/changelog/point-of-sale/pos-configuration-webhook-token.xml"
            relativeToChangelogFile="false"/>
 
+  <include file="config/liquibase/changelog/1793172986_R_Survey_Section.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1793176612_R_Survey_Question.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1793180300_R_Survey_Response.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1793180301_R_Survey_Response_Answer.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1793188104_R_Survey_Text.xml"
+            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/patient/2026101401_SA_patient_activity.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/patient/2026102801_H_activity_setup.xml"

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="1793180301_R_SURVEY_RESPONSE_ANSWER" author="Rawan-Yahya">
+    <createTable tableName="survey_response_answer">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="response_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_survey_response_answer_response"
+                     references="survey_response(id)"/>
+      </column>
+      <!-- The question text and limits never change, so the id is enough to know what was asked -->
+      <column name="question_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_survey_response_answer_question"
+                     references="survey_question(id)"/>
+      </column>
+      <!-- SCALE questions -->
+      <column name="score" type="int"/>
+      <!-- TEXT questions -->
+      <column name="text_value" type="text"/>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <createIndex tableName="survey_response_answer" indexName="idx_survey_response_answer_response">
+      <column name="response_id"/>
+    </createIndex>
+    <createIndex tableName="survey_response_answer" indexName="idx_survey_response_answer_question">
+      <column name="question_id"/>
+    </createIndex>
+  </changeSet>
+
+</databaseChangeLog>
