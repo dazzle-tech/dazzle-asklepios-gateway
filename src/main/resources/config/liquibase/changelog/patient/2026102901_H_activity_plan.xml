@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="2026102901_H_activity_plan" author="hanan">
+    <createTable tableName="activity_plan">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false" primaryKeyName="pk_activity_plan"/>
+      </column>
+      <column name="code" type="varchar(80)">
+        <constraints nullable="false" unique="true" uniqueConstraintName="uq_activity_plan_code"/>
+      </column>
+      <column name="name" type="varchar(150)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="description" type="varchar(500)"/>
+      <column name="items" type="jsonb" defaultValueComputed="'[]'::jsonb">
+        <constraints nullable="false"/>
+      </column>
+      <column name="view_order" type="int" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+  </changeSet>
+
+  <changeSet id="2026102902_H_patient_activity_plan" author="hanan">
+    <addColumn tableName="patient_activity">
+      <column name="plan_code" type="varchar(80)"/>
+      <column name="plan_run_id" type="varchar(36)"/>
+    </addColumn>
+    <createIndex indexName="idx_patient_activity_plan_run" tableName="patient_activity">
+      <column name="plan_run_id"/>
+    </createIndex>
+  </changeSet>
+
+</databaseChangeLog>

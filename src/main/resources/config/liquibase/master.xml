@@ -1214,6 +1214,16 @@
   <include file="config/liquibase/changelog/1793180301_R_Survey_Response_Answer.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1793188104_R_Survey_Text.xml"
+            relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/patient/2026101401_SA_patient_activity.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patient/2026102801_H_activity_setup.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patient/2026102901_H_activity_plan.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patient/2026102903_H_activity_history_comments.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patient/2026103001_H_patient_activity_facility.xml"
            relativeToChangelogFile="false"/>
 </databaseChangeLog>
 
