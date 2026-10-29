@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!-- Who did what to a patient activity, and when -->
+  <changeSet id="2026102903_H_patient_activity_log" author="hanan253yahya">
+    <createTable tableName="patient_activity_log">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false" primaryKeyName="pk_patient_activity_log"/>
+      </column>
+      <column name="activity_id" type="bigint">
+        <constraints nullable="false"
+                     referencedTableName="patient_activity"
+                     referencedColumnNames="id"
+                     foreignKeyName="fk_patient_activity_log_activity"/>
+      </column>
+      <column name="action" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="old_value" type="varchar(500)"/>
+      <column name="new_value" type="varchar(500)"/>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+    <createIndex indexName="idx_patient_activity_log_activity" tableName="patient_activity_log">
+      <column name="activity_id"/>
+      <column name="created_date"/>
+    </createIndex>
+  </changeSet>
+
+  <!-- Notes staff leave each other on a task -->
+  <changeSet id="2026102904_H_patient_activity_comment" author="hanan253yahya">
+    <createTable tableName="patient_activity_comment">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false" primaryKeyName="pk_patient_activity_comment"/>
+      </column>
+      <column name="activity_id" type="bigint">
+        <constraints nullable="false"
+                     referencedTableName="patient_activity"
+                     referencedColumnNames="id"
+                     foreignKeyName="fk_patient_activity_comment_activity"/>
+      </column>
+      <column name="body" type="varchar(2000)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+    <createIndex indexName="idx_patient_activity_comment_activity" tableName="patient_activity_comment">
+      <column name="activity_id"/>
+      <column name="created_date"/>
+    </createIndex>
+  </changeSet>
+
+</databaseChangeLog>

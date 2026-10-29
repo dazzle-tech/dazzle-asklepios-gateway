@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="2026102801_H_activity_category" author="hanan">
+    <createTable tableName="activity_category">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false" primaryKeyName="pk_activity_category"/>
+      </column>
+      <column name="code" type="varchar(50)">
+        <constraints nullable="false" unique="true" uniqueConstraintName="uq_activity_category_code"/>
+      </column>
+      <column name="name" type="varchar(120)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="icon" type="varchar(50)"/>
+      <column name="color" type="varchar(20)"/>
+      <column name="view_order" type="int" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+  </changeSet>
+
+  <changeSet id="2026102802_H_activity_template" author="hanan">
+    <createTable tableName="activity_template">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false" primaryKeyName="pk_activity_template"/>
+      </column>
+      <column name="code" type="varchar(80)">
+        <constraints nullable="false" unique="true" uniqueConstraintName="uq_activity_template_code"/>
+      </column>
+      <column name="name" type="varchar(150)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="description" type="varchar(500)"/>
+      <column name="category_code" type="varchar(50)">
+        <constraints nullable="false"
+                     referencedTableName="activity_category"
+                     referencedColumnNames="code"
+                     foreignKeyName="fk_activity_template_category"/>
+      </column>
+      <column name="kind" type="varchar(20)" defaultValue="TASK">
+        <constraints nullable="false"/>
+      </column>
+      <column name="default_priority" type="varchar(20)" defaultValue="NORMAL">
+        <constraints nullable="false"/>
+      </column>
+      <column name="due_offset" type="int"/>
+      <column name="due_unit" type="varchar(20)"/>
+      <column name="assignee_roles" type="jsonb" defaultValueComputed="'[]'::jsonb">
+        <constraints nullable="false"/>
+      </column>
+      <column name="creator_roles" type="jsonb" defaultValueComputed="'[]'::jsonb">
+        <constraints nullable="false"/>
+      </column>
+      <column name="outcome_options" type="jsonb" defaultValueComputed="'[]'::jsonb">
+        <constraints nullable="false"/>
+      </column>
+      <column name="checklist" type="jsonb" defaultValueComputed="'[]'::jsonb">
+        <constraints nullable="false"/>
+      </column>
+      <column name="require_outcome" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="is_system" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="view_order" type="int" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+  </changeSet>
+
+  <!--
+    Built-in categories and activity types, the ones the system records on its own among them.
+    Their rows live in data/activity_category.csv and data/activity_template.csv: add a row there
+    for every new activity type, and the next deploy inserts it. Rows that already exist are left
+    as the setup screen left them, so edits made there survive the deploy.
+  -->
+  <changeSet id="2026102803_H_activity_setup_seed_data" author="hanan253yahya" runOnChange="true">
+    <sql dbms="postgresql">
+      DROP TABLE IF EXISTS activity_category_seed;
+      DROP TABLE IF EXISTS activity_template_seed;
+    </sql>
+
+    <createTable tableName="activity_category_seed">
+      <column name="code" type="varchar(50)"/>
+      <column name="name" type="varchar(120)"/>
+      <column name="icon" type="varchar(50)"/>
+      <column name="color" type="varchar(20)"/>
+      <column name="view_order" type="varchar(10)"/>
+    </createTable>
+
+    <!-- jsonb values arrive as text and are cast below -->
+    <createTable tableName="activity_template_seed">
+      <column name="code" type="varchar(80)"/>
+      <column name="name" type="varchar(150)"/>
+      <column name="category_code" type="varchar(50)"/>
+      <column name="kind" type="varchar(20)"/>
+      <column name="default_priority" type="varchar(20)"/>
+      <column name="due_offset" type="varchar(10)"/>
+      <column name="due_unit" type="varchar(20)"/>
+      <column name="assignee_roles" type="varchar(2000)"/>
+      <column name="outcome_options" type="varchar(2000)"/>
+      <column name="checklist" type="varchar(2000)"/>
+      <column name="is_system" type="varchar(10)"/>
+      <column name="view_order" type="varchar(10)"/>
+    </createTable>
+
+    <loadData
+      tableName="activity_category_seed"
+      file="config/liquibase/data/activity_category.csv"
+      separator=";"
+      quotchar="'"
+      encoding="UTF-8">
+      <column name="code" type="STRING"/>
+      <column name="name" type="STRING"/>
+      <column name="icon" type="STRING"/>
+      <column name="color" type="STRING"/>
+      <column name="view_order" type="STRING"/>
+    </loadData>
+
+    <loadData
+      tableName="activity_template_seed"
+      file="config/liquibase/data/activity_template.csv"
+      separator=";"
+      quotchar="'"
+      encoding="UTF-8">
+      <column name="code" type="STRING"/>
+      <column name="name" type="STRING"/>
+      <column name="category_code" type="STRING"/>
+      <column name="kind" type="STRING"/>
+      <column name="default_priority" type="STRING"/>
+      <column name="due_offset" type="STRING"/>
+      <column name="due_unit" type="STRING"/>
+      <column name="assignee_roles" type="STRING"/>
+      <column name="outcome_options" type="STRING"/>
+      <column name="checklist" type="STRING"/>
+      <column name="is_system" type="STRING"/>
+      <column name="view_order" type="STRING"/>
+    </loadData>
+
+    <sql dbms="postgresql">
+      INSERT INTO activity_category (code, name, icon, color, view_order, is_active, created_by, created_date)
+      SELECT code, name, NULLIF(icon, ''), NULLIF(color, ''), COALESCE(NULLIF(view_order, '')::int, 0),
+             TRUE, 'system', now()
+        FROM activity_category_seed
+      ON CONFLICT (code) DO NOTHING;
+
+      INSERT INTO activity_template (code, name, category_code, kind, default_priority, due_offset, due_unit,
+                                     assignee_roles, creator_roles, outcome_options, checklist, require_outcome,
+                                     is_system, view_order, is_active, created_by, created_date)
+      SELECT code, name, category_code, kind, COALESCE(NULLIF(default_priority, ''), 'NORMAL'),
+             NULLIF(due_offset, '')::int, NULLIF(due_unit, ''),
+             COALESCE(NULLIF(assignee_roles, ''), '[]')::jsonb, '[]'::jsonb,
+             COALESCE(NULLIF(outcome_options, ''), '[]')::jsonb,
+             COALESCE(NULLIF(checklist, ''), '[]')::jsonb, FALSE,
+             COALESCE(NULLIF(is_system, '')::boolean, FALSE), COALESCE(NULLIF(view_order, '')::int, 0),
+             TRUE, 'system', now()
+        FROM activity_template_seed
+      ON CONFLICT (code) DO NOTHING;
+    </sql>
+
+    <dropTable tableName="activity_template_seed"/>
+    <dropTable tableName="activity_category_seed"/>
+  </changeSet>
+
+  <changeSet id="2026102804_H_patient_activity_assignment" author="hanan">
+    <addColumn tableName="patient_activity">
+      <column name="outcome" type="varchar(100)"/>
+      <column name="assigned_roles" type="jsonb" defaultValueComputed="'[]'::jsonb">
+        <constraints nullable="false"/>
+      </column>
+      <column name="assigned_to" type="varchar(50)"/>
+      <column name="checklist" type="jsonb" defaultValueComputed="'[]'::jsonb">
+        <constraints nullable="false"/>
+      </column>
+    </addColumn>
+
+    <!-- Existing open tasks go to the team of their template -->
+    <sql dbms="postgresql">
+      UPDATE patient_activity pa
+         SET assigned_roles = t.assignee_roles
+        FROM activity_template t
+       WHERE t.code = pa.activity_type
+         AND pa.status = 'OPEN';
+    </sql>
+
+    <createIndex indexName="idx_patient_activity_status_due" tableName="patient_activity">
+      <column name="status"/>
+      <column name="due_at"/>
+    </createIndex>
+    <createIndex indexName="idx_patient_activity_assigned_to" tableName="patient_activity">
+      <column name="assigned_to"/>
+      <column name="status"/>
+    </createIndex>
+    <sql dbms="postgresql">
+      CREATE INDEX idx_patient_activity_assigned_roles ON patient_activity USING gin (assigned_roles);
+    </sql>
+  </changeSet>
+
+</databaseChangeLog>
