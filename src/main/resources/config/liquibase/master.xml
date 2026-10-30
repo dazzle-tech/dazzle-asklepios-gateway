@@ -1207,7 +1207,9 @@
   <include file="config/liquibase/changelog/point-of-sale/pos-configuration-webhook-token.xml"
            relativeToChangelogFile="false"/>
 
-  <include file="config/liquibase/changelog/point-of-sale/pos-configuration-webhook-token.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/2026102701_add_tax_share_flags.xml"
+           relativeToChangelogFile="false"/>
+
+  <include file="config/liquibase/changelog/2026102901_add_share_tax_to_billing_charge_line.xml"
            relativeToChangelogFile="false"/>
 </databaseChangeLog>
