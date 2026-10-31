@@ -711,4 +711,12 @@
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/coverageManagement/1793020000_B_pre_authorization_alert_close.xml"
            relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1793030000_B_coverage_term_exclusion.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1793030100_B_coverage_discount_subcategory.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1793040000_B_drop_coverage_item_service_fk.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/payorSetup/1793040100_B_insurance_company_policy_optional_fields.xml"
+           relativeToChangelogFile="false"/>
   </databaseChangeLog>
