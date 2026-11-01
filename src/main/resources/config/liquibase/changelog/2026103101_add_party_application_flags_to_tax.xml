@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!--
+    Patient Copayment / Claim Share toggles.
+    Default TRUE keeps the existing behaviour: tax is applied to both the
+    patient share and the insurance share of every item.
+  -->
+  <changeSet id="2026103101_add_party_application_flags_to_tax" author="Batool_Bushra">
+    <addColumn tableName="tax">
+      <column name="apply_on_patient_copayment" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+      <column name="apply_on_claim_share" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+    </addColumn>
+  </changeSet>
+</databaseChangeLog>

@@ -329,7 +329,12 @@
   <include file="/config/liquibase/changelog/1764765924_BM_Billing_Invoice_Item.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1764767706_BM_Patient_Payment.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1764823037_BM_Payment_Allocation.xml" relativeToChangelogFile="false"/>
-
+  <include file="config/liquibase/changelog/1763342755_BM_Warehouse.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1764079957_BM_Warehouse_User.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1765118987_BM_Warehouse_Product.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1765137717_BM_Warehouse_Product_details.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1765281767_BM_Inventory_Transfer.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1765708188_BM_Inventory_Transfer_Product.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1768307386_B_PatientProblems.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/patientproblems/1778670079_patient_problems_add_cancel_fields.xml"
            relativeToChangelogFile="false"/>
@@ -1177,6 +1182,56 @@
            relativeToChangelogFile="false"/>
 
   <include file="config/liquibase/changelog/2026102501_S_mobile_app_config_type.xml"
+           relativeToChangelogFile="false"/>
+
+  <include file="config/liquibase/changelog/vaccine/2026102601_H_vaccine_brand_facility_price.xml"
+           relativeToChangelogFile="false"/>
+
+  <include file="config/liquibase/changelog/patientComplaint/1793097700_FA_patient_complaint.xml"
+           relativeToChangelogFile="false"/>
+
+  <include file="config/liquibase/changelog/patientComplaint/1793097701_FA_patient_complaint_action.xml"
+           relativeToChangelogFile="false"/>
+
+  <include file="config/liquibase/changelog/patientComplaint/1793109580_FA_patient_complaint_attachment.xml"
+           relativeToChangelogFile="false"/>
+
+  <include file="config/liquibase/changelog/vaccine/2026102602_H_vaccine_billing_item.xml"
+           relativeToChangelogFile="false"/>
+
+  <include file="config/liquibase/changelog/vaccine/2026102603_H_vaccine_brand_code.xml"
+           relativeToChangelogFile="false"/>
+
+  <include file="config/liquibase/changelog/point-of-sale/pos-configuration-webhook-token.xml"
+           relativeToChangelogFile="false"/>
+
+  <include file="config/liquibase/changelog/1793172986_R_Survey_Section.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1793176612_R_Survey_Question.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1793180300_R_Survey_Response.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1793180301_R_Survey_Response_Answer.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1793188104_R_Survey_Text.xml"
+            relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/patient/2026101401_SA_patient_activity.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patient/2026102801_H_activity_setup.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patient/2026102901_H_activity_plan.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patient/2026102903_H_activity_history_comments.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patient/2026103001_H_patient_activity_facility.xml"
+           relativeToChangelogFile="false"/>
+
+  <include file="config/liquibase/changelog/2026102901_S_mobile_app_config_description.xml"
+           relativeToChangelogFile="false"/>
+
+  <include file="config/liquibase/changelog/2026103101_add_party_application_flags_to_tax.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/billing/2026103102_billing_charge_line_party_tax.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/claim_WaseelIntegration/2026102601_claim_settlement.xml"
            relativeToChangelogFile="false"/>

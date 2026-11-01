@@ -33,6 +33,7 @@ services:
   lab-result-interpreter-service-url: http://localhost:8003
   clinical-summary-voice-service-url: http://clinical-summary-voice:8037
   convo-voice-agent-service-url: http://convo-voice-agent:8036
+  live-visit-scribe-service-url: http://localhost:8037
 spring:
   devtools:
     restart:
@@ -283,6 +284,13 @@ spring:
           filters:
             - RewritePath=/api/ai/v1/convo-voice-agent/(?<segment>.*),/${segment}
 
+        - id: live-visit-scribe
+          uri: ${services.live-visit-scribe-service-url}
+          predicates:
+            - Path=/api/ai/v1/live-visit-scribe/**
+          filters:
+            - RewritePath=/api/ai/v1/live-visit-scribe/(?<segment>.*),/api/v1/${segment}
+
         - id: analytics
           uri: ${services.dazzle-asklepios-analytics-service-url}
           predicates:
@@ -298,6 +306,8 @@ spring:
             - StripPrefix=0
 
       httpclient:
+        connect-timeout: 10000
+        response-timeout: 1200s
         pool:
           max-connections: 1000
 

@@ -1,0 +1,12 @@
+id;name_en;name_ar;display_order;is_active;created_by;created_date
+1;Access and Waiting;الوصول والانتظار;1;true;system;NOW()
+2;Your Doctor;طبيبك;2;true;system;NOW()
+3;Privacy, Safety and Cleanliness;الخصوصية والسلامة والنظافة;3;true;system;NOW()
+4;Your Results;نتائجك;4;true;system;NOW()
+5;Billing;الفواتير;5;true;system;NOW()
+6;Blood Tests;فحوصات الدم;6;true;system;NOW()
+7;Imaging;الأشعة;7;true;system;NOW()
+8;Pharmacy;الصيدلية;8;true;system;NOW()
+9;Nursing;التمريض;9;true;system;NOW()
+10;Reception and Registration;الاستقبال والتسجيل;10;true;system;NOW()
+11;Overall;بشكل عام;11;true;system;NOW()

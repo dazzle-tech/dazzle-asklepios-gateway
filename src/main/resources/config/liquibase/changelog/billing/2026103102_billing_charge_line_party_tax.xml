@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!--
+    Per-party tax distribution of a charge line.
+
+    calculated_tax_amount    : tax calculated on the full item before the party toggles.
+    patient_tax_amount       : tax carried by the patient share.
+    insurance_tax_amount     : tax carried by the insurance share.
+    tax_on_patient_copayment : Patient Copayment toggle used for this line.
+    tax_on_claim_share       : Claim Share toggle used for this line.
+
+    tax_amount stays the applied tax (patient_tax_amount + insurance_tax_amount),
+    so ck_billing_charge_line_net_amount is unchanged.
+
+    Existing rows are not back-filled: calculated_tax_amount stays NULL and the
+    party columns stay 0, which the services read as "legacy line" and keep the
+    previous proportional behaviour for them.
+  -->
+  <changeSet id="2026103102_billing_charge_line_party_tax" author="Batool_Bushra">
+    <addColumn tableName="billing_charge_line">
+      <column name="calculated_tax_amount" type="numeric(19,4)"/>
+      <column name="patient_tax_amount" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+      <column name="insurance_tax_amount" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+      <column name="tax_on_patient_copayment" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+      <column name="tax_on_claim_share" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+    </addColumn>
+
+    <sql>
+      ALTER TABLE billing_charge_line
+        ADD CONSTRAINT ck_billing_charge_line_party_tax_non_negative
+          CHECK (
+            patient_tax_amount &gt;= 0
+              AND insurance_tax_amount &gt;= 0
+              AND (calculated_tax_amount IS NULL OR calculated_tax_amount &gt;= 0)
+            );
+    </sql>
+  </changeSet>
+</databaseChangeLog>
