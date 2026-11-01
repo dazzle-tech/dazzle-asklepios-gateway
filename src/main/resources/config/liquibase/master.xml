@@ -1228,5 +1228,10 @@
 
   <include file="config/liquibase/changelog/2026102901_S_mobile_app_config_description.xml"
            relativeToChangelogFile="false"/>
+
+  <include file="config/liquibase/changelog/2026103101_add_party_application_flags_to_tax.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/billing/2026103102_billing_charge_line_party_tax.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
 
