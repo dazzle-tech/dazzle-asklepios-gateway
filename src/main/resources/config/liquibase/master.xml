@@ -1228,5 +1228,7 @@
 
   <include file="config/liquibase/changelog/2026102901_S_mobile_app_config_description.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/procedure/1793525667_R_Procedure_Price_Decimal.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
 
