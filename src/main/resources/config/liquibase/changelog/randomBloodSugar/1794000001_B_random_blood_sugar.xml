@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="FA000000000053" author="faroukdhelea">
+
+    <createTable tableName="random_blood_sugar">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_random_blood_sugar_patient"
+                     referencedTableName="patients"
+                     referencedColumnNames="id"/>
+      </column>
+
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="random_blood_glucose" type="varchar(255)"/>
+
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="random_blood_sugar"
+      baseColumnNames="encounter_id"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"
+      constraintName="fk_random_blood_sugar_encounter"/>
+
+    <createIndex indexName="ix_random_blood_sugar_patient"
+                 tableName="random_blood_sugar">
+      <column name="patient_id"/>
+    </createIndex>
+
+    <createIndex indexName="ix_random_blood_sugar_encounter"
+                 tableName="random_blood_sugar">
+      <column name="encounter_id"/>
+    </createIndex>
+
+  </changeSet>
+
+  <changeSet id="FA000000000054" author="faroukdhelea">
+    <dropColumn tableName="vital_signs" columnName="fasting_blood_glucose"/>
+  </changeSet>
+
+</databaseChangeLog>
