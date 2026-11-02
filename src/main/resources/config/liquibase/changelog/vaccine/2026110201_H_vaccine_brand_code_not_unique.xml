@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!--
+    Vaccine brand code is the SBS code, which belongs to the vaccine:
+    brands of the same vaccine share it, so it is no longer unique.
+  -->
+  <changeSet id="2026110201_H_VACCINE_BRAND_CODE_NOT_UNIQUE" author="hanan">
+
+    <dropUniqueConstraint
+      tableName="vaccine_brands"
+      constraintName="ux_vaccine_brands_code"/>
+
+  </changeSet>
+
+</databaseChangeLog>
