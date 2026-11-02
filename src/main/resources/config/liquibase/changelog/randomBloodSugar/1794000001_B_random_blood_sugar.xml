@@ -33,8 +33,10 @@
         <constraints nullable="false"/>
       </column>
 
-      <column name="random_blood_glucose" type="varchar(255)"/>
-
+      <column name="random_blood_glucose" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      
       <column
         name="is_active"
         type="boolean"
