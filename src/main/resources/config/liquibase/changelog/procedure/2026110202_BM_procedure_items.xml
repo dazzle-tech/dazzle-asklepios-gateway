@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="2026110202_BM_procedure_items" author="Batool_Bushra">
+
+    <createTable tableName="procedure_items">
+      <column name="id" type="bigint" autoIncrement="true" startWith="2000">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="source_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="specialty" type="varchar(100)"/>
+
+      <column name="procedure_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_procedure_items_procedure"
+                     references="procedure(id)"/>
+      </column>
+
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <createIndex tableName="procedure_items" indexName="idx_procedure_items_type_source">
+      <column name="type"/>
+      <column name="source_id"/>
+    </createIndex>
+
+    <sql>
+      CREATE UNIQUE INDEX uk_procedure_items_no_specialty
+        ON procedure_items (procedure_id, type, source_id)
+        WHERE specialty IS NULL;
+    </sql>
+
+    <sql>
+      CREATE UNIQUE INDEX uk_procedure_items_with_specialty
+        ON procedure_items (procedure_id, type, source_id, specialty)
+        WHERE specialty IS NOT NULL;
+    </sql>
+
+    <rollback>
+      <dropTable tableName="procedure_items"/>
+    </rollback>
+
+  </changeSet>
+
+</databaseChangeLog>
