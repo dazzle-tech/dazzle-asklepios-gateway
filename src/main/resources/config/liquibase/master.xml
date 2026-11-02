@@ -1236,5 +1236,9 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/priceListItems/2026110201_H_price_list_item_unique_source.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/procedure/2026110202_BM_procedure_items.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patientProcedure/2026110203_BM_patient_procedure_default_procedure.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
 
