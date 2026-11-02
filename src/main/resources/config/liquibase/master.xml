@@ -216,6 +216,12 @@
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/payorSetup/1781770892_B_create_nphies_payers.xml"
            relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/payorSetup/1792604481_PayorSupportiveDocumentRequirement.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/payorSetup/1792604482_PayorSupportiveDocumentRequirementCode.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/payorSetup/1792686000_SupportiveDocumentSetupScreenTranslation.xml"
+           relativeToChangelogFile="false"/>
 
   <include file="/config/liquibase/changelog/1764826849_H_Discharge_Planning.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1765198918_H_Price_List_Attributes.xml" relativeToChangelogFile="false"/>

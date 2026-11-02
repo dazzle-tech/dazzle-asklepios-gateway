@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+      http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd"
+  logicalFilePath="/config/liquibase/changelog/payorSetup/1792604481_PayorSupportiveDocumentRequirement.xml">
+
+  <!--
+    Collection table previously defined as FA00000046 in
+    1792604481_PayorSupportiveDocumentRequirement.xml.
+    logicalFilePath keeps the original recorded filepath so Liquibase identity
+    (id + author + filepath) is unchanged if FA00000046 was already applied,
+    or if application status is unknown.
+    Liquibase 4.29.2 (project liquibaseVersion) supports logicalFilePath on databaseChangeLog.
+  -->
+  <changeSet id="FA00000046" author="Faroukdhelea">
+
+    <createTable tableName="payor_supportive_document_requirement_code">
+
+      <column name="configuration_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="requirement_code" type="varchar(64)">
+        <constraints nullable="false"/>
+      </column>
+
+    </createTable>
+
+    <addUniqueConstraint
+      tableName="payor_supportive_document_requirement_code"
+      columnNames="configuration_id, requirement_code"
+      constraintName="uk_payor_supportive_document_requirement_code"/>
+
+    <addForeignKeyConstraint
+      baseTableName="payor_supportive_document_requirement_code"
+      baseColumnNames="configuration_id"
+      referencedTableName="payor_supportive_document_requirement"
+      referencedColumnNames="id"
+      constraintName="fk_payor_supportive_document_requirement_code_configuration"/>
+
+  </changeSet>
+
+</databaseChangeLog>
