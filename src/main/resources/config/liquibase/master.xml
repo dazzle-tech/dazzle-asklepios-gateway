@@ -1202,6 +1202,12 @@
   <include file="config/liquibase/changelog/vaccine/2026102603_H_vaccine_brand_code.xml"
            relativeToChangelogFile="false"/>
 
+  <include file="config/liquibase/changelog/vaccine/2026110201_H_vaccine_brand_code_not_unique.xml"
+           relativeToChangelogFile="false"/>
+
+  <include file="config/liquibase/changelog/vaccine/2026110202_H_vaccine_code.xml"
+           relativeToChangelogFile="false"/>
+
   <include file="config/liquibase/changelog/point-of-sale/pos-configuration-webhook-token.xml"
            relativeToChangelogFile="false"/>
 
