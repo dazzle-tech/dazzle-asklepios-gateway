@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+      http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!--
+    Append-only history of invoices joining, leaving and returning to statements of account.
+    Existing rows in claim_settlement_invoice are not copied here.
+  -->
+
+  <changeSet id="2026110101_claim_settlement_log" author="asklepios">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <tableExists tableName="claim_settlement_log"/>
+      </not>
+    </preConditions>
+
+    <createTable tableName="claim_settlement_log">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false" primaryKeyName="pk_claim_settlement_log"/>
+      </column>
+      <column name="settlement_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="settlement_no" type="varchar(50)"/>
+      <column name="financial_document_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="claim_request_id" type="bigint"/>
+      <column name="action" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="claim_status" type="varchar(50)"/>
+      <column name="note" type="text"/>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="claim_settlement_log"
+      baseColumnNames="settlement_id"
+      constraintName="fk_claim_settlement_log_settlement"
+      referencedTableName="claim_settlement"
+      referencedColumnNames="id"/>
+
+    <addForeignKeyConstraint
+      baseTableName="claim_settlement_log"
+      baseColumnNames="financial_document_id"
+      constraintName="fk_claim_settlement_log_document"
+      referencedTableName="financial_documents"
+      referencedColumnNames="id"/>
+
+    <addForeignKeyConstraint
+      baseTableName="claim_settlement_log"
+      baseColumnNames="claim_request_id"
+      constraintName="fk_claim_settlement_log_claim"
+      referencedTableName="claim_request"
+      referencedColumnNames="id"/>
+
+    <createIndex tableName="claim_settlement_log" indexName="idx_claim_settlement_log_document">
+      <column name="financial_document_id"/>
+    </createIndex>
+    <createIndex tableName="claim_settlement_log" indexName="idx_claim_settlement_log_settlement">
+      <column name="settlement_id"/>
+    </createIndex>
+  </changeSet>
+
+  <!--
+    Fills the history of invoices grouped before claim_settlement_log existed,
+    from claim_settlement_invoice and claim_request. Rows already logged are skipped, so it is safe to rerun.
+  -->
+  <changeSet id="2026110102_claim_settlement_log_backfill" author="asklepios">
+    <sql splitStatements="false">
+      INSERT INTO claim_settlement_log (
+          settlement_id, settlement_no, financial_document_id, claim_request_id,
+          action, claim_status, note, created_by, created_date
+      )
+      SELECT event.settlement_id, event.settlement_no, event.financial_document_id, event.claim_request_id,
+             event.action, event.claim_status, event.note, event.created_by, event.created_date
+      FROM (
+          -- The invoice was grouped under the statement.
+          SELECT line.settlement_id, settlement.settlement_no, line.financial_document_id,
+                 NULL::bigint AS claim_request_id, 'ADDED' AS action, NULL AS claim_status, NULL AS note,
+                 COALESCE(line.created_by, 'system') AS created_by, line.created_date
+          FROM claim_settlement_invoice line
+          JOIN claim_settlement settlement ON settlement.id = line.settlement_id
+
+          UNION ALL
+
+          -- A claim was opened for the invoice under that statement.
+          SELECT line.settlement_id, settlement.settlement_no, line.financial_document_id,
+                 claim.id, 'CLAIM_LINKED', claim.status, NULL,
+                 COALESCE(claim.created_by, 'system'), claim.created_date
+          FROM claim_settlement_invoice line
+          JOIN claim_settlement settlement ON settlement.id = line.settlement_id
+          JOIN claim_request claim ON claim.id = line.claim_request_id
+
+          UNION ALL
+
+          -- The claim was rejected, failed or returned, so the invoice left the statement.
+          SELECT line.settlement_id, settlement.settlement_no, line.financial_document_id,
+                 line.claim_request_id, 'RELEASED', claim.status, line.release_reason,
+                 COALESCE(line.last_modified_by, line.created_by, 'system'),
+                 COALESCE(line.released_at, line.last_modified_date)
+          FROM claim_settlement_invoice line
+          JOIN claim_settlement settlement ON settlement.id = line.settlement_id
+          LEFT JOIN claim_request claim ON claim.id = line.claim_request_id
+          WHERE line.membership_status = 'RELEASED'
+      ) event
+      WHERE NOT EXISTS (
+          SELECT 1
+          FROM claim_settlement_log logged
+          WHERE logged.settlement_id = event.settlement_id
+            AND logged.financial_document_id = event.financial_document_id
+            AND logged.action = event.action
+            AND logged.claim_request_id IS NOT DISTINCT FROM event.claim_request_id
+      )
+      ORDER BY event.created_date, event.action;
+    </sql>
+  </changeSet>
+
+</databaseChangeLog>

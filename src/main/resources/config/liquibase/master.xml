@@ -1235,4 +1235,6 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/claim_WaseelIntegration/2026102601_claim_settlement.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/claim_WaseelIntegration/2026110101_claim_settlement_log.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
