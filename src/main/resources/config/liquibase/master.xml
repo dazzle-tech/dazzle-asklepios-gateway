@@ -1251,5 +1251,7 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/patientProcedure/2026110203_BM_patient_procedure_default_procedure.xml"
            relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/2026110204_B_claim_copy_service_product_test_results.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
 
