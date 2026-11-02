@@ -1202,6 +1202,12 @@
   <include file="config/liquibase/changelog/vaccine/2026102603_H_vaccine_brand_code.xml"
            relativeToChangelogFile="false"/>
 
+  <include file="config/liquibase/changelog/vaccine/2026110201_H_vaccine_brand_code_not_unique.xml"
+           relativeToChangelogFile="false"/>
+
+  <include file="config/liquibase/changelog/vaccine/2026110202_H_vaccine_code.xml"
+           relativeToChangelogFile="false"/>
+
   <include file="config/liquibase/changelog/point-of-sale/pos-configuration-webhook-token.xml"
            relativeToChangelogFile="false"/>
 
@@ -1228,6 +1234,10 @@
 
   <include file="config/liquibase/changelog/2026102901_S_mobile_app_config_description.xml"
            relativeToChangelogFile="false"/>
+
+  <include file="config/liquibase/changelog/randomBloodSugar/1794000001_B_random_blood_sugar.xml"
+           relativeToChangelogFile="false"/>
+
   <include file="config/liquibase/changelog/procedure/1793525667_R_Procedure_Price_Decimal.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/2026103101_add_party_application_flags_to_tax.xml"
