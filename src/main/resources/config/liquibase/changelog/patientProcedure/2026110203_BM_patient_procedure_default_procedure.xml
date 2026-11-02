@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="2026110203_BM_patient_procedure_default_procedure" author="Batool_Bushra">
+
+    <addColumn tableName="patient_procedure">
+      <column name="is_default_procedure" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+    </addColumn>
+
+    <dropNotNullConstraint
+      tableName="patient_procedure"
+      columnName="body_part"
+      columnDataType="varchar(100)"/>
+
+    <dropNotNullConstraint
+      tableName="patient_procedure"
+      columnName="procedure_level"
+      columnDataType="varchar(30)"/>
+
+    <createIndex tableName="patient_procedure" indexName="idx_patient_procedure_encounter_default">
+      <column name="encounter_id"/>
+      <column name="is_default_procedure"/>
+    </createIndex>
+
+    <rollback>
+      <dropIndex tableName="patient_procedure" indexName="idx_patient_procedure_encounter_default"/>
+      <addNotNullConstraint
+        tableName="patient_procedure"
+        columnName="procedure_level"
+        columnDataType="varchar(30)"/>
+      <addNotNullConstraint
+        tableName="patient_procedure"
+        columnName="body_part"
+        columnDataType="varchar(100)"/>
+      <dropColumn tableName="patient_procedure" columnName="is_default_procedure"/>
+    </rollback>
+
+  </changeSet>
+
+</databaseChangeLog>
