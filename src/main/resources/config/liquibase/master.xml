@@ -1253,5 +1253,7 @@
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/2026110204_B_claim_copy_service_product_test_results.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalProcedure/2026110301_dental_procedure_tooth_numbers.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
 
