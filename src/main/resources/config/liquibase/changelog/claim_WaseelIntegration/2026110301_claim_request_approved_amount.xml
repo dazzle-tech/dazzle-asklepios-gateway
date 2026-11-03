@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+      http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!--
+    Amount the insurance approved for the claim, stored exactly as Waseel returns it (totalBenefit in the claim search).
+    It may be lower than total_net when the payer approves part of the claim. Nothing is recalculated from it.
+  -->
+
+  <changeSet id="2026110301_claim_request_approved_amount" author="asklepios">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <columnExists tableName="claim_request" columnName="approved_amount"/>
+      </not>
+    </preConditions>
+
+    <addColumn tableName="claim_request">
+      <column name="approved_amount" type="numeric(19,2)"/>
+    </addColumn>
+  </changeSet>
+
+  <!-- Payer decision from Waseel's claim search, stored as the WaseelClaimStatus enum name (PENDED, APPROVED, ...). -->
+  <changeSet id="2026110302_claim_request_waseel_status" author="asklepios">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <columnExists tableName="claim_request" columnName="waseel_status"/>
+      </not>
+    </preConditions>
+
+    <addColumn tableName="claim_request">
+      <column name="waseel_status" type="varchar(50)"/>
+    </addColumn>
+  </changeSet>
+</databaseChangeLog>
