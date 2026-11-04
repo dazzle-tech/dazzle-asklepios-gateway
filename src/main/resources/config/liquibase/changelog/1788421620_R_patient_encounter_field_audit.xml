@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="PATIENT_ENCOUNTER_FIELD_AUDIT" author="Rawan-Yahya">
+    <createTable tableName="patient_encounter_field_audit">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="patient_encounter_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="field_name" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="operation_type" type="varchar(10)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="old_value" type="text"/>
+
+      <column name="new_value" type="text"/>
+
+      <column name="log_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="log_by" type="varchar(50)">
+      <constraints nullable="false"/>
+    </column>
+
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="patient_encounter_field_audit"
+      baseColumnNames="patient_encounter_id"
+      constraintName="fk_patient_encounter_field_audit_encounter"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"
+    />
+
+    <createIndex tableName="patient_encounter_field_audit"
+                 indexName="idx_patient_encounter_field_audit_encounter">
+      <column name="patient_encounter_id"/>
+    </createIndex>
+
+    <createIndex tableName="patient_encounter_field_audit"
+                 indexName="idx_patient_encounter_field_audit_date">
+      <column name="log_date"/>
+    </createIndex>
+
+  </changeSet>
+
+  <changeSet id="R00000000000012_PATIENT_ENCOUNTER_FIELD_AUDIT_Trigger" author="Rawan-Yahya200" runOnChange="true">
+    <sqlFile path="config/liquibase/sql/Patient_Encounter_Field_Audit.sql"
+             relativeToChangelogFile="false"
+             splitStatements="false"/>
+  </changeSet>
+
+
+
+
+</databaseChangeLog>

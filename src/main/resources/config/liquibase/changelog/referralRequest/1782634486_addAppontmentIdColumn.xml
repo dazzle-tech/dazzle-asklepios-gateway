@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="1782634486_addAppointmentIdColumn" author="Rawan Yahya">
+
+    <!-- Add column -->
+    <addColumn tableName="referral_requests">
+      <column name="appointment_id" type="bigint"/>
+    </addColumn>
+
+    <!-- Foreign key -->
+    <addForeignKeyConstraint
+      baseTableName="referral_requests"
+      baseColumnNames="appointment_id"
+      referencedTableName="appointment"
+      referencedColumnNames="id"
+      constraintName="fk_ref_req_appointment"/>
+
+    <!-- Index -->
+    <createIndex tableName="referral_requests" indexName="idx_ref_req_appointment">
+      <column name="appointment_id"/>
+    </createIndex>
+
+  </changeSet>
+
+</databaseChangeLog>

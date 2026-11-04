@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="1777198308-fix-cancel-rule-trigger" author="BushraMashaiekh">
+
+    <addColumn tableName="patient_encounters">
+      <column name="physical_examination_summery" type="text"/>
+    </addColumn>
+
+    <sql dbms="postgresql" splitStatements="false" stripComments="true">
+      <![CDATA[
+      ALTER TABLE patient_encounters
+      DROP CONSTRAINT IF EXISTS ck_patient_encounters_cancel_only_when_allowed_status;
+
+      DROP TRIGGER IF EXISTS trg_patient_encounters_cancel_only_when_allowed_status
+        ON patient_encounters;
+
+      DROP FUNCTION IF EXISTS fn_patient_encounters_cancel_only_when_allowed_status();
+
+      CREATE OR REPLACE FUNCTION fn_patient_encounters_cancel_only_when_allowed_status()
+      RETURNS trigger AS $$
+      BEGIN
+        IF NEW.status = 'CANCELLED'
+           AND OLD.status IS DISTINCT FROM 'CANCELLED'
+           AND OLD.status NOT IN ('NEW', 'WAITING_TRIAGE', 'PENDING_PAYMENT')
+        THEN
+          RAISE EXCEPTION 'ck_patient_encounters_cancel_only_when_allowed_status'
+            USING CONSTRAINT = 'ck_patient_encounters_cancel_only_when_allowed_status';
+      END IF;
+
+      RETURN NEW;
+      END;
+      $$ LANGUAGE plpgsql;
+
+      CREATE TRIGGER trg_patient_encounters_cancel_only_when_allowed_status
+        BEFORE UPDATE OF status ON patient_encounters
+        FOR EACH ROW
+        EXECUTE FUNCTION fn_patient_encounters_cancel_only_when_allowed_status();
+      ]]>
+    </sql>
+
+  </changeSet>
+
+</databaseChangeLog>

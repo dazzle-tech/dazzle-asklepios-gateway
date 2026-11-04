@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+  <changeSet id="bs000000000028" author="batool">
+
+    <createTable tableName="patient_observations_complaints">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints
+          nullable="false"
+          foreignKeyName="fk_patient_obs_comp_patient"
+          referencedTableName="patients"
+          referencedColumnNames="id"/>
+      </column>
+
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="functional_status" type="text"/>
+
+      <column name="patient_conditions" type="text"/>
+
+      <column name="reason_of_visit" type="text">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="cognitive_check" type="text"/>
+
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="patient_observations_complaints"
+      baseColumnNames="encounter_id"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"
+      constraintName="fk_patient_obs_comp_encounter"/>
+
+    <createIndex indexName="ix_patient_obs_comp_patient"
+                 tableName="patient_observations_complaints">
+      <column name="patient_id"/>
+    </createIndex>
+
+    <createIndex indexName="ix_patient_obs_comp_encounter"
+                 tableName="patient_observations_complaints">
+      <column name="encounter_id"/>
+    </createIndex>
+
+  </changeSet>
+
+</databaseChangeLog>

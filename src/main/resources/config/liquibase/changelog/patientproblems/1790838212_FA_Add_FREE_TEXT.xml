@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="FA00000000014" author="faroukdhelea">
+
+    <addColumn tableName="patient_problems">
+      <column name="free_text" type="text"/>
+    </addColumn>
+
+    <dropNotNullConstraint
+      tableName="patient_problems"
+      columnName="by_patient"
+      columnDataType="boolean"/>
+
+    <sql><![CDATA[
+      ALTER TABLE patient_problems
+      DROP CONSTRAINT IF EXISTS ck_patient_problems_source_required;
+      ]]></sql>
+
+    <sql><![CDATA[
+      ALTER TABLE patient_problems
+        ADD CONSTRAINT ck_patient_problems_source_required
+          CHECK (
+            patient_is_free = true
+              OR (
+              patient_is_free = false
+                AND by_patient IS NOT NULL
+                AND (
+                by_patient = true
+                  OR (
+                  by_patient = false
+                    AND source_of_information IS NOT NULL
+                    AND TRIM(source_of_information) <> ''
+                  )
+                )
+              )
+            );
+      ]]></sql>
+
+  </changeSet>
+
+</databaseChangeLog>

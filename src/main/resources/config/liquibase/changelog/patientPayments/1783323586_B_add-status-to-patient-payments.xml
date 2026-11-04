@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+
+  <changeSet id="bs00000000000051" author="batool">
+
+    <addColumn tableName="patient_payments">
+      <column name="status" type="varchar(50)" defaultValue="CREATED">
+        <constraints nullable="false"/>
+      </column>
+    </addColumn>
+
+    <update tableName="patient_payments">
+      <column name="status" value="POSTED"/>
+      <where>status IS NULL</where>
+    </update>
+
+  </changeSet>
+
+</databaseChangeLog>

@@ -24,10 +24,6 @@
       <column name="timing" type="varchar(200)"/>
       <column name="test_duration_time" type="NUMERIC"/>
       <column name="time_unit" type="varchar(200)"/>
-      <column name="result_unit" type="varchar(100)">
-        <constraints nullable="false"/>
-      </column>
-      <column name="is_profile" type="BOOLEAN" defaultValueBoolean="false"/>
       <column name="sample_container" type="varchar(200)"/>
       <column name="sample_volume" type="NUMERIC"/>
       <column name="sample_volume_unit" type="varchar(200)"/>

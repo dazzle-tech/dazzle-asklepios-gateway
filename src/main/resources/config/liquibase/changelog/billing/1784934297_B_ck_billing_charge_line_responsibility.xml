@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet
+    id="BM000000000062"
+    author="BushraMashaiekh">
+
+    <sql>
+      ALTER TABLE billing_charge_line
+      DROP CONSTRAINT IF EXISTS
+            ck_billing_charge_line_responsibility;
+    </sql>
+
+    <sql>
+      ALTER TABLE billing_charge_line
+        ADD CONSTRAINT
+          ck_billing_charge_line_responsibility
+          CHECK (
+            status = 'DRAFT'
+              OR
+            net_amount =
+            patient_responsibility_amount
+              + insurance_responsibility_amount
+              + other_payer_responsibility_amount
+            );
+    </sql>
+
+  </changeSet>
+
+</databaseChangeLog>

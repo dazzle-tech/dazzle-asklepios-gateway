@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="QA0000000000018" author="qais">
+
+    <createTable tableName="patient_procedure">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="procedure_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_procedure_patient"
+                     referencedTableName="patients"
+                     referencedColumnNames="id"/>
+      </column>
+
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="from_facility_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_procedure_from_facility"
+                     referencedTableName="facility"
+                     referencedColumnNames="id"/>
+      </column>
+
+      <column name="to_facility_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_procedure_to_facility"
+                     referencedTableName="facility"
+                     referencedColumnNames="id"/>
+      </column>
+
+      <column name="from_department_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_procedure_from_department"
+                     referencedTableName="department"
+                     referencedColumnNames="id"/>
+      </column>
+
+      <column name="to_department_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_procedure_to_department"
+                     referencedTableName="department"
+                     referencedColumnNames="id"/>
+      </column>
+
+      <column name="indication_id" type="bigint">
+        <constraints nullable="true"
+                     foreignKeyName="fk_procedure_indication_icd"
+                     referencedTableName="icd_diagnosis"
+                     referencedColumnNames="id"/>
+      </column>
+
+      <column name="procedure_level" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="priority" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="body_part" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="side" type="varchar(20)">
+        <constraints nullable="true"/>
+      </column>
+
+      <column name="scheduled_date_time" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="notes" type="text"/>
+      <column name="extra_documentation" type="text"/>
+
+      <column name="status" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="cancelled_date" type="timestamp"/>
+      <!-- ✅ bigint + FK → varchar(50) بدون FK -->
+      <column name="cancelled_by" type="varchar(50)"/>
+      <column name="cancellation_reason" type="text"/>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="patient_procedure"
+      baseColumnNames="encounter_id"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"
+      constraintName="fk_procedure_encounter"/>
+
+    <sql>
+      <![CDATA[
+      CREATE UNIQUE INDEX uk_procedure_unique_context_active
+        ON patient_procedure (procedure_id, body_part, patient_id, encounter_id)
+        WHERE status <> 'CANCELLED';
+      ]]>
+    </sql>
+
+    <sql>
+      <![CDATA[
+      ALTER TABLE patient_procedure
+        ADD CONSTRAINT ck_procedure_level_enum
+          CHECK (procedure_level IN ('MAJOR', 'MEDIUM', 'MINOR'));
+      ]]>
+    </sql>
+
+    <sql>
+      <![CDATA[
+      ALTER TABLE patient_procedure
+        ADD CONSTRAINT ck_procedure_status_enum
+          CHECK (
+            status IN (
+                       'REQUESTED',
+                       'STARTED',
+                       'CANCELLED',
+                       'COMPLETED',
+                       'AWAITING_CONSENT',
+                       'IN_PROGRESS',
+                       'SUBMITTED',
+                       'RETURNED_TO_BED'
+              )
+            );
+      ]]>
+    </sql>
+
+    <sql>
+      <![CDATA[
+      ALTER TABLE patient_procedure
+        ADD CONSTRAINT ck_procedure_cancellation_reason
+          CHECK (
+            status <> 'CANCELLED'
+              OR cancellation_reason IS NOT NULL
+            );
+      ]]>
+    </sql>
+
+  </changeSet>
+
+  <changeSet id="QA0000000000019_PROCEDURE_LOG_TABLE" author="qais">
+
+    <createTable tableName="patient_procedure_log">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="procedure_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_procedure_log_procedure"
+                     referencedTableName="patient_procedure"
+                     referencedColumnNames="id"/>
+      </column>
+
+      <column name="action" type="varchar(10)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+      <column name="payload" type="jsonb"/>
+    </createTable>
+
+  </changeSet>
+
+  <include file="config/liquibase/sql/patient_procedure_triggers.sql" relativeToChangelogFile="false"/>
+
+</databaseChangeLog>

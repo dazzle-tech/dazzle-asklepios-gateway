@@ -37,6 +37,17 @@
       <column name="is_active" type="boolean"/>
       <column name="has_medical_sheets" type="boolean" defaultValueBoolean="false"/>
       <column name="has_nurse_medical_sheets" type="boolean" defaultValueBoolean="false"/>
+
+      <column name="parallel_capacity_enabled" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="parallel_capacity_value" type="int" defaultValueNumeric="1"/>
+      <column name="default_duration_minutes" type="int"/>
+      <column name="default_buffer_before_minutes" type="int" defaultValueNumeric="0"/>
+      <column name="default_buffer_after_minutes" type="int" defaultValueNumeric="0"/>
+      <column name="require_practitioner" type="boolean" defaultValueBoolean="false"/>
+      <column name="require_billing" type="boolean" defaultValueBoolean="false"/>
+      <column name="require_pre_assessment" type="boolean" defaultValueBoolean="false"/>
     </createTable>
 
     <addForeignKeyConstraint
@@ -45,7 +56,33 @@
       referencedTableName="facility"
       referencedColumnNames="id"
       constraintName="fk_department_facility"/>
-    <dropDefaultValue tableName="department" columnName="created_date" columnDataType="${datetimeType}"/>
+
+
+    <sql>
+      ALTER TABLE department
+        ADD CONSTRAINT chk_department_parallel_capacity
+          CHECK (
+            parallel_capacity_enabled = false
+              OR (parallel_capacity_enabled = true AND parallel_capacity_value IS NOT NULL AND parallel_capacity_value >= 1)
+            );
+    </sql>
+
+    <sql>
+      ALTER TABLE department
+        ADD CONSTRAINT chk_department_appointable_requirements
+          CHECK (
+            appointable = false
+              OR (
+              appointable = true
+                AND default_duration_minutes IS NOT NULL AND default_duration_minutes > 0
+                AND default_buffer_before_minutes IS NOT NULL AND default_buffer_before_minutes >= 0
+                AND default_buffer_after_minutes IS NOT NULL AND default_buffer_after_minutes >= 0
+                AND require_practitioner IS NOT NULL
+                AND require_billing IS NOT NULL
+                AND require_pre_assessment IS NOT NULL
+              )
+            );
+    </sql>
 
   </changeSet>
 

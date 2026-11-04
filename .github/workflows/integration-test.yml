@@ -2,7 +2,7 @@ name: Integration Tests (Gradle)
 
 on:
   push:
-    branches: [ "**" ]
+    branches: ["**"]
   workflow_dispatch:
 
 permissions:
@@ -16,17 +16,24 @@ jobs:
   integration-tests:
     runs-on: ubuntu-latest
 
+    # Forces Docker client to speak the expected API version,
+    # and prefers IPv4 (helps with ENETUNREACH/IPv6 issues on runners).
+    env:
+      JAVA_TOOL_OPTIONS: "-Djava.net.preferIPv4Stack=true -Djava.net.preferIPv6Addresses=false"
+
     strategy:
       fail-fast: false
       matrix:
-        java: ['21']   # Test against both Java 17 and 21 (adjust as needed)
+        java: ["21"]
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # Wrapper validation was failing for you due to network timeouts/IPv6.
+      # This is the official replacement and is generally more reliable.
       - name: Validate Gradle Wrapper
-        uses: gradle/wrapper-validation-action@v2
+        uses: gradle/actions/wrapper-validation@v4
 
       - name: Set up Java ${{ matrix.java }}
         uses: actions/setup-java@v4
@@ -38,7 +45,12 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
 
+
+
       - name: Run integration tests
+        env:
+          DOCKER_HOST: unix:///var/run/docker.sock
+          TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE: /var/run/docker.sock
         run: |
           chmod +x ./gradlew
           ./gradlew --no-daemon clean integrationTest --info --stacktrace

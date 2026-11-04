@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="bs00000000000058" author="batool">
+
+    <addColumn tableName="patient_payment_allocations">
+      <column name="document_item_id" type="bigint"/>
+    </addColumn>
+
+    <addForeignKeyConstraint
+      constraintName="fk_allocation_document_item"
+      baseTableName="patient_payment_allocations"
+      baseColumnNames="document_item_id"
+      referencedTableName="financial_document_items"
+      referencedColumnNames="id"
+      onDelete="RESTRICT"/>
+
+
+    <createIndex
+      indexName="idx_alloc_document_item"
+      tableName="patient_payment_allocations">
+      <column name="document_item_id"/>
+    </createIndex>
+
+  </changeSet>
+</databaseChangeLog>

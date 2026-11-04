@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="2026092901_claim_settlement_number" author="Batool Sbaih">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <columnExists tableName="claim_request" columnName="settlement_no"/>
+      </not>
+    </preConditions>
+
+    <addColumn tableName="claim_request">
+      <column name="settlement_no" type="varchar(50)"/>
+    </addColumn>
+
+    <createSequence
+      sequenceName="claim_settlement_seq"
+      startValue="1"
+      incrementBy="1"/>
+
+    <sql>
+      <![CDATA[
+      UPDATE claim_request cr
+      SET settlement_no = 'SET-' || grouped.min_id
+      FROM (
+          SELECT upload_name, MIN(id) AS min_id
+          FROM claim_request
+          WHERE upload_name IS NOT NULL
+            AND BTRIM(upload_name) <> ''
+          GROUP BY upload_name
+      ) grouped
+      WHERE cr.upload_name = grouped.upload_name
+        AND (cr.settlement_no IS NULL OR BTRIM(cr.settlement_no) = '');
+
+      UPDATE claim_request
+      SET settlement_no = 'SET-' || id
+      WHERE settlement_no IS NULL OR BTRIM(settlement_no) = '';
+
+      UPDATE claim_request
+      SET settlement_no = NULL
+      WHERE status IS DISTINCT FROM 'ACCEPTED'
+        AND settlement_no IS NOT NULL;
+      ]]>
+    </sql>
+
+    <sql splitStatements="false">
+      <![CDATA[
+      DO $$
+      DECLARE
+          max_no BIGINT;
+      BEGIN
+          SELECT MAX(CAST(SUBSTRING(settlement_no FROM 5) AS BIGINT))
+          INTO max_no
+          FROM claim_request
+          WHERE settlement_no ~ '^SET-[0-9]+$';
+
+          IF max_no IS NOT NULL AND max_no > 0 THEN
+              PERFORM setval('claim_settlement_seq', max_no);
+          END IF;
+      END $$;
+      ]]>
+    </sql>
+
+    <createIndex tableName="claim_request" indexName="idx_claim_request_settlement_no">
+      <column name="settlement_no"/>
+    </createIndex>
+  </changeSet>
+</databaseChangeLog>

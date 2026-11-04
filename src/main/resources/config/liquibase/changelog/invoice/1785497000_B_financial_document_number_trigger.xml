@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="1785497000_B_financial_document_number_trigger" author="BatoolSbaih">
+    <sql splitStatements="false">
+      CREATE OR REPLACE FUNCTION fn_generate_financial_document_number()
+      RETURNS TRIGGER
+      AS
+      $$
+      BEGIN
+        IF NEW.document_number IS NULL OR BTRIM(NEW.document_number) = '' THEN
+          RAISE EXCEPTION
+            'Financial document number must be assigned from numbering setup before insert';
+        END IF;
+
+        RETURN NEW;
+      END;
+      $$ LANGUAGE plpgsql;
+    </sql>
+  </changeSet>
+
+</databaseChangeLog>

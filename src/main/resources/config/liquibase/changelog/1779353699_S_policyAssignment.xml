@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="00000000000072_POLICY_ASSIGNMENT" author="Sondos">
+
+    <createTable tableName="policy_assignment">
+      <column name="id" type="bigint" autoIncrement="true" startWith="5000">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+
+      <column name="policy_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="facility_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="resource_type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="resource_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="is_active" type="boolean" defaultValue="true">
+        <constraints nullable="false"/>
+      </column>
+      <column name="is_required" type="boolean" defaultValue="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp" defaultValue="now()">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="policy_assignment"
+      baseColumnNames="policy_id"
+      referencedTableName="policy_definition"
+      referencedColumnNames="id"
+      constraintName="fk_policy_assignment_policy"/>
+
+    <addForeignKeyConstraint
+      baseTableName="policy_assignment"
+      baseColumnNames="facility_id"
+      referencedTableName="facility"
+      referencedColumnNames="id"
+      constraintName="fk_policy_assignment_facility"/>
+
+    <addUniqueConstraint
+      tableName="policy_assignment"
+      columnNames="policy_id, resource_type, resource_id"
+      constraintName="uk_policy_assignment_policy_resource"/>
+
+    <createIndex
+      tableName="policy_assignment"
+      indexName="idx_policy_assignment_policy_id">
+      <column name="policy_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="policy_assignment"
+      indexName="idx_policy_assignment_resource">
+      <column name="resource_type"/>
+      <column name="resource_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="policy_assignment"
+      indexName="idx_policy_assignment_facility_id">
+      <column name="facility_id"/>
+    </createIndex>
+
+  </changeSet>
+
+</databaseChangeLog>

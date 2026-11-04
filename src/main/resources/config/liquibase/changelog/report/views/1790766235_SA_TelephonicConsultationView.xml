@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-telephonic-consultation-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwtelephonicconsultation AS
+      SELECT
+        tc.id,
+        tc.patient_id,
+        tc.encounter_id,
+        tc.practitioner_id,
+        tc.date_of_call,
+        tc.consultation_content,
+        tc.approval_number,
+        tc.notes,
+        tc.extra_documentation,
+        tc.status,
+        tc.cancellation_reason,
+        tc.cancelled_at,
+        tc.cancelled_by,
+        tc.created_by,
+        tc.created_date,
+        tc.last_modified_by,
+        tc.last_modified_date
+      FROM public.telephonic_consultation tc;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwtelephonicconsultation;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-telephonic-consultation-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwtelephonicconsultation TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwtelephonicconsultation FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-pre-authorization-diagnosis-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwpreauthorizationdiagnosis AS
+      SELECT
+        pad.id,
+        pad.pre_authorization_id,
+        pad.sequence,
+        pad.diagnosis_code,
+        pad.diagnosis_description,
+        pad.diagnosis_type,
+        pad.on_admission,
+        pad.created_date,
+        pad.created_by,
+        pad.last_modified_by,
+        pad.last_modified_date
+      FROM public.pre_authorization_diagnosis pad;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwpreauthorizationdiagnosis;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-pre-authorization-diagnosis-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwpreauthorizationdiagnosis TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwpreauthorizationdiagnosis FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="BM000000000056" author="BushraMashaiekh">
+
+    <createTable tableName="billing_refund">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true"  nullable="false"/>
+      </column>
+
+      <column name="refund_number" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="wallet_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="encounter_id" type="bigint"/>
+
+      <column name="original_payment_id" type="bigint"/>
+
+      <column name="original_payment_transaction_id" type="bigint"/>
+
+      <column name="refund_payment_transaction_id" type="bigint"/>
+
+      <column name="refund_source_type" type="varchar(40)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="requested_amount" type="numeric(19,4)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="approved_amount" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="refunded_amount" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="reversed_amount" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="currency" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="refund_method_code" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="refund_method_id" type="bigint"/>
+
+      <column name="status" type="varchar(30)" defaultValue="REQUESTED">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="request_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="requested_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="reason" type="varchar(500)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="approved_by" type="varchar(50)"/>
+
+      <column name="approved_date" type="timestamp"/>
+
+      <column name="rejected_by" type="varchar(50)"/>
+
+      <column name="rejected_date" type="timestamp"/>
+
+      <column name="rejection_reason" type="varchar(500)"/>
+
+      <column name="completed_by" type="varchar(50)"/>
+
+      <column name="completed_date" type="timestamp"/>
+
+      <column name="cancelled_by" type="varchar(50)"/>
+
+      <column name="cancelled_date" type="timestamp"/>
+
+      <column name="cancellation_reason" type="varchar(500)"/>
+
+      <column name="reversed_by" type="varchar(50)"/>
+
+      <column name="reversed_date" type="timestamp"/>
+
+      <column name="reversal_reason" type="varchar(500)"/>
+
+      <column name="external_reference" type="varchar(150)"/>
+
+      <column name="processor_reference" type="varchar(150)"/>
+
+      <column name="reference_document_type" type="varchar(50)"/>
+
+      <column name="reference_document_id" type="bigint"/>
+
+      <column name="reference_document_number" type="varchar(150)"/>
+
+      <column name="original_refund_id" type="bigint"/>
+
+      <column name="idempotency_key" type="varchar(150)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="transaction_group_id" type="uuid">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="notes" type="text"/>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_refund"
+      baseColumnNames="wallet_id"
+      referencedTableName="billing_wallet"
+      referencedColumnNames="id"
+      constraintName="fk_billing_refund_wallet"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_refund"
+      baseColumnNames="patient_id"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+      constraintName="fk_billing_refund_patient"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_refund"
+      baseColumnNames="encounter_id"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"
+      constraintName="fk_billing_refund_encounter"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_refund"
+      baseColumnNames="original_payment_id"
+      referencedTableName="billing_payment"
+      referencedColumnNames="id"
+      constraintName="fk_billing_refund_original_payment"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_refund"
+      baseColumnNames="original_payment_transaction_id"
+      referencedTableName="billing_payment_transaction"
+      referencedColumnNames="id"
+      constraintName="fk_billing_refund_original_payment_tx"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_refund"
+      baseColumnNames="refund_payment_transaction_id"
+      referencedTableName="billing_payment_transaction"
+      referencedColumnNames="id"
+      constraintName="fk_billing_refund_payment_tx"/>
+
+
+    <addForeignKeyConstraint
+      baseTableName="billing_refund"
+      baseColumnNames="original_refund_id"
+      referencedTableName="billing_refund"
+      referencedColumnNames="id"
+      constraintName="fk_billing_refund_original_refund"/>
+
+    <addUniqueConstraint
+      tableName="billing_refund"
+      columnNames="refund_number"
+      constraintName="uq_billing_refund_number"/>
+
+
+    <addUniqueConstraint
+      tableName="billing_refund"
+      columnNames="idempotency_key"
+      constraintName="uq_billing_refund_idempotency"/>
+
+
+    <sql>
+      ALTER TABLE billing_refund
+        ADD CONSTRAINT ck_billing_refund_non_negative
+          CHECK (
+            requested_amount &gt; 0
+              AND approved_amount &gt;= 0
+              AND refunded_amount &gt;= 0
+              AND reversed_amount &gt;= 0
+            );
+    </sql>
+
+    <sql>
+      ALTER TABLE billing_refund
+        ADD CONSTRAINT ck_billing_refund_amount_limits
+          CHECK (
+            approved_amount &lt;= requested_amount
+              AND refunded_amount &lt;= approved_amount
+              AND reversed_amount &lt;= refunded_amount
+            );
+    </sql>
+
+
+    <sql>
+      ALTER TABLE billing_refund
+        ADD CONSTRAINT ck_billing_refund_payment_source
+          CHECK (
+            refund_source_type &lt;&gt; 'PAYMENT_TRANSACTION'
+              OR (
+              original_payment_id IS NOT NULL
+                AND original_payment_transaction_id IS NOT NULL
+              )
+            );
+    </sql>
+
+    <sql>
+      ALTER TABLE billing_refund
+        ADD CONSTRAINT ck_billing_refund_wallet_source
+          CHECK (
+            refund_source_type &lt;&gt; 'WALLET_AVAILABLE'
+              OR wallet_id IS NOT NULL
+            );
+    </sql>
+
+
+    <sql>
+      ALTER TABLE billing_refund
+        ADD CONSTRAINT ck_billing_refund_approved
+          CHECK (
+            status &lt;&gt; 'APPROVED'
+              OR (
+              approved_amount &gt; 0
+                AND approved_by IS NOT NULL
+                AND approved_date IS NOT NULL
+              )
+            );
+    </sql>
+
+    <sql>
+      ALTER TABLE billing_refund
+        ADD CONSTRAINT ck_billing_refund_completed
+          CHECK (
+            status &lt;&gt; 'COMPLETED'
+              OR (
+              approved_amount &gt; 0
+                AND refunded_amount = approved_amount
+                AND completed_by IS NOT NULL
+                AND completed_date IS NOT NULL
+              )
+            );
+    </sql>
+
+    <sql>
+      ALTER TABLE billing_refund
+        ADD CONSTRAINT ck_billing_refund_rejected
+          CHECK (
+            status &lt;&gt; 'REJECTED'
+              OR (
+              refunded_amount = 0
+                AND rejected_by IS NOT NULL
+                AND rejected_date IS NOT NULL
+                AND rejection_reason IS NOT NULL
+              )
+            );
+    </sql>
+
+    <sql>
+      ALTER TABLE billing_refund
+        ADD CONSTRAINT ck_billing_refund_cancelled
+          CHECK (
+            status &lt;&gt; 'CANCELLED'
+              OR (
+              refunded_amount = 0
+                AND cancelled_by IS NOT NULL
+                AND cancelled_date IS NOT NULL
+                AND cancellation_reason IS NOT NULL
+              )
+            );
+    </sql>
+
+    <sql>
+      ALTER TABLE billing_refund
+        ADD CONSTRAINT ck_billing_refund_reversed
+          CHECK (
+            status &lt;&gt; 'REVERSED'
+              OR (
+              refunded_amount &gt; 0
+                AND reversed_amount = refunded_amount
+                AND original_refund_id IS NOT NULL
+                AND reversed_by IS NOT NULL
+                AND reversed_date IS NOT NULL
+                AND reversal_reason IS NOT NULL
+              )
+            );
+    </sql>
+
+    <createIndex
+      tableName="billing_refund"
+      indexName="idx_billing_refund_wallet">
+      <column name="wallet_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_refund"
+      indexName="idx_billing_refund_patient">
+      <column name="patient_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_refund"
+      indexName="idx_billing_refund_encounter">
+      <column name="encounter_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_refund"
+      indexName="idx_billing_refund_original_payment">
+      <column name="original_payment_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_refund"
+      indexName="idx_billing_refund_original_payment_tx">
+      <column name="original_payment_transaction_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_refund"
+      indexName="idx_billing_refund_payment_tx">
+      <column name="refund_payment_transaction_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_refund"
+      indexName="idx_billing_refund_status">
+      <column name="status"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_refund"
+      indexName="idx_billing_refund_request_date">
+      <column name="request_date"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_refund"
+      indexName="idx_billing_refund_patient_status">
+      <column name="patient_id"/>
+      <column name="status"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_refund"
+      indexName="idx_billing_refund_wallet_status">
+      <column name="wallet_id"/>
+      <column name="status"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_refund"
+      indexName="idx_billing_refund_transaction_group">
+      <column name="transaction_group_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_refund"
+      indexName="idx_billing_refund_original_refund">
+      <column name="original_refund_id"/>
+    </createIndex>
+
+  </changeSet>
+
+</databaseChangeLog>

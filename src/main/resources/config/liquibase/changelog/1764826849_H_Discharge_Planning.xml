@@ -17,6 +17,7 @@
       <column name="patient_id" type="bigint">
         <constraints nullable="false"/>
       </column>
+
       <column name="encounter_id" type="bigint">
         <constraints nullable="false" unique="true"/>
       </column>
@@ -25,7 +26,9 @@
       <column name="expected_discharge_date" type="date">
         <constraints nullable="false"/>
       </column>
+
       <column name="estimated_los" type="varchar(50)"/>
+
       <column name="readiness_status" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
@@ -34,36 +37,45 @@
       <column name="medical_condition_stable" type="boolean" defaultValueBoolean="false">
         <constraints nullable="false"/>
       </column>
+
       <column name="vitals_stable" type="boolean" defaultValueBoolean="false">
         <constraints nullable="false"/>
       </column>
+
       <column name="pending_investigations" type="boolean" defaultValueBoolean="false">
         <constraints nullable="false"/>
       </column>
-      <column name="mobility_adl_status" type="boolean" defaultValueBoolean="false">
-      </column>
+
+      <column name="mobility_adl_status" type="boolean" defaultValueBoolean="false"/>
+
       <!-- Diagnosis (ICD-10) -->
       <column name="diagnosis_code" type="varchar(20)">
         <constraints nullable="false"/>
       </column>
+
       <column name="diagnosis_name" type="varchar(255)"/>
 
       <!-- Discharge Checklist -->
       <column name="final_med_reconciliation_completed" type="boolean" defaultValueBoolean="false">
         <constraints nullable="false"/>
       </column>
+
       <column name="discharge_summary_prepared" type="boolean" defaultValueBoolean="false">
         <constraints nullable="false"/>
       </column>
+
       <column name="discharge_orders_signed" type="boolean" defaultValueBoolean="false">
         <constraints nullable="false"/>
       </column>
+
       <column name="nursing_discharge_report_done" type="boolean" defaultValueBoolean="false">
         <constraints nullable="false"/>
       </column>
+
       <column name="patient_family_informed" type="boolean" defaultValueBoolean="false">
         <constraints nullable="false"/>
       </column>
+
       <column name="transport_arranged" type="boolean" defaultValueBoolean="false">
         <constraints nullable="false"/>
       </column>
@@ -73,6 +85,7 @@
       <column name="home_care_needed" type="boolean" defaultValueBoolean="false">
         <constraints nullable="false"/>
       </column>
+
       <column name="post_discharge_dietary_plan" type="varchar(2000)"/>
       <column name="post_discharge_social_needs" type="varchar(2000)"/>
 
@@ -84,9 +97,11 @@
       <column name="material_leaflet" type="boolean" defaultValueBoolean="false">
         <constraints nullable="false"/>
       </column>
+
       <column name="material_verbal" type="boolean" defaultValueBoolean="false">
         <constraints nullable="false"/>
       </column>
+
       <column name="material_video" type="boolean" defaultValueBoolean="false">
         <constraints nullable="false"/>
       </column>
@@ -94,6 +109,7 @@
       <column name="education_provided" type="boolean" defaultValueBoolean="false">
         <constraints nullable="false"/>
       </column>
+
       <column name="patient_understanding" type="boolean" defaultValueBoolean="false">
         <constraints nullable="false"/>
       </column>
@@ -109,6 +125,14 @@
       <column name="last_modified_by" type="varchar(50)"/>
       <column name="last_modified_date" type="timestamp"/>
     </createTable>
+
+    <!-- FK encounter -->
+    <addForeignKeyConstraint
+      baseTableName="discharge_planning"
+      baseColumnNames="encounter_id"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"
+      constraintName="fk_discharge_planning_encounter"/>
 
     <createIndex tableName="discharge_planning" indexName="idx_discharge_planning_patient">
       <column name="patient_id"/>

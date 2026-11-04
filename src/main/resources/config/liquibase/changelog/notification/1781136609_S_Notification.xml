@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="NOTIF_00000000000004" author="Sondos-Abd-Alaal">
+
+    <createTable schemaName="notification" tableName="notification">
+      <column name="id" type="bigint" autoIncrement="true" startWith="5000">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+
+      <column name="facility_id" type="bigint"/>
+
+      <column name="notification_header_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="notification_template_id" type="bigint"/>
+
+      <column name="code" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="channel" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="language" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="status" type="varchar(50)" defaultValue="PENDING">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="priority" type="varchar(50)"/>
+
+      <!-- Main recipient snapshot -->
+      <column name="recipient_type" type="varchar(50)"/>
+      <column name="recipient_id" type="bigint"/>
+      <column name="recipient_name" type="varchar(255)"/>
+      <column name="recipient_email" type="varchar(255)"/>
+      <column name="recipient_phone" type="varchar(50)"/>
+
+      <!-- Final resolved delivery destinations -->
+      <column name="to_emails" type="jsonb"/>
+      <column name="cc_emails" type="jsonb"/>
+      <column name="bcc_emails" type="jsonb"/>
+      <column name="to_phone" type="varchar(50)"/>
+
+      <!-- Message content snapshot -->
+      <column name="subject" type="varchar(255)"/>
+      <column name="title" type="varchar(255)"/>
+      <column name="body" type="text"/>
+
+      <!-- Dynamic data used for template rendering -->
+      <column name="data_json" type="jsonb"/>
+      <column name="recipient_json" type="jsonb"/>
+      <column name="resolved_recipients_json" type="jsonb"/>
+      <column name="channel_payload" type="jsonb"/>
+
+      <!-- Relation to source business object -->
+      <column name="related_entity_type" type="varchar(100)"/>
+      <column name="related_entity_id" type="bigint"/>
+
+      <!-- Provider tracking -->
+      <column name="provider_name" type="varchar(100)"/>
+      <column name="provider_message_id" type="varchar(255)"/>
+      <column name="provider_status" type="varchar(100)"/>
+      <column name="provider_response" type="jsonb"/>
+      <column name="error_message" type="text"/>
+
+      <!-- Processing / retry -->
+      <column name="retry_count" type="integer" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="max_retry_count" type="integer" defaultValueNumeric="3">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="next_retry_date" type="timestamp"/>
+      <column name="sent_date" type="timestamp"/>
+      <column name="delivered_date" type="timestamp"/>
+      <column name="read_date" type="timestamp"/>
+      <column name="failed_date" type="timestamp"/>
+
+      <column name="created_by" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(100)"/>
+
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableSchemaName="notification"
+      baseTableName="notification"
+      baseColumnNames="notification_header_id"
+      referencedTableSchemaName="notification"
+      referencedTableName="notification_header"
+      referencedColumnNames="id"
+      constraintName="fk_notification_header"/>
+
+    <addForeignKeyConstraint
+      baseTableSchemaName="notification"
+      baseTableName="notification"
+      baseColumnNames="notification_template_id"
+      referencedTableSchemaName="notification"
+      referencedTableName="notification_template"
+      referencedColumnNames="id"
+      constraintName="fk_notification_template"/>
+
+    <addForeignKeyConstraint
+      baseTableSchemaName="notification"
+      baseTableName="notification"
+      baseColumnNames="language"
+      referencedTableSchemaName="public"
+      referencedTableName="language"
+      referencedColumnNames="lang_key"
+      constraintName="fk_notification_language"/>
+
+    <!-- Status validation -->
+    <sql>
+      ALTER TABLE notification.notification
+        ADD CONSTRAINT chk_notification_status
+          CHECK (
+            status IN (
+                       'PENDING',
+                       'PROCESSING',
+                       'SENT',
+                       'DELIVERED',
+                       'READ',
+                       'FAILED',
+                       'CANCELLED'
+              )
+            );
+    </sql>
+
+    <!-- Channel validation -->
+    <sql>
+      ALTER TABLE notification.notification
+        ADD CONSTRAINT chk_notification_channel
+          CHECK (
+            channel IN (
+                        'EMAIL',
+                        'WHATSAPP',
+                        'SMS',
+                        'IN_APP',
+                        'PUSH'
+              )
+            );
+    </sql>
+
+    <!-- Recipient validation by channel -->
+    <sql>
+      ALTER TABLE notification.notification
+        ADD CONSTRAINT chk_notification_channel_recipient
+          CHECK (
+            (
+              channel &lt;&gt; 'EMAIL'
+                OR (
+                to_emails IS NOT NULL
+                  AND jsonb_typeof(to_emails) = 'array'
+                  AND jsonb_array_length(to_emails) &gt; 0
+                )
+              )
+              AND
+            (
+              channel NOT IN ('SMS', 'WHATSAPP')
+                OR (
+                to_phone IS NOT NULL
+                  AND btrim(to_phone) &lt;&gt; ''
+                )
+              )
+            );
+    </sql>
+
+    <!-- Body validation for channels that need body -->
+    <sql>
+      ALTER TABLE notification.notification
+        ADD CONSTRAINT chk_notification_body_required
+          CHECK (
+            channel NOT IN ('EMAIL', 'SMS', 'IN_APP', 'PUSH')
+              OR (
+              body IS NOT NULL
+                AND btrim(body) &lt;&gt; ''
+              )
+            );
+    </sql>
+
+    <!-- Email subject validation -->
+    <sql>
+      ALTER TABLE notification.notification
+        ADD CONSTRAINT chk_notification_email_subject_required
+          CHECK (
+            channel &lt;&gt; 'EMAIL'
+              OR (
+              subject IS NOT NULL
+                AND btrim(subject) &lt;&gt; ''
+              )
+            );
+    </sql>
+
+    <!-- Title validation for IN_APP and PUSH -->
+    <sql>
+      ALTER TABLE notification.notification
+        ADD CONSTRAINT chk_notification_title_required
+          CHECK (
+            channel NOT IN ('IN_APP', 'PUSH')
+              OR (
+              title IS NOT NULL
+                AND btrim(title) &lt;&gt; ''
+              )
+            );
+    </sql>
+
+    <createIndex
+      schemaName="notification"
+      tableName="notification"
+      indexName="idx_notification_status_created_date">
+      <column name="status"/>
+      <column name="created_date"/>
+    </createIndex>
+
+    <createIndex
+      schemaName="notification"
+      tableName="notification"
+      indexName="idx_notification_pending_processing">
+      <column name="status"/>
+      <column name="next_retry_date"/>
+      <column name="created_date"/>
+    </createIndex>
+
+    <createIndex
+      schemaName="notification"
+      tableName="notification"
+      indexName="idx_notification_recipient">
+      <column name="recipient_type"/>
+      <column name="recipient_id"/>
+    </createIndex>
+
+    <createIndex
+      schemaName="notification"
+      tableName="notification"
+      indexName="idx_notification_related_entity">
+      <column name="related_entity_type"/>
+      <column name="related_entity_id"/>
+    </createIndex>
+
+    <createIndex
+      schemaName="notification"
+      tableName="notification"
+      indexName="idx_notification_header_channel_language">
+      <column name="notification_header_id"/>
+      <column name="channel"/>
+      <column name="language"/>
+    </createIndex>
+
+    <createIndex
+      schemaName="notification"
+      tableName="notification"
+      indexName="idx_notification_provider_message_id">
+      <column name="provider_message_id"/>
+    </createIndex>
+
+  </changeSet>
+
+</databaseChangeLog>

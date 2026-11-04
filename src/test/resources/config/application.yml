@@ -53,8 +53,8 @@ asklepios:
     name: 'asklepiosGatewayApp'
   mail:
     base-url: http://127.0.0.1:8080
-    username: systemask73@gmail.com
-    password: ocdh hvae hhsz cyxc
+    username: cms.support.dimensions@gmail.com
+    password: tohr slst gphb swwx
   security:
     authentication:
       jwt:

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="H-15-add-encounter-phi" author="hanan253yahya">
+
+    <addColumn tableName="patient_encounters">
+      <column name="history_of_present_illness" type="text"/>
+    </addColumn>
+
+  </changeSet>
+
+</databaseChangeLog>

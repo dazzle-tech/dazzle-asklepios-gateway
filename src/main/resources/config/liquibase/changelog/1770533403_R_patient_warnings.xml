@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="R00000000000006" author="Rawan-Yahya200">
+
+    <createTable tableName="patient_warnings">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="warning_type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="warning" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="severity" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="onset_date_undefined" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="onset_date" type="timestamp"/>
+
+      <column name="by_patient" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="source_of_information" type="varchar(50)"/>
+
+      <column name="note" type="text"/>
+
+      <column name="action_taken" type="text"/>
+
+      <column name="status" type="varchar(50)" defaultValue="ACTIVE">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="resolved_by" type="varchar(50)"/>
+
+      <column name="resolved_date" type="timestamp"/>
+
+      <column name="cancelled_by" type="varchar(50)"/>
+
+      <column name="cancelled_date" type="timestamp"/>
+
+      <column name="cancellation_reason" type="text"/>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="patient_warnings"
+      baseColumnNames="patient_id"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+      constraintName="fk_patient_warnings_patient_id"/>
+
+    <addForeignKeyConstraint
+      baseTableName="patient_warnings"
+      baseColumnNames="encounter_id"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"
+      constraintName="fk_patient_warnings_encounter"/>
+
+    <sql>
+      CREATE UNIQUE INDEX uk_patient_warning
+      ON patient_warnings (patient_id, warning_type, warning)
+      WHERE status IN ('ACTIVE', 'RESOLVED');
+    </sql>
+
+  </changeSet>
+
+</databaseChangeLog>

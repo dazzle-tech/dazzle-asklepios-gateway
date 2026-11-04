@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="create-claim-encounter-copy-current-medications" author="Rawan-Yahya">
+
+    <createTable tableName="claim_encounter_copy_current_medications">
+
+      <column name="id" type="bigint" autoIncrement="true" startWith="1">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="claim_encounter_copy_id" type="bigint">
+        <constraints
+          nullable="false"
+          foreignKeyName="fk_claim_encounter_copy_current_medications_copy"
+          references="claim_encounter_copies(id)"/>
+      </column>
+
+      <column name="current_medication_id" type="bigint">
+        <constraints
+          foreignKeyName="fk_claim_encounter_copy_current_medications_source"
+          references="current_medication(id)"/>
+      </column>
+
+      <column name="active_ingredient_id" type="bigint"/>
+
+      <column name="dosage" type="DECIMAL(10,3)"/>
+
+      <column name="unit" type="varchar(50)"/>
+
+      <column name="frequency" type="varchar(100)"/>
+
+      <column name="start_date" type="date"/>
+
+      <column name="patient_is_free" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="free_text" type="text"/>
+
+      <column name="status" type="varchar(50)" defaultValue="ACTIVE">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="cancelled_by" type="varchar(50)"/>
+      <column name="cancelled_date" type="timestamp"/>
+      <column name="cancellation_reason" type="text"/>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+
+    <createIndex
+      tableName="claim_encounter_copy_current_medications"
+      indexName="idx_claim_encounter_copy_current_medications_copy">
+      <column name="claim_encounter_copy_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="claim_encounter_copy_current_medications"
+      indexName="idx_claim_encounter_copy_current_medications_source">
+      <column name="current_medication_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="claim_encounter_copy_current_medications"
+      indexName="idx_claim_encounter_copy_current_medications_active_ingredient">
+      <column name="active_ingredient_id"/>
+    </createIndex>
+
+  </changeSet>
+
+</databaseChangeLog>

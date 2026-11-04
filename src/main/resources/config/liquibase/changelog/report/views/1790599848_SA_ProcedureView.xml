@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-procedure-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwprocedure AS
+      SELECT
+        pr.id,
+        pr.name,
+        pr.code,
+        pr.category_type,
+        pr.is_appointable,
+        pr.indications,
+        pr.contraindications,
+        pr.preparation_instructions,
+        pr.recovery_notes,
+        pr.is_active,
+        pr.facility_id,
+        pr.price,
+        pr.currency,
+        pr.created_by,
+        pr.created_date,
+        pr.last_modified_by,
+        pr.last_modified_date,
+        pr.billing_rule_id
+      FROM public."procedure" pr;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwprocedure;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-procedure-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwprocedure TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwprocedure FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

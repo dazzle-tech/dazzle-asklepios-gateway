@@ -4,6 +4,7 @@ package com.dazzle.asklepios.web.rest;
 import com.dazzle.asklepios.IntegrationTest;
 import com.dazzle.asklepios.config.Constants;
 import com.dazzle.asklepios.domain.User;
+import com.dazzle.asklepios.domain.enumeration.JobRole;
 import com.dazzle.asklepios.repository.AuthorityRepository;
 import com.dazzle.asklepios.repository.UserRepository;
 import com.dazzle.asklepios.security.AuthoritiesConstants;
@@ -92,6 +93,10 @@ class UserResourceIT {
         persistUser.setImageUrl(DEFAULT_IMAGEURL);
         persistUser.setLangKey(DEFAULT_LANGKEY);
         persistUser.setCreatedBy(Constants.SYSTEM);
+
+        // job_role is mandatory
+        persistUser.setJobRole(JobRole.ANESTHESIOLOGIST);
+
         return persistUser;
     }
 
@@ -135,6 +140,7 @@ class UserResourceIT {
         userDTO.setActivated(true);
         userDTO.setImageUrl(DEFAULT_IMAGEURL);
         userDTO.setLangKey(DEFAULT_LANGKEY);
+        userDTO.setJobRole(JobRole.ANESTHESIOLOGIST);
         userDTO.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
 
         var returnedUserDTO = webTestClient
@@ -157,6 +163,7 @@ class UserResourceIT {
         assertThat(convertedUser.getEmail()).isEqualTo(DEFAULT_EMAIL);
         assertThat(convertedUser.getImageUrl()).isEqualTo(DEFAULT_IMAGEURL);
         assertThat(convertedUser.getLangKey()).isEqualTo(DEFAULT_LANGKEY);
+        assertThat(convertedUser.getJobRole()).isEqualTo(JobRole.ANESTHESIOLOGIST);
     }
 
     @Test
@@ -172,6 +179,7 @@ class UserResourceIT {
         userDTO.setActivated(true);
         userDTO.setImageUrl(DEFAULT_IMAGEURL);
         userDTO.setLangKey(DEFAULT_LANGKEY);
+        userDTO.setJobRole(JobRole.ANESTHESIOLOGIST);
         userDTO.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
 
         // An entity with an existing ID cannot be created, so this API call must fail
@@ -202,6 +210,7 @@ class UserResourceIT {
         userDTO.setActivated(true);
         userDTO.setImageUrl(DEFAULT_IMAGEURL);
         userDTO.setLangKey(DEFAULT_LANGKEY);
+        userDTO.setJobRole(JobRole.ANESTHESIOLOGIST);
         userDTO.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
 
         // Create the User
@@ -232,6 +241,7 @@ class UserResourceIT {
         userDTO.setActivated(true);
         userDTO.setImageUrl(DEFAULT_IMAGEURL);
         userDTO.setLangKey(DEFAULT_LANGKEY);
+        userDTO.setJobRole(JobRole.ANESTHESIOLOGIST);
         userDTO.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
 
         // Create the User
@@ -272,6 +282,7 @@ class UserResourceIT {
         assertThat(foundUser.getEmail()).isEqualTo(DEFAULT_EMAIL);
         assertThat(foundUser.getImageUrl()).isEqualTo(DEFAULT_IMAGEURL);
         assertThat(foundUser.getLangKey()).isEqualTo(DEFAULT_LANGKEY);
+        assertThat(foundUser.getJobRole()).isEqualTo(JobRole.ANESTHESIOLOGIST);
     }
 
     @Test
@@ -330,6 +341,8 @@ class UserResourceIT {
         userDTO.setCreatedDate(updatedUser.getCreatedDate());
         userDTO.setLastModifiedBy(updatedUser.getLastModifiedBy());
         userDTO.setLastModifiedDate(updatedUser.getLastModifiedDate());
+        userDTO.setJobRole(updatedUser.getJobRole());
+
         userDTO.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
 
         webTestClient
@@ -350,6 +363,8 @@ class UserResourceIT {
             assertThat(testUser.getEmail()).isEqualTo(UPDATED_EMAIL);
             assertThat(testUser.getImageUrl()).isEqualTo(UPDATED_IMAGEURL);
             assertThat(testUser.getLangKey()).isEqualTo(UPDATED_LANGKEY);
+            assertThat(testUser.getJobRole()).isEqualTo(updatedUser.getJobRole());
+
         });
     }
 
@@ -375,6 +390,7 @@ class UserResourceIT {
         userDTO.setCreatedDate(updatedUser.getCreatedDate());
         userDTO.setLastModifiedBy(updatedUser.getLastModifiedBy());
         userDTO.setLastModifiedDate(updatedUser.getLastModifiedDate());
+        userDTO.setJobRole(updatedUser.getJobRole());
         userDTO.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
 
         webTestClient
@@ -390,7 +406,6 @@ class UserResourceIT {
         assertPersistedUsers(users -> {
             assertThat(users).hasSize(databaseSizeBeforeUpdate);
             User testUser = users.stream().filter(usr -> usr.getId().equals(updatedUser.getId())).findFirst().orElseThrow();
-            assertThat(testUser.getLogin()).isEqualTo(UPDATED_LOGIN);
             assertThat(testUser.getFirstName()).isEqualTo(UPDATED_FIRSTNAME);
             assertThat(testUser.getLastName()).isEqualTo(UPDATED_LASTNAME);
             assertThat(testUser.getEmail()).isEqualTo(UPDATED_EMAIL);
@@ -414,6 +429,10 @@ class UserResourceIT {
         anotherUser.setImageUrl("");
         anotherUser.setLangKey("en");
         anotherUser.setCreatedBy(Constants.SYSTEM);
+
+        // job_role is mandatory
+        anotherUser.setJobRole(JobRole.ANESTHESIOLOGIST);
+
         userRepository.save(anotherUser).block();
 
         // Update the user
@@ -421,10 +440,9 @@ class UserResourceIT {
 
         AdminUserDTO userDTO = new AdminUserDTO();
         userDTO.setId(updatedUser.getId());
-        userDTO.setLogin(updatedUser.getLogin());
         userDTO.setFirstName(updatedUser.getFirstName());
         userDTO.setLastName(updatedUser.getLastName());
-        userDTO.setEmail("testuser@localhost"); // this email should already be used by anotherUser
+        userDTO.setEmail("testuser@localhost");
         userDTO.setActivated(updatedUser.isActivated());
         userDTO.setImageUrl(updatedUser.getImageUrl());
         userDTO.setLangKey(updatedUser.getLangKey());
@@ -432,6 +450,9 @@ class UserResourceIT {
         userDTO.setCreatedDate(updatedUser.getCreatedDate());
         userDTO.setLastModifiedBy(updatedUser.getLastModifiedBy());
         userDTO.setLastModifiedDate(updatedUser.getLastModifiedDate());
+
+        userDTO.setJobRole(updatedUser.getJobRole());
+
         userDTO.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
 
         webTestClient
@@ -459,6 +480,8 @@ class UserResourceIT {
         anotherUser.setImageUrl("");
         anotherUser.setLangKey("en");
         anotherUser.setCreatedBy(Constants.SYSTEM);
+        anotherUser.setJobRole(JobRole.ANESTHESIOLOGIST);
+
         userRepository.save(anotherUser).block();
 
         // Update the user
@@ -477,6 +500,8 @@ class UserResourceIT {
         userDTO.setCreatedDate(updatedUser.getCreatedDate());
         userDTO.setLastModifiedBy(updatedUser.getLastModifiedBy());
         userDTO.setLastModifiedDate(updatedUser.getLastModifiedDate());
+        userDTO.setJobRole(updatedUser.getJobRole());
+
         userDTO.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
 
         webTestClient

@@ -17,7 +17,9 @@
       <column name="patient_id" type="bigint">
         <constraints nullable="false"/>
       </column>
-      <column name="encounter_id" type="bigint"/>
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
 
       <!-- main fields -->
       <column name="referral_type" type="varchar(20)" defaultValue="INTERNAL">
@@ -48,6 +50,14 @@
       <column name="last_modified_by" type="varchar(50)"/>
       <column name="last_modified_date" type="timestamp"/>
     </createTable>
+
+    <!-- FK encounter -->
+    <addForeignKeyConstraint
+      baseTableName="referral_request"
+      baseColumnNames="encounter_id"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"
+      constraintName="fk_referral_request_encounter"/>
 
     <createIndex tableName="referral_request" indexName="idx_referral_request_patient">
       <column name="patient_id"/>

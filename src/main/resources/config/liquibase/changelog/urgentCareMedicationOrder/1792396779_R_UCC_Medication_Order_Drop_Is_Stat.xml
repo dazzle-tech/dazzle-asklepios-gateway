@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!--
+    STAT is now a MedFrequency value (frequency = 'STAT'), so is_stat is no longer needed.
+    Existing STAT orders keep that information in frequency before the column is dropped.
+    Must be deployed together with the patient-service version that no longer maps is_stat.
+  -->
+  <changeSet id="1792396779_R_UCC_MEDICATION_ORDER_DROP_IS_STAT" author="Rawan-Yahya">
+    <sql>
+      UPDATE urgent_care_medication_order
+      SET frequency = 'STAT'
+      WHERE is_stat = true
+        AND frequency IS NULL;
+    </sql>
+
+    <dropColumn tableName="urgent_care_medication_order" columnName="is_stat"/>
+
+    <!-- Column re-created from frequency = 'STAT' -->
+    <rollback>
+      <addColumn tableName="urgent_care_medication_order">
+        <column name="is_stat" type="boolean" defaultValueBoolean="false">
+          <constraints nullable="false"/>
+        </column>
+      </addColumn>
+      <sql>
+        UPDATE urgent_care_medication_order
+        SET is_stat = true
+        WHERE frequency = 'STAT';
+      </sql>
+    </rollback>
+  </changeSet>
+
+</databaseChangeLog>

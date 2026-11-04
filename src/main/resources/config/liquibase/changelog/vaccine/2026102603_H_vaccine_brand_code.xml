@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!--
+    Vaccine brand item code: used as the item code in price lists and Waseel SBS mapping.
+  -->
+  <changeSet id="2026102603_H_VACCINE_BRAND_CODE" author="hanan">
+
+    <addColumn tableName="vaccine_brands">
+      <column name="code" type="varchar(100)"/>
+    </addColumn>
+
+    <!-- Existing brands get a generated code, they can be edited from Vaccine Setup -->
+    <sql>
+      UPDATE vaccine_brands
+      SET code = 'VB-' || id
+      WHERE code IS NULL;
+    </sql>
+
+    <addNotNullConstraint tableName="vaccine_brands" columnName="code" columnDataType="varchar(100)"/>
+
+    <addUniqueConstraint
+      tableName="vaccine_brands"
+      columnNames="code"
+      constraintName="ux_vaccine_brands_code"/>
+
+  </changeSet>
+
+</databaseChangeLog>

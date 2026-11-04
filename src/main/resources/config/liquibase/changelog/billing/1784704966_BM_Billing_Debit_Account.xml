@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="BM000000000053" author="BushraMashaiekh">
+
+    <createTable tableName="billing_debit_account">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="account_number" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="currency" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="credit_limit"
+              type="numeric(19,4)"
+              defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="current_debit_balance"
+              type="numeric(19,4)"
+              defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="available_credit"
+              type="numeric(19,4)"
+              defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="total_debit_created"
+              type="numeric(19,4)"
+              defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="total_debit_settled"
+              type="numeric(19,4)"
+              defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="status" type="varchar(30)" defaultValue="ACTIVE">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="debit_allowed" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="approval_required" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="approved_by" type="varchar(50)"/>
+
+      <column name="approved_date" type="timestamp"/>
+
+      <column name="blocked_by" type="varchar(50)"/>
+
+      <column name="blocked_date" type="timestamp"/>
+
+      <column name="block_reason" type="varchar(500)"/>
+
+      <column name="expiry_date" type="date"/>
+
+      <column name="notes" type="text"/>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+
+
+    <addForeignKeyConstraint
+      baseTableName="billing_debit_account"
+      baseColumnNames="patient_id"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+      constraintName="fk_billing_debit_account_patient"/>
+
+
+    <addUniqueConstraint
+      tableName="billing_debit_account"
+      columnNames="account_number"
+      constraintName="uq_billing_debit_account_number"/>
+
+
+    <addUniqueConstraint
+      tableName="billing_debit_account"
+      columnNames="patient_id,currency"
+      constraintName="uq_billing_debit_account_patient_currency"/>
+
+    <sql>
+      ALTER TABLE billing_debit_account
+        ADD CONSTRAINT ck_billing_debit_account_non_negative
+          CHECK (
+            credit_limit &gt;= 0
+              AND current_debit_balance &gt;= 0
+              AND available_credit &gt;= 0
+              AND total_debit_created &gt;= 0
+              AND total_debit_settled &gt;= 0
+            );
+    </sql>
+
+    <sql>
+      ALTER TABLE billing_debit_account
+        ADD CONSTRAINT ck_billing_debit_account_available_credit
+          CHECK (
+            available_credit =
+            credit_limit - current_debit_balance
+            );
+    </sql>
+
+    <sql>
+      ALTER TABLE billing_debit_account
+        ADD CONSTRAINT ck_billing_debit_account_balance
+          CHECK (
+            current_debit_balance =
+            total_debit_created - total_debit_settled
+            );
+    </sql>
+    <sql>
+      ALTER TABLE billing_debit_account
+        ADD CONSTRAINT ck_billing_debit_account_credit_limit
+          CHECK (
+            current_debit_balance &lt;= credit_limit
+            );
+    </sql>
+
+    <sql>
+      ALTER TABLE billing_debit_account
+        ADD CONSTRAINT ck_billing_debit_account_approval
+          CHECK (
+            approval_required = false
+              OR debit_allowed = false
+              OR (
+              approved_by IS NOT NULL
+                AND approved_date IS NOT NULL
+              )
+            );
+    </sql>
+
+    <sql>
+      ALTER TABLE billing_debit_account
+        ADD CONSTRAINT ck_billing_debit_account_block_details
+          CHECK (
+            status &lt;&gt; 'BLOCKED'
+              OR (
+              blocked_by IS NOT NULL
+                AND blocked_date IS NOT NULL
+                AND block_reason IS NOT NULL
+              )
+            );
+    </sql>
+
+    <createIndex
+      tableName="billing_debit_account"
+      indexName="idx_billing_debit_account_patient">
+      <column name="patient_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_debit_account"
+      indexName="idx_billing_debit_account_status">
+      <column name="status"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_debit_account"
+      indexName="idx_billing_debit_account_patient_status">
+      <column name="patient_id"/>
+      <column name="status"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_debit_account"
+      indexName="idx_billing_debit_account_expiry">
+      <column name="expiry_date"/>
+    </createIndex>
+
+  </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-facility-view" author="sondos">
+
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwFacility AS
+      SELECT
+        f.id,
+        f.name,
+        f.type,
+        f.code,
+        f.registration_date,
+        f.email_address,
+        f.phone1,
+        f.phone2,
+        f.fax,
+        f.address_id,
+        f.default_currency,
+        f.is_active,
+        f.time_zone,
+        f.working_days,
+        f.created_date,
+        f.created_by,
+        f.last_modified_by,
+        f.last_modified_date,
+        f.rule_id,
+        f.default_lab_department_id,
+        f.default_rad_department_id
+      FROM public.facility f;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwFacility;
+      </sql>
+    </rollback>
+
+  </changeSet>
+
+  <changeSet id="grant-report-facility-view-access" author="sondos">
+
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwFacility TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwFacility FROM report_user;
+      </sql>
+    </rollback>
+
+  </changeSet>
+</databaseChangeLog>

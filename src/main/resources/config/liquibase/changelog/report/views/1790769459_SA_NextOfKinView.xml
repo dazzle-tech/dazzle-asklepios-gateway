@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-next-of-kin-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwnextofkin AS
+      SELECT
+        nok.id,
+        nok.patient_id,
+        nok.name,
+        nok.relationship,
+        nok.address,
+        nok.email,
+        nok.mobile_number,
+        nok.telephone,
+        nok.international_number,
+        nok.landline_number,
+        nok.created_by,
+        nok.created_date,
+        nok.last_modified_by,
+        nok.last_modified_date
+      FROM public.next_of_kin nok;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwnextofkin;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-next-of-kin-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwnextofkin TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwnextofkin FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

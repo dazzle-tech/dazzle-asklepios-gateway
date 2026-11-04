@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-beds-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwbeds AS
+      SELECT
+        b.id,
+        b.room_id,
+        b.name,
+        b.location_details,
+        b.type,
+        b.status,
+        b.created_date,
+        b.is_active,
+        b.created_by,
+        b.last_modified_by,
+        b.last_modified_date
+      FROM public.beds b;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwbeds;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-beds-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwbeds TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwbeds FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

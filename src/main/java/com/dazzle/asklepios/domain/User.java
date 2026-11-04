@@ -4,7 +4,9 @@ import com.dazzle.asklepios.config.Constants;
 import com.dazzle.asklepios.domain.enumeration.Gender;
 import com.dazzle.asklepios.domain.enumeration.JobRole;
 import com.dazzle.asklepios.domain.enumeration.SecurityLevel;
+import com.dazzle.asklepios.security.AuthoritiesConstants;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Email;
@@ -83,19 +85,38 @@ public class User extends AbstractAuditingEntity<Long> implements Serializable {
     @Column("birth_date")
     private java.time.LocalDate birthDate;
 
+    @Column("allow_ongoing_visit")
+    private boolean allowOngoingVisit;
+
+    @Column("can_un_discharge_urgent_care")
+    private boolean canUnDischargeUrgentCare;
+
+    @Column("can_un_complete_encounter")
+    private boolean canUnCompleteEncounter;
+
+    @Column("can_return_claim_for_resubmit")
+    private boolean canReturnClaimForResubmit;
 
     @Column("gender")
     private Gender gender;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     @Column("job_role")
     private JobRole jobRole;
 
     @Enumerated(EnumType.STRING)
-    @Column("security_access_leve")
-    private SecurityLevel securityAccessLeve;
+    @Column("security_access_level")
+    private SecurityLevel securityAccessLevel;
 
     @JsonIgnore
     @org.springframework.data.annotation.Transient
     private Set<Authority> authorities = new HashSet<>();
+
+    @JsonProperty("isAdmin")
+    public boolean isAdmin() {
+        return authorities != null &&
+            authorities.stream()
+                .anyMatch(a -> AuthoritiesConstants.ADMIN.equals(a.getName()));
+    }
 }

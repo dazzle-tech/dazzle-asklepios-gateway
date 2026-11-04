@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="
+                     http://www.liquibase.org/xml/ns/dbchangelog
+                     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="1791163200-allergies-warnings-reopen-session-columns" author="farouk">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <columnExists tableName="patient_allergies_log" columnName="reopen_session_id"/>
+      </not>
+    </preConditions>
+    <addColumn tableName="patient_allergies_log">
+      <column name="reopen_session_id" type="bigint"/>
+    </addColumn>
+    <addForeignKeyConstraint
+      baseTableName="patient_allergies_log"
+      baseColumnNames="reopen_session_id"
+      referencedTableName="encounter_reopen_session"
+      referencedColumnNames="id"
+      constraintName="fk_patient_allergies_log_reopen_session"/>
+    <createIndex tableName="patient_allergies_log" indexName="idx_patient_allergies_log_reopen_session">
+      <column name="reopen_session_id"/>
+    </createIndex>
+  </changeSet>
+
+  <changeSet id="1791163200-warnings-reopen-session-columns" author="farouk">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <columnExists tableName="patient_warnings_log" columnName="reopen_session_id"/>
+      </not>
+    </preConditions>
+    <addColumn tableName="patient_warnings_log">
+      <column name="reopen_session_id" type="bigint"/>
+    </addColumn>
+    <addForeignKeyConstraint
+      baseTableName="patient_warnings_log"
+      baseColumnNames="reopen_session_id"
+      referencedTableName="encounter_reopen_session"
+      referencedColumnNames="id"
+      constraintName="fk_patient_warnings_log_reopen_session"/>
+    <createIndex tableName="patient_warnings_log" indexName="idx_patient_warnings_log_reopen_session">
+      <column name="reopen_session_id"/>
+    </createIndex>
+  </changeSet>
+
+  <changeSet id="1791163200-patient-allergies-log-reopen-session" author="farouk" runOnChange="true">
+    <sqlFile path="config/liquibase/sql/Patient_Allergies_Log.sql"
+             relativeToChangelogFile="false"
+             splitStatements="false"/>
+  </changeSet>
+
+  <changeSet id="1791163200-patient-warnings-log-reopen-session" author="farouk" runOnChange="true">
+    <sqlFile path="config/liquibase/sql/Patient_Warnings_Log.sql"
+             relativeToChangelogFile="false"
+             splitStatements="false"/>
+  </changeSet>
+
+</databaseChangeLog>

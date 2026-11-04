@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="
+                     http://www.liquibase.org/xml/ns/dbchangelog
+                     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="2026102102-create-ambient-scribe-setup" author="sondos">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <tableExists tableName="ambient_scribe_setting"/>
+      </not>
+    </preConditions>
+
+    <createTable tableName="ambient_scribe_setting">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" primaryKey="true" primaryKeyName="pk_ambient_scribe_setting"/>
+      </column>
+      <column name="facility_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="note_language" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="instruction_language" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="note_style" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="specialty" type="varchar(50)" defaultValue="GENERAL_PRACTICE">
+        <constraints nullable="false"/>
+      </column>
+      <column name="note_form" type="varchar(50)" defaultValue="PROSE">
+        <constraints nullable="false"/>
+      </column>
+      <column name="suggest_icd10" type="boolean">
+        <constraints nullable="false"/>
+      </column>
+      <column name="suggest_orders" type="boolean">
+        <constraints nullable="false"/>
+      </column>
+      <column name="audio_retention" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="consent_verbal" type="boolean">
+        <constraints nullable="false"/>
+      </column>
+      <column name="consent_tablet" type="boolean">
+        <constraints nullable="false"/>
+      </column>
+      <column name="recording_access" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="allow_anonymized_audio" type="boolean">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="ambient_scribe_setting"
+      baseColumnNames="facility_id"
+      referencedTableName="facility"
+      referencedColumnNames="id"
+      constraintName="fk_ambient_scribe_setting_facility"/>
+
+    <addUniqueConstraint
+      tableName="ambient_scribe_setting"
+      columnNames="facility_id"
+      constraintName="uk_ambient_scribe_setting_facility"/>
+
+    <createTable tableName="ambient_scribe_clinic">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" primaryKey="true" primaryKeyName="pk_ambient_scribe_clinic"/>
+      </column>
+      <column name="setting_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="department_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="enabled" type="boolean">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="ambient_scribe_clinic"
+      baseColumnNames="setting_id"
+      referencedTableName="ambient_scribe_setting"
+      referencedColumnNames="id"
+      constraintName="fk_ambient_scribe_clinic_setting"/>
+
+    <addForeignKeyConstraint
+      baseTableName="ambient_scribe_clinic"
+      baseColumnNames="department_id"
+      referencedTableName="department"
+      referencedColumnNames="id"
+      constraintName="fk_ambient_scribe_clinic_department"/>
+
+    <addUniqueConstraint
+      tableName="ambient_scribe_clinic"
+      columnNames="setting_id, department_id"
+      constraintName="uk_ambient_scribe_clinic_setting_department"/>
+
+    <createTable tableName="ambient_scribe_clinic_practitioner">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" primaryKey="true" primaryKeyName="pk_ambient_scribe_clinic_practitioner"/>
+      </column>
+      <column name="clinic_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="practitioner_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="ambient_scribe_clinic_practitioner"
+      baseColumnNames="clinic_id"
+      referencedTableName="ambient_scribe_clinic"
+      referencedColumnNames="id"
+      constraintName="fk_ambient_scribe_clinic_practitioner_clinic"/>
+
+    <addForeignKeyConstraint
+      baseTableName="ambient_scribe_clinic_practitioner"
+      baseColumnNames="practitioner_id"
+      referencedTableName="practitioner"
+      referencedColumnNames="id"
+      constraintName="fk_ambient_scribe_clinic_practitioner_practitioner"/>
+
+    <addUniqueConstraint
+      tableName="ambient_scribe_clinic_practitioner"
+      columnNames="clinic_id, practitioner_id"
+      constraintName="uk_ambient_scribe_clinic_practitioner"/>
+  </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-billing-ledger-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwbillingledger AS
+      SELECT
+        bl.id,
+        bl.ledger_number,
+        bl.transaction_group_id,
+        bl.correlation_id,
+        bl.idempotency_key,
+        bl.patient_id,
+        bl.encounter_id,
+        bl.wallet_id,
+        bl.payment_id,
+        bl.payment_transaction_id,
+        bl.charge_id,
+        bl.charge_line_id,
+        bl.charge_responsibility_id,
+        bl.reservation_id,
+        bl.allocation_id,
+        bl.debit_account_id,
+        bl.debit_transaction_id,
+        bl.refund_id,
+        bl.transaction_type,
+        bl.ledger_scope,
+        bl.amount,
+        bl.currency,
+        bl.available_change,
+        bl.reserved_change,
+        bl.consumed_change,
+        bl.refunded_change,
+        bl.debit_balance_change,
+        bl.allocated_change,
+        bl.outstanding_change,
+        bl.wallet_available_before,
+        bl.wallet_available_after,
+        bl.wallet_reserved_before,
+        bl.wallet_reserved_after,
+        bl.debit_balance_before,
+        bl.debit_balance_after,
+        bl.responsibility_outstanding_before,
+        bl.responsibility_outstanding_after,
+        bl.entry_direction,
+        bl.entry_category,
+        bl.reversed_ledger_id,
+        bl.reference_type,
+        bl.reference_id,
+        bl.reference_number,
+        bl.description,
+        bl.reason,
+        bl.transaction_date,
+        bl.source_channel,
+        bl.created_by,
+        bl.created_date,
+        bl.last_modified_by,
+        bl.last_modified_date
+      FROM public.billing_ledger bl;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwbillingledger;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-billing-ledger-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwbillingledger TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwbillingledger FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

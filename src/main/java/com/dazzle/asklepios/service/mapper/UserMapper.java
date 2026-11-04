@@ -62,6 +62,13 @@ public class UserMapper {
             user.setLastModifiedDate(userDTO.getLastModifiedDate());
             user.setActivated(userDTO.isActivated());
             user.setLangKey(userDTO.getLangKey());
+
+            // IMPORTANT: jobRole is mandatory now
+            user.setJobRole(userDTO.getJobRole());
+
+            // If you have this field on User and AdminUserDTO, map it too (uncomment if applicable)
+            // user.setSecurityAccessLevel(userDTO.getSecurityAccessLevel());
+
             Set<Authority> authorities = this.authoritiesFromStrings(userDTO.getAuthorities());
             user.setAuthorities(authorities);
             return user;

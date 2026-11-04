@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="1793176612_R_SURVEY_QUESTION" author="Rawan-Yahya">
+    <createTable tableName="survey_question">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="section_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_survey_question_section"
+                     references="survey_section(id)"/>
+      </column>
+      <!-- Order inside the section -->
+      <column name="display_order" type="int">
+        <constraints nullable="false"/>
+      </column>
+      <column name="question_en" type="varchar(1000)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="question_ar" type="varchar(1000)">
+        <constraints nullable="false"/>
+      </column>
+      <!-- SurveyAnswerType enum value: SCALE, TEXT -->
+      <column name="answer_type" type="varchar(20)">
+        <constraints nullable="false"/>
+      </column>
+      <!-- SCALE only -->
+      <column name="min_value" type="int"/>
+      <column name="max_value" type="int"/>
+      <!-- false = the patient may skip the question -->
+      <column name="is_required" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <createIndex tableName="survey_question" indexName="idx_survey_question_section">
+      <column name="section_id"/>
+    </createIndex>
+  </changeSet>
+
+  <!-- Questions of the V2 survey sheet, in the sections loaded by 1793172986_R_Survey_Section.xml -->
+  <changeSet id="1793176612_R_SURVEY_QUESTION_DATA" author="Rawan-Yahya">
+    <!-- Skipped when questions were already added (e.g. from the setup screen) -->
+    <preConditions onFail="MARK_RAN">
+      <sqlCheck expectedResult="0">SELECT COUNT(*) FROM survey_question</sqlCheck>
+    </preConditions>
+
+    <loadData
+      file="config/liquibase/data/survey_question.csv"
+      separator=";"
+      tableName="survey_question"
+      usePreparedStatements="true">
+      <column name="section_id" type="numeric"/>
+      <column name="display_order" type="numeric"/>
+      <column name="question_en" type="string"/>
+      <column name="question_ar" type="string"/>
+      <column name="answer_type" type="string"/>
+      <column name="min_value" type="numeric"/>
+      <column name="max_value" type="numeric"/>
+      <column name="is_required" type="boolean"/>
+      <column name="is_active" type="boolean"/>
+      <column name="created_by" type="string"/>
+      <column name="created_date" type="computed"/>
+    </loadData>
+  </changeSet>
+
+</databaseChangeLog>

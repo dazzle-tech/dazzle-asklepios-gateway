@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.24.xsd">
+
+  <changeSet id="FA0000000000015" author="Faroukdhelea">
+
+    <addColumn tableName="patient_prescription_medications">
+      <column name="other_medication_name" type="varchar(255)"/>
+    </addColumn>
+
+  </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="APP_00000000000031_CREATE_APPOINTMENT_BOOKING_GROUP" author="Sondos">
+    <createTable tableName="appointment_booking_group">
+      <column name="id" type="bigint" autoIncrement="true" startWith="1">
+        <constraints primaryKey="true" nullable="false" primaryKeyName="pk_appointment_booking_group"/>
+      </column>
+
+      <column name="facility_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="department_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="service_id" type="bigint"/>
+
+      <column name="practitioner_id" type="bigint"/>
+
+      <column name="source_type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="total_duration_minutes" type="integer">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="start_datetime" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="end_datetime" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="notes" type="varchar(1000)"/>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp" defaultValue="now()">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="appointment_booking_group"
+      baseColumnNames="facility_id"
+      referencedTableName="facility"
+      referencedColumnNames="id"
+      constraintName="fk_appointment_booking_group_facility"/>
+
+    <addForeignKeyConstraint
+      baseTableName="appointment_booking_group"
+      baseColumnNames="department_id"
+      referencedTableName="department"
+      referencedColumnNames="id"
+      constraintName="fk_appointment_booking_group_department"/>
+
+
+    <addForeignKeyConstraint
+      baseTableName="appointment_booking_group"
+      baseColumnNames="patient_id"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+      constraintName="fk_appointment_booking_group_patient"/>
+    <addForeignKeyConstraint
+      baseTableName="appointment_booking_group"
+      baseColumnNames="practitioner_id"
+      referencedTableName="practitioner"
+      referencedColumnNames="id"
+      constraintName="fk_appointment_booking_group_practitioner"/>
+
+    <addForeignKeyConstraint
+      baseTableName="appointment_booking_group"
+      baseColumnNames="service_id"
+      referencedTableName="service"
+      referencedColumnNames="id"
+      constraintName="fk_appointment_booking_group_service"/>
+
+    <createIndex tableName="appointment_booking_group" indexName="idx_booking_group_patient">
+      <column name="patient_id"/>
+    </createIndex>
+
+    <createIndex tableName="appointment_booking_group" indexName="idx_booking_group_department_date">
+      <column name="facility_id"/>
+      <column name="department_id"/>
+      <column name="start_datetime"/>
+    </createIndex>
+  </changeSet>
+
+
+
+</databaseChangeLog>

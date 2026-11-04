@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-claim-item-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwclaimitem AS
+      SELECT
+        ci.id,
+        ci.claim_request_id,
+        ci.sequence,
+        ci.patient_service_product_id,
+        ci.financial_document_item_id,
+        ci.billing_charge_line_id,
+        ci.item_type,
+        ci.item_code,
+        ci.item_description,
+        ci.invoice_no,
+        ci.quantity,
+        ci.unit_price,
+        ci.net,
+        ci.patient_share,
+        ci.payer_share,
+        ci.created_by,
+        ci.created_date,
+        ci.last_modified_by,
+        ci.last_modified_date
+      FROM public.claim_item ci;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwclaimitem;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-claim-item-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwclaimitem TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwclaimitem FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

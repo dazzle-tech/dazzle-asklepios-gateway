@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+  <changeSet id="bs0000000000023" author="batool">
+
+    <createTable tableName="patient_insurances">
+      <column name="id" type="bigint" autoIncrement="true" startWith="3000">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints
+          nullable="false"
+          foreignKeyName="fk_patient_insurance_patient"
+          referencedTableName="patients"
+          referencedColumnNames="id"/>
+      </column>
+
+      <column name="payor_id" type="bigint">
+        <constraints
+          nullable="false"
+          foreignKeyName="fk_patient_insurance_payor"
+          referencedTableName="payor"
+          referencedColumnNames="id"/>
+      </column>
+
+      <column name="plan_id" type="bigint">
+        <constraints
+          nullable="false"
+          foreignKeyName="fk_patient_insurance_plan"
+          referencedTableName="payor_plan"
+          referencedColumnNames="id"/>
+      </column>
+
+      <column name="policy_holder_id" type="bigint">
+        <constraints
+          nullable="true"
+          foreignKeyName="fk_patient_insurance_policy_holder"
+          referencedTableName="patients"
+          referencedColumnNames="id"/>
+      </column>
+
+      <column name="policy_number" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="group_number" type="bigint"/>
+
+      <column name="expiration_date" type="date">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="remaining_benefits" type="numeric(19,2)"/>
+      <column name="remaining_deductibles" type="numeric(19,2)"/>
+
+      <column name="is_primary" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addUniqueConstraint
+      tableName="patient_insurances"
+      columnNames="patient_id, payor_id"
+      constraintName="ux_patient_insurance_patient_payor"/>
+
+  </changeSet>
+
+  <changeSet id="bs0000000000024" author="batool">
+
+    <createIndex
+      tableName="patient_insurances"
+      indexName="ux_patient_insurance_one_primary_per_patient"
+      unique="true">
+      <column name="patient_id"/>
+    </createIndex>
+
+    <modifySql dbms="postgresql">
+      <append value=" WHERE is_primary = true"/>
+    </modifySql>
+
+  </changeSet>
+
+</databaseChangeLog>

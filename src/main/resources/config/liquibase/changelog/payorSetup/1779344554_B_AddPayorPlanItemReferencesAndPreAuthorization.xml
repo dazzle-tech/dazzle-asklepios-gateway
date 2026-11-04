@@ -1,0 +1,779 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!-- ====================================================== -->
+  <!-- Add Pre Authorization Column                          -->
+  <!-- ====================================================== -->
+
+  <changeSet id="bs000000000043-01" author="batool">
+
+    <preConditions onFail="MARK_RAN" onError="HALT">
+      <tableExists
+        schemaName="public"
+        tableName="payor_plan_item"/>
+
+      <not>
+        <columnExists
+          schemaName="public"
+          tableName="payor_plan_item"
+          columnName="pre_authorization"/>
+      </not>
+    </preConditions>
+
+    <addColumn
+      schemaName="public"
+      tableName="payor_plan_item">
+
+      <column
+        name="pre_authorization"
+        type="boolean"
+        defaultValueBoolean="false">
+
+        <constraints nullable="false"/>
+
+      </column>
+
+    </addColumn>
+
+    <rollback>
+
+      <dropColumn
+        schemaName="public"
+        tableName="payor_plan_item"
+        columnName="pre_authorization"/>
+
+    </rollback>
+
+  </changeSet>
+
+
+  <!-- ====================================================== -->
+  <!-- Add Brand Medication Reference Column                 -->
+  <!-- ====================================================== -->
+
+  <changeSet id="bs000000000043-02" author="batool">
+
+    <preConditions onFail="MARK_RAN" onError="HALT">
+      <tableExists
+        schemaName="public"
+        tableName="payor_plan_item"/>
+
+      <not>
+        <columnExists
+          schemaName="public"
+          tableName="payor_plan_item"
+          columnName="brand_medication_id"/>
+      </not>
+    </preConditions>
+
+    <addColumn
+      schemaName="public"
+      tableName="payor_plan_item">
+
+      <column
+        name="brand_medication_id"
+        type="bigint"/>
+
+    </addColumn>
+
+    <rollback>
+
+      <dropColumn
+        schemaName="public"
+        tableName="payor_plan_item"
+        columnName="brand_medication_id"/>
+
+    </rollback>
+
+  </changeSet>
+
+
+  <!-- ====================================================== -->
+  <!-- Add Diagnostic Test Reference Column                  -->
+  <!-- ====================================================== -->
+
+  <changeSet id="bs000000000043-03" author="batool">
+
+    <preConditions onFail="MARK_RAN" onError="HALT">
+      <tableExists
+        schemaName="public"
+        tableName="payor_plan_item"/>
+
+      <not>
+        <columnExists
+          schemaName="public"
+          tableName="payor_plan_item"
+          columnName="diagnostic_test_id"/>
+      </not>
+    </preConditions>
+
+    <addColumn
+      schemaName="public"
+      tableName="payor_plan_item">
+
+      <column
+        name="diagnostic_test_id"
+        type="bigint"/>
+
+    </addColumn>
+
+    <rollback>
+
+      <dropColumn
+        schemaName="public"
+        tableName="payor_plan_item"
+        columnName="diagnostic_test_id"/>
+
+    </rollback>
+
+  </changeSet>
+
+
+  <!-- ====================================================== -->
+  <!-- Add Service Reference Column                          -->
+  <!-- ====================================================== -->
+
+  <changeSet id="bs000000000043-04" author="batool">
+
+    <preConditions onFail="MARK_RAN" onError="HALT">
+      <tableExists
+        schemaName="public"
+        tableName="payor_plan_item"/>
+
+      <not>
+        <columnExists
+          schemaName="public"
+          tableName="payor_plan_item"
+          columnName="service_id"/>
+      </not>
+    </preConditions>
+
+    <addColumn
+      schemaName="public"
+      tableName="payor_plan_item">
+
+      <column
+        name="service_id"
+        type="bigint"/>
+
+    </addColumn>
+
+    <rollback>
+
+      <dropColumn
+        schemaName="public"
+        tableName="payor_plan_item"
+        columnName="service_id"/>
+
+    </rollback>
+
+  </changeSet>
+
+
+  <!-- ====================================================== -->
+  <!-- Add Procedure Reference Column                        -->
+  <!-- ====================================================== -->
+
+  <changeSet id="bs000000000043-05" author="batool">
+
+    <preConditions onFail="MARK_RAN" onError="HALT">
+      <tableExists
+        schemaName="public"
+        tableName="payor_plan_item"/>
+
+      <not>
+        <columnExists
+          schemaName="public"
+          tableName="payor_plan_item"
+          columnName="procedure_id"/>
+      </not>
+    </preConditions>
+
+    <addColumn
+      schemaName="public"
+      tableName="payor_plan_item">
+
+      <column
+        name="procedure_id"
+        type="bigint"/>
+
+    </addColumn>
+
+    <rollback>
+
+      <dropColumn
+        schemaName="public"
+        tableName="payor_plan_item"
+        columnName="procedure_id"/>
+
+    </rollback>
+
+  </changeSet>
+
+
+  <!-- ====================================================== -->
+  <!-- Add Brand Medication Foreign Key                      -->
+  <!-- ====================================================== -->
+
+  <changeSet id="bs000000000043-06" author="batool">
+
+    <preConditions onFail="MARK_RAN" onError="HALT">
+
+      <and>
+
+        <tableExists
+          schemaName="public"
+          tableName="payor_plan_item"/>
+
+        <tableExists
+          schemaName="public"
+          tableName="brand_medication"/>
+
+        <columnExists
+          schemaName="public"
+          tableName="payor_plan_item"
+          columnName="brand_medication_id"/>
+
+        <columnExists
+          schemaName="public"
+          tableName="brand_medication"
+          columnName="id"/>
+
+        <not>
+          <foreignKeyConstraintExists
+            schemaName="public"
+            foreignKeyName="fk_ppi_brand_medication"/>
+        </not>
+
+      </and>
+
+    </preConditions>
+
+    <addForeignKeyConstraint
+      baseTableSchemaName="public"
+      baseTableName="payor_plan_item"
+      baseColumnNames="brand_medication_id"
+      referencedTableSchemaName="public"
+      referencedTableName="brand_medication"
+      referencedColumnNames="id"
+      constraintName="fk_ppi_brand_medication"
+      onDelete="RESTRICT"
+      onUpdate="NO ACTION"/>
+
+    <rollback>
+
+      <dropForeignKeyConstraint
+        baseTableSchemaName="public"
+        baseTableName="payor_plan_item"
+        constraintName="fk_ppi_brand_medication"/>
+
+    </rollback>
+
+  </changeSet>
+
+
+  <!-- ====================================================== -->
+  <!-- Add Diagnostic Test Foreign Key                       -->
+  <!-- ====================================================== -->
+
+  <changeSet id="bs000000000043-07" author="batool">
+
+    <preConditions onFail="MARK_RAN" onError="HALT">
+
+      <and>
+
+        <tableExists
+          schemaName="public"
+          tableName="payor_plan_item"/>
+
+        <tableExists
+          schemaName="public"
+          tableName="diagnostic_test"/>
+
+        <columnExists
+          schemaName="public"
+          tableName="payor_plan_item"
+          columnName="diagnostic_test_id"/>
+
+        <columnExists
+          schemaName="public"
+          tableName="diagnostic_test"
+          columnName="id"/>
+
+        <not>
+          <foreignKeyConstraintExists
+            schemaName="public"
+            foreignKeyName="fk_ppi_diagnostic_test"/>
+        </not>
+
+      </and>
+
+    </preConditions>
+
+    <addForeignKeyConstraint
+      baseTableSchemaName="public"
+      baseTableName="payor_plan_item"
+      baseColumnNames="diagnostic_test_id"
+      referencedTableSchemaName="public"
+      referencedTableName="diagnostic_test"
+      referencedColumnNames="id"
+      constraintName="fk_ppi_diagnostic_test"
+      onDelete="RESTRICT"
+      onUpdate="NO ACTION"/>
+
+    <rollback>
+
+      <dropForeignKeyConstraint
+        baseTableSchemaName="public"
+        baseTableName="payor_plan_item"
+        constraintName="fk_ppi_diagnostic_test"/>
+
+    </rollback>
+
+  </changeSet>
+
+
+  <!-- ====================================================== -->
+  <!-- Add Service Foreign Key                               -->
+  <!-- ====================================================== -->
+
+  <changeSet id="bs000000000043-08" author="batool">
+
+    <preConditions onFail="MARK_RAN" onError="HALT">
+
+      <and>
+
+        <tableExists
+          schemaName="public"
+          tableName="payor_plan_item"/>
+
+        <tableExists
+          schemaName="public"
+          tableName="service"/>
+
+        <columnExists
+          schemaName="public"
+          tableName="payor_plan_item"
+          columnName="service_id"/>
+
+        <columnExists
+          schemaName="public"
+          tableName="service"
+          columnName="id"/>
+
+        <not>
+          <foreignKeyConstraintExists
+            schemaName="public"
+            foreignKeyName="fk_ppi_service"/>
+        </not>
+
+      </and>
+
+    </preConditions>
+
+    <addForeignKeyConstraint
+      baseTableSchemaName="public"
+      baseTableName="payor_plan_item"
+      baseColumnNames="service_id"
+      referencedTableSchemaName="public"
+      referencedTableName="service"
+      referencedColumnNames="id"
+      constraintName="fk_ppi_service"
+      onDelete="RESTRICT"
+      onUpdate="NO ACTION"/>
+
+    <rollback>
+
+      <dropForeignKeyConstraint
+        baseTableSchemaName="public"
+        baseTableName="payor_plan_item"
+        constraintName="fk_ppi_service"/>
+
+    </rollback>
+
+  </changeSet>
+
+
+  <!-- ====================================================== -->
+  <!-- Add Procedure Foreign Key                             -->
+  <!-- ====================================================== -->
+
+  <changeSet id="bs000000000043-09" author="batool">
+
+    <preConditions onFail="MARK_RAN" onError="HALT">
+
+      <and>
+
+        <tableExists
+          schemaName="public"
+          tableName="payor_plan_item"/>
+
+        <tableExists
+          schemaName="public"
+          tableName="procedure"/>
+
+        <columnExists
+          schemaName="public"
+          tableName="payor_plan_item"
+          columnName="procedure_id"/>
+
+        <columnExists
+          schemaName="public"
+          tableName="procedure"
+          columnName="id"/>
+
+        <not>
+          <foreignKeyConstraintExists
+            schemaName="public"
+            foreignKeyName="fk_ppi_procedure"/>
+        </not>
+
+      </and>
+
+    </preConditions>
+
+    <addForeignKeyConstraint
+      baseTableSchemaName="public"
+      baseTableName="payor_plan_item"
+      baseColumnNames="procedure_id"
+      referencedTableSchemaName="public"
+      referencedTableName="procedure"
+      referencedColumnNames="id"
+      constraintName="fk_ppi_procedure"
+      onDelete="RESTRICT"
+      onUpdate="NO ACTION"/>
+
+    <rollback>
+
+      <dropForeignKeyConstraint
+        baseTableSchemaName="public"
+        baseTableName="payor_plan_item"
+        constraintName="fk_ppi_procedure"/>
+
+    </rollback>
+
+  </changeSet>
+
+
+  <!-- ====================================================== -->
+  <!-- Add Item Reference Check Constraint                   -->
+  <!-- NOT VALID ignores existing invalid rows               -->
+  <!-- New and updated rows must satisfy the constraint      -->
+  <!-- ====================================================== -->
+
+  <changeSet id="bs000000000043-10" author="batool">
+
+    <preConditions onFail="MARK_RAN" onError="HALT">
+
+      <and>
+
+        <tableExists
+          schemaName="public"
+          tableName="payor_plan_item"/>
+
+        <columnExists
+          schemaName="public"
+          tableName="payor_plan_item"
+          columnName="item_type"/>
+
+        <columnExists
+          schemaName="public"
+          tableName="payor_plan_item"
+          columnName="brand_medication_id"/>
+
+        <columnExists
+          schemaName="public"
+          tableName="payor_plan_item"
+          columnName="diagnostic_test_id"/>
+
+        <columnExists
+          schemaName="public"
+          tableName="payor_plan_item"
+          columnName="service_id"/>
+
+        <columnExists
+          schemaName="public"
+          tableName="payor_plan_item"
+          columnName="procedure_id"/>
+
+      </and>
+
+    </preConditions>
+
+    <sql
+      dbms="postgresql"
+      splitStatements="false"
+      stripComments="false">
+
+      <![CDATA[
+      DO
+      $$
+      BEGIN
+
+          IF NOT EXISTS (
+            SELECT 1
+            FROM pg_constraint constraint_definition
+            INNER JOIN pg_class table_definition
+              ON table_definition.oid = constraint_definition.conrelid
+            INNER JOIN pg_namespace schema_definition
+              ON schema_definition.oid = table_definition.relnamespace
+            WHERE constraint_definition.conname = 'ck_ppi_item_reference_by_type'
+              AND table_definition.relname = 'payor_plan_item'
+              AND schema_definition.nspname = 'public'
+          ) THEN
+
+      ALTER TABLE public.payor_plan_item
+        ADD CONSTRAINT ck_ppi_item_reference_by_type
+          CHECK (
+            (
+              item_type = 'MEDICATION'
+                AND brand_medication_id IS NOT NULL
+                AND diagnostic_test_id IS NULL
+                AND service_id IS NULL
+                AND procedure_id IS NULL
+              )
+
+              OR
+
+            (
+              item_type IN (
+                            'LABORATORY',
+                            'RADIOLOGY',
+                            'PATHOLOGY'
+                )
+                AND brand_medication_id IS NULL
+                AND diagnostic_test_id IS NOT NULL
+                AND service_id IS NULL
+                AND procedure_id IS NULL
+              )
+
+              OR
+
+            (
+              item_type = 'SERVICE'
+                AND brand_medication_id IS NULL
+                AND diagnostic_test_id IS NULL
+                AND service_id IS NOT NULL
+                AND procedure_id IS NULL
+              )
+
+              OR
+
+            (
+              item_type = 'PROCEDURE'
+                AND brand_medication_id IS NULL
+                AND diagnostic_test_id IS NULL
+                AND service_id IS NULL
+                AND procedure_id IS NOT NULL
+              )
+            )
+        NOT VALID;
+
+      END IF;
+
+      END
+        $$;
+      ]]>
+
+    </sql>
+
+    <rollback>
+
+      <sql
+        dbms="postgresql"
+        splitStatements="false">
+
+        <![CDATA[
+          ALTER TABLE public.payor_plan_item
+            DROP CONSTRAINT IF EXISTS ck_ppi_item_reference_by_type;
+        ]]>
+
+      </sql>
+
+    </rollback>
+
+  </changeSet>
+
+
+  <!-- ====================================================== -->
+  <!-- Add Indexes                                            -->
+  <!-- ====================================================== -->
+
+  <changeSet id="bs000000000043-11" author="batool">
+
+    <preConditions onFail="MARK_RAN" onError="HALT">
+
+      <and>
+
+        <columnExists
+          schemaName="public"
+          tableName="payor_plan_item"
+          columnName="brand_medication_id"/>
+
+        <not>
+          <indexExists
+            schemaName="public"
+            tableName="payor_plan_item"
+            indexName="idx_ppi_brand_medication_id"/>
+        </not>
+
+      </and>
+
+    </preConditions>
+
+    <createIndex
+      schemaName="public"
+      tableName="payor_plan_item"
+      indexName="idx_ppi_brand_medication_id">
+
+      <column name="brand_medication_id"/>
+
+    </createIndex>
+
+    <rollback>
+
+      <dropIndex
+        schemaName="public"
+        tableName="payor_plan_item"
+        indexName="idx_ppi_brand_medication_id"/>
+
+    </rollback>
+
+  </changeSet>
+
+
+  <changeSet id="bs000000000043-12" author="batool">
+
+    <preConditions onFail="MARK_RAN" onError="HALT">
+
+      <and>
+
+        <columnExists
+          schemaName="public"
+          tableName="payor_plan_item"
+          columnName="diagnostic_test_id"/>
+
+        <not>
+          <indexExists
+            schemaName="public"
+            tableName="payor_plan_item"
+            indexName="idx_ppi_diagnostic_test_id"/>
+        </not>
+
+      </and>
+
+    </preConditions>
+
+    <createIndex
+      schemaName="public"
+      tableName="payor_plan_item"
+      indexName="idx_ppi_diagnostic_test_id">
+
+      <column name="diagnostic_test_id"/>
+
+    </createIndex>
+
+    <rollback>
+
+      <dropIndex
+        schemaName="public"
+        tableName="payor_plan_item"
+        indexName="idx_ppi_diagnostic_test_id"/>
+
+    </rollback>
+
+  </changeSet>
+
+
+  <changeSet id="bs000000000043-13" author="batool">
+
+    <preConditions onFail="MARK_RAN" onError="HALT">
+
+      <and>
+
+        <columnExists
+          schemaName="public"
+          tableName="payor_plan_item"
+          columnName="service_id"/>
+
+        <not>
+          <indexExists
+            schemaName="public"
+            tableName="payor_plan_item"
+            indexName="idx_ppi_service_id"/>
+        </not>
+
+      </and>
+
+    </preConditions>
+
+    <createIndex
+      schemaName="public"
+      tableName="payor_plan_item"
+      indexName="idx_ppi_service_id">
+
+      <column name="service_id"/>
+
+    </createIndex>
+
+    <rollback>
+
+      <dropIndex
+        schemaName="public"
+        tableName="payor_plan_item"
+        indexName="idx_ppi_service_id"/>
+
+    </rollback>
+
+  </changeSet>
+
+
+  <changeSet id="bs000000000043-14" author="batool">
+
+    <preConditions onFail="MARK_RAN" onError="HALT">
+
+      <and>
+
+        <columnExists
+          schemaName="public"
+          tableName="payor_plan_item"
+          columnName="procedure_id"/>
+
+        <not>
+          <indexExists
+            schemaName="public"
+            tableName="payor_plan_item"
+            indexName="idx_ppi_procedure_id"/>
+        </not>
+
+      </and>
+
+    </preConditions>
+
+    <createIndex
+      schemaName="public"
+      tableName="payor_plan_item"
+      indexName="idx_ppi_procedure_id">
+
+      <column name="procedure_id"/>
+
+    </createIndex>
+
+    <rollback>
+
+      <dropIndex
+        schemaName="public"
+        tableName="payor_plan_item"
+        indexName="idx_ppi_procedure_id"/>
+
+    </rollback>
+
+  </changeSet>
+
+</databaseChangeLog>

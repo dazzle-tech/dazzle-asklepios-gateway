@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+  <changeSet id="BM000000000040" author="BushraMashaiekh">
+
+    <createTable tableName="price_list_setup">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="facility_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="type" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="payer_id" type="bigint">
+      </column>
+
+      <column name="name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="version_number" type="integer">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="effective_from" type="date">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="effective_to" type="date"/>
+
+      <column name="status" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="currency" type="varchar(10)"/>
+
+      <column name="description" type="varchar(1000)"/>
+
+      <column name="is_active"
+              type="boolean"
+              defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+
+
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="price_list_setup"
+      baseColumnNames="facility_id"
+      constraintName="fk_price_list_setup_facility"
+      referencedTableName="facility"
+      referencedColumnNames="id"/>
+
+    <addForeignKeyConstraint
+      baseTableName="price_list_setup"
+      baseColumnNames="payer_id"
+      constraintName="fk_price_list_setup_payer"
+      referencedTableName="nphies_payers"
+      referencedColumnNames="id"/>
+
+    <addUniqueConstraint
+      tableName="price_list_setup"
+      columnNames="facility_id,type,payer_id,version_number"
+      constraintName="uk_price_list_setup_version"/>
+
+    <createIndex
+      tableName="price_list_setup"
+      indexName="idx_price_list_setup_facility">
+
+      <column name="facility_id"/>
+
+    </createIndex>
+
+    <createIndex
+      tableName="price_list_setup"
+      indexName="idx_price_list_setup_payer">
+
+      <column name="payer_id"/>
+
+    </createIndex>
+
+    <sql>
+      ALTER TABLE price_list_setup
+        ADD CONSTRAINT ck_price_list_setup_dates
+          CHECK (
+            effective_to IS NULL
+              OR effective_to >= effective_from
+            );
+    </sql>
+
+  </changeSet>
+
+</databaseChangeLog>

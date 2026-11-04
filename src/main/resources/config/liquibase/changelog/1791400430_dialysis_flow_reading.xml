@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="FA0000000031" author="farouk">
+
+    <createTable tableName="dialysis_flow_reading">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="dialysis_session_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="time" type="time"/>
+
+      <column name="blood_pressure_systolic" type="integer"/>
+      <column name="blood_pressure_diastolic" type="integer"/>
+
+      <column name="pulse" type="integer"/>
+
+      <column name="uf_rate" type="numeric(10,2)"/>
+      <column name="uf_removed" type="numeric(10,2)"/>
+
+      <column name="arterial_pressure" type="numeric(10,2)"/>
+      <column name="venous_pressure" type="numeric(10,2)"/>
+      <column name="transmembrane_pressure" type="numeric(10,2)"/>
+
+      <column name="created_by" type="varchar(50)"/>
+      <column name="created_date" type="timestamp"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+
+    <addForeignKeyConstraint
+      constraintName="fk_dialysis_flow_reading_session_id"
+      baseTableName="dialysis_flow_reading"
+      baseColumnNames="dialysis_session_id"
+      referencedTableName="dialysis_session"
+      referencedColumnNames="id"/>
+
+  </changeSet>
+
+</databaseChangeLog>

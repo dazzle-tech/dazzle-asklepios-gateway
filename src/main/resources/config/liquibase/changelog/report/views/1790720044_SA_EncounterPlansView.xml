@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-encounter-plans-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwencounterplans AS
+      SELECT
+        ep.id,
+        ep.patient_id,
+        ep.encounter_id,
+        ep.goals,
+        ep.treatment_plan,
+        ep.created_date,
+        ep.created_by,
+        ep.last_modified_by,
+        ep.last_modified_date
+      FROM public.encounter_plans ep;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwencounterplans;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-encounter-plans-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwencounterplans TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwencounterplans FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+
+</databaseChangeLog>

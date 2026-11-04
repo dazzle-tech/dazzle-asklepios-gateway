@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="Urgent_Care_Actual_Administer" author="hanan253yahya">
+    <addColumn tableName="urgent_care_medication_order">
+      <column name="actual_administer_time" type="timestamp" defaultValue="now()"/>
+    </addColumn>
+
+  </changeSet>
+
+
+</databaseChangeLog>

@@ -21,13 +21,18 @@
       <column name="otc" type="boolean"/>
       <column name="has_synonyms" type="boolean"/>
       <column name="antimicrobial" type="boolean"/>
-      <column name="high_risk_med" type="boolean"/>
+      <column name="high_alert" type="boolean">
+        <constraints nullable="false"/>
+      </column>
       <column name="abortive_medication" type="boolean"/>
       <column name="labor_inducing_med" type="boolean"/>
       <column name="is_controlled" type="boolean"/>
       <column name="controlled" type="varchar(50)"/>
       <column name="has_black_box_warning" type="boolean"/>
       <column name="black_box_warning" type="nvarchar(200)"/>
+      <column name="is_look-alike-sound-alike" type="boolean">
+        <constraints nullable="false"/>
+      </column>
 
       <column name="created_by" type="varchar(50)">
         <constraints nullable="false"/>

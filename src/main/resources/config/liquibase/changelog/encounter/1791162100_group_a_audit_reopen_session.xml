@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="
+                     http://www.liquibase.org/xml/ns/dbchangelog
+                     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="1791162100-group-a-audit-reopen-session-columns" author="Faroukdhelea">
+    <addColumn tableName="vital_signs_log">
+      <column name="reopen_session_id" type="bigint"/>
+    </addColumn>
+    <addForeignKeyConstraint
+      baseTableName="vital_signs_log"
+      baseColumnNames="reopen_session_id"
+      referencedTableName="encounter_reopen_session"
+      referencedColumnNames="id"
+      constraintName="fk_vital_signs_log_reopen_session"/>
+    <createIndex tableName="vital_signs_log" indexName="idx_vital_signs_log_reopen_session">
+      <column name="reopen_session_id"/>
+    </createIndex>
+
+    <addColumn tableName="consultation_log">
+      <column name="reopen_session_id" type="bigint"/>
+    </addColumn>
+    <addForeignKeyConstraint
+      baseTableName="consultation_log"
+      baseColumnNames="reopen_session_id"
+      referencedTableName="encounter_reopen_session"
+      referencedColumnNames="id"
+      constraintName="fk_consultation_log_reopen_session"/>
+    <createIndex tableName="consultation_log" indexName="idx_consultation_log_reopen_session">
+      <column name="reopen_session_id"/>
+    </createIndex>
+
+    <addColumn tableName="patient_encounter_field_audit">
+      <column name="reopen_session_id" type="bigint"/>
+    </addColumn>
+    <addForeignKeyConstraint
+      baseTableName="patient_encounter_field_audit"
+      baseColumnNames="reopen_session_id"
+      referencedTableName="encounter_reopen_session"
+      referencedColumnNames="id"
+      constraintName="fk_patient_encounter_field_audit_reopen_session"/>
+    <createIndex tableName="patient_encounter_field_audit" indexName="idx_patient_encounter_field_audit_reopen_session">
+      <column name="reopen_session_id"/>
+    </createIndex>
+
+    <addColumn tableName="patient_encounter_assessment_field_audit">
+      <column name="reopen_session_id" type="bigint"/>
+    </addColumn>
+    <addForeignKeyConstraint
+      baseTableName="patient_encounter_assessment_field_audit"
+      baseColumnNames="reopen_session_id"
+      referencedTableName="encounter_reopen_session"
+      referencedColumnNames="id"
+      constraintName="fk_patient_encounter_assessment_field_audit_reopen_session"/>
+    <createIndex tableName="patient_encounter_assessment_field_audit" indexName="idx_patient_encounter_assessment_field_audit_reopen_session">
+      <column name="reopen_session_id"/>
+    </createIndex>
+
+    <addColumn tableName="patient_encounter_plan_field_audit">
+      <column name="reopen_session_id" type="bigint"/>
+    </addColumn>
+    <addForeignKeyConstraint
+      baseTableName="patient_encounter_plan_field_audit"
+      baseColumnNames="reopen_session_id"
+      referencedTableName="encounter_reopen_session"
+      referencedColumnNames="id"
+      constraintName="fk_patient_encounter_plan_field_audit_reopen_session"/>
+    <createIndex tableName="patient_encounter_plan_field_audit" indexName="idx_patient_encounter_plan_field_audit_reopen_session">
+      <column name="reopen_session_id"/>
+    </createIndex>
+  </changeSet>
+
+  <changeSet id="1791162100-vital-signs-audit-reopen-session" author="Faroukdhelea" runOnChange="true">
+    <sqlFile path="config/liquibase/sql/vital_signs_triggers.sql"
+             relativeToChangelogFile="false"
+             splitStatements="false"/>
+  </changeSet>
+
+  <changeSet id="1791162100-consultation-audit-reopen-session" author="Faroukdhelea" runOnChange="true">
+    <sqlFile path="config/liquibase/sql/consultation_triggers.sql"
+             relativeToChangelogFile="false"
+             splitStatements="false"/>
+  </changeSet>
+
+  <changeSet id="1791162100-encounter-field-audit-reopen-session" author="Faroukdhelea" runOnChange="true">
+    <sqlFile path="config/liquibase/sql/Patient_Encounter_Field_Audit.sql"
+             relativeToChangelogFile="false"
+             splitStatements="false"/>
+  </changeSet>
+
+  <changeSet id="1791162100-assessment-audit-reopen-session" author="Faroukdhelea" runOnChange="true">
+    <sqlFile path="config/liquibase/sql/Encounter_Assessments_Log.sql"
+             relativeToChangelogFile="false"
+             splitStatements="false"/>
+  </changeSet>
+
+  <changeSet id="1791162100-plan-audit-reopen-session" author="Faroukdhelea" runOnChange="true">
+    <sqlFile path="config/liquibase/sql/Encounter_Plans_Log.sql"
+             relativeToChangelogFile="false"
+             splitStatements="false"/>
+  </changeSet>
+
+</databaseChangeLog>

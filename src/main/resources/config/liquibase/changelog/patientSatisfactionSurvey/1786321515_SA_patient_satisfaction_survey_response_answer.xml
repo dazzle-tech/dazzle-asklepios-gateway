@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="20260810-02" author="sondos">
+
+    <createTable tableName="patient_satisfaction_survey_response_answer">
+
+      <column name="id" type="BIGINT" autoIncrement="true">
+        <constraints
+          primaryKey="true"
+          primaryKeyName="pk_pss_response_answer"
+          nullable="false"/>
+      </column>
+
+      <column name="response_id" type="BIGINT">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="question_code" type="VARCHAR(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="answer" type="TEXT"/>
+
+      <column name="score" type="DECIMAL(10,2)"/>
+
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="patient_satisfaction_survey_response_answer"
+      baseColumnNames="response_id"
+      constraintName="fk_pss_answer_response"
+      referencedTableName="patient_satisfaction_survey_response"
+      referencedColumnNames="id"
+      onDelete="CASCADE"/>
+
+    <addUniqueConstraint
+      tableName="patient_satisfaction_survey_response_answer"
+      columnNames="response_id, question_code"
+      constraintName="uk_pss_response_question"/>
+
+  </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-patient-observations-complaints-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwpatientobservationscomplaints AS
+      SELECT
+        poc.id,
+        poc.patient_id,
+        poc.encounter_id,
+        poc.functional_status,
+        poc.patient_conditions,
+        poc.reason_of_visit,
+        poc.cognitive_check,
+        poc.is_active,
+        poc.created_by,
+        poc.created_date,
+        poc.last_modified_by,
+        poc.last_modified_date,
+        poc.blood_group,
+        poc.by_patient,
+        poc.source_of_information,
+        poc.mode_of_arrival
+      FROM public.patient_observations_complaints poc;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwpatientobservationscomplaints;
+      </sql>
+    </rollback>
+  </changeSet>
+  <changeSet id="grant-report-patient-observations-complaints-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwpatientobservationscomplaints TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwpatientobservationscomplaints FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

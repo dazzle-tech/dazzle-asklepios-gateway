@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+  <!--
+    Waseel Eligibility -> Patient Insurance enrichment
+
+    Mapping (coverages[0]):
+      memberId              -> member_card_id
+      policyNumber          -> policy_number (fallback)
+      policyHolder          -> group_number (fallback)
+      benefitStartDate      -> issue_date
+      benefitEndDate        -> expiration_date
+      type                  -> coverage_type
+      relationship          -> relation_with_subscriber
+      network               -> network_id
+      status                -> eligibility_status
+      siteEligibility       -> site_eligibility
+      inforce               -> inforce
+      classList[group].className  -> group_name
+      classList[group].classValue -> group_number
+      classList[plan].className   -> policy_class_name
+      classList[plan].classValue  -> plan_code / policy_number
+      costBeneficiaries[gpvisit].costBeneficiaryMoney -> gp_visit_copay
+      costBeneficiaries[spvisit].costBeneficiaryQut   -> specialist_visits_limit
+      items + costBeneficiaries (full JSON)           -> eligibility_benefits_json
+  -->
+
+  <changeSet id="20260731-01-patient-insurance-eligibility-columns" author="asklepios">
+    <addColumn tableName="patient_insurances">
+      <column name="group_name" type="varchar(255)">
+        <constraints nullable="true"/>
+      </column>
+      <column name="plan_code" type="varchar(100)">
+        <constraints nullable="true"/>
+      </column>
+      <column name="eligibility_status" type="varchar(50)">
+        <constraints nullable="true"/>
+      </column>
+      <column name="site_eligibility" type="varchar(50)">
+        <constraints nullable="true"/>
+      </column>
+      <column name="inforce" type="varchar(10)">
+        <constraints nullable="true"/>
+      </column>
+      <column name="gp_visit_copay" type="decimal(19,2)">
+        <constraints nullable="true"/>
+      </column>
+      <column name="specialist_visits_limit" type="integer">
+        <constraints nullable="true"/>
+      </column>
+      <column name="eligibility_benefits_json" type="text">
+        <constraints nullable="true"/>
+      </column>
+      <column name="last_eligibility_request_id" type="bigint">
+        <constraints nullable="true"/>
+      </column>
+      <column name="last_eligibility_synced_at" type="timestamp with time zone">
+        <constraints nullable="true"/>
+      </column>
+    </addColumn>
+
+    <createIndex indexName="ix_patient_insurance_last_eligibility_request"
+                 tableName="patient_insurances">
+      <column name="last_eligibility_request_id"/>
+    </createIndex>
+
+    <addForeignKeyConstraint
+      baseTableName="patient_insurances"
+      baseColumnNames="last_eligibility_request_id"
+      constraintName="fk_patient_insurance_last_eligibility_request"
+      referencedTableName="waseel_eligibility_request"
+      referencedColumnNames="id"
+      deferrable="false"
+      initiallyDeferred="false"
+      onDelete="SET NULL"/>
+  </changeSet>
+
+</databaseChangeLog>

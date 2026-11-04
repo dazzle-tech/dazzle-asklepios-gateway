@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-pre-authorization-item-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwpreauthorizationitem AS
+      SELECT
+        pai.id,
+        pai.pre_authorization_id,
+        pai.sequence,
+        pai.item_type,
+        pai.item_code,
+        pai.item_description,
+        pai.non_standard_code,
+        pai.non_standard_desc,
+        pai.is_package,
+        pai.is_maternity,
+        pai.quantity,
+        pai.quantity_code,
+        pai.unit_price,
+        pai.discount,
+        pai.factor,
+        pai.tax_percent,
+        pai.tax,
+        pai.patient_share_percent,
+        pai.patient_share,
+        pai.payer_share,
+        pai.net,
+        pai.start_date,
+        pai.end_date,
+        pai.invoice_no,
+        pai.body_site,
+        pai.sub_site,
+        pai.brand_medication_id,
+        pai.diagnostic_test_id,
+        pai.service_id,
+        pai.procedure_id,
+        pai.waseel_item_id,
+        pai.item_decision,
+        pai.reason_codes,
+        pai.raw_json,
+        pai.created_date,
+        pai.created_by,
+        pai.last_modified_by,
+        pai.last_modified_date
+      FROM public.pre_authorization_item pai;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwpreauthorizationitem;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-pre-authorization-item-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwpreauthorizationitem TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwpreauthorizationitem FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

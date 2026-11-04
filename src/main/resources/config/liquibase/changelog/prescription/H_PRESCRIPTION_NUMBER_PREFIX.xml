@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="HY0000000000MD_PRESCRIPTION_NUMBER_PREFIX" author="hanan253yahya">
+
+    <modifyDataType
+      tableName="patient_prescriptions"
+      columnName="prescription_num"
+      newDataType="varchar(20)"/>
+
+    <sql>
+      UPDATE patient_prescriptions
+      SET prescription_num = 'Rx-' || prescription_num
+      WHERE prescription_num NOT LIKE 'Rx-%';
+    </sql>
+
+    <sql>
+      ALTER TABLE patient_prescriptions
+        ALTER COLUMN prescription_num
+          SET DEFAULT ('Rx-' || nextval('seq_patient_prescription_num'));
+    </sql>
+
+    <addUniqueConstraint
+    tableName="patient_prescriptions"
+    columnNames="prescription_num"
+    constraintName="uk_patient_prescription_num"/>
+  </changeSet>
+
+</databaseChangeLog>

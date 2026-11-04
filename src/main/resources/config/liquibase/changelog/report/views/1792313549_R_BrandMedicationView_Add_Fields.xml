@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!--
+    Adds the new brand_medication columns (changelog/brandMedication/1792302282_R_Brand_Medication_Add_Fields.xml)
+    to reports.vwbrandmedication (created in 1790599690_SA_BrandMedicationView.xml).
+  -->
+  <changeSet id="1792313549_R_BRAND_MEDICATION_VIEW_ADD_FIELDS" author="Rawan-Yahya">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwbrandmedication AS
+      SELECT
+        bm.id,
+        bm.name,
+        bm.code,
+        bm.manufacturer,
+        bm.dosage_form,
+        bm.usage_instructions,
+        bm.storage_requirements,
+        bm.price,
+        bm.currency,
+        bm.expires_after_opening,
+        bm.expires_after_opening_value,
+        bm.expires_after_opening_unit,
+        bm.single_patient_use,
+        bm.high_cost_medication,
+        bm.cost_category,
+        bm.roa,
+        bm.uom_group_id,
+        bm.uom_group_unit_id,
+        bm.is_active,
+        bm.created_by,
+        bm.created_date,
+        bm.last_modified_by,
+        bm.last_modified_date,
+        bm.billing_rule_id,
+        bm.facility_id,
+        bm.registration_number,
+        bm.integration_code,
+        bm.gtin_code,
+        bm.description_code,
+        bm.med_distribute_area,
+        bm.price_base_uom_id,
+        bm.local_market
+      FROM public.brand_medication bm;
+    </sql>
+
+    <!-- Back to the original view (columns cannot be removed with CREATE OR REPLACE) -->
+    <rollback>
+      <sql splitStatements="false">
+        DROP VIEW IF EXISTS reports.vwbrandmedication;
+
+        CREATE VIEW reports.vwbrandmedication AS
+        SELECT
+          bm.id,
+          bm.name,
+          bm.code,
+          bm.manufacturer,
+          bm.dosage_form,
+          bm.usage_instructions,
+          bm.storage_requirements,
+          bm.price,
+          bm.currency,
+          bm.expires_after_opening,
+          bm.expires_after_opening_value,
+          bm.expires_after_opening_unit,
+          bm.single_patient_use,
+          bm.high_cost_medication,
+          bm.cost_category,
+          bm.roa,
+          bm.uom_group_id,
+          bm.uom_group_unit_id,
+          bm.is_active,
+          bm.created_by,
+          bm.created_date,
+          bm.last_modified_by,
+          bm.last_modified_date,
+          bm.billing_rule_id
+        FROM public.brand_medication bm;
+
+        GRANT SELECT ON reports.vwbrandmedication TO report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+
+</databaseChangeLog>

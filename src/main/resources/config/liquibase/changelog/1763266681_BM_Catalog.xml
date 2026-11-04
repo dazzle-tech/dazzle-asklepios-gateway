@@ -23,6 +23,16 @@
       <column name="department_id" type="bigint">
         <constraints  foreignKeyName="fk_catalog_department" referencedTableName="department" referencedColumnNames="id"/>
       </column>
+      <column name="appointable" type="boolean" defaultValue="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="parallel_capacity_value" type="int" defaultValueNumeric="1">
+        <constraints nullable="false"/>
+      </column>
+      <column name="default_duration_minutes" type="int"/>
+      <column name="default_buffer_before_minutes" type="int" defaultValueNumeric="0"/>
+      <column name="default_buffer_after_minutes" type="int" defaultValueNumeric="0"/>
+
     </createTable>
 
     <createIndex indexName="idx_catalog_department" tableName="catalog">
@@ -31,5 +41,18 @@
     <createIndex indexName="idx_catalog_facility" tableName="catalog">
       <column name="facility_id"/>
     </createIndex>
+    <sql>
+      ALTER TABLE catalog
+        ADD CONSTRAINT chk_catalog_appointable_requirements
+          CHECK (
+            appointable = false
+              OR (
+              appointable = true
+                AND default_duration_minutes IS NOT NULL AND default_duration_minutes > 0
+                AND default_buffer_before_minutes IS NOT NULL AND default_buffer_before_minutes >= 0
+                AND default_buffer_after_minutes IS NOT NULL AND default_buffer_after_minutes >= 0
+              )
+            );
+    </sql>
   </changeSet>
   </databaseChangeLog>

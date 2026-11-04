@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="FA0000000044" author="farouk">
+
+    <addColumn tableName="diagnostic_test">
+      <column name="loinc_code_id" type="bigint"/>
+    </addColumn>
+
+    <addForeignKeyConstraint
+      constraintName="fk_diagnostic_test_loinc_code_id"
+      baseTableName="diagnostic_test"
+      baseColumnNames="loinc_code_id"
+      referencedTableName="loinc_code"
+      referencedColumnNames="id"/>
+
+    <createIndex
+      indexName="idx_diagnostic_test_loinc_code_id"
+      tableName="diagnostic_test">
+      <column name="loinc_code_id"/>
+    </createIndex>
+
+  </changeSet>
+
+</databaseChangeLog>

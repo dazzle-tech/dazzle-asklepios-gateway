@@ -1,5 +1,6 @@
 package com.dazzle.asklepios.service;
 
+import com.dazzle.asklepios.service.dto.UserEncountersAccessDTO;
 import com.dazzle.asklepios.config.Constants;
 import com.dazzle.asklepios.domain.Authority;
 import com.dazzle.asklepios.domain.User;
@@ -8,8 +9,11 @@ import com.dazzle.asklepios.domain.enumeration.JobRole;
 import com.dazzle.asklepios.domain.enumeration.SecurityLevel;
 import com.dazzle.asklepios.repository.AuthorityRepository;
 import com.dazzle.asklepios.repository.UserRepository;
+import com.dazzle.asklepios.security.AuthoritiesConstants;
 import com.dazzle.asklepios.security.SecurityUtils;
 import com.dazzle.asklepios.service.dto.AdminUserDTO;
+import com.dazzle.asklepios.service.dto.CreatePasswordKeyValidationDTO;
+import com.dazzle.asklepios.service.errors.UserAlreadyActiveException;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,8 +28,9 @@ import reactor.core.scheduler.Schedulers;
 import java.security.SecureRandom;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.AbstractMap;
+import java.util.List;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 /**
  * Service class for managing users.
@@ -38,6 +43,7 @@ public class UserService {
     private final UserRepository userRepository;
 
     private final PasswordEncoder passwordEncoder;
+    private static final long CREATE_PASSWORD_KEY_EXPIRATION_HOURS = 24;
 
     private final AuthorityRepository authorityRepository;
     private final MailService mailService;
@@ -51,8 +57,14 @@ public class UserService {
     @Transactional
     public Mono<User> completePasswordReset(String newPassword, String key) {
         LOG.debug("Reset user password for reset key {}", key);
+
+        if (!isPasswordSecure(newPassword)) {
+            return Mono.error(new InvalidPasswordException());
+        }
+
         return userRepository
             .findOneByResetKey(key)
+            .filter(user -> user.getResetDate() != null)
             .filter(user -> user.getResetDate().isAfter(Instant.now().minus(1, ChronoUnit.DAYS)))
             .publishOn(Schedulers.boundedElastic())
             .map(user -> {
@@ -63,6 +75,7 @@ public class UserService {
             })
             .flatMap(this::saveUser);
     }
+
 
     @Transactional
     public Mono<User> requestPasswordReset(String mail) {
@@ -76,6 +89,43 @@ public class UserService {
                 return user;
             })
             .flatMap(this::saveUser);
+    }
+
+    @Transactional(readOnly = true)
+    public Mono<UserEncountersAccessDTO> getUserEncountersAccess(Long userId) {
+        return userRepository
+            .findById(userId)
+            .map(user -> new UserEncountersAccessDTO(
+                user.isAllowOngoingVisit(),
+                user.isCanUnDischargeUrgentCare(),
+                user.isCanUnCompleteEncounter(),
+                user.isCanReturnClaimForResubmit()
+            ));
+    }
+
+
+    @Transactional
+    public Mono<UserEncountersAccessDTO> updateUserEncountersAccess(
+        Long userId,
+        UserEncountersAccessDTO accessDTO
+    ) {
+        return userRepository
+            .findById(userId)
+            .map(user -> {
+                user.setAllowOngoingVisit(accessDTO.isAllowOngoingVisit());
+                user.setCanUnDischargeUrgentCare(accessDTO.isCanUnDischargeUrgentCare());
+                user.setCanUnCompleteEncounter(accessDTO.isCanUnCompleteEncounter());
+                user.setCanReturnClaimForResubmit(accessDTO.isCanReturnClaimForResubmit());
+
+                return user;
+            })
+            .flatMap(this::saveUser)
+            .map(user -> new UserEncountersAccessDTO(
+                user.isAllowOngoingVisit(),
+                user.isCanUnDischargeUrgentCare(),
+                user.isCanUnCompleteEncounter(),
+                user.isCanReturnClaimForResubmit()
+            ));
     }
 
     @Transactional
@@ -92,34 +142,38 @@ public class UserService {
         user.setBirthDate(userDTO.getBirthDate());
         user.setGender(userDTO.getGender());
         user.setJobRole(userDTO.getJobRole());
-        if(userDTO.getSecurityAccessLeve() ==null){
-            user.setSecurityAccessLeve(SecurityLevel.NORMAL_1);
+        if (userDTO.getSecurityAccessLevel() == null) {
+            user.setSecurityAccessLevel(SecurityLevel.NORMAL_1);
         }
         user.setLangKey(userDTO.getLangKey() == null ? Constants.DEFAULT_LANGUAGE : userDTO.getLangKey());
 
         return Mono.fromCallable(() -> {
+                // Do NOT generate or email a raw password
+                // Keep password unusable until user sets it
+                user.setPassword(passwordEncoder.encode(RandomUtil.generatePassword())); // placeholder
+                user.setActivated(false);
 
-                String rawPassword = RandomUtil.generatePassword();
-                user.setPassword(passwordEncoder.encode(rawPassword));
-                user.setResetKey(RandomUtil.generateResetKey());
+                // Token for one-time create-password link
+                String token = RandomUtil.generateResetKey();
+                user.setResetKey(token);
                 user.setResetDate(Instant.now());
-                user.setActivated(true);
-                return new AbstractMap.SimpleEntry<>(user, rawPassword);
+
+                return token;
             })
             .subscribeOn(Schedulers.boundedElastic())
-            .flatMap(entry -> saveUser(entry.getKey())
-                .flatMap(savedUser -> sendWelcomeEmail(savedUser, entry.getValue()).thenReturn(savedUser))
+            .flatMap(token ->
+                saveUser(user)
+                    .flatMap(savedUser -> sendWelcomeEmail(savedUser, token).thenReturn(savedUser))
             )
-            .doOnNext(savedUser -> LOG.debug("Created user {} and sent password email", savedUser.getLogin()));
+            .doOnNext(savedUser -> LOG.debug("Created user {} and sent create-password email", savedUser.getLogin()));
     }
 
-    private Mono<Void> sendWelcomeEmail(User user, String rawPassword) {
+
+    private Mono<Void> sendWelcomeEmail(User user, String token) {
         if (user.getEmail() == null) {
             return Mono.empty();
         }
-        return Mono.fromRunnable(() -> {
-                mailService.sendNewUserPasswordMail(user, rawPassword);
-            })
+        return Mono.fromRunnable(() -> mailService.sendOneTimeSetPasswordLinkMail(user, token))
             .subscribeOn(Schedulers.boundedElastic())
             .then();
     }
@@ -138,12 +192,13 @@ public class UserService {
         return userRepository
             .findById(userDTO.getId())
             .map(user -> {
-                user.setLogin(userDTO.getLogin().toLowerCase());
                 user.setFirstName(userDTO.getFirstName());
                 user.setLastName(userDTO.getLastName());
+
                 if (userDTO.getEmail() != null) {
                     user.setEmail(userDTO.getEmail().toLowerCase());
                 }
+
                 user.setImageUrl(userDTO.getImageUrl());
                 user.setActivated(userDTO.isActivated());
                 user.setLangKey(userDTO.getLangKey());
@@ -151,11 +206,18 @@ public class UserService {
                 user.setBirthDate(userDTO.getBirthDate());
                 user.setGender(userDTO.getGender());
                 user.setJobRole(userDTO.getJobRole());
-                if(userDTO.getSecurityAccessLeve() ==null){
-                    user.setSecurityAccessLeve(SecurityLevel.NORMAL_1);
+
+                if (userDTO.getSecurityAccessLevel() == null) {
+                    user.setSecurityAccessLevel(SecurityLevel.NORMAL_1);
                 }
+
+                user.setAllowOngoingVisit(userDTO.isAllowOngoingVisit());
+                user.setCanUnDischargeUrgentCare(userDTO.isCanUnDischargeUrgentCare());
+                user.setCanUnCompleteEncounter(userDTO.isCanUnCompleteEncounter());
+
                 Set<Authority> managedAuthorities = user.getAuthorities();
                 managedAuthorities.clear();
+
                 return user;
             })
             .flatMap(this::saveUser)
@@ -286,6 +348,14 @@ public class UserService {
         return authorityRepository.findAll().map(Authority::getName);
     }
 
+    public Flux<AdminUserDTO> getActiveAdmins(Pageable pageable) {
+        return getAllManagedUsers(pageable)
+            .filter(AdminUserDTO::isActivated)
+            .filter(dto -> dto.getAuthorities() != null && dto.getAuthorities().contains(AuthoritiesConstants.ADMIN));
+    }
+
+
+
     public final class RandomUtil {
         private static final int DEF_COUNT = 20;
         private static final SecureRandom SECURE_RANDOM = new SecureRandom();
@@ -308,5 +378,141 @@ public class UserService {
         static {
             SECURE_RANDOM.nextBytes(new byte[64]);
         }
+    }
+    public Mono<User> completeCreatePassword(String newPassword, String key) {
+        if (!isPasswordSecure(newPassword)) {
+            return Mono.error(new InvalidPasswordException());
+        }
+
+        return userRepository
+            .findOneByResetKey(key)
+            .filter(user -> user.getResetDate() != null)
+            .filter(user -> user.getResetDate().isAfter(
+                Instant.now().minus(CREATE_PASSWORD_KEY_EXPIRATION_HOURS, ChronoUnit.HOURS)
+            ))
+            .flatMap(user -> {
+                if (Boolean.TRUE.equals(user.isActivated())) {
+                    return Mono.error(new UserAlreadyActiveException());
+                }
+
+                user.setPassword(passwordEncoder.encode(newPassword));
+                user.setActivated(true);
+
+                // one-time use
+                user.setResetKey(null);
+                user.setResetDate(null);
+
+                return userRepository.save(user);
+            });
+    }
+
+
+
+    @Transactional(readOnly = true)
+    public Mono<CreatePasswordKeyValidationDTO> validateCreatePasswordKey(String key) {
+        return userRepository
+            .findOneByResetKey(key)
+            .map(user -> {
+                boolean activated = Boolean.TRUE.equals(user.isActivated());
+                boolean passwordAlreadySet = user.getPassword() != null;
+
+                boolean notExpired =
+                    user.getResetDate() != null &&
+                        user.getResetDate().isAfter(
+                            Instant.now().minus(CREATE_PASSWORD_KEY_EXPIRATION_HOURS, ChronoUnit.HOURS)
+                        );
+
+                boolean valid = notExpired && !activated;
+
+                String message;
+                if (!notExpired) message = "TOKEN_INVALID_OR_EXPIRED";
+                else if (activated) message = "USER_ALREADY_ACTIVE";
+                else message = "OK";
+
+                return new CreatePasswordKeyValidationDTO(valid, activated, passwordAlreadySet, message);
+            })
+            .switchIfEmpty(Mono.just(new CreatePasswordKeyValidationDTO(false, false, false, "TOKEN_NOT_FOUND")));
+    }
+
+
+
+    private static final Pattern STRONG_PASSWORD_PATTERN = Pattern.compile(
+        "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&#_.-])[A-Za-z\\d@$!%*?&#_.-]{8,}$"
+    );
+
+    private static boolean isPasswordSecure(String password) {
+        return password != null && STRONG_PASSWORD_PATTERN.matcher(password).matches();
+    }
+
+    public Flux<User> findByIds(List<Long> ids) {
+        LOG.debug("[BULK FIND USERS] idsCount={} ids={}",
+            ids == null ? 0 : ids.size(), ids);
+
+        return userRepository.findAllById(ids)
+            .doOnNext(u -> LOG.debug("[BULK FIND USERS] found user id={}", u.getId()));
+    }
+
+    @Transactional
+    public Mono<Void> resendCreatePasswordEmail(String login) {
+        return userRepository
+            .findOneByLogin(login.toLowerCase())
+            .switchIfEmpty(Mono.error(new RuntimeException("User not found")))
+            .flatMap(user -> {
+
+                if (user.getEmail() == null || user.getEmail().trim().isEmpty()) {
+                    return Mono.error(new RuntimeException("User email is missing"));
+                }
+
+                if (Boolean.TRUE.equals(user.isActivated())) {
+                    return Mono.error(new RuntimeException("User is already activated"));
+                }
+
+                Instant now = Instant.now();
+
+                String token = user.getResetKey();
+
+                boolean hasValidToken =
+                    token != null &&
+                        user.getResetDate() != null &&
+                        user.getResetDate().isAfter(
+                            now.minus(CREATE_PASSWORD_KEY_EXPIRATION_HOURS, ChronoUnit.HOURS)
+                        );
+
+                if (!hasValidToken) {
+                    token = RandomUtil.generateResetKey();
+                    user.setResetKey(token);
+                    user.setResetDate(now);
+                }
+
+                String finalToken = token;
+
+                return saveUser(user)
+                    .flatMap(savedUser ->
+                        Mono.fromRunnable(() ->
+                                mailService.sendOneTimeSetPasswordLinkMail(savedUser, finalToken)
+                            )
+                            .subscribeOn(Schedulers.boundedElastic())
+                            .then()
+                    );
+            });
+    }
+    @Transactional
+    public Mono<Void> toggleActivation(String login) {
+        return userRepository
+            .findOneByLogin(login.toLowerCase())
+            .switchIfEmpty(Mono.error(new RuntimeException("User not found")))
+            .flatMap(user -> {
+
+                boolean newState = !Boolean.TRUE.equals(user.isActivated());
+                user.setActivated(newState);
+
+                if (!newState) {
+                    user.setResetKey(null);
+                    user.setResetDate(null);
+                }
+
+                return userRepository.save(user);
+            })
+            .then();
     }
 }

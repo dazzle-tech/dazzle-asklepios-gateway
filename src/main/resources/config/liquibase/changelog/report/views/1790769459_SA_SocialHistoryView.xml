@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-social-history-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwsocialhistory AS
+      SELECT
+        sh.id,
+        sh.patient_id,
+        sh.is_current_smoker,
+        sh.smoke_start_date,
+        sh.cigarette_amount,
+        sh.cigarette_type,
+        sh.is_previous_smoker,
+        sh.smoke_quit_date,
+        sh.exposure_to_second_hand_smoke,
+        sh.alcohol_consumption,
+        sh.type_of_alcohol,
+        sh.alcohol_since_when,
+        sh.substance_use,
+        sh.route,
+        sh.frequency,
+        sh.physical_limitation,
+        sh.diagnosed_eating_disorders,
+        sh.created_by,
+        sh.created_date,
+        sh.last_modified_by,
+        sh.last_modified_date,
+        sh.status,
+        sh.cancelled_by,
+        sh.cancelled_date,
+        sh.cancellation_reason
+      FROM public.social_history sh;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwsocialhistory;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-social-history-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwsocialhistory TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwsocialhistory FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

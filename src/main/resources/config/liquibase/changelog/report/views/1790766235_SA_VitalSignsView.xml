@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-vital-signs-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwvitalsigns AS
+      SELECT
+        vs.id,
+        vs.patient_id,
+        vs.encounter_id,
+        vs.blood_pressure_systolic,
+        vs.blood_pressure_diastolic,
+        vs.measurement_site,
+        vs.heart_rate,
+        vs.temperature,
+        vs.oxygen_saturation,
+        vs.respiratory_rate,
+        vs.notes,
+        vs.is_triage,
+        vs.created_by,
+        vs.is_active,
+        vs.created_date,
+        vs.last_modified_by,
+        vs.last_modified_date
+      FROM public.vital_signs vs;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwvitalsigns;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-vital-signs-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwvitalsigns TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwvitalsigns FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

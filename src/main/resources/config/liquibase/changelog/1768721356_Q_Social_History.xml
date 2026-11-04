@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd"
+>
+
+  <changeSet id="QA000000000013" author="qais">
+
+    <createTable tableName="social_history">
+
+      <column name="id" type="bigint" autoIncrement="true" startWith="1">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints
+          nullable="false"
+          foreignKeyName="fk_social_history_patient"
+          references="patients(id)"/>
+      </column>
+
+      <column name="is_current_smoker" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="smoke_start_date" type="date"/>
+      <column name="cigarette_amount" type="int"/>
+      <column name="cigarette_type" type="varchar(255)"/>
+
+      <column name="is_previous_smoker" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="smoke_quit_date" type="date"/>
+
+      <column name="exposure_to_second_hand_smoke" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="alcohol_consumption" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="type_of_alcohol" type="varchar(255)"/>
+      <column name="alcohol_since_when" type="date"/>
+
+      <column name="substance_use" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="route" type="varchar(50)"/>
+      <column name="frequency" type="varchar(50)"/>
+
+      <column name="physical_limitation" type="varchar(50)"/>
+      <column name="diagnosed_eating_disorders" type="varchar(50)"/>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+
+  </changeSet>
+
+
+  <changeSet id="QA000000000013_ck_01" author="qais">
+    <sql dbms="postgresql">
+      ALTER TABLE social_history
+        ADD CONSTRAINT ck_social_history_current_smoker_required
+          CHECK (
+            is_current_smoker IS NOT TRUE
+              OR (smoke_start_date IS NOT NULL AND cigarette_amount IS NOT NULL)
+            );
+    </sql>
+    <rollback>ٍ
+      <sql dbms="postgresql">
+        ALTER TABLE social_history
+        DROP CONSTRAINT IF EXISTS ck_social_history_current_smoker_required;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="QA000000000013_ck_02" author="qais">
+    <sql dbms="postgresql">
+      ALTER TABLE social_history
+        ADD CONSTRAINT ck_social_history_previous_smoker_required
+          CHECK (
+            is_previous_smoker IS NOT TRUE
+              OR smoke_quit_date IS NOT NULL
+            );
+    </sql>
+    <rollback>
+      <sql dbms="postgresql">
+        ALTER TABLE social_history
+        DROP CONSTRAINT IF EXISTS ck_social_history_previous_smoker_required;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="QA000000000013_ck_03" author="qais">
+    <sql dbms="postgresql">
+      ALTER TABLE social_history
+        ADD CONSTRAINT ck_social_history_smoker_xor
+          CHECK (
+            NOT (is_current_smoker IS TRUE AND is_previous_smoker IS TRUE)
+            );
+    </sql>
+    <rollback>
+      <sql dbms="postgresql">
+        ALTER TABLE social_history
+        DROP CONSTRAINT IF EXISTS ck_social_history_smoker_xor;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="QA000000000013_ck_04" author="qais">
+    <sql dbms="postgresql">
+      ALTER TABLE social_history
+        ADD CONSTRAINT ck_social_history_alcohol_since_when_required
+          CHECK (
+            alcohol_consumption IS NOT TRUE
+              OR alcohol_since_when IS NOT NULL
+            );
+    </sql>
+    <rollback>
+      <sql dbms="postgresql">
+        ALTER TABLE social_history
+        DROP CONSTRAINT IF EXISTS ck_social_history_alcohol_since_when_required;
+      </sql>
+    </rollback>
+  </changeSet>
+
+</databaseChangeLog>
+

@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="b00000000000031" author="batool">
+    <createTable tableName="patient_payments">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_patient_payments_patient"
+                     referencedTableName="patients"
+                     referencedColumnNames="id"/>
+      </column>
+
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_patient_payments_encounter"
+                     referencedTableName="patient_encounters"
+                     referencedColumnNames="id"/>
+      </column>
+
+      <column name="plan_id" type="bigint">
+        <constraints nullable="true"
+                     foreignKeyName="fk_patient_payments_plan"
+                     referencedTableName="patient_insurances"
+                     referencedColumnNames="id"/>
+      </column>
+
+      <column name="due_amount" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="patient_balance" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="paid_from_amount" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="paid_from_balance" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="payment_type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="payment_method" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="amount" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="currency" type="varchar(10)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="facility_default_currency" type="varchar(10)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="amount_in_facility_currency" type="numeric(19,2)">
+        <constraints nullable="true"/>
+      </column>
+
+      <column name="remaining" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="add_to_free_balance" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="use_balance_to_settle_debts" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="card_number" type="varchar(25)"/>
+      <column name="card_holder_name" type="varchar(255)"/>
+      <column name="card_valid_until" type="date"/>
+
+      <column name="cheque_number" type="varchar(50)"/>
+      <column name="cheque_bank_name" type="varchar(255)"/>
+      <column name="cheque_due_date" type="date"/>
+
+      <column name="transfer_number" type="varchar(50)"/>
+      <column name="transfer_bank_name" type="varchar(255)"/>
+      <column name="transfer_date" type="date"/>
+
+      <column name="refunds" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <createIndex tableName="patient_payments" indexName="idx_patient_payments_patient_created">
+      <column name="patient_id"/>
+      <column name="created_date"/>
+    </createIndex>
+
+    <createIndex tableName="patient_payments" indexName="idx_patient_payments_encounter">
+      <column name="encounter_id"/>
+    </createIndex>
+
+  </changeSet>
+
+
+  <changeSet id="b00000000000032" author="batool">
+    <createTable tableName="patient_payment_services">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="payment_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_payment_services_payment"
+                     referencedTableName="patient_payments"
+                     referencedColumnNames="id"
+                     deleteCascade="true"/>
+      </column>
+
+      <column name="service_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_payment_services_service"
+                     referencedTableName="service"
+                     referencedColumnNames="id"/>
+      </column>
+
+      <column name="price" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="is_exempted" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <createIndex tableName="patient_payment_services" indexName="idx_payment_services_payment_id">
+      <column name="payment_id"/>
+    </createIndex>
+
+    <createIndex tableName="patient_payment_services" indexName="idx_payment_services_service_id">
+      <column name="service_id"/>
+    </createIndex>
+    <sql dbms="postgresql">
+  <![CDATA[
+      ALTER TABLE patient_payments
+        ADD CONSTRAINT ck_patient_payments_plan_required_when_insurance
+          CHECK (
+            payment_method <> 'INSURANCE_COVERAGE'
+              OR plan_id IS NOT NULL
+            );
+      ]]>
+</sql>
+
+    <sql dbms="postgresql">
+  <![CDATA[
+      ALTER TABLE patient_payments
+        ADD CONSTRAINT ck_patient_payments_card_details_required
+          CHECK (
+            payment_method <> 'CREDIT_DEBIT_CARD'
+              OR (
+              card_number IS NOT NULL
+                AND card_holder_name IS NOT NULL
+                AND card_valid_until IS NOT NULL
+              )
+            );
+      ]]>
+</sql>
+
+    <sql dbms="postgresql">
+  <![CDATA[
+      ALTER TABLE patient_payments
+        ADD CONSTRAINT ck_patient_payments_cheque_details_required
+          CHECK (
+            payment_method <> 'CHEQUE'
+              OR (
+              cheque_number IS NOT NULL
+                AND cheque_bank_name IS NOT NULL
+                AND cheque_due_date IS NOT NULL
+              )
+            );
+      ]]>
+</sql>
+
+    <sql dbms="postgresql">
+  <![CDATA[
+      ALTER TABLE patient_payments
+        ADD CONSTRAINT ck_patient_payments_transfer_details_required
+          CHECK (
+            payment_method <> 'BANK_TRANSFER'
+              OR (
+              transfer_number IS NOT NULL
+                AND transfer_bank_name IS NOT NULL
+                AND transfer_date IS NOT NULL
+              )
+            );
+      ]]>
+</sql>
+  </changeSet>
+
+  <changeSet id="b00000000000035" author="batool">
+    <createTable tableName="patient_wallet">
+      <column name="patient_id" type="bigint">
+        <constraints primaryKey="true" nullable="false"
+                     foreignKeyName="fk_patient_wallet_patient"
+                     referencedTableName="patients"
+                     referencedColumnNames="id"/>
+      </column>
+
+      <column name="balance" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+
+    <createTable tableName="patient_charges">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_patient_charges_patient"
+                     referencedTableName="patients"
+                     referencedColumnNames="id"/>
+      </column>
+
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_patient_charges_encounter"
+                     referencedTableName="patient_encounters"
+                     referencedColumnNames="id"/>
+      </column>
+
+      <column name="plan_id" type="bigint">
+        <constraints nullable="true"
+                     foreignKeyName="fk_patient_charges_plan"
+                     referencedTableName="patient_insurances"
+                     referencedColumnNames="id"/>
+      </column>
+
+      <column name="due_amount" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="remaining" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="currency" type="varchar(10)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="facility_default_currency" type="varchar(10)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+
+    <addUniqueConstraint tableName="patient_charges"
+                         columnNames="encounter_id"
+                         constraintName="uq_patient_charges_encounter"/>
+
+    <createIndex tableName="patient_charges" indexName="idx_patient_charges_patient_open">
+      <column name="patient_id"/>
+      <column name="remaining"/>
+      <column name="created_date"/>
+    </createIndex>
+
+    <createIndex tableName="patient_charges" indexName="idx_patient_charges_encounter">
+      <column name="encounter_id"/>
+    </createIndex>
+    <createTable tableName="patient_payment_allocations">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="payment_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_alloc_payment"
+                     referencedTableName="patient_payments"
+                     referencedColumnNames="id"
+                     deleteCascade="true"/>
+      </column>
+
+      <column name="charge_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_alloc_charge"
+                     referencedTableName="patient_charges"
+                     referencedColumnNames="id"
+                     deleteCascade="true"/>
+      </column>
+
+      <column name="paid_from_amount" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="paid_from_balance" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+    <addUniqueConstraint tableName="patient_payment_allocations"
+                         columnNames="payment_id,charge_id"
+                         constraintName="uq_alloc_payment_charge"/>
+
+    <createIndex tableName="patient_payment_allocations" indexName="idx_alloc_payment">
+      <column name="payment_id"/>
+    </createIndex>
+
+    <createIndex tableName="patient_payment_allocations" indexName="idx_alloc_charge">
+      <column name="charge_id"/>
+    </createIndex>
+  </changeSet>
+
+</databaseChangeLog>

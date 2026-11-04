@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="tooth_service_create" author="hanan253yahya">
+    <createTable tableName="tooth_service">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+      <column name="tooth_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="service_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="source" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="tooth_action_id" type="bigint"/>
+      <column name="price" type="decimal(10,2)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="is_cancelled" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="cancelled_date" type="timestamp"/>
+      <column name="cancelled_by" type="varchar(50)"/>
+      <column name="cancellation_reason" type="text"/>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="tooth_service"
+      baseColumnNames="tooth_id"
+      referencedTableName="dental_chart_tooth"
+      referencedColumnNames="id"
+      constraintName="fk_tooth_service_tooth"/>
+
+    <addForeignKeyConstraint
+      baseTableName="tooth_service"
+      baseColumnNames="service_id"
+      referencedTableName="service"
+      referencedColumnNames="id"
+      constraintName="fk_tooth_service_service"/>
+
+    <addForeignKeyConstraint
+      baseTableName="tooth_service"
+      baseColumnNames="tooth_action_id"
+      referencedTableName="tooth_action"
+      referencedColumnNames="id"
+      constraintName="fk_tooth_service_tooth_action"/>
+
+    <createIndex indexName="idx_tooth_service_tooth_id" tableName="tooth_service">
+      <column name="tooth_id"/>
+    </createIndex>
+
+    <createIndex indexName="idx_tooth_service_tooth_action_id" tableName="tooth_service">
+      <column name="tooth_action_id"/>
+    </createIndex>
+  </changeSet>
+
+</databaseChangeLog>

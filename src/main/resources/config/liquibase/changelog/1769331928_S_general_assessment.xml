@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="100000000000066_General_Assessment" author="Sondos">
+    <createTable tableName="general_assessment">
+      <column name="id" type="bigint" startWith="1" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="position_status" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="body_movements" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="level_of_consciousness" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="facial_expression" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="speech" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="mood_behavior" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="memory_remote" type="boolean">
+        <constraints nullable="false"/>
+      </column>
+      <column name="memory_recent" type="boolean">
+        <constraints nullable="false"/>
+      </column>
+      <column name="signs_of_agitation" type="boolean">
+        <constraints nullable="false"/>
+      </column>
+      <column name="signs_of_depression" type="boolean">
+        <constraints nullable="false"/>
+      </column>
+      <column name="signs_of_suicidal_ideation" type="boolean">
+        <constraints nullable="false"/>
+      </column>
+      <column name="signs_of_substance_use" type="boolean">
+        <constraints nullable="false"/>
+      </column>
+      <column name="is_triage" type="boolean">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <createIndex indexName="idx_general_assessment_encounter_createddate_desc" tableName="general_assessment">
+      <column name="encounter_id"/>
+      <column name="created_date" descending="true"/>
+    </createIndex>
+
+    <addForeignKeyConstraint
+      baseTableName="general_assessment"
+      baseColumnNames="patient_id"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+      constraintName="fk_general_assessment_patient_id"/>
+
+    <addForeignKeyConstraint
+      baseTableName="general_assessment"
+      baseColumnNames="encounter_id"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"
+      constraintName="fk_general_assessment_encounter_id"
+      onDelete="CASCADE"/>
+  </changeSet>
+
+</databaseChangeLog>

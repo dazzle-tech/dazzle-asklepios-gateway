@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="H_PATIENT_TRIGGER" author="hanan">
+
+    <sql dbms="postgresql" splitStatements="false">
+  <![CDATA[
+      CREATE OR REPLACE FUNCTION notify_hl7_patient_event()
+RETURNS TRIGGER AS $function$
+      BEGIN
+      INSERT INTO ${hl7.integrationSchema}.hl7_event (
+        id,
+        event_type,
+        object_key,
+        event_datetime
+      )
+      VALUES (
+               gen_random_uuid()::varchar,
+               CASE
+                 WHEN TG_OP = 'INSERT' THEN '${hl7.events.patientRegistered}'
+                 WHEN TG_OP = 'UPDATE' THEN '${hl7.events.patientUpdated}'
+                 END,
+               NEW.id::varchar,
+               NOW()
+             );
+
+      RETURN NEW;
+      END;
+      $function$ LANGUAGE plpgsql;
+      ]]>
+</sql>
+    <sql dbms="postgresql" splitStatements="false">
+    <![CDATA[
+      DROP TRIGGER IF EXISTS trg_hl7_create_patient ON patients;
+
+      CREATE TRIGGER trg_hl7_create_patient
+        AFTER INSERT ON patients
+        FOR EACH ROW
+        EXECUTE FUNCTION notify_hl7_patient_event();
+      ]]>
+  </sql>
+
+    <sql dbms="postgresql" splitStatements="false">
+    <![CDATA[
+      DROP TRIGGER IF EXISTS trg_hl7_update_patient ON patients;
+
+      CREATE TRIGGER trg_hl7_update_patient
+        AFTER UPDATE ON patients
+        FOR EACH ROW
+        EXECUTE FUNCTION notify_hl7_patient_event();
+      ]]>
+  </sql>
+
+    <rollback>
+      <sql dbms="postgresql" splitStatements="false">
+        <![CDATA[
+DROP TRIGGER IF EXISTS trg_hl7_create_patient ON patients;
+DROP TRIGGER IF EXISTS trg_hl7_update_patient ON patients;
+DROP FUNCTION IF EXISTS notify_hl7_patient_event();
+      ]]>
+      </sql>
+    </rollback>
+
+  </changeSet>
+
+</databaseChangeLog>

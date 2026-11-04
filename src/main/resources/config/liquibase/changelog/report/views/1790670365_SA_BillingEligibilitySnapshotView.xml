@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-billing-eligibility-snapshot-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwbillingeligibilitysnapshot AS
+      SELECT
+        bes.id,
+        bes.encounter_id,
+        bes.patient_id,
+        bes.patient_insurance_id,
+        bes.waseel_eligibility_request_id,
+        bes.eligibility_response_id,
+        bes.member_id,
+        bes.policy_number,
+        bes.policy_holder,
+        bes.network,
+        bes.coverage_status,
+        bes.inforce,
+        bes.copayment_percent,
+        bes.copayment_cap,
+        bes.coverage_json,
+        bes.response_json,
+        bes.frozen_at,
+        bes.frozen_by,
+        bes.created_by,
+        bes.created_date,
+        bes.last_modified_by,
+        bes.last_modified_date
+      FROM public.billing_eligibility_snapshot bes;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwbillingeligibilitysnapshot;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-billing-eligibility-snapshot-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwbillingeligibilitysnapshot TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwbillingeligibilitysnapshot FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

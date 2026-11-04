@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-billing-refund-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwbillingrefund AS
+      SELECT
+        br.id,
+        br.refund_number,
+        br.wallet_id,
+        br.patient_id,
+        br.encounter_id,
+        br.original_payment_id,
+        br.original_payment_transaction_id,
+        br.refund_payment_transaction_id,
+        br.refund_source_type,
+        br.requested_amount,
+        br.approved_amount,
+        br.refunded_amount,
+        br.reversed_amount,
+        br.currency,
+        br.refund_method_code,
+        br.refund_method_id,
+        br.status,
+        br.request_date,
+        br.requested_by,
+        br.reason,
+        br.approved_by,
+        br.approved_date,
+        br.rejected_by,
+        br.rejected_date,
+        br.rejection_reason,
+        br.completed_by,
+        br.completed_date,
+        br.cancelled_by,
+        br.cancelled_date,
+        br.cancellation_reason,
+        br.reversed_by,
+        br.reversed_date,
+        br.reversal_reason,
+        br.external_reference,
+        br.processor_reference,
+        br.reference_document_type,
+        br.reference_document_id,
+        br.reference_document_number,
+        br.original_refund_id,
+        br.idempotency_key,
+        br.transaction_group_id,
+        br.notes,
+        br.created_by,
+        br.created_date,
+        br.last_modified_by,
+        br.last_modified_date
+      FROM public.billing_refund br;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwbillingrefund;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-billing-refund-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwbillingrefund TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwbillingrefund FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

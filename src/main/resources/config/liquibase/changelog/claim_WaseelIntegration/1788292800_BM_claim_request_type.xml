@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="BM000000000068" author="BushraMashaiekh">
+
+    <addColumn tableName="claim_request">
+      <column name="claim_type" type="varchar(50)"/>
+    </addColumn>
+
+    <addColumn tableName="claim_request">
+      <column name="claim_sub_type" type="varchar(50)"/>
+    </addColumn>
+
+    <update tableName="claim_request">
+      <column name="claim_type" value="PROFESSIONAL"/>
+      <where>claim_type IS NULL</where>
+    </update>
+
+    <update tableName="claim_request">
+      <column name="claim_sub_type" value="OUTPATIENT"/>
+      <where>claim_sub_type IS NULL</where>
+    </update>
+
+  </changeSet>
+</databaseChangeLog>

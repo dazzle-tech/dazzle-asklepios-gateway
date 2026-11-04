@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="bs00000000000057" author="batool">
+
+    <createTable tableName="financial_document_items">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="document_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="patient_service_product_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="quantity" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="unit_price" type="numeric(19,4)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="gross_amount" type="numeric(19,4)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="discount_amount"
+              type="numeric(19,4)"
+              defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="tax_amount"
+              type="numeric(19,4)"
+              defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="net_amount" type="numeric(19,4)">
+        <constraints nullable="false"/>
+      </column>
+
+
+      <column name="patient_share_amount"
+              type="numeric(19,4)"
+              defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="insurance_share_amount"
+              type="numeric(19,4)"
+              defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+
+    <addForeignKeyConstraint
+      constraintName="fk_financial_document_item_document"
+      baseTableName="financial_document_items"
+      baseColumnNames="document_id"
+      referencedTableName="financial_documents"
+      referencedColumnNames="id"
+      onDelete="CASCADE"/>
+
+
+    <addForeignKeyConstraint
+      constraintName="fk_financial_document_item_psp"
+      baseTableName="financial_document_items"
+      baseColumnNames="patient_service_product_id"
+      referencedTableName="patient_services_and_products"
+      referencedColumnNames="id"
+      onDelete="RESTRICT"/>
+
+
+    <createIndex
+      indexName="idx_financial_document_items_document"
+      tableName="financial_document_items">
+      <column name="document_id"/>
+    </createIndex>
+
+    <createIndex
+      indexName="idx_financial_document_items_psp"
+      tableName="financial_document_items">
+      <column name="patient_service_product_id"/>
+    </createIndex>
+  </changeSet>
+
+</databaseChangeLog>

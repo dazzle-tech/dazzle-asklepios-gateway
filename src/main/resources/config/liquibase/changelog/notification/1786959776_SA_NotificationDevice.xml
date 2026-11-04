@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="20260817-01-notification-device" author="sondos">
+
+    <createTable tableName="notification_device" schemaName="notification">
+
+      <column name="id" type="BIGINT" autoIncrement="true">
+        <constraints primaryKey="true"
+                     nullable="false"/>
+      </column>
+
+      <column name="recipient_type" type="VARCHAR(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="recipient_id" type="BIGINT">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="device_token" type="TEXT">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="platform" type="VARCHAR(20)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="device_id" type="VARCHAR(255)"/>
+
+      <column name="app_version" type="VARCHAR(50)"/>
+
+      <column name="is_active" type="BOOLEAN" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_seen" type="TIMESTAMP WITH TIME ZONE"/>
+
+      <column name="created_by" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="TIMESTAMP WITH TIMEZONE" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="VARCHAR(50)"/>
+
+      <column name="last_modified_date" type="TIMESTAMP WITH TIMEZONE"/>
+
+    </createTable>
+
+    <createIndex
+      indexName="idx_notification_device_recipient"
+      tableName="notification_device" schemaName="notification">
+      <column name="recipient_type"/>
+      <column name="recipient_id"/>
+    </createIndex>
+
+    <createIndex
+      indexName="idx_notification_device_token"
+      tableName="notification_device" schemaName="notification">
+      <column name="device_token"/>
+    </createIndex>
+
+    <createIndex
+      indexName="idx_notification_device_active"
+      tableName="notification_device" schemaName="notification">
+      <column name="is_active"/>
+    </createIndex>
+
+    <addUniqueConstraint
+      tableName="notification_device"
+      columnNames="device_token"
+      constraintName="uk_notification_device_token" schemaName="notification"/>
+
+  </changeSet>
+
+</databaseChangeLog>

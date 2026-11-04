@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="QA000000000011" author="qais">
+
+    <createTable tableName="hospitalizations">
+      <column name="id" type="bigint" autoIncrement="true" startWith="1">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints
+          nullable="false"
+          foreignKeyName="fk_hospitalizations_patient"
+          references="patients(id)"/>
+      </column>
+
+      <column name="facility" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="reason" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="admission_type" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="date_of_admission" type="date">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="length_of_stay_days" type="int"/>
+
+      <column name="outcomes" type="varchar(255)"/>
+
+      <column name="medical_interventions_performed" type="varchar(1000)"/>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+
+    <addUniqueConstraint
+      tableName="hospitalizations"
+      columnNames="patient_id,facility,date_of_admission,reason"
+      constraintName="ux_hospitalizations_patient_facility_date_reason"/>
+
+  </changeSet>
+
+</databaseChangeLog>

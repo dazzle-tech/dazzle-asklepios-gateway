@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+  <!--
+    Waseel eligibility benefit rules persisted per patient insurance coverage.
+    General policy defaults remain on patient_insurances for display only.
+  -->
+
+  <changeSet id="20260810-01-patient-insurance-benefit-rules-table" author="asklepios">
+    <createTable tableName="patient_insurance_benefit_rules">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="patient_insurance_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="eligibility_request_id" type="bigint">
+        <constraints nullable="true"/>
+      </column>
+
+      <column name="benefit_category" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="item_name" type="varchar(255)">
+        <constraints nullable="true"/>
+      </column>
+
+      <column name="item_code" type="varchar(100)">
+        <constraints nullable="true"/>
+      </column>
+
+      <column name="network_type" type="varchar(100)">
+        <constraints nullable="true"/>
+      </column>
+
+      <column name="provider_type" type="varchar(100)">
+        <constraints nullable="true"/>
+      </column>
+
+      <column name="term" type="varchar(100)">
+        <constraints nullable="true"/>
+      </column>
+
+      <column name="unit" type="varchar(50)">
+        <constraints nullable="true"/>
+      </column>
+
+      <column name="currency" type="varchar(10)">
+        <constraints nullable="true"/>
+      </column>
+
+      <column name="maximum_benefit" type="numeric(19,4)">
+        <constraints nullable="true"/>
+      </column>
+
+      <column name="approval_limit" type="numeric(19,4)">
+        <constraints nullable="true"/>
+      </column>
+
+      <column name="patient_copayment_percentage" type="numeric(19,4)">
+        <constraints nullable="true"/>
+      </column>
+
+      <column name="patient_maximum_copayment" type="numeric(19,4)">
+        <constraints nullable="true"/>
+      </column>
+
+      <column name="is_global_default" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="exceptions_json" type="text">
+        <constraints nullable="true"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)">
+        <constraints nullable="true"/>
+      </column>
+
+      <column name="last_modified_date" type="timestamp">
+        <constraints nullable="true"/>
+      </column>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="patient_insurance_benefit_rules"
+      baseColumnNames="patient_insurance_id"
+      referencedTableName="patient_insurances"
+      referencedColumnNames="id"
+      constraintName="fk_pibr_patient_insurance"
+      deferrable="false"
+      initiallyDeferred="false"
+      onDelete="CASCADE"/>
+
+    <createIndex
+      indexName="idx_pibr_patient_insurance_id"
+      tableName="patient_insurance_benefit_rules">
+      <column name="patient_insurance_id"/>
+    </createIndex>
+  </changeSet>
+
+  <changeSet id="20260810-02-patient-insurance-default-copay-columns" author="asklepios">
+    <addColumn tableName="patient_insurances">
+      <column name="default_copayment_percent" type="numeric(19,4)">
+        <constraints nullable="true"/>
+      </column>
+      <column name="default_maximum_copayment" type="numeric(19,4)">
+        <constraints nullable="true"/>
+      </column>
+      <column name="benefit_start_date" type="date">
+        <constraints nullable="true"/>
+      </column>
+      <column name="benefit_end_date" type="date">
+        <constraints nullable="true"/>
+      </column>
+    </addColumn>
+  </changeSet>
+
+</databaseChangeLog>

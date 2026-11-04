@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+
+  <changeSet id="bs00000000000052" author="batool">
+
+    <createTable tableName="patient_ledger_entries">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="type" type="varchar(20)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="source" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="reference_id" type="bigint"/>
+
+      <column name="amount" type="numeric(19,4)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="currency" type="varchar(10)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+
+    </createTable>
+
+    <createIndex tableName="patient_ledger_entries" indexName="idx_ledger_patient">
+      <column name="patient_id"/>
+      <column name="created_date"/>
+    </createIndex>
+
+  </changeSet>
+
+</databaseChangeLog>

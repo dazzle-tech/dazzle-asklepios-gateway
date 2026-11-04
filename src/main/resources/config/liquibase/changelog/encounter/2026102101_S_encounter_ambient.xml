@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="
+                     http://www.liquibase.org/xml/ns/dbchangelog
+                     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="2026102101-create-encounter-ambient" author="sondos">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <tableExists tableName="encounter_ambient"/>
+      </not>
+    </preConditions>
+
+    <createTable tableName="encounter_ambient">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" primaryKey="true" primaryKeyName="pk_encounter_ambient"/>
+      </column>
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="consent_status" type="varchar(20)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="consent_method" type="varchar(20)"/>
+      <column name="microphone_source" type="varchar(20)"/>
+      <column name="consent_at" type="timestamp"/>
+      <column name="recording_started_at" type="timestamp"/>
+      <column name="recording_stopped_at" type="timestamp"/>
+      <column name="recording_duration_ms" type="bigint"/>
+      <column name="recording_content_type" type="varchar(120)"/>
+      <column name="recording_file_name" type="varchar(255)"/>
+      <column name="recording_byte_size" type="bigint"/>
+      <column name="space_key" type="varchar(500)"/>
+      <column name="draft_json" type="jsonb"/>
+      <column name="draft_created_at" type="timestamp"/>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="encounter_ambient"
+      baseColumnNames="encounter_id"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"
+      constraintName="fk_encounter_ambient_encounter"/>
+
+    <addForeignKeyConstraint
+      baseTableName="encounter_ambient"
+      baseColumnNames="patient_id"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+      constraintName="fk_encounter_ambient_patient"/>
+
+    <addUniqueConstraint
+      tableName="encounter_ambient"
+      columnNames="space_key"
+      constraintName="uk_encounter_ambient_space_key"/>
+
+    <createIndex tableName="encounter_ambient" indexName="idx_encounter_ambient_encounter_id">
+      <column name="encounter_id"/>
+    </createIndex>
+
+    <createIndex tableName="encounter_ambient" indexName="idx_encounter_ambient_patient_id">
+      <column name="patient_id"/>
+    </createIndex>
+  </changeSet>
+</databaseChangeLog>

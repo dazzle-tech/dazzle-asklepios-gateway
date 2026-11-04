@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+  <changeSet id="bs00000000000048" author="batool">
+
+    <dropForeignKeyConstraint
+      baseTableName="patient_insurances"
+      constraintName="fk_patient_insurance_payor"/>
+
+    <dropForeignKeyConstraint
+      baseTableName="patient_insurances"
+      constraintName="fk_patient_insurance_plan"/>
+
+    <dropNotNullConstraint
+      tableName="patient_insurances"
+      columnName="payor_id"
+      columnDataType="bigint"/>
+
+    <dropNotNullConstraint
+      tableName="patient_insurances"
+      columnName="plan_id"
+      columnDataType="bigint"/>
+
+    <addColumn tableName="patient_insurances">
+      <column name="payer_name" type="varchar(255)"/>
+      <column name="tpa_nphies_id" type="varchar(100)"/>
+      <column name="tpa_name" type="varchar(255)"/>
+    </addColumn>
+
+  </changeSet>
+</databaseChangeLog>

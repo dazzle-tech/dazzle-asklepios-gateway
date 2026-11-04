@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="H000000000001MD_DIAG_COLLECTED_SAMPLES_QUANTITY_NULLABLE" author="hanan">
+
+    <dropNotNullConstraint
+      tableName="diagnostic_order_test_collected_samples"
+      columnName="quantity"
+      columnDataType="decimal(19,2)"/>
+    <dropNotNullConstraint
+      tableName="diagnostic_order_test_collected_samples"
+      columnName="unit"
+      columnDataType="varchar(100)"/>
+
+  </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!-- RADIOLOGY_SUPERVISOR job role (kept out of more_language_translation.csv so its checksum doesn't change) -->
+  <changeSet id="2026110203-radiology-supervisor-translation" author="hanan253yahya">
+    <sql>
+      INSERT INTO language_translation (lang_key, translation_key, translation_text, verified, translated)
+      VALUES
+      ('en', 'RADIOLOGY_SUPERVISOR', 'Radiology Supervisor', false, false),
+      ('arb', 'RADIOLOGY_SUPERVISOR', 'مشرف أشعة', false, false)
+      ON CONFLICT (lang_key, translation_key) DO NOTHING;
+    </sql>
+  </changeSet>
+
+</databaseChangeLog>

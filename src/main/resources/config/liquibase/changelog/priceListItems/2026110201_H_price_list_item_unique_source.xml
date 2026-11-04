@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!--
+    A price list may hold the same code for several items (one SBS code is
+    shared by many services), but the same catalog item must be active only
+    once per price list. Pricing already resolves by item_type + source_id.
+  -->
+  <changeSet id="2026110201_H_price_list_item_unique_source" author="hanan253yahya">
+
+    <dropUniqueConstraint
+      tableName="price_list_setup_item"
+      constraintName="uk_price_list_item_code"/>
+
+    <sql>
+      CREATE UNIQUE INDEX uk_price_list_item_source_active
+        ON price_list_setup_item (price_list_setup_id, item_type, source_id)
+        WHERE is_active = true AND source_id IS NOT NULL;
+    </sql>
+
+    <rollback>
+      <sql>DROP INDEX IF EXISTS uk_price_list_item_source_active;</sql>
+      <addUniqueConstraint
+        tableName="price_list_setup_item"
+        columnNames="price_list_setup_id,item_code"
+        constraintName="uk_price_list_item_code"/>
+    </rollback>
+
+  </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.24.xsd">
+
+
+  <changeSet id="BM0000000000017" author="BushraMashaiekh">
+    <createTable tableName="warehouse">
+      <column name="id" type="bigint" autoIncrement="true" startWith="1">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="facility_id" type="bigint" >
+        <constraints nullable="false"/>
+      </column>
+      <column name="department_id" type="bigint" >
+        <constraints nullable="true"/>
+      </column>
+      <column name="name" type="varchar(150)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="code" type="varchar(150)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="is_default" type="boolean"/>
+      <column name="close_warehouse" type="boolean"/>
+      <column name="capacity" type="varchar(150)"/>
+      <column name="working_hours_from_time" type="numeric(16)"/>
+      <column name="working_hours_to_time" type="numeric(16)"/>
+      <column name="is_active" type="boolean">
+        <constraints nullable="true"/>
+      </column>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <createIndex
+      tableName="warehouse"
+      indexName="idx_warehouse_code_name_unique"
+      unique="true">
+      <column name="code"/>
+      <column name="name"/>
+    </createIndex>
+
+    <addForeignKeyConstraint
+      baseTableName="warehouse"
+      baseColumnNames="facility_id"
+      referencedTableName="facility"
+      referencedColumnNames="id"
+      constraintName="fk_warehouse_facility"
+      deferrable="false" initiallyDeferred="false"/>
+
+    <addForeignKeyConstraint
+      baseTableName="warehouse"
+      baseColumnNames="department_id"
+      referencedTableName="department"
+      referencedColumnNames="id"
+      constraintName="fk_warehouse_department"
+      deferrable="false" initiallyDeferred="false"/>
+
+  </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!--
+    Facility, price and currency move from the vaccine to the vaccine brand.
+  -->
+  <changeSet id="2026102601_H_VACCINE_BRAND_FACILITY_PRICE" author="hanan">
+
+    <!-- 1) The report views select the columns that are moved, drop them first (recreated below) -->
+    <sql>
+      DROP VIEW IF EXISTS reports.vwvaccine;
+      DROP VIEW IF EXISTS reports.vwvaccinebrands;
+    </sql>
+
+    <addColumn tableName="vaccine_brands">
+      <column name="facility_id" type="bigint"/>
+      <column name="price" type="numeric(15, 2)"/>
+      <column name="currency" type="varchar(10)"/>
+    </addColumn>
+
+    <!-- 2) Existing brands: take facility and price from their vaccine -->
+    <sql>
+      UPDATE vaccine_brands vb
+      SET facility_id = v.facility_id,
+          price       = v.price
+      FROM vaccine v
+      WHERE v.id = vb.vaccine_id;
+    </sql>
+
+    <addNotNullConstraint tableName="vaccine_brands" columnName="facility_id" columnDataType="bigint"/>
+    <addNotNullConstraint tableName="vaccine_brands" columnName="price" columnDataType="numeric(15, 2)"/>
+
+    <addForeignKeyConstraint
+      baseTableName="vaccine_brands"
+      baseColumnNames="facility_id"
+      referencedTableName="facility"
+      referencedColumnNames="id"
+      constraintName="fk_vaccine_brands_facility"/>
+
+    <!-- 3) The same brand can now be defined (and priced) per facility -->
+    <dropUniqueConstraint
+      tableName="vaccine_brands"
+      constraintName="ux_vaccine_brands_name_unit_volume"/>
+
+    <addUniqueConstraint
+      tableName="vaccine_brands"
+      columnNames="facility_id, name, unit, volume"
+      constraintName="ux_vaccine_brands_facility_name_unit_volume"/>
+
+    <!-- 4) Remove facility and price from the vaccine -->
+    <dropUniqueConstraint
+      tableName="vaccine"
+      constraintName="ux_vaccines_facility_name_type_roa"/>
+
+    <dropForeignKeyConstraint
+      baseTableName="vaccine"
+      constraintName="fk_vaccine_facility"/>
+
+    <dropColumn tableName="vaccine" columnName="facility_id"/>
+    <dropColumn tableName="vaccine" columnName="price"/>
+
+    <!--
+      5) Currency follows the facility's default currency
+         - existing records are synced now (create / update set it in setup-service)
+         - when a facility's default currency changes, its vaccine brands follow it
+         Note: only the currency label changes; prices are NOT converted.
+    -->
+    <sql splitStatements="false">
+      UPDATE vaccine_brands vb
+      SET currency = f.default_currency
+      FROM facility f
+      WHERE f.id = vb.facility_id;
+
+      CREATE OR REPLACE FUNCTION fn_facility_currency_to_vaccine_brands()
+      RETURNS TRIGGER
+      AS
+      $$
+      BEGIN
+        UPDATE vaccine_brands
+           SET currency = NEW.default_currency
+         WHERE facility_id = NEW.id;
+
+        RETURN NEW;
+      END;
+      $$ LANGUAGE plpgsql;
+
+      DROP TRIGGER IF EXISTS trg_facility_currency_to_vaccine_brands ON facility;
+      CREATE TRIGGER trg_facility_currency_to_vaccine_brands
+        AFTER UPDATE OF default_currency ON facility
+        FOR EACH ROW
+        WHEN (OLD.default_currency IS DISTINCT FROM NEW.default_currency)
+        EXECUTE FUNCTION fn_facility_currency_to_vaccine_brands();
+    </sql>
+
+    <addNotNullConstraint tableName="vaccine_brands" columnName="currency" columnDataType="varchar(10)"/>
+
+    <!-- 6) Recreate the report views -->
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwvaccine AS
+      SELECT
+        v.id,
+        v.name,
+        v.atc_code,
+        v.type,
+        v.roa,
+        v.site_of_administration,
+        v.post_opening_duration,
+        v.duration_unit,
+        v.number_of_doses,
+        v.indications,
+        v.possible_reactions,
+        v.contraindications_and_precautions,
+        v.storage_and_handling,
+        v.is_active,
+        v.created_by,
+        v.created_date,
+        v.last_modified_by,
+        v.last_modified_date
+      FROM public.vaccine v;
+
+      CREATE OR REPLACE VIEW reports.vwvaccinebrands AS
+      SELECT
+        vb.id,
+        vb.vaccine_id,
+        vb.name,
+        vb.manufacture,
+        vb.volume,
+        vb.unit,
+        vb.marketing_authorization_holder,
+        vb.facility_id,
+        vb.price,
+        vb.currency,
+        vb.is_active,
+        vb.created_by,
+        vb.created_date,
+        vb.last_modified_by,
+        vb.last_modified_date
+      FROM public.vaccine_brands vb;
+
+      GRANT SELECT ON reports.vwvaccine TO report_user;
+      GRANT SELECT ON reports.vwvaccinebrands TO report_user;
+    </sql>
+
+  </changeSet>
+
+  <!--
+    The vaccine is no longer per facility, so (name, type, roa) is unique on its own.
+    Skipped when existing data already has duplicates across facilities (clean them up first).
+  -->
+  <changeSet id="2026102601_H_VACCINE_UNIQUE_NAME_TYPE_ROA" author="hanan">
+    <preConditions onFail="MARK_RAN">
+      <sqlCheck expectedResult="0">
+        SELECT COUNT(*) FROM (
+          SELECT 1 FROM vaccine GROUP BY name, type, roa HAVING COUNT(*) > 1
+        ) d
+      </sqlCheck>
+    </preConditions>
+
+    <addUniqueConstraint
+      tableName="vaccine"
+      columnNames="name, type, roa"
+      constraintName="ux_vaccine_name_type_roa"/>
+  </changeSet>
+
+</databaseChangeLog>

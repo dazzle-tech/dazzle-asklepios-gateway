@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-pre-authorization-track-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwpreauthorizationtrack AS
+      SELECT
+        pat.id,
+        pat.pre_authorization_id,
+        pat.track_type,
+        pat.status,
+        pat.outcome,
+        pat.message,
+        pat.disposition,
+        pat.transaction_id,
+        pat.outgoing_transaction_id,
+        pat.approval_request_id,
+        pat.approval_response_id,
+        pat.request_json,
+        pat.response_json,
+        pat.created_date,
+        pat.created_by,
+        pat.last_modified_by,
+        pat.last_modified_date
+      FROM public.pre_authorization_track pat;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwpreauthorizationtrack;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-pre-authorization-track-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwpreauthorizationtrack TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwpreauthorizationtrack FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

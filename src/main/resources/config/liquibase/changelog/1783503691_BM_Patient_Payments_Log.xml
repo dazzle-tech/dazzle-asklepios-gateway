@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="BM000000000035_PATIENT_PAYMENT_LOG" author="BushraMashaiekh">
+
+    <createTable tableName="patient_payments_log">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true"
+                     nullable="false"/>
+      </column>
+
+      <column name="patient_payment_id" type="bigint">
+        <constraints nullable="false"
+                     foreignKeyName="fk_pp_log_payment"
+                     referencedTableName="patient_payments"
+                     referencedColumnNames="id"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"
+                     referencedTableName="patients"
+                     referencedColumnNames="id"
+                     foreignKeyName="fk_encounter_assign_bed_patient"/>
+      </column>
+
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="false"
+                     referencedTableName="patient_encounters"
+                     referencedColumnNames="id"
+                     foreignKeyName="fk_encounter_assign_bed_encounter"/>
+      </column>
+
+      <column name="plan_id" type="bigint"/>
+
+      <column name="action" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="status" type="varchar(50)"/>
+
+      <column name="payment_method" type="varchar(50)"/>
+
+      <column name="payment_type" type="varchar(50)"/>
+
+      <column name="amount" type="numeric(19,4)"/>
+
+      <column name="remaining" type="numeric(19,4)"/>
+
+      <column name="refunds" type="numeric(19,4)"/>
+
+      <column name="currency" type="varchar(10)"/>
+
+      <column name="facility_default_currency" type="varchar(10)"/>
+
+      <column name="amount_in_facility_currency" type="numeric(19,2)"/>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date"
+              type="timestamp"
+              defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+
+      <column name="last_modified_date" type="timestamp"/>
+
+      <column name="payload" type="jsonb"/>
+
+    </createTable>
+
+    <createIndex tableName="patient_payments_log"
+                 indexName="ix_ppl_payment_id">
+      <column name="patient_payment_id"/>
+    </createIndex>
+
+    <createIndex tableName="patient_payments_log"
+                 indexName="ix_ppl_patient_id">
+      <column name="patient_id"/>
+    </createIndex>
+
+    <createIndex tableName="patient_payments_log"
+                 indexName="ix_ppl_encounter_id">
+      <column name="encounter_id"/>
+    </createIndex>
+
+    <createIndex tableName="patient_payments_log"
+                 indexName="ix_ppl_created_date">
+      <column name="created_date"/>
+    </createIndex>
+
+    <createIndex tableName="patient_payments_log"
+                 indexName="ix_ppl_action">
+      <column name="action"/>
+    </createIndex>
+
+  </changeSet>
+
+  <include file="config/liquibase/sql/payments/patient_payment_triggers.sql"
+           relativeToChangelogFile="false"/>
+
+</databaseChangeLog>

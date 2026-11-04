@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-icd-diagnosis-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwicddiagnosis AS
+      SELECT
+        d.id,
+        d.icd_diagnosis_uid,
+        d.icd_code,
+        d.icd_coding,
+        d.category_code,
+        d.icd_short_description,
+        d.icd_full_description,
+        d.is_display
+      FROM public.icd_diagnosis d;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwicddiagnosis;
+      </sql>
+    </rollback>
+  </changeSet>
+  <changeSet id="grant-report-icd-diagnosis-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwicddiagnosis TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwicddiagnosis FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-availability-template-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwavailabilitytemplate AS
+      SELECT
+        a.id,
+        a.facility_id,
+        a.department_id,
+        a.template_name,
+        a.template_type,
+        a.resource_id,
+        a.template_color,
+        a.status,
+        a.version_no,
+        a.copy_from_template_id,
+        a.parent_template_id,
+        a.duration_minutes,
+        a.default_buffer_before_minutes,
+        a.default_buffer_after_minutes,
+        a.parallel_capacity_value,
+        a.default_service_id,
+        a.number_of_resources_expected,
+        a.require_practitioner,
+        a.default_practitioner_id,
+        a.require_billing,
+        a.require_pre_assessment,
+        a.allow_patient_portal_booking,
+        a.require_confirmation,
+        a.financial_details,
+        a.working_days,
+        a.is_active,
+        a.created_by,
+        a.created_date,
+        a.last_modified_by,
+        a.last_modified_date,
+        a.allow_walk_in_booking
+      FROM public.availability_template a;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwavailabilitytemplate;
+      </sql>
+    </rollback>
+  </changeSet>
+  <changeSet id="grant-report-availability-template-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwavailabilitytemplate TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON report.availability_template FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

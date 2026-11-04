@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-diagnostic-test-normal-range-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwdiagnostictestnormalrange AS
+      SELECT
+        dtnr.id,
+        dtnr.profile_test_id,
+        dtnr.test_id,
+        dtnr.gender,
+        dtnr.age_from,
+        dtnr.age_from_unit,
+        dtnr.age_to,
+        dtnr.age_to_unit,
+        dtnr.condition,
+        dtnr.result_text,
+        dtnr.result_lov,
+        dtnr.normal_range_type,
+        dtnr.range_from,
+        dtnr.range_to,
+        dtnr.critical_value,
+        dtnr.critical_value_less_than,
+        dtnr.critical_value_more_than
+      FROM public.diagnostic_test_normal_range dtnr;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwdiagnostictestnormalrange;
+      </sql>
+    </rollback>
+  </changeSet>
+  <changeSet id="grant-report-diagnostic-test-normal-range-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwdiagnostictestnormalrange TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwdiagnostictestnormalrange FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet></databaseChangeLog>

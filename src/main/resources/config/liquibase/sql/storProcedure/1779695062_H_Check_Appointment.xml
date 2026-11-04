@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="H_CREATE_FIND_AVAILABLE_SLOT_FUNCTION" author="hanan253yahya">
+
+    <sql splitStatements="false">
+        <![CDATA[
+
+      CREATE OR REPLACE FUNCTION find_available_slot(
+            p_facility_id BIGINT,
+            p_department_id BIGINT,
+            p_resource_type VARCHAR,
+            p_resource_id BIGINT,
+            p_requested_datetime VARCHAR
+        )
+        RETURNS SETOF appointment
+        LANGUAGE plpgsql
+        AS
+        $$
+      BEGIN
+
+      RETURN QUERY
+      SELECT a.*
+      FROM appointment a
+      WHERE a.facility_id = p_facility_id
+        AND a.department_id = p_department_id
+        AND a.resource_type = p_resource_type
+        AND a.resource_id = p_resource_id
+        AND a.status IN ('NEW', 'RESCHEDULED')
+        AND a.booking_mode = 'SLOT'
+        AND TO_TIMESTAMP(
+              p_requested_datetime,
+              'YYYYMMDDHH24MISS'
+            ) >= a.start_datetime
+        AND TO_TIMESTAMP(
+              p_requested_datetime,
+              'YYYYMMDDHH24MISS'
+            ) < a.end_datetime
+      ORDER BY a.start_datetime
+        LIMIT 1;
+
+      END;
+        $$;
+
+      ]]>
+    </sql>
+
+  </changeSet>
+</databaseChangeLog>

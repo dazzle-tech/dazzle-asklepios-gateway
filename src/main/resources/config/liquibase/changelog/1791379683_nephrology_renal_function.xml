@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="FA0000000026" author="farouk">
+
+    <createTable tableName="nephrology_renal_function">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="egfr" type="numeric(10,2)"/>
+
+      <column name="creatinine" type="numeric(10,2)"/>
+
+      <column name="bun" type="numeric(10,2)"/>
+
+      <column name="hemoglobin" type="numeric(10,2)"/>
+
+      <column name="potassium" type="numeric(10,2)"/>
+
+      <column name="sodium" type="numeric(10,2)"/>
+
+      <column name="calcium" type="numeric(10,2)"/>
+
+      <column name="phosphorus" type="numeric(10,2)"/>
+
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)"/>
+
+      <column name="created_date" type="timestamp"/>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+
+  </changeSet>
+
+</databaseChangeLog>

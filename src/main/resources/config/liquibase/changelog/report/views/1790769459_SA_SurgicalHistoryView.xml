@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-surgical-history-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwsurgicalhistory AS
+      SELECT
+        sh.id,
+        sh.patient_id,
+        sh.surgery,
+        sh.date_of_surgery,
+        sh.facility,
+        sh.anesthesia_type,
+        sh.complications,
+        sh.adverse_reactions_to_anesthesia,
+        sh.has_implants_or_devices,
+        sh.implants_or_devices_description,
+        sh.created_by,
+        sh.created_date,
+        sh.last_modified_by,
+        sh.last_modified_date,
+        sh.status,
+        sh.cancelled_by,
+        sh.cancelled_date,
+        sh.cancellation_reason,
+        sh.patient_is_free
+      FROM public.surgical_history sh;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwsurgicalhistory;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-surgical-history-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwsurgicalhistory TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwsurgicalhistory FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

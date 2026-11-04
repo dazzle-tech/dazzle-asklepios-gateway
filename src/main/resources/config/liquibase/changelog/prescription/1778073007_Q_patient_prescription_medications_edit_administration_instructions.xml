@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="QA0000000000023_modify_administration_instructions" author="qais">
+
+    <modifyDataType
+      tableName="patient_prescription_medications"
+      columnName="administration_instructions"
+      newDataType="varchar(255)"/>
+
+  </changeSet>
+
+</databaseChangeLog>

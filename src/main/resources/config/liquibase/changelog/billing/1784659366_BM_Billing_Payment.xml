@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="BM000000000044" author="BushraMashaiekh">
+
+    <createTable tableName="billing_payment">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="payment_number" type="varchar(50)">
+        <constraints nullable="false" unique="true" uniqueConstraintName="uq_billing_payment_number"/>
+      </column>
+
+      <column name="wallet_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="encounter_id" type="bigint"/>
+
+      <column name="payment_category" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="payer_type" type="varchar(30)" defaultValue="PATIENT">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="payer_id" type="bigint"/>
+
+      <column name="amount" type="numeric(19,4)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="currency" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="status" type="varchar(30)" defaultValue="PENDING">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="payment_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="receipt_number" type="varchar(100)"/>
+
+      <column name="external_reference" type="varchar(150)"/>
+
+      <column name="idempotency_key" type="varchar(150)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="notes" type="text"/>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_payment"
+      baseColumnNames="wallet_id"
+      referencedTableName="billing_wallet"
+      referencedColumnNames="id"
+      constraintName="fk_billing_payment_wallet"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_payment"
+      baseColumnNames="patient_id"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+      constraintName="fk_billing_payment_patient"/>
+
+    <addForeignKeyConstraint
+      baseTableName="billing_payment"
+      baseColumnNames="encounter_id"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"
+      constraintName="fk_billing_payment_encounter"/>
+
+
+    <addUniqueConstraint
+      tableName="billing_payment"
+      columnNames="idempotency_key"
+      constraintName="uq_billing_payment_idempotency_key"/>
+
+    <sql>
+      ALTER TABLE billing_payment
+        ADD CONSTRAINT ck_billing_payment_positive_amount
+          CHECK (
+            amount > 0
+            );
+    </sql>
+
+    <createIndex
+      tableName="billing_payment"
+      indexName="idx_billing_payment_wallet">
+      <column name="wallet_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_payment"
+      indexName="idx_billing_payment_patient">
+      <column name="patient_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_payment"
+      indexName="idx_billing_payment_encounter">
+      <column name="encounter_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_payment"
+      indexName="idx_billing_payment_status">
+      <column name="status"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_payment"
+      indexName="idx_billing_payment_date">
+      <column name="payment_date"/>
+    </createIndex>
+
+    <createIndex
+      tableName="billing_payment"
+      indexName="idx_billing_payment_patient_status">
+      <column name="patient_id"/>
+      <column name="status"/>
+    </createIndex>
+
+  </changeSet>
+
+</databaseChangeLog>
