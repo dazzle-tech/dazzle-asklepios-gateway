@@ -1332,4 +1332,12 @@
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/payorSetup/1793040100_B_insurance_company_policy_optional_fields.xml"
            relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1793050000_B_coverage_copayment_department.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/payorSetup/1793060000_B_nphies_payers_validity.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/payorSetup/1793070000_B_nphies_payers_inactive_reason.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/payorSetup/1793080000_B_policy_class_inactive_reason.xml"
+           relativeToChangelogFile="false"/>
   </databaseChangeLog>

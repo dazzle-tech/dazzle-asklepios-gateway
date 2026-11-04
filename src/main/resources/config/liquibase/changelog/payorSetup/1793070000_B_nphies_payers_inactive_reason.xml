@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="1793070000_B_nphies_payers_inactive_reason" author="Batool_Bushra">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <columnExists tableName="nphies_payers" columnName="inactive_reason"/>
+      </not>
+    </preConditions>
+    <addColumn tableName="nphies_payers">
+      <column name="inactive_reason" type="varchar(1000)"/>
+    </addColumn>
+  </changeSet>
+</databaseChangeLog>

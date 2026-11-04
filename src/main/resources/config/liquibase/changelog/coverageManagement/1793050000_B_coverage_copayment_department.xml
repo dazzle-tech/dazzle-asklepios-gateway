@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="1793050000_B_coverage_copayment_department" author="Batool_Bushra">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <columnExists tableName="coverage_copayment" columnName="facility_id"/>
+      </not>
+    </preConditions>
+    <addColumn tableName="coverage_copayment">
+      <column name="facility_id" type="bigint"/>
+      <column name="all_departments" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+      <column name="department_id" type="bigint"/>
+    </addColumn>
+    <addForeignKeyConstraint
+      baseTableName="coverage_copayment"
+      baseColumnNames="facility_id"
+      referencedTableName="facility"
+      referencedColumnNames="id"
+      constraintName="fk_coverage_copayment_facility"/>
+    <addForeignKeyConstraint
+      baseTableName="coverage_copayment"
+      baseColumnNames="department_id"
+      referencedTableName="department"
+      referencedColumnNames="id"
+      constraintName="fk_coverage_copayment_department"/>
+  </changeSet>
+</databaseChangeLog>
