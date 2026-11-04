@@ -1250,5 +1250,9 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/patientProcedure/2026110203_BM_patient_procedure_default_procedure.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1793628490_R_External_Lab_Result.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1793628491_R_External_Radiology_Report.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
 
