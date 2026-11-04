@@ -1251,6 +1251,10 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/patientProcedure/2026110203_BM_patient_procedure_default_procedure.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1793628490_R_External_Lab_Result.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1793628491_R_External_Radiology_Report.xml"
+           relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/2026110204_B_claim_copy_service_product_test_results.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/dentalProcedure/2026110301_dental_procedure_tooth_numbers.xml"
