@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-appointment-booking-group-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwAppointmentBookingGroup AS
+      SELECT
+        a.id,
+        a.facility_id,
+        a.patient_id,
+        a.department_id,
+        a.service_id,
+        a.practitioner_id,
+        a.source_type,
+        a.total_duration_minutes,
+        a.start_datetime,
+        a.end_datetime,
+        a.notes,
+        a.created_by,
+        a.created_date,
+        a.last_modified_by,
+        a.last_modified_date
+      FROM public.appointment_booking_group a;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwAppointmentBookingGroup;
+      </sql>
+    </rollback>
+  </changeSet>
+  <changeSet id="grant-report-appointment-booking-group-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwAppointmentBookingGroup TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwAppointmentBookingGroup FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

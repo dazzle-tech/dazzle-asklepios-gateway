@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+           http://www.liquibase.org/xml/ns/dbchangelog
+           http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.15.xsd">
+
+  <changeSet id="BM0000000000024" author="BushraMashaiekh">
+    <createTable tableName="warehouse_product">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="warehouse_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="product_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="quantity" type="numeric"/>
+      <column name="re_order_quantity" type="numeric"/>
+      <column name="mini_order" type="numeric"/>
+      <column name="max_order" type="numeric"/>
+
+      <column name="working_hours_from_time" type="numeric(16)"/>
+      <column name="working_hours_to_time" type="numeric(16)"/>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+      <column name="is_active" type="boolean">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="department_id" type="bigint"/>
+
+      <column name="avg_cost" type="numeric(12,4)"/>
+    </createTable>
+
+    <createIndex
+      tableName="warehouse_product"
+      indexName="idx_warehouse_product_id_unique"
+      unique="true">
+      <column name="warehouse_id"/>
+      <column name="product_id"/>
+    </createIndex>
+
+    <addForeignKeyConstraint
+      baseTableName="warehouse_product"
+      baseColumnNames="department_id"
+      referencedTableName="department"
+      referencedColumnNames="id"
+      constraintName="fk_warehouse_product_department"
+      deferrable="false" initiallyDeferred="false"/>
+
+    <addForeignKeyConstraint
+      baseTableName="warehouse_product"
+      baseColumnNames="warehouse_id"
+      referencedTableName="warehouse"
+      referencedColumnNames="id"
+      constraintName="fk_warehouse_product_warehouse"
+      deferrable="false" initiallyDeferred="false"/>
+
+    <addForeignKeyConstraint
+      baseTableName="warehouse_product"
+      baseColumnNames="product_id"
+      referencedTableName="inventory_products"
+      referencedColumnNames="id"
+      constraintName="fk_warehouse_product_product"
+      deferrable="false" initiallyDeferred="false"/>
+
+    <rollback>
+      <dropTable tableName="warehouse_product"/>
+    </rollback>
+  </changeSet>
+
+</databaseChangeLog>

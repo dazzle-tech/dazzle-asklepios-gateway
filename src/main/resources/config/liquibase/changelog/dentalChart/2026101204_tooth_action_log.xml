@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="tooth_action_log_create" author="hanan253yahya">
+    <createTable tableName="tooth_action_log">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+      <column name="tooth_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="dental_action_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="log_type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="log_time" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+      <column name="log_owner" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="tooth_action_log"
+      baseColumnNames="tooth_id"
+      referencedTableName="dental_chart_tooth"
+      referencedColumnNames="id"
+      constraintName="fk_tooth_action_log_tooth"/>
+
+    <addForeignKeyConstraint
+      baseTableName="tooth_action_log"
+      baseColumnNames="dental_action_id"
+      referencedTableName="dental_action"
+      referencedColumnNames="id"
+      constraintName="fk_tooth_action_log_dental_action"/>
+
+    <createIndex indexName="idx_tooth_action_log_tooth_id" tableName="tooth_action_log">
+      <column name="tooth_id"/>
+    </createIndex>
+  </changeSet>
+
+</databaseChangeLog>

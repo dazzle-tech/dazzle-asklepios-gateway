@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="claim-copy-diagnostic-results-service-product-source" author="Batool_Bushra">
+
+    <dropNotNullConstraint
+      tableName="claim_encounter_copy_diagnostic_order_test_results"
+      columnName="order_test_id"
+      columnDataType="bigint"/>
+
+    <dropNotNullConstraint
+      tableName="claim_encounter_copy_diagnostic_order_test_reports"
+      columnName="order_test_id"
+      columnDataType="bigint"/>
+
+    <addColumn tableName="claim_encounter_copy_diagnostic_order_test_results">
+      <column name="patient_service_product_id" type="bigint"/>
+    </addColumn>
+
+    <addColumn tableName="claim_encounter_copy_diagnostic_order_test_reports">
+      <column name="patient_service_product_id" type="bigint"/>
+    </addColumn>
+
+    <addColumn tableName="claim_encounter_copy_diagnostic_order_test_result_logs">
+      <column name="patient_service_product_id" type="bigint"/>
+    </addColumn>
+
+    <addColumn tableName="claim_encounter_copy_diagnostic_order_test_report_logs">
+      <column name="patient_service_product_id" type="bigint"/>
+    </addColumn>
+
+    <createIndex
+      tableName="claim_encounter_copy_diagnostic_order_test_results"
+      indexName="idx_claim_copy_diag_order_test_result_service_product">
+      <column name="patient_service_product_id"/>
+    </createIndex>
+
+    <createIndex
+      tableName="claim_encounter_copy_diagnostic_order_test_reports"
+      indexName="idx_claim_copy_diag_order_test_report_service_product">
+      <column name="patient_service_product_id"/>
+    </createIndex>
+
+    <sql>
+      ALTER TABLE claim_encounter_copy_diagnostic_order_test_results
+        ADD CONSTRAINT chk_claim_copy_diag_order_test_result_source
+        CHECK (num_nonnulls(order_test_id, patient_service_product_id) = 1);
+
+      ALTER TABLE claim_encounter_copy_diagnostic_order_test_reports
+        ADD CONSTRAINT chk_claim_copy_diag_order_test_report_source
+        CHECK (num_nonnulls(order_test_id, patient_service_product_id) = 1);
+    </sql>
+
+    <sqlFile
+      path="config/liquibase/sql/claim_encounter_copy_diagnostic_order_test_result_log_service_product.sql"
+      relativeToChangelogFile="false"
+      splitStatements="false"/>
+
+    <sqlFile
+      path="config/liquibase/sql/claim_encounter_copy_diagnostic_order_test_report_log_service_product.sql"
+      relativeToChangelogFile="false"
+      splitStatements="false"/>
+
+  </changeSet>
+
+</databaseChangeLog>

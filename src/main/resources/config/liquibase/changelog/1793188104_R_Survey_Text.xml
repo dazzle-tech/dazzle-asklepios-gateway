@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="1793188104_R_SURVEY_TEXT" author="Rawan-Yahya">
+    <createTable tableName="survey_text">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <!-- How the survey page finds the text, e.g. SURVEY_TITLE -->
+      <column name="text_key" type="varchar(100)">
+        <constraints nullable="false" unique="true" uniqueConstraintName="uq_survey_text_key"/>
+      </column>
+      <!-- {placeholders} such as {facility} are filled by the page -->
+      <column name="text_en" type="text">
+        <constraints nullable="false"/>
+      </column>
+      <column name="text_ar" type="text">
+        <constraints nullable="false"/>
+      </column>
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+  </changeSet>
+
+  <!-- The texts the survey page shows (same as surveyTexts.ts in the UI) -->
+  <changeSet id="1793188104_R_SURVEY_TEXT_DATA" author="Rawan-Yahya">
+    <!-- Skipped when texts were already added (e.g. from the setup screen) -->
+    <preConditions onFail="MARK_RAN">
+      <sqlCheck expectedResult="0">SELECT COUNT(*) FROM survey_text</sqlCheck>
+    </preConditions>
+
+    <loadData
+      file="config/liquibase/data/survey_text.csv"
+      separator=";"
+      tableName="survey_text"
+      usePreparedStatements="true">
+      <column name="text_key" type="string"/>
+      <column name="text_en" type="string"/>
+      <column name="text_ar" type="string"/>
+      <column name="is_active" type="boolean"/>
+      <column name="created_by" type="string"/>
+      <column name="created_date" type="computed"/>
+    </loadData>
+  </changeSet>
+
+</databaseChangeLog>

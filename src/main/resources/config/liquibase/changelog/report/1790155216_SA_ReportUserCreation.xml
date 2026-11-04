@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="create-report-user" author="sondos">
+
+    <sql splitStatements="false">
+      DO $$
+      BEGIN
+                IF NOT EXISTS (
+                    SELECT 1
+                    FROM pg_roles
+                    WHERE rolname = 'report_user'
+                ) THEN
+                    CREATE USER report_user
+                    WITH LOGIN
+                    PASSWORD 'ReportUserPassword123!';
+      END IF;
+      END
+            $$;
+    </sql>
+
+    <!-- Allow access to the reports schema -->
+    <sql>
+      GRANT USAGE ON SCHEMA reports
+            TO report_user;
+    </sql>
+
+    <!-- Grant read-only access to the views -->
+    <sql splitStatements="false">
+      DO $$
+            DECLARE
+      view_record RECORD;
+      BEGIN
+      FOR view_record IN
+      SELECT table_schema, table_name
+      FROM information_schema.views
+      WHERE table_schema = 'reports'
+        LOOP
+                    EXECUTE format(
+                        'GRANT SELECT ON %I.%I TO report_user',
+                        view_record.table_schema,
+                        view_record.table_name
+                    );
+      END LOOP;
+      END
+            $$;
+    </sql>
+
+  </changeSet>
+
+</databaseChangeLog>

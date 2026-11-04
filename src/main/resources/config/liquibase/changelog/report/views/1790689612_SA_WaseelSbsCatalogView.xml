@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-waseel-sbs-catalog-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwwaseelsbscatalog AS
+      SELECT
+        wsc.id,
+        wsc.waseel_item_type,
+        wsc.sbs_code,
+        wsc.update_type,
+        wsc.revision_details,
+        wsc.short_description,
+        wsc.long_description,
+        wsc.is_active,
+        wsc.source_file_name,
+        wsc.created_date,
+        wsc.created_by,
+        wsc.last_modified_by,
+        wsc.last_modified_date
+      FROM public.waseel_sbs_catalog wsc;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwwaseelsbscatalog;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-waseel-sbs-catalog-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwwaseelsbscatalog TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwwaseelsbscatalog FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

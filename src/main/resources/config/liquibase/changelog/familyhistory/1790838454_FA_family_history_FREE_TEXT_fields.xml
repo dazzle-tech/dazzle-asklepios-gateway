@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="FA00000000015" author="faroukdhelea">
+
+    <addColumn tableName="family_history">
+      <column name="patient_is_free" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="free_text" type="text"/>
+    </addColumn>
+
+    <dropNotNullConstraint
+      tableName="family_history"
+      columnName="condition"
+      columnDataType="varchar"/>
+
+    <dropNotNullConstraint
+      tableName="family_history"
+      columnName="relation"
+      columnDataType="varchar(100)"/>
+
+    <dropNotNullConstraint
+      tableName="family_history"
+      columnName="inherited_diseases"
+      columnDataType="boolean"/>
+
+  </changeSet>
+
+</databaseChangeLog>

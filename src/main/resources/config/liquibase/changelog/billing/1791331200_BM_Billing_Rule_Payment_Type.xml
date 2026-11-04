@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="BB000000000070" author="Bushra_Batool">
+    <preConditions onFail="MARK_RAN">
+      <tableExists tableName="billing_rule"/>
+      <not>
+        <columnExists tableName="billing_rule" columnName="payment_type"/>
+      </not>
+    </preConditions>
+
+    <addColumn tableName="billing_rule">
+      <column name="payment_type" type="varchar(30)" defaultValue="BOTH">
+        <constraints nullable="false"/>
+      </column>
+    </addColumn>
+
+    <createIndex tableName="billing_rule" indexName="idx_billing_rule_payment_type">
+      <column name="payment_type"/>
+    </createIndex>
+  </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-encounter-vaccination-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwencountervaccination AS
+      SELECT
+        ev.id,
+        ev.patient_id,
+        ev.encounter_id,
+        ev.vaccine_id,
+        ev.vaccine_brand_id,
+        ev.vaccine_dose_id,
+        ev.vaccine_lot_number,
+        ev.date_administered,
+        ev.status,
+        ev.cancellation_reason,
+        ev.cancelled_at,
+        ev.cancelled_by,
+        ev.administered_location,
+        ev.administration_reactions,
+        ev.is_external_facility,
+        ev.external_facility_name,
+        ev.notes,
+        ev.created_by,
+        ev.created_date,
+        ev.last_modified_by,
+        ev.last_modified_date,
+        ev.reviewed_at,
+        ev.reviewed_by
+      FROM public.encounter_vaccination ev;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwencountervaccination ;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-encounter-vaccination-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwencountervaccination  TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwencountervaccination  FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+
+</databaseChangeLog>

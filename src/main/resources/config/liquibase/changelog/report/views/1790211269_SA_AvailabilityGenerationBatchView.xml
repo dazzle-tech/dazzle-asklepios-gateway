@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-availability-generation-batch-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwAvailabilityGenerationBatch AS
+      SELECT
+        a.id,
+        a.template_id,
+        a.scope,
+        a.apply_start_date_time,
+        a.apply_end_date_time,
+        a.total_slots,
+        a.daily_avg,
+        a.execution_status,
+        a.holiday_handling_mode,
+        a.created_by,
+        a.created_date,
+        a.last_modified_by,
+        a.last_modified_date,
+        a.interval_ended_notification_sent,
+        a.interval_ended_notification_sent_at
+      FROM public.availability_generation_batch a;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwAvailabilityGenerationBatch;
+      </sql>
+    </rollback>
+  </changeSet>
+  <changeSet id="grant-report-availability-generation-batch-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwAvailabilityGenerationBatch TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON report.availability_generation_batch FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

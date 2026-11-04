@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-financial-document-sequence-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwfinancialdocumentsequence AS
+      SELECT
+        fds.id,
+        fds.facility_id,
+        fds.document_type,
+        fds.period_key,
+        fds.last_number,
+        fds.version,
+        fds.created_by,
+        fds.created_date,
+        fds.last_modified_by,
+        fds.last_modified_date
+      FROM public.financial_document_sequence fds;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwfinancialdocumentsequence;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-financial-document-sequence-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwfinancialdocumentsequence TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwfinancialdocumentsequence FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

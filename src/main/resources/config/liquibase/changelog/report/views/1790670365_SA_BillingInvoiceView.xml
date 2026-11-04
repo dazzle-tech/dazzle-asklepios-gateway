@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-billing-invoice-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwbillinginvoice AS
+      SELECT
+        bi.id,
+        bi.invoice_number,
+        bi.patient_id,
+        bi.facility_id,
+        bi.status,
+        bi.total_amount,
+        bi.paid_amount,
+        bi.balance_amount,
+        bi.currency,
+        bi.created_by,
+        bi.created_date,
+        bi.last_modified_by,
+        bi.last_modified_date
+      FROM public.billing_invoice bi;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwbillinginvoice;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-billing-invoice-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwbillinginvoice TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwbillinginvoice FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

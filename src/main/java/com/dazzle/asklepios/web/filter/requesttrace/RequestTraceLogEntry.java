@@ -13,6 +13,7 @@ import java.time.Instant;
 
 public record RequestTraceLogEntry(
     Instant timestamp,
+    String requestId,
     String user,
     String method,
     String path,

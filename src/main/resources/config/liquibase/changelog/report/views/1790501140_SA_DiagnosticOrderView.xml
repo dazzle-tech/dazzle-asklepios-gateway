@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-diagnostic-orders-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwDiagnosticOrders AS
+      SELECT
+        dorder.id,
+        dorder.patient_id,
+        dorder.encounter_id,
+        dorder.status,
+        dorder.order_number,
+        dorder.save_draft,
+        dorder.submitted_by,
+        dorder.submitted_date,
+        dorder.is_urgent,
+        dorder.lab_status,
+        dorder.rad_status,
+        dorder.from_department_id,
+        dorder.from_facility_id,
+        dorder.created_date,
+        dorder.created_by,
+        dorder.last_modified_by,
+        dorder.last_modified_date
+      FROM public.diagnostic_orders dorder;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwDiagnosticOrders;
+      </sql>
+    </rollback>
+  </changeSet>
+  <changeSet id="grant-report-diagnostic-orders-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwDiagnosticOrders TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwDiagnosticOrders FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

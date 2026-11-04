@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="dental_planned_treatment_create" author="hanan253yahya">
+    <createTable tableName="dental_planned_treatment">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="visit_number" type="int"/>
+      <column name="cdt_code_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="tooth_id" type="bigint"/>
+      <column name="note" type="text"/>
+      <column name="surface" type="varchar(50)"/>
+      <column name="fees" type="decimal(10,2)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+      <column name="insurance" type="decimal(10,2)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+      <column name="discount" type="decimal(10,2)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+      <column name="source" type="varchar(50)"/>
+      <column name="tooth_action_id" type="bigint"/>
+      <column name="is_cancelled" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="cancelled_date" type="timestamp"/>
+      <column name="cancelled_by" type="varchar(50)"/>
+      <column name="cancellation_reason" type="text"/>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="dental_planned_treatment"
+      baseColumnNames="patient_id"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+      constraintName="fk_dental_planned_treatment_patient"/>
+
+    <addForeignKeyConstraint
+      baseTableName="dental_planned_treatment"
+      baseColumnNames="encounter_id"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"
+      constraintName="fk_dental_planned_treatment_encounter"/>
+
+    <addForeignKeyConstraint
+      baseTableName="dental_planned_treatment"
+      baseColumnNames="cdt_code_id"
+      referencedTableName="cdt_code"
+      referencedColumnNames="id"
+      constraintName="fk_dental_planned_treatment_cdt_code"/>
+
+    <addForeignKeyConstraint
+      baseTableName="dental_planned_treatment"
+      baseColumnNames="tooth_id"
+      referencedTableName="dental_chart_tooth"
+      referencedColumnNames="id"
+      constraintName="fk_dental_planned_treatment_tooth"/>
+
+    <addForeignKeyConstraint
+      baseTableName="dental_planned_treatment"
+      baseColumnNames="tooth_action_id"
+      referencedTableName="tooth_action"
+      referencedColumnNames="id"
+      constraintName="fk_dental_planned_treatment_tooth_action"/>
+
+    <createIndex indexName="idx_dental_planned_treatment_patient_id" tableName="dental_planned_treatment">
+      <column name="patient_id"/>
+    </createIndex>
+
+    <createIndex indexName="idx_dental_planned_treatment_encounter_id" tableName="dental_planned_treatment">
+      <column name="encounter_id"/>
+    </createIndex>
+
+    <createIndex indexName="idx_dental_planned_treatment_tooth_action_id" tableName="dental_planned_treatment">
+      <column name="tooth_action_id"/>
+    </createIndex>
+  </changeSet>
+
+</databaseChangeLog>

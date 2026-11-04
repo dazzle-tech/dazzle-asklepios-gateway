@@ -77,6 +77,7 @@ public class AdminUserDTO implements Serializable {
     private boolean allowOngoingVisit;
     private boolean canUnDischargeUrgentCare;
     private boolean canUnCompleteEncounter;
+    private boolean canReturnClaimForResubmit;
 
     public AdminUserDTO() {
     }
@@ -110,6 +111,7 @@ public class AdminUserDTO implements Serializable {
         this.allowOngoingVisit = user.isAllowOngoingVisit();
         this.canUnDischargeUrgentCare = user.isCanUnDischargeUrgentCare();
         this.canUnCompleteEncounter = user.isCanUnCompleteEncounter();
+        this.canReturnClaimForResubmit = user.isCanReturnClaimForResubmit();
     }
 
 }

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-urgent-care-medication-order-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwurgentcaremedicationorder AS
+      SELECT
+        ucm.id,
+        ucm.patient_id,
+        ucm.encounter_id,
+        ucm.active_ingredient_id,
+        ucm.instruction_type,
+        ucm.instruction_text,
+        ucm.dose,
+        ucm.dose_unit,
+        ucm.route,
+        ucm.is_high_alert,
+        ucm.status,
+        ucm.submitted_date,
+        ucm.submitted_by,
+        ucm.administered_date,
+        ucm.administered_by,
+        ucm.double_checked_date,
+        ucm.double_checked_by,
+        ucm.discarded_date,
+        ucm.discarded_by,
+        ucm.discard_reason,
+        ucm.cancelled_date,
+        ucm.cancelled_by,
+        ucm.cancellation_reason,
+        ucm.created_by,
+        ucm.created_date,
+        ucm.last_modified_by,
+        ucm.last_modified_date,
+        ucm.actual_administer_time,
+        ucm.frequency_number,
+        ucm.frequency_unit,
+        ucm.duration,
+        ucm.start_time,
+        ucm.dose_time,
+        ucm.order_group_id
+      FROM public.urgent_care_medication_order ucm;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwurgentcaremedicationorder;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-urgent-care-medication-order-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwurgentcaremedicationorder TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwurgentcaremedicationorder FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

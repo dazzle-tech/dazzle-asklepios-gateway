@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-appointment-request-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwappointmentrequest AS
+      SELECT
+        ar.id,
+        ar.patient_id,
+        ar.facility_id,
+        ar.department_id,
+        ar.source_encounter_id,
+        ar.appointment_id,
+        ar.requested_resource_type,
+        ar.requested_resource_id,
+        ar.priority,
+        ar.reason,
+        ar.note,
+        ar.status,
+        ar.cancelled_at,
+        ar.cancel_reason,
+        ar.created_by,
+        ar.created_date,
+        ar.last_modified_by,
+        ar.last_modified_date,
+        ar.preferred_date
+      FROM public.appointment_request ar;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwappointmentrequest;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-appointment-request-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwappointmentrequest TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwappointmentrequest FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

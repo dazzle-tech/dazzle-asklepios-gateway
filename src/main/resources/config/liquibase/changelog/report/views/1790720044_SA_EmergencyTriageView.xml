@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-emergency-triage-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwemergencytriage AS
+      SELECT
+        et.id,
+        et.patient_id,
+        et.encounter_id,
+        et.emergency_level,
+        et.right_eye_light_response,
+        et.right_eye_pupil_size,
+        et.left_eye_light_response,
+        et.left_eye_pupil_size,
+        et.hpi_additional_notes,
+        et.life_saving,
+        et.unresponsive,
+        et.high_risk,
+        et.avpu_scale,
+        et.pain_score,
+        et.labs_required,
+        et.imaging_required,
+        et.iv_fluids_required,
+        et.medication_required,
+        et.ecg_required,
+        et.consultation_required,
+        et.destination,
+        et.completed_date,
+        et.created_by,
+        et.created_date,
+        et.last_modified_by,
+        et.last_modified_date
+      FROM public.emergency_triage et;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwemergencytriage;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-emergency-triage-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwemergencytriage TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwemergencytriage FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

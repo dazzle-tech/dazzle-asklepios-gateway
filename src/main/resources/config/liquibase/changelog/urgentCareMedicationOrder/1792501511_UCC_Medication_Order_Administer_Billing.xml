@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!--
+    A UCC administration is charged in the UOM unit the nurse picks. The line keeps
+    the unit and the price factor (price base UOM units per one charged unit) so
+    every later re-pricing of the line stays in the charged unit.
+  -->
+  <changeSet id="1792501511_PSP_UOM_PRICE_FACTOR" author="Claude">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <columnExists tableName="patient_services_and_products" columnName="uom_price_factor"/>
+      </not>
+    </preConditions>
+
+    <addColumn tableName="patient_services_and_products">
+      <column name="uom_group_unit_id" type="bigint"/>
+      <column name="uom_price_factor" type="numeric(19,6)"/>
+    </addColumn>
+  </changeSet>
+
+</databaseChangeLog>

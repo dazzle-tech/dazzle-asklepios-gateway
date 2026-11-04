@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-procedure-coding-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwprocedurecoding AS
+      SELECT
+        pc.id,
+        pc.procedure_id,
+        pc.code_type,
+        pc.code_id,
+        pc.created_by,
+        pc.created_date,
+        pc.last_modified_by,
+        pc.last_modified_date
+      FROM public.procedure_coding pc;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwprocedurecoding;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-procedure-coding-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwprocedurecoding TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwprocedurecoding FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

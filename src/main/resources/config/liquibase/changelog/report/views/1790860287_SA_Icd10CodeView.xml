@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-icd10-code-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwicdcode AS
+      SELECT
+        ic.id,
+        ic.code,
+        ic.description,
+        ic.version,
+        ic.is_active,
+        ic.last_updated
+      FROM public.icd10_code ic;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwicdcode;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-icd10-code-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwicdcode TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwicdcode FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

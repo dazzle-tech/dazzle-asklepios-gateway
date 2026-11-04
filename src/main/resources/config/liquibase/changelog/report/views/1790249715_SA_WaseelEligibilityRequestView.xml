@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-waseel-eligibility-request-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwWaseelEligibilityRequest AS
+      SELECT
+        w.id,
+        w.patient_id,
+        w.encounter_id,
+        w.patient_insurance_id,
+        w.provider_id,
+        w.destination_id,
+        w.service_date,
+        w.benefits,
+        w.discovery,
+        w.validation,
+        w.transfer,
+        w.emergency,
+        w.api_status,
+        w.status_code,
+        w.message,
+        w.eligibility_response_id,
+        w.eligibility_response_url,
+        w.waseel_request_id,
+        w.request_status,
+        w.requested_at,
+        w.responded_at,
+        w.request_json,
+        w.response_json,
+        w.created_by,
+        w.created_date,
+        w.last_modified_by,
+        w.last_modified_date
+      FROM public.waseel_eligibility_request w;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwWaseelEligibilityRequest;
+      </sql>
+    </rollback>
+  </changeSet>
+  <changeSet id="grant-report-waseel-eligibility-request-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwWaseelEligibilityRequest TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwWaseelEligibilityRequest FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

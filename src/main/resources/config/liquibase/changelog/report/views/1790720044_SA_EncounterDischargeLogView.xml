@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-encounter-discharge-log-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwencounterdischargelog AS
+      SELECT
+        edl.id,
+        edl.encounter_id,
+        edl.discharged_at,
+        edl.discharged_by,
+        edl.created_date,
+        edl.discharge_type
+      FROM public.encounter_discharge_log edl;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwencounterdischargelog;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-encounter-discharge-log-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwencounterdischargelog TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwencounterdischargelog FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+
+</databaseChangeLog>

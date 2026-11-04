@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="FA0000000036" author="farouk">
+
+    <addColumn tableName="dialysis_session">
+      <column name="treatment_plan_id" type="bigint"/>
+    </addColumn>
+
+    <createIndex
+      indexName="idx_dialysis_session_treatment_plan_id"
+      tableName="dialysis_session">
+      <column name="treatment_plan_id"/>
+    </createIndex>
+
+    <createIndex
+      indexName="idx_nephrology_treatment_plan_patient_id"
+      tableName="nephrology_treatment_plan">
+      <column name="patient_id"/>
+    </createIndex>
+
+    <addForeignKeyConstraint
+      constraintName="fk_dialysis_session_treatment_plan_id"
+      baseTableName="dialysis_session"
+      baseColumnNames="treatment_plan_id"
+      referencedTableName="nephrology_treatment_plan"
+      referencedColumnNames="id"/>
+
+  </changeSet>
+
+</databaseChangeLog>

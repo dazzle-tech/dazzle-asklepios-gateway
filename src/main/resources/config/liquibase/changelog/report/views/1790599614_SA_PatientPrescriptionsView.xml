@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-patient-prescriptions-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwpatientprescriptions AS
+      SELECT
+        pp.id,
+        pp.patient_id,
+        pp.encounter_id,
+        pp.prescription_num,
+        pp.prescription_date,
+        pp.urgency_level,
+        pp.status,
+        pp.from_facility_id,
+        pp.from_department_id,
+        pp.to_facility_id,
+        pp.to_department_id,
+        pp.submited_by,
+        pp.submited_date,
+        pp.created_by,
+        pp.created_date,
+        pp.last_modified_by,
+        pp.last_modified_date
+      FROM public.patient_prescriptions pp;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwpatientprescriptions;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-patient-prescriptions-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwpatientprescriptions TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwpatientprescriptions FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

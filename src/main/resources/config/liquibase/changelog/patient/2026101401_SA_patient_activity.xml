@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="2026101401_SA_patient_activity" author="sondos">
+
+    <createTable tableName="patient_activity">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false" primaryKeyName="pk_patient_activity"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"
+                     referencedTableName="patients"
+                     referencedColumnNames="id"
+                     foreignKeyName="fk_patient_activity_patient"/>
+      </column>
+
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="true"
+                     referencedTableName="patient_encounters"
+                     referencedColumnNames="id"
+                     foreignKeyName="fk_patient_activity_encounter"/>
+      </column>
+
+      <column name="appointment_id" type="bigint">
+        <constraints nullable="true"
+                     referencedTableName="appointment"
+                     referencedColumnNames="id"
+                     foreignKeyName="fk_patient_activity_appointment"/>
+      </column>
+
+      <column name="category" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="activity_type" type="varchar(80)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="status" type="varchar(20)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="source" type="varchar(20)" defaultValue="STAFF">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="source_type" type="varchar(50)"/>
+      <column name="source_id" type="bigint"/>
+
+      <column name="priority" type="varchar(20)" defaultValue="NORMAL">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="note" type="varchar(2000)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="due_at" type="timestamp"/>
+
+      <column name="completed_at" type="timestamp"/>
+      <column name="completed_by" type="varchar(50)"/>
+      <column name="outcome_note" type="varchar(2000)"/>
+
+      <column name="cancellation_reason" type="varchar(255)"/>
+      <column name="cancelled_at" type="timestamp"/>
+      <column name="cancelled_by" type="varchar(50)"/>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+
+    </createTable>
+
+    <createIndex indexName="idx_patient_activity_patient_created"
+                 tableName="patient_activity">
+      <column name="patient_id"/>
+      <column name="created_date"/>
+    </createIndex>
+
+    <createIndex indexName="idx_patient_activity_patient_status"
+                 tableName="patient_activity">
+      <column name="patient_id"/>
+      <column name="status"/>
+    </createIndex>
+
+    <sql dbms="postgresql">
+      CREATE UNIQUE INDEX uq_patient_activity_source_event
+        ON patient_activity (source_type, source_id, activity_type)
+        WHERE source_type IS NOT NULL AND source_id IS NOT NULL;
+    </sql>
+
+  </changeSet>
+
+</databaseChangeLog>

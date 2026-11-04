@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-diagnostic-order-tests-report-image-status-log-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwdiagnosticordertestsreportimagestatuslog AS
+      SELECT
+        risl.id,
+        risl.report_id,
+        risl.status_date,
+        risl.status_by,
+        risl.status_value
+      FROM public.diagnostic_order_tests_report_image_status_log risl;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwdiagnosticordertestsreportimagestatuslog;
+      </sql>
+    </rollback>
+  </changeSet>
+  <changeSet id="grant-report-diagnostic-order-tests-report-image-status-log-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwdiagnosticordertestsreportimagestatuslog TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwdiagnosticordertestsreportimagestatuslog FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

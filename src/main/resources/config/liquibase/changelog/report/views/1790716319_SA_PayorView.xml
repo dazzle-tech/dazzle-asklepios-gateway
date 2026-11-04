@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-payor-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwpayor AS
+      SELECT
+        p.id,
+        p.code,
+        p.name,
+        p.category,
+        p.address,
+        p.phone,
+        p.email,
+        p.contract_manager_contact,
+        p.start_date,
+        p.expiry_date,
+        p.renewable,
+        p.allow_partial_coverage,
+        p.accept_copay,
+        p.accept_deductibles,
+        p.allow_package_pricing,
+        p.allow_drg_billing,
+        p.force_preapproval,
+        p.is_active,
+        p.created_date,
+        p.created_by,
+        p.last_modified_by,
+        p.last_modified_date,
+        p.nphies_id,
+        p.waseel_payer_id,
+        p.tpa_nphies_id,
+        p.is_waseel_enabled
+      FROM public.payor p;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwpayor;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-payor-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwpayor TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwpayor FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

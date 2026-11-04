@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-discharge-planning-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwdischargeplanning AS
+      SELECT
+        dp.id,
+        dp.patient_id,
+        dp.encounter_id,
+        dp.expected_discharge_date,
+        dp.estimated_los,
+        dp.readiness_status,
+        dp.medical_condition_stable,
+        dp.vitals_stable,
+        dp.pending_investigations,
+        dp.mobility_adl_status,
+        dp.diagnosis_code,
+        dp.diagnosis_name,
+        dp.final_med_reconciliation_completed,
+        dp.discharge_summary_prepared,
+        dp.discharge_orders_signed,
+        dp.nursing_discharge_report_done,
+        dp.patient_family_informed,
+        dp.transport_arranged,
+        dp.medical_equipment,
+        dp.home_care_needed,
+        dp.post_discharge_dietary_plan,
+        dp.post_discharge_social_needs,
+        dp.topics_covered,
+        dp.education_dietary_plan,
+        dp.education_social_needs,
+        dp.material_leaflet,
+        dp.material_verbal,
+        dp.material_video,
+        dp.education_provided,
+        dp.patient_understanding,
+        dp.is_active,
+        dp.created_date,
+        dp.created_by,
+        dp.last_modified_by,
+        dp.last_modified_date
+      FROM public.discharge_planning dp;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwdischargeplanning;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-discharge-planning-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwdischargeplanning TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwdischargeplanning FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

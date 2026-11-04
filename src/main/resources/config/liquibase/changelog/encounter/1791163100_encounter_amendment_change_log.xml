@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="
+                     http://www.liquibase.org/xml/ns/dbchangelog
+                     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="FA00000000023" author="Faroukdhelea">
+    <createTable tableName="encounter_amendment_change_log">
+      <column name="id" type="BIGINT" autoIncrement="true">
+        <constraints primaryKey="true"
+                     primaryKeyName="pk_encounter_amendment_change_log"
+                     nullable="false"/>
+      </column>
+      <column name="reopen_session_id" type="BIGINT">
+        <constraints nullable="false"/>
+      </column>
+      <column name="encounter_id" type="BIGINT">
+        <constraints nullable="false"/>
+      </column>
+      <column name="change_data" type="jsonb">
+        <constraints nullable="false"/>
+      </column>
+      <column name="changed_by" type="varchar(50)"/>
+      <column name="changed_at" type="TIMESTAMP">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="encounter_amendment_change_log"
+      baseColumnNames="reopen_session_id"
+      referencedTableName="encounter_reopen_session"
+      referencedColumnNames="id"
+      constraintName="fk_encounter_amendment_change_log_session"/>
+
+    <addForeignKeyConstraint
+      baseTableName="encounter_amendment_change_log"
+      baseColumnNames="encounter_id"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"
+      constraintName="fk_encounter_amendment_change_log_encounter"/>
+
+    <createIndex tableName="encounter_amendment_change_log" indexName="idx_encounter_amendment_change_log_session">
+      <column name="reopen_session_id"/>
+    </createIndex>
+    <createIndex tableName="encounter_amendment_change_log" indexName="idx_encounter_amendment_change_log_encounter">
+      <column name="encounter_id"/>
+    </createIndex>
+    <createIndex tableName="encounter_amendment_change_log" indexName="idx_encounter_amendment_change_log_session_changed_at">
+      <column name="reopen_session_id"/>
+      <column name="changed_at"/>
+    </createIndex>
+  </changeSet>
+</databaseChangeLog>

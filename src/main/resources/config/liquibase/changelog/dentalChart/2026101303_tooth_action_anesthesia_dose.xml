@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="tooth_action_anesthesia_dose" author="hanan253yahya">
+    <addColumn tableName="tooth_action">
+      <column name="anesthesia_used" type="varchar(255)"/>
+      <column name="dose" type="varchar(255)"/>
+    </addColumn>
+  </changeSet>
+
+</databaseChangeLog>

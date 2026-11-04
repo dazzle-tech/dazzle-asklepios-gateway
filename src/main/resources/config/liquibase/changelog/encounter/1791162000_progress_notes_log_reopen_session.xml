@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="
+                     http://www.liquibase.org/xml/ns/dbchangelog
+                     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="1791162000-progress-notes-log-reopen-session" author="Faroukdhelea">
+    <addColumn tableName="progress_notes_log">
+      <column name="reopen_session_id" type="bigint"/>
+    </addColumn>
+
+    <addForeignKeyConstraint
+      baseTableName="progress_notes_log"
+      baseColumnNames="reopen_session_id"
+      referencedTableName="encounter_reopen_session"
+      referencedColumnNames="id"
+      constraintName="fk_progress_notes_log_reopen_session"/>
+
+    <createIndex tableName="progress_notes_log" indexName="idx_progress_notes_log_reopen_session">
+      <column name="reopen_session_id"/>
+    </createIndex>
+  </changeSet>
+
+  <changeSet id="1791162000-progress-notes-audit-reopen-session" author="Faroukdhelea" runOnChange="true">
+    <sqlFile path="config/liquibase/sql/progress_notes_triggers.sql"
+             relativeToChangelogFile="false"
+             splitStatements="false"/>
+  </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-document-version-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwdocumentversion AS
+      SELECT
+        dv.id,
+        dv.document_definition_id,
+        dv.version,
+        dv.filename,
+        dv.space_key,
+        dv.mime_type,
+        dv.size_bytes,
+        dv.effective_from,
+        dv.effective_to,
+        dv.status,
+        dv.created_by,
+        dv.created_date
+      FROM public.document_version dv;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwdocumentversion;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-document-version-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwdocumentversion TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwdocumentversion FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>
