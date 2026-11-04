@@ -1246,6 +1246,7 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/priceListItems/2026110201_H_price_list_item_unique_source.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/languageTranslation/2026110203_H_radiology_supervisor_translation.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/procedure/2026110202_BM_procedure_items.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/patientProcedure/2026110203_BM_patient_procedure_default_procedure.xml"
@@ -1253,6 +1254,12 @@
   <include file="config/liquibase/changelog/1793628490_R_External_Lab_Result.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1793628491_R_External_Radiology_Report.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/2026110204_B_claim_copy_service_product_test_results.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalProcedure/2026110301_dental_procedure_tooth_numbers.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patient/2026110302_SA_daily_briefing.xml"
            relativeToChangelogFile="false"/>
 </databaseChangeLog>
 
