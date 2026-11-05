@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="2026110501_H_patient_procedure_registration_columns" author="Hanan">
+    <addColumn tableName="patient_procedure">
+      <column name="consent_form" type="varchar(255)"/>
+      <column name="registration_date_time" type="timestamp"/>
+      <column name="performing_department_id" type="bigint"/>
+      <column name="performing_practitioner_id" type="bigint"/>
+    </addColumn>
+  </changeSet>
+
+  <changeSet id="2026110501_H_patient_procedure_staff" author="Hanan">
+    <createTable tableName="patient_procedure_staff">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="patient_procedure_id" type="bigint">
+        <constraints nullable="false" foreignKeyName="fk_patient_procedure_staff_procedure" references="patient_procedure(id)"/>
+      </column>
+      <column name="user_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="responsibility" type="varchar(255)"/>
+      <column name="is_present" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueDate="CURRENT_TIMESTAMP"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+    <createIndex tableName="patient_procedure_staff" indexName="idx_patient_procedure_staff_procedure">
+      <column name="patient_procedure_id"/>
+    </createIndex>
+    <addUniqueConstraint tableName="patient_procedure_staff" columnNames="patient_procedure_id,user_id" constraintName="ux_patient_procedure_staff_user_id"/>
+  </changeSet>
+
+  <changeSet id="2026110501_H_patient_procedure_pre_assessment" author="Hanan">
+    <createTable tableName="patient_procedure_pre_assessment">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="patient_procedure_id" type="bigint">
+        <constraints nullable="false" unique="true" uniqueConstraintName="ux_patient_procedure_pre_assessment_procedure" foreignKeyName="fk_patient_procedure_pre_assessment_procedure" references="patient_procedure(id)"/>
+      </column>
+      <column name="fasting_required" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="patient_prepared" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="special_instructions" type="text"/>
+      <column name="blood_pressure_systolic" type="decimal(10,2)"/>
+      <column name="blood_pressure_diastolic" type="decimal(10,2)"/>
+      <column name="heart_rate" type="decimal(10,2)"/>
+      <column name="temperature" type="decimal(10,2)"/>
+      <column name="oxygen_saturation" type="decimal(10,2)"/>
+      <column name="patient_identity_verified" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="consent_confirmed" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="procedure_site_marked" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="allergies_confirmed" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="patient_premedicated" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="equipment_counting_done" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="asa_score" type="varchar(255)"/>
+      <column name="airway_grade" type="varchar(255)"/>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueDate="CURRENT_TIMESTAMP"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+  </changeSet>
+
+  <changeSet id="2026110501_H_patient_procedure_performance" author="Hanan">
+    <createTable tableName="patient_procedure_performance">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="patient_procedure_id" type="bigint">
+        <constraints nullable="false" unique="true" uniqueConstraintName="ux_patient_procedure_performance_procedure" foreignKeyName="fk_patient_procedure_performance_procedure" references="patient_procedure(id)"/>
+      </column>
+      <column name="actual_start_time" type="timestamp"/>
+      <column name="actual_end_time" type="timestamp"/>
+      <column name="anesthesia_used" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="anesthesia_type" type="varchar(255)"/>
+      <column name="anesthesia_start_time" type="timestamp"/>
+      <column name="anesthesia_end_time" type="timestamp"/>
+      <column name="anesthesia_administered_by_id" type="bigint"/>
+      <column name="time_out" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="procedure_outcome" type="varchar(255)"/>
+      <column name="observations" type="text"/>
+      <column name="complication_type" type="varchar(255)"/>
+      <column name="complication_severity" type="varchar(255)"/>
+      <column name="actions_taken" type="text"/>
+      <column name="additional_notes" type="text"/>
+      <column name="home_instruction" type="varchar(255)"/>
+      <column name="home_instruction_notes" type="text"/>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueDate="CURRENT_TIMESTAMP"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+  </changeSet>
+
+  <changeSet id="2026110501_H_patient_procedure_medication" author="Hanan">
+    <createTable tableName="patient_procedure_medication">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="patient_procedure_id" type="bigint">
+        <constraints nullable="false" foreignKeyName="fk_patient_procedure_medication_procedure" references="patient_procedure(id)"/>
+      </column>
+      <column name="active_ingredient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="dose" type="decimal(10,2)"/>
+      <column name="unit" type="varchar(255)"/>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueDate="CURRENT_TIMESTAMP"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+    <createIndex tableName="patient_procedure_medication" indexName="idx_patient_procedure_medication_procedure">
+      <column name="patient_procedure_id"/>
+    </createIndex>
+  </changeSet>
+
+  <changeSet id="2026110501_H_patient_procedure_service_equipment" author="Hanan">
+    <createTable tableName="patient_procedure_service_equipment">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="patient_procedure_id" type="bigint">
+        <constraints nullable="false" foreignKeyName="fk_patient_procedure_service_equipment_procedure" references="patient_procedure(id)"/>
+      </column>
+      <column name="service_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueDate="CURRENT_TIMESTAMP"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+    <createIndex tableName="patient_procedure_service_equipment" indexName="idx_patient_procedure_service_equipment_procedure">
+      <column name="patient_procedure_id"/>
+    </createIndex>
+    <addUniqueConstraint tableName="patient_procedure_service_equipment" columnNames="patient_procedure_id,service_id" constraintName="ux_patient_procedure_service_equipment_service_id"/>
+  </changeSet>
+
+  <changeSet id="2026110501_H_patient_procedure_post_care" author="Hanan">
+    <createTable tableName="patient_procedure_post_care">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="patient_procedure_id" type="bigint">
+        <constraints nullable="false" unique="true" uniqueConstraintName="ux_patient_procedure_post_care_procedure" foreignKeyName="fk_patient_procedure_post_care_procedure" references="patient_procedure(id)"/>
+      </column>
+      <column name="diagnosis_icd_id" type="bigint"/>
+      <column name="diagnosis_description" type="varchar(500)"/>
+      <column name="patient_condition" type="text"/>
+      <column name="blood_pressure_systolic" type="decimal(10,2)"/>
+      <column name="blood_pressure_diastolic" type="decimal(10,2)"/>
+      <column name="heart_rate" type="decimal(10,2)"/>
+      <column name="temperature" type="decimal(10,2)"/>
+      <column name="oxygen_saturation" type="decimal(10,2)"/>
+      <column name="pain_score" type="varchar(255)"/>
+      <column name="pain_description" type="text"/>
+      <column name="recovery_notes" type="text"/>
+      <column name="additional_observations" type="text"/>
+      <column name="equipment_count_done" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="count_status" type="varchar(255)"/>
+      <column name="nausea_vomiting" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="awake_and_oriented" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="tolerating_oral_fluids" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="ambulating_independently" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="voided_urine" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="no_active_bleeding" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="pain_score_4" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="activity" type="varchar(255)"/>
+      <column name="respiration" type="varchar(255)"/>
+      <column name="circulation" type="varchar(255)"/>
+      <column name="consciousness" type="varchar(255)"/>
+      <column name="oxygen_saturation_level" type="varchar(255)"/>
+      <column name="aldrete_score" type="decimal(10,2)"/>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueDate="CURRENT_TIMESTAMP"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+  </changeSet>
+
+</databaseChangeLog>
