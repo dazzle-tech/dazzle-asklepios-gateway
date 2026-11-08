@@ -238,4 +238,141 @@
     </createTable>
   </changeSet>
 
+  <changeSet id="2026110503_H_patient_procedure_post_care_drop_diagnosis_description" author="Hanan">
+    <preConditions onFail="MARK_RAN">
+      <columnExists tableName="patient_procedure_post_care" columnName="diagnosis_description"/>
+    </preConditions>
+    <dropColumn tableName="patient_procedure_post_care" columnName="diagnosis_description"/>
+    <rollback>
+      <addColumn tableName="patient_procedure_post_care">
+        <column name="diagnosis_description" type="varchar(500)"/>
+      </addColumn>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="2026110504_H_patient_procedure_post_care_ensure_diagnosis_id" author="Hanan">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <columnExists tableName="patient_procedure_post_care" columnName="diagnosis_icd_id"/>
+      </not>
+    </preConditions>
+    <addColumn tableName="patient_procedure_post_care">
+      <column name="diagnosis_icd_id" type="bigint"/>
+    </addColumn>
+    <rollback/>
+  </changeSet>
+
+  <changeSet id="2026110505_H_patient_procedure_complication" author="Hanan">
+    <createTable tableName="patient_procedure_complication">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="patient_procedure_id" type="bigint">
+        <constraints nullable="false" foreignKeyName="fk_patient_procedure_complication_procedure" references="patient_procedure(id)"/>
+      </column>
+      <column name="complication_type" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="severity" type="varchar(255)"/>
+      <column name="actions_taken" type="text"/>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueDate="CURRENT_TIMESTAMP"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+    <createIndex tableName="patient_procedure_complication" indexName="idx_patient_procedure_complication_procedure">
+      <column name="patient_procedure_id"/>
+    </createIndex>
+  </changeSet>
+
+  <changeSet id="2026110506_H_patient_procedure_performance_drop_complication" author="Hanan">
+    <dropColumn tableName="patient_procedure_performance" columnName="complication_type"/>
+    <dropColumn tableName="patient_procedure_performance" columnName="complication_severity"/>
+    <dropColumn tableName="patient_procedure_performance" columnName="actions_taken"/>
+    <rollback>
+      <addColumn tableName="patient_procedure_performance">
+        <column name="complication_type" type="varchar(255)"/>
+        <column name="complication_severity" type="varchar(255)"/>
+        <column name="actions_taken" type="text"/>
+      </addColumn>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="2026110507_H_patient_procedure_vital_monitoring" author="Hanan">
+    <createTable tableName="patient_procedure_vital_monitoring">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="patient_procedure_id" type="bigint">
+        <constraints nullable="false" foreignKeyName="fk_patient_procedure_vital_monitoring_procedure" references="patient_procedure(id)"/>
+      </column>
+      <column name="recorded_at" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+      <column name="heart_rate" type="decimal(10,2)"/>
+      <column name="oxygen_saturation" type="decimal(10,2)"/>
+      <column name="blood_pressure_systolic" type="decimal(10,2)"/>
+      <column name="blood_pressure_diastolic" type="decimal(10,2)"/>
+      <column name="respiratory_rate" type="decimal(10,2)"/>
+      <column name="temperature" type="decimal(10,2)"/>
+      <column name="etco2" type="decimal(10,2)"/>
+      <column name="fluids_given" type="decimal(10,2)"/>
+      <column name="urine_output" type="decimal(10,2)"/>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueDate="CURRENT_TIMESTAMP"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+    <createIndex tableName="patient_procedure_vital_monitoring" indexName="idx_patient_procedure_vital_monitoring_procedure">
+      <column name="patient_procedure_id"/>
+    </createIndex>
+  </changeSet>
+
+  <changeSet id="2026110508_H_patient_procedure_post_care_diagnosis" author="Hanan">
+    <createTable tableName="patient_procedure_post_care_diagnosis">
+      <column name="post_care_id" type="bigint">
+        <constraints nullable="false" foreignKeyName="fk_patient_procedure_post_care_diagnosis_post_care" references="patient_procedure_post_care(id)"/>
+      </column>
+      <column name="diagnosis_icd_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+    <addPrimaryKey tableName="patient_procedure_post_care_diagnosis" columnNames="post_care_id,diagnosis_icd_id" constraintName="pk_patient_procedure_post_care_diagnosis"/>
+    <dropColumn tableName="patient_procedure_post_care" columnName="diagnosis_icd_id"/>
+    <rollback>
+      <addColumn tableName="patient_procedure_post_care">
+        <column name="diagnosis_icd_id" type="bigint"/>
+      </addColumn>
+      <dropTable tableName="patient_procedure_post_care_diagnosis"/>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="2026110509_H_patient_procedure_post_care_pain_assessment_type" author="Hanan">
+    <addColumn tableName="patient_procedure_post_care">
+      <column name="pain_assessment_type" type="varchar(50)"/>
+    </addColumn>
+  </changeSet>
+
+  <changeSet id="2026110510_H_patient_procedure_service_equipment_as_service_product" author="Hanan">
+    <comment>Equipment now lives in patient_services_and_products; this table only links a line to its procedure. Old rows are dropped (no migration).</comment>
+    <delete tableName="patient_procedure_service_equipment"/>
+    <dropUniqueConstraint tableName="patient_procedure_service_equipment" constraintName="ux_patient_procedure_service_equipment_service_id"/>
+    <dropColumn tableName="patient_procedure_service_equipment" columnName="service_id"/>
+    <addColumn tableName="patient_procedure_service_equipment">
+      <column name="service_product_id" type="bigint">
+        <constraints nullable="false" unique="true" uniqueConstraintName="ux_patient_procedure_service_equipment_item"/>
+      </column>
+    </addColumn>
+    <rollback>
+      <dropColumn tableName="patient_procedure_service_equipment" columnName="service_product_id"/>
+      <addColumn tableName="patient_procedure_service_equipment">
+        <column name="service_id" type="bigint"/>
+      </addColumn>
+    </rollback>
+  </changeSet>
+
 </databaseChangeLog>
