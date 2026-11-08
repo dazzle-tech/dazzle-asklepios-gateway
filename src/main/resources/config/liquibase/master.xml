@@ -1340,4 +1340,8 @@
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/payorSetup/1793080000_B_policy_class_inactive_reason.xml"
            relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/billing/1793090000_B_charge_line_contract_discount.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/payorSetup/1793100000_B_tpa_definitions_nphies_id.xml"
+           relativeToChangelogFile="false"/>
   </databaseChangeLog>

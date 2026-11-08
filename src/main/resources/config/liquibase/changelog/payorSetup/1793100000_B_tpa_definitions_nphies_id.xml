@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="1793100000_B_tpa_definitions_nphies_id" author="Batool_Bushra">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <columnExists tableName="tpa_definitions" columnName="nphies_id"/>
+      </not>
+    </preConditions>
+    <addColumn tableName="tpa_definitions">
+      <column name="nphies_id" type="varchar(100)"/>
+    </addColumn>
+    <addUniqueConstraint
+      tableName="tpa_definitions"
+      columnNames="nphies_id"
+      constraintName="ux_tpa_definitions_nphies_id"/>
+  </changeSet>
+</databaseChangeLog>
