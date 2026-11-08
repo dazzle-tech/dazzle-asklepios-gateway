@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!--
+    configuration_user.config_key is NOT NULL, and uq_cfg_user_key_facility
+    unique-indexes (user_id, config_key, facility). Hibernate only inserts
+    configuration_id and user_id, so assigning a user fails unless these
+    columns are copied from the parent configuration.
+  -->
+  <changeSet id="2026110801_S_configuration_user_scope" author="Sondos">
+    <sql dbms="postgresql" splitStatements="false">
+      <![CDATA[
+CREATE OR REPLACE FUNCTION configuration_user_fill_scope()
+RETURNS trigger
+LANGUAGE plpgsql
+AS $$
+DECLARE
+    src_key varchar;
+    src_facility bigint;
+BEGIN
+    SELECT c.key, c.facility_id
+      INTO src_key, src_facility
+      FROM configuration c
+     WHERE c.id = NEW.configuration_id;
+
+    IF src_key IS NULL THEN
+        RAISE EXCEPTION 'configuration % not found for configuration_user', NEW.configuration_id;
+    END IF;
+
+    NEW.config_key := src_key;
+    NEW.facility_id := src_facility;
+    RETURN NEW;
+END;
+$$;
+
+DROP TRIGGER IF EXISTS trg_configuration_user_fill_scope ON configuration_user;
+CREATE TRIGGER trg_configuration_user_fill_scope
+BEFORE INSERT ON configuration_user
+FOR EACH ROW
+EXECUTE FUNCTION configuration_user_fill_scope();
+      ]]>
+    </sql>
+
+    <sql dbms="postgresql" splitStatements="false">
+      <![CDATA[
+CREATE OR REPLACE FUNCTION configuration_sync_user_scope()
+RETURNS trigger
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    IF NEW.key IS DISTINCT FROM OLD.key
+       OR NEW.facility_id IS DISTINCT FROM OLD.facility_id THEN
+        UPDATE configuration_user
+           SET config_key = NEW.key,
+               facility_id = NEW.facility_id
+         WHERE configuration_id = NEW.id;
+    END IF;
+    RETURN NEW;
+END;
+$$;
+
+DROP TRIGGER IF EXISTS trg_configuration_sync_user_scope ON configuration;
+CREATE TRIGGER trg_configuration_sync_user_scope
+AFTER UPDATE OF key, facility_id ON configuration
+FOR EACH ROW
+EXECUTE FUNCTION configuration_sync_user_scope();
+      ]]>
+    </sql>
+
+    <rollback>
+      <sql dbms="postgresql" splitStatements="false">
+        <![CDATA[
+DROP TRIGGER IF EXISTS trg_configuration_user_fill_scope ON configuration_user;
+DROP TRIGGER IF EXISTS trg_configuration_sync_user_scope ON configuration;
+DROP FUNCTION IF EXISTS configuration_user_fill_scope();
+DROP FUNCTION IF EXISTS configuration_sync_user_scope();
+        ]]>
+      </sql>
+    </rollback>
+  </changeSet>
+
+</databaseChangeLog>

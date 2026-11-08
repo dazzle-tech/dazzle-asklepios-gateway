@@ -1270,5 +1270,7 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/patient/2026110302_SA_daily_briefing.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/2026110801_S_configuration_user_scope.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
 
