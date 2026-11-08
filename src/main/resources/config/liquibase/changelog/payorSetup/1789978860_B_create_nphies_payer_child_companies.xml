@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="1789978860_B_create_nphies_payer_child_companies" author="batool_bushra">
+    <createTable tableName="nphies_payer_child_companies">
+      <column name="parent_nphies_payer_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="child_nphies_payer_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+
+    <addPrimaryKey
+      tableName="nphies_payer_child_companies"
+      columnNames="parent_nphies_payer_id, child_nphies_payer_id"
+      constraintName="pk_nphies_payer_child_companies"/>
+
+    <addUniqueConstraint
+      tableName="nphies_payer_child_companies"
+      columnNames="child_nphies_payer_id"
+      constraintName="uk_nphies_payer_child_company"/>
+
+    <addForeignKeyConstraint
+      baseTableName="nphies_payer_child_companies"
+      baseColumnNames="parent_nphies_payer_id"
+      referencedTableName="nphies_payers"
+      referencedColumnNames="id"
+      constraintName="fk_nphies_payer_child_parent"
+      onDelete="CASCADE"/>
+
+    <addForeignKeyConstraint
+      baseTableName="nphies_payer_child_companies"
+      baseColumnNames="child_nphies_payer_id"
+      referencedTableName="nphies_payers"
+      referencedColumnNames="id"
+      constraintName="fk_nphies_payer_child_company"
+      onDelete="CASCADE"/>
+  </changeSet>
+
+</databaseChangeLog>
