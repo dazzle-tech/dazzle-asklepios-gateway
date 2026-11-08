@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="CONFIG-100000000000062" author="Sondos">
+
+    <modifyDataType tableName="configuration" columnName="value" newDataType="text"/>
+
+    <addColumn tableName="configuration">
+      <column name="scope_type" type="varchar(20)" defaultValue="ORGANIZATION">
+        <constraints nullable="false"/>
+      </column>
+    </addColumn>
+
+    <sql>UPDATE configuration SET scope_type = 'FACILITY' WHERE facility_id IS NOT NULL;</sql>
+
+    <createTable tableName="configuration_user">
+      <column name="configuration_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="user_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="config_key" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="facility_id" type="bigint"/>
+    </createTable>
+
+    <addPrimaryKey tableName="configuration_user"
+                   columnNames="configuration_id, user_id"
+                   constraintName="pk_configuration_user"/>
+
+    <addForeignKeyConstraint
+      baseTableName="configuration_user" baseColumnNames="configuration_id"
+      referencedTableName="configuration" referencedColumnNames="id"
+      constraintName="fk_cfg_user_config" onDelete="CASCADE"/>
+
+    <addForeignKeyConstraint
+      baseTableName="configuration_user" baseColumnNames="user_id"
+      referencedTableName="app_user" referencedColumnNames="id"
+      constraintName="fk_cfg_user_user" onDelete="CASCADE"/>
+
+    <sql>DROP INDEX IF EXISTS uq_configuration_key_org;</sql>
+    <sql>DROP INDEX IF EXISTS uq_configuration_key_facility;</sql>
+
+    <sql>
+      CREATE UNIQUE INDEX uq_configuration_key_org
+        ON configuration ("key") WHERE scope_type = 'ORGANIZATION';
+    </sql>
+
+    <sql>
+      CREATE UNIQUE INDEX uq_configuration_key_facility
+        ON configuration (facility_id, "key") WHERE scope_type = 'FACILITY';
+    </sql>
+
+    <sql>
+      CREATE UNIQUE INDEX uq_cfg_user_key_facility
+        ON configuration_user (user_id, config_key, COALESCE(facility_id, 0));
+    </sql>
+
+    <createIndex tableName="configuration_user" indexName="idx_cfg_user_user">
+      <column name="user_id"/>
+    </createIndex>
+
+    <rollback>
+      <dropTable tableName="configuration_user"/>
+      <sql>DROP INDEX IF EXISTS uq_configuration_key_org;</sql>
+      <sql>DROP INDEX IF EXISTS uq_configuration_key_facility;</sql>
+      <dropColumn tableName="configuration" columnName="scope_type"/>
+      <sql>CREATE UNIQUE INDEX uq_configuration_key_org ON configuration ("key") WHERE facility_id IS NULL;</sql>
+      <sql>CREATE UNIQUE INDEX uq_configuration_key_facility ON configuration (facility_id, "key") WHERE facility_id IS NOT NULL;</sql>
+    </rollback>
+  </changeSet>
+
+</databaseChangeLog>
