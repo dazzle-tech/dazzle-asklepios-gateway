@@ -1251,9 +1251,11 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/patientProcedure/2026110203_BM_patient_procedure_default_procedure.xml"
            relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/2026110204_B_claim_copy_service_product_test_results.xml"
+  <include file="config/liquibase/changelog/2026110204_B_claim_copy_service_product_test_results.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/dentalProcedure/2026110301_dental_procedure_tooth_numbers.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/appUser/2026110301_add_can_cancel_service_before_invoice.xml"
            relativeToChangelogFile="false"/>
 </databaseChangeLog>
 

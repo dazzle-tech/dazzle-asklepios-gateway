@@ -78,6 +78,7 @@ public class AdminUserDTO implements Serializable {
     private boolean canUnDischargeUrgentCare;
     private boolean canUnCompleteEncounter;
     private boolean canReturnClaimForResubmit;
+    private boolean canCancelServiceBeforeInvoice;
 
     public AdminUserDTO() {
     }
@@ -112,6 +113,7 @@ public class AdminUserDTO implements Serializable {
         this.canUnDischargeUrgentCare = user.isCanUnDischargeUrgentCare();
         this.canUnCompleteEncounter = user.isCanUnCompleteEncounter();
         this.canReturnClaimForResubmit = user.isCanReturnClaimForResubmit();
+        this.canCancelServiceBeforeInvoice = user.isCanCancelServiceBeforeInvoice();
     }
 
 }
