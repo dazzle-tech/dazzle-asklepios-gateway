@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="2026110909_H_patient_procedure_post_care" author="Hanan">
+    <createTable tableName="patient_procedure_post_care">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="patient_procedure_id" type="bigint">
+        <constraints nullable="false" unique="true" uniqueConstraintName="ux_patient_procedure_post_care_procedure" foreignKeyName="fk_patient_procedure_post_care_procedure" references="patient_procedure(id)"/>
+      </column>
+      <column name="patient_condition" type="text"/>
+      <column name="blood_pressure_systolic" type="decimal(10,2)"/>
+      <column name="blood_pressure_diastolic" type="decimal(10,2)"/>
+      <column name="heart_rate" type="decimal(10,2)"/>
+      <column name="temperature" type="decimal(10,2)"/>
+      <column name="oxygen_saturation" type="decimal(10,2)"/>
+      <column name="pain_assessment_type" type="varchar(50)"/>
+      <column name="pain_score" type="varchar(255)"/>
+      <column name="pain_description" type="text"/>
+      <column name="recovery_notes" type="text"/>
+      <column name="additional_observations" type="text"/>
+      <column name="equipment_count_done" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="count_status" type="varchar(255)"/>
+      <column name="nausea_vomiting" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="awake_and_oriented" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="tolerating_oral_fluids" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="ambulating_independently" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="voided_urine" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="no_active_bleeding" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="pain_score_4" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="activity" type="varchar(255)"/>
+      <column name="respiration" type="varchar(255)"/>
+      <column name="circulation" type="varchar(255)"/>
+      <column name="consciousness" type="varchar(255)"/>
+      <column name="oxygen_saturation_level" type="varchar(255)"/>
+      <column name="aldrete_score" type="decimal(10,2)"/>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueDate="CURRENT_TIMESTAMP"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+  </changeSet>
+
+</databaseChangeLog>
