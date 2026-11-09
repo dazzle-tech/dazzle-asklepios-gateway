@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="2026110901_H_patient_procedure_registration_columns" author="Hanan">
+    <addColumn tableName="patient_procedure">
+      <column name="consent_form" type="varchar(255)"/>
+      <column name="registration_date_time" type="timestamp"/>
+      <column name="performing_department_id" type="bigint"/>
+      <column name="performing_practitioner_id" type="bigint"/>
+    </addColumn>
+  </changeSet>
+
+</databaseChangeLog>
