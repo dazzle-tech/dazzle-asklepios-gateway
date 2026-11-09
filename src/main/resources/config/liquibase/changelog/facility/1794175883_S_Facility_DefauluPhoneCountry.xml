@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="FACILITY_DEFAULT_PHONE_0000111" author="sondos">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <columnExists tableName="facility" columnName="default_phone_country"/>
+      </not>
+    </preConditions>
+
+    <addColumn tableName="facility">
+      <column name="default_phone_country" type="varchar(5)"/>
+    </addColumn>
+  </changeSet>
+
+</databaseChangeLog>
