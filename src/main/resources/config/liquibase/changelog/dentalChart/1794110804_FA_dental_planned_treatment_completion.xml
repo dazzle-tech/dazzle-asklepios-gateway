@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!-- Incremental: completion audit on deployed dental_planned_treatment. Continues after FA000000000056. -->
+  <changeSet id="FA000000000057" author="Faroukdhelea">
+    <addColumn tableName="dental_planned_treatment">
+      <column name="completed_by" type="varchar(50)"/>
+      <column name="completed_at" type="timestamp"/>
+    </addColumn>
+  </changeSet>
+
+</databaseChangeLog>

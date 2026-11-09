@@ -1045,6 +1045,23 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/dentalChart/2026101303_tooth_action_anesthesia_dose.xml"
            relativeToChangelogFile="false"/>
+  <!-- Current dental treatment-plan work: incremental alters + new undeployed tables -->
+  <include file="config/liquibase/changelog/dentalChart/1794110801_FA_tooth_action_visit_number.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalChart/1794110802_FA_dental_planned_treatment_billing_fields.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalChart/1794110803_FA_dental_planned_treatment_scope_clinical.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalChart/1794110804_FA_dental_planned_treatment_completion.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalChart/1794110805_FA_dental_treatment_plan.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalChart/1794110806_FA_dental_treatment_session.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalChart/1794110807_FA_dental_treatment_plan_status_log.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalChart/1794110808_FA_dental_planned_treatment_plan_links.xml"
+           relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1791451200_dialysis_session_treatment_plan_id.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1791454800_dialysis_session_plan_unique.xml"

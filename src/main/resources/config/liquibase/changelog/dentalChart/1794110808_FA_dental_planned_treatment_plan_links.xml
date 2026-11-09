@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!--
+    Incremental: link deployed dental_planned_treatment rows to the new plan/session tables.
+    Continues after FA000000000060. No legacy data migration.
+  -->
+  <changeSet id="FA000000000061" author="Faroukdhelea">
+    <addColumn tableName="dental_planned_treatment">
+      <column name="treatment_plan_id" type="bigint"/>
+      <column name="treatment_session_id" type="bigint"/>
+      <column name="execution_encounter_id" type="bigint"/>
+    </addColumn>
+
+    <addForeignKeyConstraint
+      baseTableName="dental_planned_treatment"
+      baseColumnNames="treatment_plan_id"
+      referencedTableName="dental_treatment_plan"
+      referencedColumnNames="id"
+      constraintName="fk_dental_planned_treatment_plan"/>
+
+    <addForeignKeyConstraint
+      baseTableName="dental_planned_treatment"
+      baseColumnNames="treatment_session_id"
+      referencedTableName="dental_treatment_session"
+      referencedColumnNames="id"
+      constraintName="fk_dental_planned_treatment_session"/>
+
+    <createIndex indexName="idx_dental_planned_treatment_plan" tableName="dental_planned_treatment">
+      <column name="treatment_plan_id"/>
+    </createIndex>
+  </changeSet>
+
+  <!--
+    Incremental: procedure link on planned treatment + per-treatment history log (no FK on planned row).
+    Continues after FA000000000061.
+  -->
+  <changeSet id="FA000000000062" author="Faroukdhelea">
+    <addColumn tableName="dental_planned_treatment">
+      <column name="procedure_id" type="bigint"/>
+    </addColumn>
+
+    <createTable tableName="dental_planned_treatment_status_log">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="planned_treatment_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="treatment_plan_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="tooth_id" type="bigint"/>
+      <column name="tooth_label" type="varchar(50)"/>
+      <column name="action" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="changed_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="changed_at" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+
+    <createIndex indexName="idx_dental_planned_treatment_status_log_plan"
+                 tableName="dental_planned_treatment_status_log">
+      <column name="treatment_plan_id"/>
+    </createIndex>
+  </changeSet>
+
+</databaseChangeLog>
