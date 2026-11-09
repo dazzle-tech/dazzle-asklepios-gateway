@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="2026110913-create-patient-family-education" author="sondos">
+    <createTable tableName="patient_family_education">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false" foreignKeyName="fk_patient_family_education_patient" references="patients(id)"/>
+      </column>
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="false" foreignKeyName="fk_patient_family_education_encounter" references="patient_encounters(id)"/>
+      </column>
+      <column name="topic" type="text">
+        <constraints nullable="false"/>
+      </column>
+      <column name="method" type="varchar(50)"/>
+      <column name="effectiveness" type="text"/>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueDate="CURRENT_TIMESTAMP"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+    <createIndex tableName="patient_family_education" indexName="idx_patient_family_education_patient_id">
+      <column name="patient_id"/>
+    </createIndex>
+    <createIndex tableName="patient_family_education" indexName="idx_patient_family_education_encounter_id">
+      <column name="encounter_id"/>
+    </createIndex>
+  </changeSet>
+
+</databaseChangeLog>
