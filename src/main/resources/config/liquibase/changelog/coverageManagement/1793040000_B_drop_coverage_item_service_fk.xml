@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!-- service_id holds the catalog item id of any category (procedure, test, medication),
+       not only a service, so it must not reference the service table. -->
+  <changeSet id="1793040000_B_drop_coverage_term_item_service_fk" author="Batool_Bushra">
+    <preConditions onFail="MARK_RAN">
+      <foreignKeyConstraintExists foreignKeyName="fk_coverage_term_item_service"/>
+    </preConditions>
+    <dropForeignKeyConstraint
+      baseTableName="coverage_term_item"
+      constraintName="fk_coverage_term_item_service"/>
+  </changeSet>
+
+  <changeSet id="1793040001_B_drop_coverage_discount_service_fk" author="Batool_Bushra">
+    <preConditions onFail="MARK_RAN">
+      <foreignKeyConstraintExists foreignKeyName="fk_coverage_discount_service"/>
+    </preConditions>
+    <dropForeignKeyConstraint
+      baseTableName="coverage_discount"
+      constraintName="fk_coverage_discount_service"/>
+  </changeSet>
+
+  <changeSet id="1793040002_B_drop_coverage_exclusion_service_fk" author="Batool_Bushra">
+    <preConditions onFail="MARK_RAN">
+      <foreignKeyConstraintExists foreignKeyName="fk_coverage_exclusion_service"/>
+    </preConditions>
+    <dropForeignKeyConstraint
+      baseTableName="coverage_exclusion"
+      constraintName="fk_coverage_exclusion_service"/>
+  </changeSet>
+</databaseChangeLog>
