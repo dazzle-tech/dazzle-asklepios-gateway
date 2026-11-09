@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="BS000000000081" author="batool_bushra">
+    <preConditions onFail="MARK_RAN">
+      <and>
+        <tableExists tableName="coverage_class"/>
+        <not>
+          <columnExists tableName="coverage_pre_approval" columnName="coverage_class_id"/>
+        </not>
+      </and>
+    </preConditions>
+
+    <addColumn tableName="coverage_pre_approval">
+      <column name="coverage_class_id" type="bigint"/>
+    </addColumn>
+
+    <addForeignKeyConstraint
+      baseTableName="coverage_pre_approval"
+      baseColumnNames="coverage_class_id"
+      referencedTableName="coverage_class"
+      referencedColumnNames="id"
+      constraintName="fk_coverage_pre_approval_class"
+      onDelete="CASCADE"/>
+
+    <createIndex tableName="coverage_pre_approval" indexName="idx_coverage_pre_approval_class">
+      <column name="coverage_class_id"/>
+    </createIndex>
+
+    <dropForeignKeyConstraint baseTableName="coverage_pre_approval" constraintName="fk_coverage_pre_approval_contract"/>
+    <dropIndex tableName="coverage_pre_approval" indexName="idx_coverage_pre_approval_contract"/>
+    <dropColumn tableName="coverage_pre_approval" columnName="coverage_contract_id"/>
+  </changeSet>
+</databaseChangeLog>

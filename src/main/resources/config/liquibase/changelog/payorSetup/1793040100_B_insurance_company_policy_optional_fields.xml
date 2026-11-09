@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="1793040100_B_policy_number_nullable" author="Batool_Bushra">
+    <dropNotNullConstraint tableName="insurance_company_policy" columnName="policy_number" columnDataType="varchar(100)"/>
+  </changeSet>
+
+  <changeSet id="1793040101_B_policy_valid_to_nullable" author="Batool_Bushra">
+    <dropNotNullConstraint tableName="insurance_company_policy" columnName="valid_to" columnDataType="date"/>
+  </changeSet>
+
+  <changeSet id="1793040102_B_policy_is_active" author="Batool_Bushra">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <columnExists tableName="insurance_company_policy" columnName="is_active"/>
+      </not>
+    </preConditions>
+    <addColumn tableName="insurance_company_policy">
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+    </addColumn>
+  </changeSet>
+</databaseChangeLog>

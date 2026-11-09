@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="BS000000000073" author="bushra_batool">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <columnExists tableName="nphies_payers" columnName="approval_coverage_company"/>
+      </not>
+    </preConditions>
+    <addColumn tableName="nphies_payers">
+      <column name="approval_coverage_company" type="varchar(20)"/>
+    </addColumn>
+  </changeSet>
+
+  <changeSet id="BS000000000074" author="bushra_batool">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <columnExists tableName="tpa_definitions" columnName="approval_coverage_company"/>
+      </not>
+    </preConditions>
+    <addColumn tableName="tpa_definitions">
+      <column name="approval_coverage_company" type="varchar(20)"/>
+    </addColumn>
+  </changeSet>
+
+  <changeSet id="BS000000000075" author="bushra_batool">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <columnExists tableName="coverage_contract" columnName="approval_coverage_company"/>
+      </not>
+    </preConditions>
+    <addColumn tableName="coverage_contract">
+      <column name="approval_coverage_company" type="varchar(20)"/>
+    </addColumn>
+  </changeSet>
+</databaseChangeLog>
