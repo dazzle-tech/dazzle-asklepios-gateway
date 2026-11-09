@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="2026110904_H_patient_procedure_performance" author="Hanan">
+    <createTable tableName="patient_procedure_performance">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="patient_procedure_id" type="bigint">
+        <constraints nullable="false" unique="true" uniqueConstraintName="ux_patient_procedure_performance_procedure" foreignKeyName="fk_patient_procedure_performance_procedure" references="patient_procedure(id)"/>
+      </column>
+      <column name="actual_start_time" type="timestamp"/>
+      <column name="actual_end_time" type="timestamp"/>
+      <column name="anesthesia_used" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="anesthesia_type" type="varchar(255)"/>
+      <column name="anesthesia_start_time" type="timestamp"/>
+      <column name="anesthesia_end_time" type="timestamp"/>
+      <column name="anesthesia_administered_by_id" type="bigint"/>
+      <column name="time_out" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="procedure_outcome" type="varchar(255)"/>
+      <column name="observations" type="text"/>
+      <column name="additional_notes" type="text"/>
+      <column name="home_instruction" type="varchar(255)"/>
+      <column name="home_instruction_notes" type="text"/>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueDate="CURRENT_TIMESTAMP"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+  </changeSet>
+
+</databaseChangeLog>

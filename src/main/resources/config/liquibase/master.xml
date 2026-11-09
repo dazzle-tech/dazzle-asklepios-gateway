@@ -1257,7 +1257,25 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/patient/2026110302_SA_daily_briefing.xml"
            relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/patientProcedure/2026110501_H_procedure_module_tables.xml"
+  <include file="config/liquibase/changelog/patientProcedure/2026110901_H_patient_procedure_registration_columns.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patientProcedure/2026110902_H_patient_procedure_staff.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patientProcedure/2026110903_H_patient_procedure_pre_assessment.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patientProcedure/2026110904_H_patient_procedure_performance.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patientProcedure/2026110905_H_patient_procedure_complication.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patientProcedure/2026110906_H_patient_procedure_vital_monitoring.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patientProcedure/2026110907_H_patient_procedure_medication.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patientProcedure/2026110908_H_patient_procedure_service_equipment.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patientProcedure/2026110909_H_patient_procedure_post_care.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patientProcedure/2026110910_H_patient_procedure_post_care_diagnosis.xml"
            relativeToChangelogFile="false"/>
 </databaseChangeLog>
 
