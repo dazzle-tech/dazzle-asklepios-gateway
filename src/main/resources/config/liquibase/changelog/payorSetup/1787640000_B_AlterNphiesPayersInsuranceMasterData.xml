@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="1787640000_BM_AlterNphiesPayersInsuranceMasterData" author="BushraMashaiekh">
+
+    <addColumn tableName="nphies_payers">
+      <column name="short_name" type="varchar(100)"/>
+      <column name="facility_id" type="bigint"/>
+      <column name="insurance_authority_license_no" type="varchar(100)"/>
+      <column name="commercial_registration_no" type="varchar(100)"/>
+      <column name="vat_registration_no" type="varchar(100)"/>
+      <column name="unified_national_no" type="varchar(100)"/>
+      <column name="head_office_address" type="varchar(2000)"/>
+      <column name="country_id" type="bigint"/>
+      <column name="city_id" type="bigint"/>
+      <column name="postal_code" type="varchar(20)"/>
+      <column name="contact_person" type="varchar(255)"/>
+      <column name="phone" type="varchar(50)"/>
+      <column name="mobile" type="varchar(50)"/>
+      <column name="email" type="varchar(255)"/>
+      <column name="website" type="varchar(255)"/>
+    </addColumn>
+
+    <addForeignKeyConstraint
+      baseTableName="nphies_payers"
+      baseColumnNames="facility_id"
+      referencedTableName="facility"
+      referencedColumnNames="id"
+      constraintName="fk_nphies_payers_facility"/>
+
+    <addForeignKeyConstraint
+      baseTableName="nphies_payers"
+      baseColumnNames="country_id"
+      referencedTableName="country"
+      referencedColumnNames="id"
+      constraintName="fk_nphies_payers_country"/>
+
+    <addForeignKeyConstraint
+      baseTableName="nphies_payers"
+      baseColumnNames="city_id"
+      referencedTableName="country_districts"
+      referencedColumnNames="id"
+      constraintName="fk_nphies_payers_city"/>
+
+    <createIndex tableName="nphies_payers" indexName="idx_nphies_payers_facility_id">
+      <column name="facility_id"/>
+    </createIndex>
+
+    <createIndex tableName="nphies_payers" indexName="idx_nphies_payers_country_id">
+      <column name="country_id"/>
+    </createIndex>
+
+    <createIndex tableName="nphies_payers" indexName="idx_nphies_payers_city_id">
+      <column name="city_id"/>
+    </createIndex>
+
+  </changeSet>
+
+</databaseChangeLog>

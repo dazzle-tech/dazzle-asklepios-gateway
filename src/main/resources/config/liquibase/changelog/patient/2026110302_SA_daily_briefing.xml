@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!-- Issued daily-briefing versions and the audit trail for case-level reads -->
+  <changeSet id="2026110302_SA_daily_briefing" author="sondos">
+
+    <createTable tableName="daily_briefing_issue">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false" primaryKeyName="pk_daily_briefing_issue"/>
+      </column>
+      <column name="facility_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="department_id" type="bigint"/>
+      <column name="practitioner_id" type="bigint"/>
+      <column name="specialty" type="varchar(255)"/>
+      <column name="report_date" type="date">
+        <constraints nullable="false"/>
+      </column>
+      <column name="language" type="varchar(8)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="recipient" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_at" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+      <column name="status" type="varchar(40)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="errors" type="text"/>
+      <column name="supersede_reason" type="varchar(500)"/>
+      <column name="superseded" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="payload" type="text">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+
+    <sql dbms="postgresql">
+      CREATE UNIQUE INDEX uq_daily_briefing_issue_active
+        ON daily_briefing_issue (
+          facility_id,
+          COALESCE(department_id, 0),
+          COALESCE(practitioner_id, 0),
+          COALESCE(specialty, ''),
+          report_date,
+          recipient,
+          language
+        )
+        WHERE superseded = FALSE;
+    </sql>
+
+    <createTable tableName="daily_briefing_access_log">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false" primaryKeyName="pk_daily_briefing_access_log"/>
+      </column>
+      <column name="accessed_at" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+      <column name="accessed_by" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="facility_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="department_id" type="bigint"/>
+      <column name="practitioner_id" type="bigint"/>
+      <column name="specialty" type="varchar(255)"/>
+      <column name="report_date" type="date">
+        <constraints nullable="false"/>
+      </column>
+      <column name="indicator" type="varchar(80)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="case_count" type="integer">
+        <constraints nullable="false"/>
+      </column>
+      <column name="case_ids" type="text"/>
+    </createTable>
+
+  </changeSet>
+
+</databaseChangeLog>

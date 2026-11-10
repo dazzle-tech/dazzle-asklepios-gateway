@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="2026110903_H_patient_procedure_pre_assessment" author="Hanan">
+    <createTable tableName="patient_procedure_pre_assessment">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="patient_procedure_id" type="bigint">
+        <constraints nullable="false" unique="true" uniqueConstraintName="ux_patient_procedure_pre_assessment_procedure" foreignKeyName="fk_patient_procedure_pre_assessment_procedure" references="patient_procedure(id)"/>
+      </column>
+      <column name="fasting_required" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="patient_prepared" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="special_instructions" type="text"/>
+      <column name="blood_pressure_systolic" type="decimal(10,2)"/>
+      <column name="blood_pressure_diastolic" type="decimal(10,2)"/>
+      <column name="heart_rate" type="decimal(10,2)"/>
+      <column name="temperature" type="decimal(10,2)"/>
+      <column name="oxygen_saturation" type="decimal(10,2)"/>
+      <column name="patient_identity_verified" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="consent_confirmed" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="procedure_site_marked" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="allergies_confirmed" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="patient_premedicated" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="equipment_counting_done" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="asa_score" type="varchar(255)"/>
+      <column name="airway_grade" type="varchar(255)"/>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueDate="CURRENT_TIMESTAMP"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+  </changeSet>
+
+</databaseChangeLog>

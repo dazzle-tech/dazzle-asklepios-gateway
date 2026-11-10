@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="BS000000000066" author="bushra_batool">
+    <createTable tableName="coverage_term">
+      <column name="id" type="bigint" autoIncrement="true" startWith="1000">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="coverage_contract_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="term_type" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="diagnosis_scope" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="diagnosis_id" type="bigint"/>
+      <column name="facility_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="all_departments" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="department_id" type="bigint"/>
+      <column name="encounter_type" type="varchar(30)"/>
+      <column name="period_basis" type="varchar(30)"/>
+      <column name="coverage_basis" type="varchar(20)"/>
+      <column name="value_type" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="limit_value" type="decimal(19,4)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="coverage_term"
+      baseColumnNames="coverage_contract_id"
+      referencedTableName="coverage_contract"
+      referencedColumnNames="id"
+      constraintName="fk_coverage_term_contract"
+      onDelete="CASCADE"/>
+    <addForeignKeyConstraint
+      baseTableName="coverage_term"
+      baseColumnNames="facility_id"
+      referencedTableName="facility"
+      referencedColumnNames="id"
+      constraintName="fk_coverage_term_facility"/>
+    <addForeignKeyConstraint
+      baseTableName="coverage_term"
+      baseColumnNames="department_id"
+      referencedTableName="department"
+      referencedColumnNames="id"
+      constraintName="fk_coverage_term_department"/>
+    <addForeignKeyConstraint
+      baseTableName="coverage_term"
+      baseColumnNames="diagnosis_id"
+      referencedTableName="icd_diagnosis"
+      referencedColumnNames="id"
+      constraintName="fk_coverage_term_diagnosis"/>
+
+    <createIndex tableName="coverage_term" indexName="idx_coverage_term_contract_type">
+      <column name="coverage_contract_id"/>
+      <column name="term_type"/>
+    </createIndex>
+  </changeSet>
+</databaseChangeLog>
