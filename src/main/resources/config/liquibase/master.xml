@@ -1311,6 +1311,10 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/patientProcedure/2026110203_BM_patient_procedure_default_procedure.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1793628490_R_External_Lab_Result.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1793628491_R_External_Radiology_Report.xml"
+           relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/2026110204_B_claim_copy_service_product_test_results.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/dentalProcedure/2026110301_dental_procedure_tooth_numbers.xml"
@@ -1385,5 +1389,7 @@
   <include file="config/liquibase/changelog/patientFamilyEducation/2026110913_patient_family_education.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1794293018_R_claim_encounter_copy_original_created.xml"
+            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/2026111001_S_mobile_app_config_value_text.xml"
            relativeToChangelogFile="false"/>
 </databaseChangeLog>
