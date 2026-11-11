@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+  <changeSet id="2026111103_discount_code_usage" author="sondos">
+
+    <createTable tableName="discount_code_usage">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="discount_code_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="facility_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="patient_service_product_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="charge_line_id" type="bigint"/>
+
+      <column name="service_id" type="bigint"/>
+
+      <column name="procedure_id" type="bigint"/>
+
+      <column name="authorized_user_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="code" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="discount_name" type="varchar(150)"/>
+
+      <column name="discount_type" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="percentage" type="decimal(10,4)"/>
+
+      <column name="fixed_amount" type="decimal(19,4)"/>
+
+      <column name="currency" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="gross_amount" type="decimal(19,4)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="discount_amount" type="decimal(19,4)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addUniqueConstraint
+      tableName="discount_code_usage"
+      columnNames="patient_service_product_id, discount_code_id"
+      constraintName="uk_discount_code_usage_line"/>
+
+    <createIndex tableName="discount_code_usage" indexName="idx_discount_code_usage_code">
+      <column name="discount_code_id"/>
+    </createIndex>
+
+    <createIndex tableName="discount_code_usage" indexName="idx_discount_code_usage_encounter">
+      <column name="encounter_id"/>
+    </createIndex>
+
+    <createIndex tableName="discount_code_usage" indexName="idx_discount_code_usage_patient">
+      <column name="patient_id"/>
+    </createIndex>
+
+    <createIndex tableName="discount_code_usage" indexName="idx_discount_code_usage_user">
+      <column name="authorized_user_id"/>
+    </createIndex>
+
+    <addForeignKeyConstraint
+      constraintName="fk_discount_code_usage_code"
+      baseTableName="discount_code_usage"
+      baseColumnNames="discount_code_id"
+      referencedTableName="discount_code"
+      referencedColumnNames="id"/>
+
+    <addForeignKeyConstraint
+      constraintName="fk_discount_code_usage_facility"
+      baseTableName="discount_code_usage"
+      baseColumnNames="facility_id"
+      referencedTableName="facility"
+      referencedColumnNames="id"/>
+
+    <addForeignKeyConstraint
+      constraintName="fk_discount_code_usage_patient"
+      baseTableName="discount_code_usage"
+      baseColumnNames="patient_id"
+      referencedTableName="patients"
+      referencedColumnNames="id"/>
+
+    <addForeignKeyConstraint
+      constraintName="fk_discount_code_usage_encounter"
+      baseTableName="discount_code_usage"
+      baseColumnNames="encounter_id"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"/>
+
+    <addForeignKeyConstraint
+      constraintName="fk_discount_code_usage_user"
+      baseTableName="discount_code_usage"
+      baseColumnNames="authorized_user_id"
+      referencedTableName="app_user"
+      referencedColumnNames="id"/>
+
+  </changeSet>
+
+</databaseChangeLog>
