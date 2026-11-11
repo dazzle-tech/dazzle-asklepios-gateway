@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="1794293018_R_claim_encounter_diagnoses_original_created" author="Rawan-Yahya">
+    <preConditions onFail="MARK_RAN">
+      <not><columnExists tableName="claim_encounter_diagnoses" columnName="original_created_by"/></not>
+    </preConditions>
+    <addColumn tableName="claim_encounter_diagnoses">
+      <column name="original_created_by" type="varchar(50)"/>
+      <column name="original_created_date" type="timestamp"/>
+    </addColumn>
+  </changeSet>
+
+  <changeSet id="1794293018_R_claim_encounter_progress_notes_original_created" author="Rawan-Yahya">
+    <preConditions onFail="MARK_RAN">
+      <not><columnExists tableName="claim_encounter_progress_notes" columnName="original_created_by"/></not>
+    </preConditions>
+    <addColumn tableName="claim_encounter_progress_notes">
+      <column name="original_created_by" type="varchar(50)"/>
+      <column name="original_created_date" type="timestamp"/>
+    </addColumn>
+  </changeSet>
+
+  <changeSet id="1794293018_R_claim_encounter_copy_social_histories_original_created" author="Rawan-Yahya">
+    <preConditions onFail="MARK_RAN">
+      <not><columnExists tableName="claim_encounter_copy_social_histories" columnName="original_created_by"/></not>
+    </preConditions>
+    <addColumn tableName="claim_encounter_copy_social_histories">
+      <column name="original_created_by" type="varchar(50)"/>
+      <column name="original_created_date" type="timestamp"/>
+    </addColumn>
+  </changeSet>
+
+  <changeSet id="1794293018_R_claim_encounter_copy_surgical_histories_original_created" author="Rawan-Yahya">
+    <preConditions onFail="MARK_RAN">
+      <not><columnExists tableName="claim_encounter_copy_surgical_histories" columnName="original_created_by"/></not>
+    </preConditions>
+    <addColumn tableName="claim_encounter_copy_surgical_histories">
+      <column name="original_created_by" type="varchar(50)"/>
+      <column name="original_created_date" type="timestamp"/>
+    </addColumn>
+  </changeSet>
+
+  <changeSet id="1794293018_R_claim_encounter_copy_patient_problems_original_created" author="Rawan-Yahya">
+    <preConditions onFail="MARK_RAN">
+      <not><columnExists tableName="claim_encounter_copy_patient_problems" columnName="original_created_by"/></not>
+    </preConditions>
+    <addColumn tableName="claim_encounter_copy_patient_problems">
+      <column name="original_created_by" type="varchar(50)"/>
+      <column name="original_created_date" type="timestamp"/>
+    </addColumn>
+  </changeSet>
+
+  <changeSet id="1794293018_R_claim_encounter_copy_family_histories_original_created" author="Rawan-Yahya">
+    <preConditions onFail="MARK_RAN">
+      <not><columnExists tableName="claim_encounter_copy_family_histories" columnName="original_created_by"/></not>
+    </preConditions>
+    <addColumn tableName="claim_encounter_copy_family_histories">
+      <column name="original_created_by" type="varchar(50)"/>
+      <column name="original_created_date" type="timestamp"/>
+    </addColumn>
+  </changeSet>
+
+  <changeSet id="1794293018_R_claim_encounter_copy_hospitalizations_original_created" author="Rawan-Yahya">
+    <preConditions onFail="MARK_RAN">
+      <not><columnExists tableName="claim_encounter_copy_hospitalizations" columnName="original_created_by"/></not>
+    </preConditions>
+    <addColumn tableName="claim_encounter_copy_hospitalizations">
+      <column name="original_created_by" type="varchar(50)"/>
+      <column name="original_created_date" type="timestamp"/>
+    </addColumn>
+  </changeSet>
+
+  <changeSet id="1794293018_R_claim_encounter_copy_current_medications_original_created" author="Rawan-Yahya">
+    <preConditions onFail="MARK_RAN">
+      <not><columnExists tableName="claim_encounter_copy_current_medications" columnName="original_created_by"/></not>
+    </preConditions>
+    <addColumn tableName="claim_encounter_copy_current_medications">
+      <column name="original_created_by" type="varchar(50)"/>
+      <column name="original_created_date" type="timestamp"/>
+    </addColumn>
+  </changeSet>
+
+  <changeSet id="1794293018_R_claim_encounter_copy_diag_order_test_results_original_created" author="Rawan-Yahya">
+    <preConditions onFail="MARK_RAN">
+      <not><columnExists tableName="claim_encounter_copy_diagnostic_order_test_results" columnName="original_created_by"/></not>
+    </preConditions>
+    <addColumn tableName="claim_encounter_copy_diagnostic_order_test_results">
+      <column name="original_created_by" type="varchar(50)"/>
+      <column name="original_created_date" type="timestamp"/>
+    </addColumn>
+  </changeSet>
+
+  <changeSet id="1794293018_R_claim_encounter_copy_diag_order_test_reports_original_created" author="Rawan-Yahya">
+    <preConditions onFail="MARK_RAN">
+      <not><columnExists tableName="claim_encounter_copy_diagnostic_order_test_reports" columnName="original_created_by"/></not>
+    </preConditions>
+    <addColumn tableName="claim_encounter_copy_diagnostic_order_test_reports">
+      <column name="original_created_by" type="varchar(50)"/>
+      <column name="original_created_date" type="timestamp"/>
+    </addColumn>
+  </changeSet>
+
+
+
+  <changeSet id="1794293018_R_claim_encounter_copy_original_created_backfill" author="Rawan-Yahya">
+    <sql>
+      UPDATE claim_encounter_diagnoses c
+      SET original_created_by = s.created_by, original_created_date = s.created_date
+      FROM patient_diagnoses s
+      WHERE s.encounter_id = c.encounter_id AND s.diagnosis_id = c.diagnosis_id
+        AND c.original_created_by IS NULL;
+
+      UPDATE claim_encounter_progress_notes c
+      SET original_created_by = s.created_by, original_created_date = s.created_date
+      FROM progress_notes s
+      WHERE s.id = c.progress_note_id AND c.original_created_by IS NULL;
+
+      UPDATE claim_encounter_copy_social_histories c
+      SET original_created_by = s.created_by, original_created_date = s.created_date
+      FROM social_history s
+      WHERE s.id = c.social_history_id AND c.original_created_by IS NULL;
+
+      UPDATE claim_encounter_copy_surgical_histories c
+      SET original_created_by = s.created_by, original_created_date = s.created_date
+      FROM surgical_history s
+      WHERE s.id = c.surgical_history_id AND c.original_created_by IS NULL;
+
+      UPDATE claim_encounter_copy_patient_problems c
+      SET original_created_by = s.created_by, original_created_date = s.created_date
+      FROM patient_problems s
+      WHERE s.id = c.patient_problem_id AND c.original_created_by IS NULL;
+
+      UPDATE claim_encounter_copy_family_histories c
+      SET original_created_by = s.created_by, original_created_date = s.created_date
+      FROM family_history s
+      WHERE s.id = c.family_history_id AND c.original_created_by IS NULL;
+
+      UPDATE claim_encounter_copy_hospitalizations c
+      SET original_created_by = s.created_by, original_created_date = s.created_date
+      FROM hospitalizations s
+      WHERE s.id = c.hospitalization_id AND c.original_created_by IS NULL;
+
+      UPDATE claim_encounter_copy_current_medications c
+      SET original_created_by = s.created_by, original_created_date = s.created_date
+      FROM current_medication s
+      WHERE s.id = c.current_medication_id AND c.original_created_by IS NULL;
+
+      UPDATE claim_encounter_copy_diagnostic_order_test_results c
+      SET original_created_by = s.created_by, original_created_date = s.created_date
+      FROM diagnostic_order_tests_result s
+      WHERE s.id = c.diagnostic_order_test_result_id AND c.original_created_by IS NULL;
+
+      UPDATE claim_encounter_copy_diagnostic_order_test_reports c
+      SET original_created_by = s.created_by, original_created_date = s.created_date
+      FROM diagnostic_order_tests_report s
+      WHERE s.id = c.diagnostic_order_test_report_id AND c.original_created_by IS NULL;
+    </sql>
+  </changeSet>
+</databaseChangeLog>
