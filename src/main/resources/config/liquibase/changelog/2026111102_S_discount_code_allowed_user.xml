@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+  <changeSet id="2026111102_discount_code_allowed_user" author="sondos">
+
+    <createTable tableName="discount_code_allowed_user">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="discount_code_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="user_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addUniqueConstraint
+      tableName="discount_code_allowed_user"
+      columnNames="discount_code_id, user_id"
+      constraintName="uk_discount_code_allowed_user"/>
+
+    <createIndex tableName="discount_code_allowed_user" indexName="idx_discount_code_allowed_user_code">
+      <column name="discount_code_id"/>
+    </createIndex>
+
+    <createIndex tableName="discount_code_allowed_user" indexName="idx_discount_code_allowed_user_user">
+      <column name="user_id"/>
+    </createIndex>
+
+    <addForeignKeyConstraint
+      constraintName="fk_discount_code_allowed_user_code"
+      baseTableName="discount_code_allowed_user"
+      baseColumnNames="discount_code_id"
+      referencedTableName="discount_code"
+      referencedColumnNames="id"
+      onDelete="CASCADE"/>
+
+    <addForeignKeyConstraint
+      constraintName="fk_discount_code_allowed_user_user"
+      baseTableName="discount_code_allowed_user"
+      baseColumnNames="user_id"
+      referencedTableName="app_user"
+      referencedColumnNames="id"/>
+
+  </changeSet>
+
+</databaseChangeLog>

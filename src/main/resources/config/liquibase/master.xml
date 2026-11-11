@@ -1393,4 +1393,6 @@
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/2026111101_S_discount_code.xml"
            relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/2026111102_S_discount_code_allowed_user.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
