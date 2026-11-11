@@ -35,6 +35,7 @@ services:
   auto-population-service-url: http://auto-population-service:8010
   discharge-report-service-url: http://discharge-report-service:8005
   ocr-parsing-service-url: http://ocr-parsing-service:8012
+  medical-document-processor-service-url: http://medical-document-processor-service:8029
   lab-result-interpreter-service-url: http://lab-result-interpreter-service:8003
   clinical-summary-voice-service-url: http://clinical-summary-voice-service:8037
   convo-voice-agent-service-url: http://convo-voice-agent-service:8036
@@ -256,6 +257,13 @@ spring:
             - Path=/api/ai/v1/ocr-parsing-service/**
           filters:
             - RewritePath=/api/ai/v1/ocr-parsing-service/(?<segment>.*),/api/v1/${segment}
+
+        - id: medical-document-processor
+          uri: ${services.medical-document-processor-service-url}
+          predicates:
+            - Path=/api/ai/v1/medical-document-processor/**
+          filters:
+            - RewritePath=/api/ai/v1/medical-document-processor/(?<segment>.*),/api/v1/${segment}
 
         - id: patient-timeline
           uri: ${services.patient-timeline-service-url}
