@@ -71,6 +71,7 @@ public class SecurityConfiguration {
                 .pathMatchers(HttpMethod.POST, "/api/patient/patient-satisfaction-survey/submit").permitAll()
                 .pathMatchers(HttpMethod.POST, "/api/patient/patient-complaints/submit").permitAll()
                 .pathMatchers(HttpMethod.POST, "/api/patient/patient-complaints/lookup-by-document").permitAll()
+                .pathMatchers(HttpMethod.GET, "/api/patient/patient-complaints/form-lookups").permitAll()
                 .pathMatchers(HttpMethod.GET, "/api/patient/survey/form").permitAll()
                 .pathMatchers(HttpMethod.POST, "/api/patient/survey/request-otp").permitAll()
                 .pathMatchers(HttpMethod.POST, "/api/patient/survey/verify-otp").permitAll()
