@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+  <changeSet id="2026111101_discount_code" author="sondos">
+
+    <createTable tableName="discount_code">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="facility_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="code" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="name" type="varchar(150)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="description" type="varchar(500)"/>
+
+      <column name="discount_type" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="percentage" type="decimal(10,4)"/>
+
+      <column name="fixed_amount" type="decimal(19,4)"/>
+
+      <column name="currency" type="varchar(30)"/>
+
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="last_modified_by" type="varchar(50)"/>
+
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addUniqueConstraint
+      tableName="discount_code"
+      columnNames="facility_id, code"
+      constraintName="uk_discount_code_facility_code"/>
+
+    <createIndex tableName="discount_code" indexName="idx_discount_code_facility">
+      <column name="facility_id"/>
+    </createIndex>
+
+    <createIndex tableName="discount_code" indexName="idx_discount_code_code">
+      <column name="code"/>
+    </createIndex>
+
+    <createIndex tableName="discount_code" indexName="idx_discount_code_name">
+      <column name="name"/>
+    </createIndex>
+
+    <createIndex tableName="discount_code" indexName="idx_discount_code_type">
+      <column name="discount_type"/>
+    </createIndex>
+
+    <addForeignKeyConstraint
+      constraintName="fk_discount_code_facility"
+      baseTableName="discount_code"
+      baseColumnNames="facility_id"
+      referencedTableName="facility"
+      referencedColumnNames="id"/>
+
+  </changeSet>
+
+  <changeSet id="2026111101_BM_discount_code_translation" author="engso">
+    <sql>
+      INSERT INTO language_translation
+      (
+        lang_key,
+        translation_key,
+        translation_text,
+        verified,
+        translated
+      )
+      VALUES
+        ('en', 'DISCOUNT_CODE_DEFINITION', 'Discount Code Definition', false, false),
+        ('arb', 'DISCOUNT_CODE_DEFINITION', 'تعريف رموز الخصم', false, false)
+      ON CONFLICT (lang_key, translation_key) DO NOTHING;
+    </sql>
+  </changeSet>
+
+</databaseChangeLog>

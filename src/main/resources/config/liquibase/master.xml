@@ -1391,4 +1391,6 @@
 
   <include file="config/liquibase/changelog/2026111001_S_mobile_app_config_value_text.xml"
            relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/2026111101_S_discount_code.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
