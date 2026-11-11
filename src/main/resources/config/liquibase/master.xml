@@ -1384,4 +1384,6 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/patientFamilyEducation/2026110913_patient_family_education.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1794293018_R_claim_encounter_copy_original_created.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
