@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!-- Allow decimal doses (e.g. 2.5). The report view depends on the column, so drop and recreate it. -->
+  <changeSet id="2026111201_H_patient_prescription_medications_dose_decimal" author="Hanan">
+
+    <sql>
+      DROP VIEW IF EXISTS reports.vwpatientprescriptionmedications;
+    </sql>
+
+    <modifyDataType
+      tableName="patient_prescription_medications"
+      columnName="dose"
+      newDataType="numeric(10,2)"/>
+
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwpatientprescriptionmedications AS
+      SELECT
+        ppm.id,
+        ppm.prescription_header_id,
+        ppm.medications_id,
+        ppm.active_ingredient_id,
+        ppm.instructions_type,
+        ppm.instructions,
+        ppm.dose,
+        ppm.does_unit,
+        ppm.rout,
+        ppm.frequency,
+        ppm.duration,
+        ppm.duration_type,
+        ppm.chronic_medication,
+        ppm.maximum_dose,
+        ppm.allowed_substitute,
+        ppm.indication_manually,
+        ppm.indication_use,
+        ppm.indication_icd,
+        ppm.parameters_to_monitor,
+        ppm.number_of_refills,
+        ppm.refill_value,
+        ppm.refill_unit,
+        ppm.notes,
+        ppm.extra_documentation,
+        ppm.administration_instructions,
+        ppm.status,
+        ppm.created_by,
+        ppm.created_date,
+        ppm.last_modified_by,
+        ppm.last_modified_date,
+        ppm.cancellation_reason,
+        ppm.cancelled_by,
+        ppm.cancelled_date,
+        ppm.other_medication_name
+      FROM public.patient_prescription_medications ppm;
+    </sql>
+
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwpatientprescriptionmedications TO report_user;
+    </sql>
+
+  </changeSet>
+
+</databaseChangeLog>
