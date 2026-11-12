@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!-- New undeployed table: dental_treatment_plan + plan_number sequence. Continues after FA000000000057. -->
+  <changeSet id="FA000000000058" author="Faroukdhelea">
+    <createSequence sequenceName="dental_treatment_plan_seq" startValue="1" incrementBy="1"/>
+
+    <createTable tableName="dental_treatment_plan">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="plan_number" type="varchar(40)">
+        <constraints nullable="false" unique="true"/>
+      </column>
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="origin_encounter_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="title" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="notes" type="text"/>
+      <column name="practitioner_id" type="bigint"/>
+      <column name="status" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="resume_status" type="varchar(30)"/>
+      <column name="hold_reason" type="text"/>
+      <column name="completed_by" type="varchar(50)"/>
+      <column name="completed_at" type="timestamp"/>
+      <column name="cancelled_by" type="varchar(50)"/>
+      <column name="cancelled_at" type="timestamp"/>
+      <column name="cancellation_reason" type="text"/>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp"/>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <createIndex indexName="idx_dental_treatment_plan_patient" tableName="dental_treatment_plan">
+      <column name="patient_id"/>
+    </createIndex>
+  </changeSet>
+
+</databaseChangeLog>
