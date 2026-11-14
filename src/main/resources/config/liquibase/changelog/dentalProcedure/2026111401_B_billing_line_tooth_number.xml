@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+  <!--
+    A dental procedure on several teeth is billed one line per tooth (the price is per tooth).
+    The tooth of the line is sent to Waseel as the item bodySite (NPHIES BV-01265:
+    tooth-specific codes need a bodySite).
+  -->
+  <changeSet id="2026111401-01-billing-line-tooth-number" author="asklepios">
+    <addColumn tableName="patient_services_and_products">
+      <column name="tooth_number" type="varchar(10)">
+        <constraints nullable="true"/>
+      </column>
+    </addColumn>
+  </changeSet>
+
+</databaseChangeLog>

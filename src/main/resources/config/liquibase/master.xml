@@ -1409,7 +1409,9 @@
             relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/2026111001_S_mobile_app_config_value_text.xml"
            relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/departments/1794501686_FA_department_assign_practitioner_on_visit_start.xml" 
+  <include file="config/liquibase/changelog/dentalProcedure/2026111401_B_billing_line_tooth_number.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/departments/1794501686_FA_department_assign_practitioner_on_visit_start.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/patientPrescriptionMedication/2026111201_H_patient_prescription_medications_dose_decimal.xml"
            relativeToChangelogFile="false"/>
