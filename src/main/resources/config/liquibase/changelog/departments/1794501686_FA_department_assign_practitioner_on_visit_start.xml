@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!-- Incremental: assign_practitioner_on_visit_start on department. Continues after FA000000000062. -->
+  <changeSet id="FA000000000063" author="Faroukdhelea">
+    <addColumn tableName="department">
+      <column name="assign_practitioner_on_visit_start" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+    </addColumn>
+  </changeSet>
+
+</databaseChangeLog>
