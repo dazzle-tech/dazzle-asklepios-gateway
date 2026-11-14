@@ -1391,4 +1391,6 @@
 
   <include file="config/liquibase/changelog/2026111001_S_mobile_app_config_value_text.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalProcedure/2026111401_B_billing_line_tooth_number.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
