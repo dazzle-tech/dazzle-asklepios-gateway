@@ -63,6 +63,8 @@ public class SecurityConfiguration {
             )
             .authorizeExchange(authz -> authz
                 .pathMatchers(HttpMethod.GET, "/api/setup/system-config").permitAll()
+                // Public check behind the QR code printed on procedure reports
+                .pathMatchers(HttpMethod.GET, "/api/analytics/public/procedure-report/verify").permitAll()
                 .pathMatchers(HttpMethod.GET, "/api/setup/mobile-app-config/value").permitAll()
                 .pathMatchers(HttpMethod.GET, "/api/setup/mobile-app-config/value/**").permitAll()
                 .pathMatchers(HttpMethod.GET,  "/api/account/create-password/validate").permitAll()
@@ -71,6 +73,7 @@ public class SecurityConfiguration {
                 .pathMatchers(HttpMethod.POST, "/api/patient/patient-satisfaction-survey/submit").permitAll()
                 .pathMatchers(HttpMethod.POST, "/api/patient/patient-complaints/submit").permitAll()
                 .pathMatchers(HttpMethod.POST, "/api/patient/patient-complaints/lookup-by-document").permitAll()
+                .pathMatchers(HttpMethod.GET, "/api/patient/patient-complaints/form-lookups").permitAll()
                 .pathMatchers(HttpMethod.GET, "/api/patient/survey/form").permitAll()
                 .pathMatchers(HttpMethod.POST, "/api/patient/survey/request-otp").permitAll()
                 .pathMatchers(HttpMethod.POST, "/api/patient/survey/verify-otp").permitAll()
