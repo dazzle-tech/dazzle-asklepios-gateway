@@ -1415,4 +1415,10 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/patientPrescriptionMedication/2026111201_H_patient_prescription_medications_dose_decimal.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1794297977_H_nahdi_integration_log_add_prescription_id.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1794297978_H_prescription_medications_add_dispensing.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/appUser/1794297979_H_add_can_edit_submitted_prescription.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>

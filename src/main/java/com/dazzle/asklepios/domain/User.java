@@ -97,6 +97,9 @@ public class User extends AbstractAuditingEntity<Long> implements Serializable {
     @Column("can_return_claim_for_resubmit")
     private boolean canReturnClaimForResubmit;
 
+    @Column("can_edit_submitted_prescription")
+    private boolean canEditSubmittedPrescription;
+
     @Column("gender")
     private Gender gender;
 
