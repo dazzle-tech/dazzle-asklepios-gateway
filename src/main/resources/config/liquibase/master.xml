@@ -255,6 +255,8 @@
   <include file="config/liquibase/changelog/1768722141_R_patient_allergies.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/allergies/1777540518_add_field_B_allergens.xml"
            relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/allergies/1790850437_FA_Fix_Null_Columns.xml"
+           relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1768730708_R_patient_allergies_active_ingredients.xml"
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1763382042_Q_PatientPreferredHealthProfessional.xml"
@@ -315,8 +317,6 @@
     relativeToChangelogFile="false"/>
 
   <include file="config/liquibase/changelog/1770533404_R_patient_allergies_log.xml" relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/allergies/1790850437_FA_Fix_Null_Columns.xml"
-           relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1764016179_H_Relation_Matrix.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1765448261_H_Next_Of_Kin.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1771843369_R_patient_warnings_log.xml" relativeToChangelogFile="false"/>
@@ -352,6 +352,8 @@
   <include file="/config/liquibase/changelog/hospitalization/1778674502_hospitalization_add_cancel_fields.xml"
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/hospitalization/1790846305_FA_hospitalization_add_FREE_TEXT.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/currentmedication/1790846488_FA_ADD_FREE_TEXT_fields.xml"
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/surgicalhistory/1790850031_FA_surgical_history_add_FREE_TEXT.xml"
            relativeToChangelogFile="false"/>
@@ -417,8 +419,6 @@
   <include
     file="/config/liquibase/changelog/currentmedication/1783350900_current_medication_replace_instructions_with_dosage_fields.xml"
     relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/currentmedication/1790846488_FA_ADD_FREE_TEXT_fields.xml"
-           relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1776165512_BM_Appointment_Request.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/appUser/1788255133_FA_add_user_encounters_access.xml"
            relativeToChangelogFile="false"/>
