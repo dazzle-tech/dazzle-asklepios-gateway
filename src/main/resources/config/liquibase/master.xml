@@ -1419,4 +1419,6 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1794297978_H_prescription_medications_add_dispensing.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/appUser/1794297979_H_add_can_edit_submitted_prescription.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>

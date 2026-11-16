@@ -11,6 +11,7 @@ public class UserEncountersAccessDTO implements Serializable {
     private boolean canUnDischargeUrgentCare;
     private boolean canUnCompleteEncounter;
     private boolean canReturnClaimForResubmit;
+    private boolean canEditSubmittedPrescription;
 
     public UserEncountersAccessDTO() {
     }
@@ -19,11 +20,13 @@ public class UserEncountersAccessDTO implements Serializable {
         boolean allowOngoingVisit,
         boolean canUnDischargeUrgentCare,
         boolean canUnCompleteEncounter,
-        boolean canReturnClaimForResubmit
+        boolean canReturnClaimForResubmit,
+        boolean canEditSubmittedPrescription
     ) {
         this.allowOngoingVisit = allowOngoingVisit;
         this.canUnDischargeUrgentCare = canUnDischargeUrgentCare;
         this.canUnCompleteEncounter = canUnCompleteEncounter;
         this.canReturnClaimForResubmit = canReturnClaimForResubmit;
+        this.canEditSubmittedPrescription = canEditSubmittedPrescription;
     }
 }
