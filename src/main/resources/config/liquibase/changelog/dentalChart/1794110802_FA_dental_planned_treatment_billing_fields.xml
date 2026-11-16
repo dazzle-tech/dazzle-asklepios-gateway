@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!-- Incremental: billing fields on deployed dental_planned_treatment. Continues after FA000000000054. -->
+  <changeSet id="FA000000000055" author="Faroukdhelea">
+    <addColumn tableName="dental_planned_treatment">
+      <column name="service_id" type="bigint"/>
+      <column name="price" type="decimal(10,2)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+      <column name="quantity" type="bigint" defaultValueNumeric="1">
+        <constraints nullable="false"/>
+      </column>
+      <column name="discount" type="decimal(10,2)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+      <column name="status" type="varchar(50)" defaultValue="PENDING">
+        <constraints nullable="false"/>
+      </column>
+      <column name="patient_service_and_product_id" type="bigint"/>
+    </addColumn>
+
+    <addForeignKeyConstraint
+      baseTableName="dental_planned_treatment"
+      baseColumnNames="service_id"
+      referencedTableName="service"
+      referencedColumnNames="id"
+      constraintName="fk_dental_planned_treatment_service"/>
+
+    <createIndex indexName="idx_dental_planned_treatment_status" tableName="dental_planned_treatment">
+      <column name="status"/>
+    </createIndex>
+
+    <createIndex indexName="idx_dental_planned_treatment_service_id" tableName="dental_planned_treatment">
+      <column name="service_id"/>
+    </createIndex>
+
+    <createIndex indexName="idx_dental_planned_treatment_psp_id" tableName="dental_planned_treatment">
+      <column name="patient_service_and_product_id"/>
+    </createIndex>
+  </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!-- Incremental: visit_number on deployed tooth_action. Continues after FA000000000053. -->
+  <changeSet id="FA000000000054" author="Faroukdhelea">
+    <addColumn tableName="tooth_action">
+      <column name="visit_number" type="int"/>
+    </addColumn>
+
+    <createIndex indexName="idx_tooth_action_visit_number" tableName="tooth_action">
+      <column name="visit_number"/>
+    </createIndex>
+  </changeSet>
+
+</databaseChangeLog>
