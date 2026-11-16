@@ -55,6 +55,10 @@ asklepios:
     base-url: http://127.0.0.1:8080
     username: cms.support.dimensions@gmail.com
     password: tohr slst gphb swwx
+  # Public attachment host used by setup to resolve SYSTEM_LOGO and other theme images.
+  attachments:
+    cdn-endpoint: https://asklepios.sfo3.cdn.digitaloceanspaces.com
+    endpoint: https://sfo3.digitaloceanspaces.com
   security:
     authentication:
       jwt:
