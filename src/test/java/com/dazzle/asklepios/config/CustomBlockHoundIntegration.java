@@ -9,6 +9,10 @@ public class CustomBlockHoundIntegration implements BlockHoundIntegration {
     public void applyTo(BlockHound.Builder builder) {
         builder.allowBlockingCallsInside("org.springframework.validation.beanvalidation.SpringValidatorAdapter", "validate");
         builder.allowBlockingCallsInside("com.asklepios.gateway.service.MailService", "sendEmailFromTemplate");
+        builder.allowBlockingCallsInside("com.dazzle.asklepios.service.MailService", "resolveInlineLogo");
+        builder.allowBlockingCallsInside("com.dazzle.asklepios.service.MailService", "loadInlineLogo");
+        builder.allowBlockingCallsInside("com.dazzle.asklepios.service.MailService", "sendEmailWithInlineLogoSync");
+        builder.allowBlockingCallsInside("com.dazzle.asklepios.service.MailService", "deliverEmailWithInlineLogo");
         builder.allowBlockingCallsInside("com.asklepios.gateway.security.DomainUserDetailsService", "createSpringSecurityUser");
         builder.allowBlockingCallsInside("org.springframework.web.reactive.result.method.InvocableHandlerMethod", "invoke");
         builder.allowBlockingCallsInside("org.springdoc.core.service.OpenAPIService", "build");

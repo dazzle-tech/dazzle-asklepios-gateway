@@ -63,6 +63,7 @@ public class SecurityConfiguration {
             )
             .authorizeExchange(authz -> authz
                 .pathMatchers(HttpMethod.GET, "/api/setup/system-config").permitAll()
+                .pathMatchers(HttpMethod.GET, "/api/system-config/logo").permitAll()
                 // Public check behind the QR code printed on procedure reports
                 .pathMatchers(HttpMethod.GET, "/api/analytics/public/procedure-report/verify").permitAll()
                 .pathMatchers(HttpMethod.GET, "/api/setup/mobile-app-config/value").permitAll()
