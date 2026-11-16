@@ -1421,4 +1421,6 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/appUser/1794297979_H_add_can_edit_submitted_prescription.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1794297980_H_nahdi_integration_log_add_created_by.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
