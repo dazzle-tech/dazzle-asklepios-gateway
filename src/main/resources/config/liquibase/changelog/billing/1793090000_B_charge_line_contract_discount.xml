@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="1793090000_B_charge_line_contract_discount" author="Batool_Bushra">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <columnExists tableName="billing_charge_line" columnName="contract_discount_amount"/>
+      </not>
+    </preConditions>
+    <addColumn tableName="billing_charge_line">
+      <column name="contract_discount_amount" type="numeric(19,4)" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+    </addColumn>
+  </changeSet>
+</databaseChangeLog>

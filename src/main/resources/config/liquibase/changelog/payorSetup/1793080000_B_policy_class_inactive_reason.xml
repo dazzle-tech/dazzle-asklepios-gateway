@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="1793080000_B_insurance_company_policy_inactive_reason" author="Batool_Bushra">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <columnExists tableName="insurance_company_policy" columnName="inactive_reason"/>
+      </not>
+    </preConditions>
+    <addColumn tableName="insurance_company_policy">
+      <column name="inactive_reason" type="varchar(1000)"/>
+    </addColumn>
+  </changeSet>
+
+  <changeSet id="1793080001_B_coverage_class_inactive_reason" author="Batool_Bushra">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <columnExists tableName="coverage_class" columnName="inactive_reason"/>
+      </not>
+    </preConditions>
+    <addColumn tableName="coverage_class">
+      <column name="inactive_reason" type="varchar(1000)"/>
+    </addColumn>
+  </changeSet>
+</databaseChangeLog>

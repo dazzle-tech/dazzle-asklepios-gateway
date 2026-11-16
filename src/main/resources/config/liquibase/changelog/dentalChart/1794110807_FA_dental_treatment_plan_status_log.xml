@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!-- New undeployed table: dental_treatment_plan_status_log. Continues after FA000000000059. -->
+  <changeSet id="FA000000000060" author="Faroukdhelea">
+    <createTable tableName="dental_treatment_plan_status_log">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="treatment_plan_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="previous_status" type="varchar(30)"/>
+      <column name="new_status" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="reason" type="text"/>
+      <column name="changed_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="changed_at" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="dental_treatment_plan_status_log"
+      baseColumnNames="treatment_plan_id"
+      referencedTableName="dental_treatment_plan"
+      referencedColumnNames="id"
+      constraintName="fk_dental_treatment_plan_status_log_plan"/>
+  </changeSet>
+
+</databaseChangeLog>

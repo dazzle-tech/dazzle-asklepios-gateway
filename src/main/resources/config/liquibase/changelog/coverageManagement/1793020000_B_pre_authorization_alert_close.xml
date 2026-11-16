@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="1793020000_B_pre_authorization_alert_close" author="Batool_Bushra">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <tableExists tableName="pre_authorization_alert_close"/>
+      </not>
+    </preConditions>
+    <createTable tableName="pre_authorization_alert_close">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="patient_service_product_id" type="bigint"/>
+      <column name="item_label" type="varchar(500)"/>
+      <column name="message" type="varchar(1000)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="closed_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="closed_at" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+    <createIndex tableName="pre_authorization_alert_close" indexName="idx_pre_auth_alert_close_encounter">
+      <column name="encounter_id"/>
+    </createIndex>
+  </changeSet>
+</databaseChangeLog>

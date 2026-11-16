@@ -100,6 +100,9 @@ public class User extends AbstractAuditingEntity<Long> implements Serializable {
     @Column("can_cancel_service_before_invoice")
     private boolean canCancelServiceBeforeInvoice;
 
+    @Column("can_edit_submitted_prescription")
+    private boolean canEditSubmittedPrescription;
+
     @Column("gender")
     private Gender gender;
 

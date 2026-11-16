@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="2026110911-dental-procedure-consent-outcome" author="sondos">
+    <addColumn tableName="dental_procedure">
+      <column name="informed_consent_obtained" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="treatment_outcome" type="text"/>
+    </addColumn>
+  </changeSet>
+
+  <changeSet id="2026110911-dental-procedure-view-consent-outcome" author="engso">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwdentalprocedure AS
+      SELECT
+        dp.id,
+        dp.patient_id,
+        dp.encounter_id,
+        dp.service_id,
+        dp.procedure_id,
+        dp.tooth_number,
+        dp.surface,
+        dp.anesthesia_used,
+        dp.dose,
+        dp.unit,
+        dp.filling_material,
+        dp.cdt_code_id,
+        dp.notes,
+        dp.created_by,
+        dp.created_date,
+        dp.last_modified_by,
+        dp.last_modified_date,
+        dp.is_cancelled,
+        dp.cancelled_date,
+        dp.cancelled_by,
+        dp.cancellation_reason,
+        dp.informed_consent_obtained,
+        dp.treatment_outcome
+      FROM public.dental_procedure dp;
+    </sql>
+  </changeSet>
+
+</databaseChangeLog>

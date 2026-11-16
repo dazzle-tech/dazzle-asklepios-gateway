@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="1793628490-external-lab-result" author="Rawan-Yahya">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <tableExists tableName="external_lab_result"/>
+      </not>
+    </preConditions>
+
+    <createTable tableName="external_lab_result">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="encounter_id" type="bigint"/>
+      <column name="attachment_id" type="bigint"/>
+
+      <column name="test_name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="result_date" type="date"/>
+      <column name="result_value" type="varchar(255)"/>
+      <column name="unit" type="varchar(50)"/>
+      <column name="normal_range_value" type="varchar(150)"/>
+      <column name="marker" type="varchar(50)"/>
+      <column name="physician_name" type="varchar(255)"/>
+
+      <column name="raw_extracted_text" type="text"/>
+      <column name="detected_language" type="varchar(10)"/>
+      <column name="translated" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="external_lab_result"
+      baseColumnNames="patient_id"
+      constraintName="fk_ext_lab_result_patient"
+      referencedTableName="patients"
+      referencedColumnNames="id"/>
+
+    <addForeignKeyConstraint
+      baseTableName="external_lab_result"
+      baseColumnNames="encounter_id"
+      constraintName="fk_ext_lab_result_encounter"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"/>
+
+    <addForeignKeyConstraint
+      baseTableName="external_lab_result"
+      baseColumnNames="attachment_id"
+      constraintName="fk_ext_lab_result_attachment"
+      referencedTableName="encounter_attachments"
+      referencedColumnNames="id"/>
+
+    <createIndex tableName="external_lab_result" indexName="idx_ext_lab_result_patient">
+      <column name="patient_id"/>
+    </createIndex>
+    <createIndex tableName="external_lab_result" indexName="idx_ext_lab_result_encounter">
+      <column name="encounter_id"/>
+    </createIndex>
+  </changeSet>
+
+</databaseChangeLog>

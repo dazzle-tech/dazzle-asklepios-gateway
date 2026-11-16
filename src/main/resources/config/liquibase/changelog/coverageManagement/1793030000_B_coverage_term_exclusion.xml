@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="1793030000_B_coverage_term_exclusion" author="Batool_Bushra">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <tableExists tableName="coverage_term_exclusion"/>
+      </not>
+    </preConditions>
+    <createTable tableName="coverage_term_exclusion">
+      <column name="id" type="bigint" autoIncrement="true" startWith="1000">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="coverage_term_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="category_scope" type="varchar(30)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="billing_item_type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="subcategory_key" type="varchar(100)"/>
+      <column name="service_id" type="bigint"/>
+      <column name="item_name" type="varchar(255)"/>
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="coverage_term_exclusion"
+      baseColumnNames="coverage_term_id"
+      referencedTableName="coverage_term"
+      referencedColumnNames="id"
+      constraintName="fk_coverage_term_exclusion_term"
+      onDelete="CASCADE"/>
+
+    <createIndex tableName="coverage_term_exclusion" indexName="idx_coverage_term_exclusion_term">
+      <column name="coverage_term_id"/>
+    </createIndex>
+  </changeSet>
+</databaseChangeLog>

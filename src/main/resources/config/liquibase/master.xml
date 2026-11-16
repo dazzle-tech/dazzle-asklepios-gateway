@@ -71,8 +71,9 @@
   <include
     file="/config/liquibase/changelog/availabilityGenerationBatch/1782636302_S_AvailabilityGenerationBatchNotificationColumns.xml"
     relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/availabilityGenerationBatch/1791366719_S_AvailabilityGenerationBatchEndingSoonIntervalNotificationColumn.xml"
-           relativeToChangelogFile="false"/>
+  <include
+    file="config/liquibase/changelog/availabilityGenerationBatch/1791366719_S_AvailabilityGenerationBatchEndingSoonIntervalNotificationColumn.xml"
+    relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1774339459_BM_appointment.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1782644939_S_AppointmentBookingGroup.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1782645230_S_AppointmentWaitingList.xml" relativeToChangelogFile="false"/>
@@ -156,8 +157,9 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1762422091_H_Diagnostic_Test_Normal_Range.xml"
            relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/diagnostic_test/2026092701_H_Diagnostic_Test_Normal_Range_Add_Profile_Result_Type.xml"
-           relativeToChangelogFile="false"/>
+  <include
+    file="config/liquibase/changelog/diagnostic_test/2026092701_H_Diagnostic_Test_Normal_Range_Add_Profile_Result_Type.xml"
+    relativeToChangelogFile="false"/>
 
   <include file="config/liquibase/changelog/1762698784_BM_PrescriptionInstructions.xml"
            relativeToChangelogFile="false"/>
@@ -241,8 +243,9 @@
   <include file="config/liquibase/sql/Lab_Result_Log.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/diagnosticOrderTest/2026092301_R_Lab_Result_Log_Use_Row_Timestamp.xml"
            relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/diagnosticOrderTest/2026092501_H_Diagnostic_Order_Test_Result_Add_Result_Type_At_Entry.xml"
-           relativeToChangelogFile="false"/>
+  <include
+    file="config/liquibase/changelog/diagnosticOrderTest/2026092501_H_Diagnostic_Order_Test_Result_Add_Result_Type_At_Entry.xml"
+    relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1769608169_H_Diagnostic_Test_Result_Tecnition_Note.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1768892972_H_Diagnostic_Test_Request.xml" relativeToChangelogFile="false"/>
@@ -251,8 +254,6 @@
   <include file="config/liquibase/changelog/1769002068_H_Extarnel_Test.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1768722141_R_patient_allergies.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/allergies/1777540518_add_field_B_allergens.xml"
-           relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/allergies/1790850437_FA_Fix_Null_Columns.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1768730708_R_patient_allergies_active_ingredients.xml"
            relativeToChangelogFile="false"/>
@@ -314,6 +315,8 @@
     relativeToChangelogFile="false"/>
 
   <include file="config/liquibase/changelog/1770533404_R_patient_allergies_log.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/allergies/1790850437_FA_Fix_Null_Columns.xml"
+           relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1764016179_H_Relation_Matrix.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1765448261_H_Next_Of_Kin.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1771843369_R_patient_warnings_log.xml" relativeToChangelogFile="false"/>
@@ -329,12 +332,16 @@
   <include file="/config/liquibase/changelog/1764765924_BM_Billing_Invoice_Item.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1764767706_BM_Patient_Payment.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1764823037_BM_Payment_Allocation.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1766485060_S_Configurations.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1766485060_S_UpdateConfigurations.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1763342755_BM_Warehouse.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1764079957_BM_Warehouse_User.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1765118987_BM_Warehouse_Product.xml" relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/1765137717_BM_Warehouse_Product_details.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1765137717_BM_Warehouse_Product_details.xml"
+           relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1765281767_BM_Inventory_Transfer.xml" relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/1765708188_BM_Inventory_Transfer_Product.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1765708188_BM_Inventory_Transfer_Product.xml"
+           relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1768307386_B_PatientProblems.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/patientproblems/1778670079_patient_problems_add_cancel_fields.xml"
            relativeToChangelogFile="false"/>
@@ -346,14 +353,13 @@
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/hospitalization/1790846305_FA_hospitalization_add_FREE_TEXT.xml"
            relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/currentmedication/1790846488_FA_ADD_FREE_TEXT_fields.xml"
-           relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/surgicalhistory/1790850031_FA_surgical_history_add_FREE_TEXT.xml"
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/socialhistory/1790850125_social_history_free_texts_fields.xml"
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1769002586_B_VitalSigns.xml" relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/vitalsigns/1790509356_FA_VitalSigns_add_fasting_blood_glucose.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/vitalsigns/1790509356_FA_VitalSigns_add_fasting_blood_glucose.xml"
+           relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1769005669_B_BodyMeasurements.xml" relativeToChangelogFile="false"/>
 
   <include file="/config/liquibase/changelog/1769004404_B_PatientObservation_Complaints.xml"
@@ -411,6 +417,8 @@
   <include
     file="/config/liquibase/changelog/currentmedication/1783350900_current_medication_replace_instructions_with_dosage_fields.xml"
     relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/currentmedication/1790846488_FA_ADD_FREE_TEXT_fields.xml"
+           relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1776165512_BM_Appointment_Request.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/appUser/1788255133_FA_add_user_encounters_access.xml"
            relativeToChangelogFile="false"/>
@@ -514,6 +522,7 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/facility/1788500001_Add_Facility_Vat_And_Address.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/facility/1794175883_S_Facility_DefauluPhoneCountry.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1784630001_BM_Discount_Setup.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/billing/1784658177_BM_Billing_Wallet.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/billing/1784659366_BM_Billing_Payment.xml" relativeToChangelogFile="false"/>
@@ -523,8 +532,6 @@
   <include file="config/liquibase/changelog/billing/1784663451_BM_Billing_Charge_Line.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/billing/1784664349_BM_Billing_Pricing_Snapshot.xml"
-           relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/BillingPricingSnapshot/1786124415_Billing_Pricing_Snapshot.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/billing/1784701001_BM_Billing_Charge_Responsibility.xml"
            relativeToChangelogFile="false"/>
@@ -538,8 +545,6 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/billing/1784706738_BM_Billing_Refund.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/billing/1784707531_BM_Billing_Ledger.xml" relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/BillingLedger/1786124482_Billing_Ledger.xml"
-           relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/billing/1784714856_BM_Billing_Rule.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/billing/1784715102_BM_Add_Billing_Rule_ID_to_Billing_Item_Setup.xml"
            relativeToChangelogFile="false"/>
@@ -611,6 +616,10 @@
 
   <include file="/config/liquibase/changelog/billing/1785869584_B_add_missing_data.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/BillingPricingSnapshot/1786124415_Billing_Pricing_Snapshot.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/BillingLedger/1786124482_Billing_Ledger.xml"
+           relativeToChangelogFile="false"/>
 
   <include file="config/liquibase/changelog/billing/1785870000_B_add_audit_columns_to_billing_debit_transaction.xml"
            relativeToChangelogFile="false"/>
@@ -638,6 +647,10 @@
   <include file="config/liquibase/changelog/1787475621_SA_DocumentAssignment.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/encounterAttachment/1787476174_SA_EncounterAttachment_DocumentsColumns.xml"
            relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/surgicalhistory/1788721153_H_Add_Patient_Is_free.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patientproblems/1788723942_H_Add_Patient_is_Free.xml"
+           relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/patientproblems/1790838212_FA_Add_FREE_TEXT.xml"
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/familyhistory/1790838454_FA_family_history_FREE_TEXT_fields.xml"
@@ -647,6 +660,52 @@
   <include file="config/liquibase/changelog/point-of-sale/pos-check-in.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/point-of-sale/pos-webhook-log.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1787990400_BM_price_list_item_non_standard_code.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/payorSetup/1787640000_B_AlterNphiesPayersInsuranceMasterData.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/billing/1787643600_BM_price_list_management.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/payorSetup/1787810000_B_create_tpa_definitions.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/payorSetup/1789978860_B_create_nphies_payer_child_companies.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1788844800_B_coverage_contract.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1788844801_B_coverage_copayment.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1788844802_B_coverage_term.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1788844803_B_coverage_term_item.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1788844804_B_coverage_discount.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1788844805_B_coverage_exclusion.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1788844806_B_coverage_pre_approval.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1788844807_B_coverage_pre_approval_item.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1788844808_B_approval_coverage_company.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1789982400_B_coverage_class.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1789982401_B_coverage_copayment_class.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1789982402_B_coverage_term_class.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1789982403_B_coverage_discount_class.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1789982404_B_coverage_exclusion_class.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1789982405_B_coverage_pre_approval_class.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1789982406_B_drop_coverage_contract_class_name.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1789982500_B_coverage_term_diagnosis.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1789982501_B_coverage_exclusion_diagnosis.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1789982502_B_coverage_pre_approval_item_diagnosis.xml"
            relativeToChangelogFile="false"/>
 
   <include file="config/liquibase/changelog/report/1781082967_S_ReportsSchema.xml" relativeToChangelogFile="false"/>
@@ -706,8 +765,6 @@
   <include file="config/liquibase/changelog/report/views/1790501140_SA_DiagnosticOrderView.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/report/views/1790501389_SA_DiagnosticOrderTestView.xml"
-           relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/report/views/1790503277_SA_IcdDiagnosisView.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/report/views/1790509523_SA_DiagnosticTestLaboratory.xml"
            relativeToChangelogFile="false"/>
@@ -824,8 +881,6 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/report/views/1790686325_SA_ClaimItemView.xml"
            relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/report/views/1790686325_SA_ClaimRequestView.xml"
-           relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/report/views/1790689612_SA_WalletTransactionsView.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/report/views/1790689612_SA_WaseelItemMappingView.xml"
@@ -866,8 +921,6 @@
   <include file="config/liquibase/changelog/report/views/1790720044_SA_EmergencyTriageView.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/report/views/1790720044_SA_EncounterAttachmentsView.xml"
-           relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/report/views/1790720044_SA_EncounterDischargeLogView.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/report/views/1790720044_SA_EncounterPlansView.xml"
            relativeToChangelogFile="false"/>
@@ -995,14 +1048,16 @@
   <include file="config/liquibase/changelog/1788291540_SA_EncounterDischargeLog.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/claim_WaseelIntegration/1788292800_BM_claim_request_type.xml"
            relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/surgicalhistory/1788721153_H_Add_Patient_Is_free.xml"
-           relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/patientproblems/1788723942_H_Add_Patient_is_Free.xml"
-           relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1788851627_R_FLACC_Pain_Scale.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/flaccPainScale/1789376822_R_FLACC_pain_level_column.xml"
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1788867600_B_icd_category_as_diagnosis.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790503277_SA_IcdDiagnosisView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790686325_SA_ClaimRequestView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790720044_SA_EncounterDischargeLogView.xml"
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/departments/20260914_department_age_specific.xml"
            relativeToChangelogFile="false"/>
@@ -1010,8 +1065,9 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/claim_WaseelIntegration/2026092902_claim_foreign_keys.xml"
            relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/diagnosticOrderTest/2026100401_H_Diagnostic_Order_Test_Add_Confirmed_By_At.xml"
-           relativeToChangelogFile="false"/>
+  <include
+    file="config/liquibase/changelog/diagnosticOrderTest/2026100401_H_Diagnostic_Order_Test_Add_Confirmed_By_At.xml"
+    relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/encounter/2026100601_H_Patient_Encounter_Add_Cancellation_Fields.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/billing/1791331200_BM_Billing_Rule_Payment_Type.xml"
@@ -1044,6 +1100,23 @@
   <include file="config/liquibase/changelog/dentalChart/2026101302_dental_planned_treatment_drop_fees_discount.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/dentalChart/2026101303_tooth_action_anesthesia_dose.xml"
+           relativeToChangelogFile="false"/>
+  <!-- Current dental treatment-plan work: incremental alters + new undeployed tables -->
+  <include file="config/liquibase/changelog/dentalChart/1794110801_FA_tooth_action_visit_number.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalChart/1794110802_FA_dental_planned_treatment_billing_fields.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalChart/1794110803_FA_dental_planned_treatment_scope_clinical.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalChart/1794110804_FA_dental_planned_treatment_completion.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalChart/1794110805_FA_dental_treatment_plan.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalChart/1794110806_FA_dental_treatment_session.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalChart/1794110807_FA_dental_treatment_plan_status_log.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalChart/1794110808_FA_dental_planned_treatment_plan_links.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1791451200_dialysis_session_treatment_plan_id.xml"
            relativeToChangelogFile="false"/>
@@ -1134,12 +1207,14 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/urgentCareMedicationOrder/1792389302_R_UCC_Medication_Order_Frequency.xml"
            relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/urgentCareMedicationOrder/1792396779_R_UCC_Medication_Order_Drop_Is_Stat.xml"
-           relativeToChangelogFile="false"/>
+  <include
+    file="config/liquibase/changelog/urgentCareMedicationOrder/1792396779_R_UCC_Medication_Order_Drop_Is_Stat.xml"
+    relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/report/views/1792389303_R_UrgentCareMedicationOrderView_Add_Frequency.xml"
            relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/patientPrescriptionMedication/1792322167_FA_patient_prescription_medications_duration_decimal.xml"
-           relativeToChangelogFile="false"/>
+  <include
+    file="config/liquibase/changelog/patientPrescriptionMedication/1792322167_FA_patient_prescription_medications_duration_decimal.xml"
+    relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/encounter/1792339153_encounter_promotion_fields.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/patient/2026101901_add_is_citizen_to_patients.xml"
@@ -1160,8 +1235,9 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1792506333_FA_diagnostic_test_add_loinc_code_id.xml"
            relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/urgentCareMedicationOrder/1792501511_UCC_Medication_Order_Administer_Billing.xml"
-           relativeToChangelogFile="false"/>
+  <include
+    file="config/liquibase/changelog/urgentCareMedicationOrder/1792501511_UCC_Medication_Order_Administer_Billing.xml"
+    relativeToChangelogFile="false"/>
 
   <include file="config/liquibase/changelog/1792413927_R_Med_Frequency_Setup.xml"
            relativeToChangelogFile="false"/>
@@ -1174,9 +1250,9 @@
            relativeToChangelogFile="false"/>
 
 
-
-  <include file="config/liquibase/changelog/patientPrescriptionMedication/1792679233_FA_patient_prescription_medications_maximum_dose_decimal.xml"
-           relativeToChangelogFile="false"/>
+  <include
+    file="config/liquibase/changelog/patientPrescriptionMedication/1792679233_FA_patient_prescription_medications_maximum_dose_decimal.xml"
+    relativeToChangelogFile="false"/>
 
   <include file="config/liquibase/changelog/2026102401_S_mobile_app_config.xml"
            relativeToChangelogFile="false"/>
@@ -1220,7 +1296,7 @@
   <include file="config/liquibase/changelog/1793180301_R_Survey_Response_Answer.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1793188104_R_Survey_Text.xml"
-            relativeToChangelogFile="false"/>
+           relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/patient/2026101401_SA_patient_activity.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/patient/2026102801_H_activity_setup.xml"
@@ -1246,14 +1322,104 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/priceListItems/2026110201_H_price_list_item_unique_source.xml"
            relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/languageTranslation/2026110203_H_radiology_supervisor_translation.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/languageTranslation/2026110203_H_radiology_supervisor_translation.xml"
+           relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/procedure/2026110202_BM_procedure_items.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/patientProcedure/2026110203_BM_patient_procedure_default_procedure.xml"
            relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/2026110204_B_claim_copy_service_product_test_results.xml"
+  <include file="config/liquibase/changelog/1793628490_R_External_Lab_Result.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1793628491_R_External_Radiology_Report.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/2026110204_B_claim_copy_service_product_test_results.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/dentalProcedure/2026110301_dental_procedure_tooth_numbers.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patient/2026110302_SA_daily_briefing.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/2026110801_S_configuration_user_scope.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patientProcedure/2026110901_H_patient_procedure_registration_columns.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patientProcedure/2026110902_H_patient_procedure_staff.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patientProcedure/2026110903_H_patient_procedure_pre_assessment.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patientProcedure/2026110904_H_patient_procedure_performance.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patientProcedure/2026110905_H_patient_procedure_complication.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patientProcedure/2026110906_H_patient_procedure_vital_monitoring.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patientProcedure/2026110907_H_patient_procedure_medication.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patientProcedure/2026110908_H_patient_procedure_service_equipment.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patientProcedure/2026110909_H_patient_procedure_post_care.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patientProcedure/2026110910_H_patient_procedure_post_care_diagnosis.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/payorSetup/1792454400_B_create_insurance_company_policy.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1792531200_B_coverage_class_policy_link.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/billing/1792531800_BM_price_list_payer_fk.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1792540800_B_drop_coverage_code_and_payer_children.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1792700000_B_drop_copayment_discount_flags.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1792800000_B_coverage_pre_approval_limit.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1792920000_B_coverage_pre_approval_item_name.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1793010000_B_coverage_pre_approval_level.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1793010100_B_coverage_term_item_subcategory.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1793020000_B_pre_authorization_alert_close.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1793030000_B_coverage_term_exclusion.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1793030100_B_coverage_discount_subcategory.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1793040000_B_drop_coverage_item_service_fk.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/payorSetup/1793040100_B_insurance_company_policy_optional_fields.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/coverageManagement/1793050000_B_coverage_copayment_department.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/payorSetup/1793060000_B_nphies_payers_validity.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/payorSetup/1793070000_B_nphies_payers_inactive_reason.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/payorSetup/1793080000_B_policy_class_inactive_reason.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/billing/1793090000_B_charge_line_contract_discount.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/payorSetup/1793100000_B_tpa_definitions_nphies_id.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalProcedure/2026110911_dental_procedure_consent_outcome.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalHistory/2026110912_dental_history.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patientFamilyEducation/2026110913_patient_family_education.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1794293018_R_claim_encounter_copy_original_created.xml"
+            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/2026111001_S_mobile_app_config_value_text.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalProcedure/2026111401_B_billing_line_tooth_number.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/departments/1794501686_FA_department_assign_practitioner_on_visit_start.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patientPrescriptionMedication/2026111201_H_patient_prescription_medications_dose_decimal.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1794297977_H_nahdi_integration_log_add_prescription_id.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1794297978_H_prescription_medications_add_dispensing.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/appUser/1794297979_H_add_can_edit_submitted_prescription.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/appUser/2026110301_add_can_cancel_service_before_invoice.xml"
            relativeToChangelogFile="false"/>
@@ -1262,4 +1428,3 @@
   <include file="config/liquibase/changelog/billing/2026110902_financial_documents_document_number_100.xml"
            relativeToChangelogFile="false"/>
 </databaseChangeLog>
-

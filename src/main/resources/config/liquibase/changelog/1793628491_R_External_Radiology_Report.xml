@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="1793628491-external-radiology-report" author="Rawan-Yahya">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <tableExists tableName="external_radiology_report"/>
+      </not>
+    </preConditions>
+
+    <createTable tableName="external_radiology_report">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="encounter_id" type="bigint"/>
+      <column name="attachment_id" type="bigint"/>
+
+      <column name="test_name" type="varchar(255)"/>
+      <column name="report_date" type="date"/>
+      <column name="report" type="text"/>
+      <column name="severity" type="varchar(50)"/>
+      <column name="radiologist_information" type="text"/>
+      <column name="critical_findings" type="text"/>
+      <column name="radiologist_comments" type="text"/>
+      <column name="physician_name" type="varchar(255)"/>
+
+      <column name="raw_extracted_text" type="text"/>
+      <column name="detected_language" type="varchar(10)"/>
+      <column name="translated" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="external_radiology_report"
+      baseColumnNames="patient_id"
+      constraintName="fk_ext_rad_report_patient"
+      referencedTableName="patients"
+      referencedColumnNames="id"/>
+
+    <addForeignKeyConstraint
+      baseTableName="external_radiology_report"
+      baseColumnNames="encounter_id"
+      constraintName="fk_ext_rad_report_encounter"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"/>
+
+    <addForeignKeyConstraint
+      baseTableName="external_radiology_report"
+      baseColumnNames="attachment_id"
+      constraintName="fk_ext_rad_report_attachment"
+      referencedTableName="encounter_attachments"
+      referencedColumnNames="id"/>
+
+    <createIndex tableName="external_radiology_report" indexName="idx_ext_rad_report_patient">
+      <column name="patient_id"/>
+    </createIndex>
+    <createIndex tableName="external_radiology_report" indexName="idx_ext_rad_report_encounter">
+      <column name="encounter_id"/>
+    </createIndex>
+  </changeSet>
+
+</databaseChangeLog>
