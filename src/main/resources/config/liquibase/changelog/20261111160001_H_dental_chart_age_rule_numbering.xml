@@ -14,7 +14,6 @@
       <column name="tooth_numbers" type="text"/>
     </addColumn>
 
-    <!-- Backfill tooth inventory from chart type using stable internal ids. -->
     <sql>
       UPDATE dental_chart_age_rule
       SET tooth_numbers = CASE chart_type

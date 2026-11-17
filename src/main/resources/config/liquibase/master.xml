@@ -1435,4 +1435,8 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/dentalChart/1794823008_FA_tooth_action_source_planned_treatment.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalChart/1794823009_FA_dental_planned_treatment_cdt_optional.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalChart/1794823010_FA_dental_planned_treatment_status_log_reason.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
