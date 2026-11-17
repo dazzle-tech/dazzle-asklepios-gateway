@@ -12,6 +12,17 @@
     redistribution) is never rejected. Existing values are kept as they are.
   -->
   <changeSet id="2026110901_billing_reason_columns_to_text" author="Batool_Bushra">
+    <!-- Report views that select the changed columns are dropped first: PostgreSQL cannot change
+         the type of a column a view uses. No CASCADE, so nothing else can be dropped. -->
+    <sql>DROP VIEW IF EXISTS reports.vwbillingchargeline;</sql>
+    <sql>DROP VIEW IF EXISTS reports.vwbillingcharge;</sql>
+    <sql>DROP VIEW IF EXISTS reports.vwbillingchargeresponsibility;</sql>
+    <sql>DROP VIEW IF EXISTS reports.vwbillingreservation;</sql>
+    <sql>DROP VIEW IF EXISTS reports.vwbillingallocation;</sql>
+    <sql>DROP VIEW IF EXISTS reports.vwbillingledger;</sql>
+    <sql>DROP VIEW IF EXISTS reports.vwbillingdebittransaction;</sql>
+    <sql>DROP VIEW IF EXISTS reports.vwbillingpricingsnapshot;</sql>
+
     <modifyDataType tableName="billing_charge_line" columnName="cancellation_reason" newDataType="text"/>
     <modifyDataType tableName="billing_charge" columnName="cancellation_reason" newDataType="text"/>
     <modifyDataType tableName="billing_charge_responsibility" columnName="adjustment_reason" newDataType="text"/>
@@ -20,6 +31,388 @@
     <modifyDataType tableName="billing_ledger" columnName="reason" newDataType="text"/>
     <modifyDataType tableName="billing_debit_transaction" columnName="reason" newDataType="text"/>
     <modifyDataType tableName="billing_pricing_snapshot" columnName="override_reason" newDataType="text"/>
+
+    <!-- The same report views, recreated exactly as defined in changelog/report/views, with their grants. -->
+    <!-- 1790670365_SA_BillingChargeLineView.xml -->
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwbillingchargeline AS
+      SELECT
+        bcl.id,
+        bcl.charge_id,
+        bcl.patient_service_product_id,
+        bcl.patient_id,
+        bcl.encounter_id,
+        bcl.billing_item_type,
+        bcl.brand_medication_id,
+        bcl.diagnostic_test_id,
+        bcl.service_id,
+        bcl.procedure_id,
+        bcl.item_code,
+        bcl.item_description,
+        bcl.service_source,
+        bcl.source_id,
+        bcl.quantity,
+        bcl.unit_price,
+        bcl.gross_amount,
+        bcl.discount_amount,
+        bcl.exemption_amount,
+        bcl.tax_amount,
+        bcl.net_amount,
+        bcl.patient_responsibility_amount,
+        bcl.insurance_responsibility_amount,
+        bcl.other_payer_responsibility_amount,
+        bcl.allocated_amount,
+        bcl.outstanding_amount,
+        bcl.reserved_amount,
+        bcl.currency,
+        bcl.status,
+        bcl.current_pricing_snapshot_id,
+        bcl.patient_insurance_id,
+        bcl.pre_authorization_required,
+        bcl.pre_authorization_status,
+        bcl.pre_authorization_request_id,
+        bcl.pre_authorization_reference_no,
+        bcl.reversed_charge_line_id,
+        bcl.idempotency_key,
+        bcl.cancelled_date,
+        bcl.cancelled_by,
+        bcl.cancellation_reason,
+        bcl.notes,
+        bcl.created_by,
+        bcl.created_date,
+        bcl.last_modified_by,
+        bcl.last_modified_date
+      FROM public.billing_charge_line bcl;
+    </sql>
+    <sql>GRANT SELECT ON reports.vwbillingchargeline TO report_user;</sql>
+
+    <!-- 1790670365_SA_BillingChargeView.xml -->
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwbillingcharge AS
+      SELECT
+        bc.id,
+        bc.charge_number,
+        bc.patient_id,
+        bc.encounter_id,
+        bc.charge_type,
+        bc.currency,
+        bc.gross_amount,
+        bc.discount_amount,
+        bc.exemption_amount,
+        bc.tax_amount,
+        bc.net_amount,
+        bc.allocated_amount,
+        bc.outstanding_amount,
+        bc.line_count,
+        bc.status,
+        bc.charge_date,
+        bc.confirmed_date,
+        bc.closed_date,
+        bc.cancelled_date,
+        bc.cancelled_by,
+        bc.cancellation_reason,
+        bc.reversed_charge_id,
+        bc.idempotency_key,
+        bc.source_type,
+        bc.source_id,
+        bc.source_reference,
+        bc.notes,
+        bc.created_by,
+        bc.created_date,
+        bc.last_modified_by,
+        bc.last_modified_date
+      FROM public.billing_charge bc;
+    </sql>
+    <sql>GRANT SELECT ON reports.vwbillingcharge TO report_user;</sql>
+
+    <!-- 1790670365_SA_BillingChargeResponsilityView.xml -->
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwbillingchargeresponsibility AS
+      SELECT
+        bcr.id,
+        bcr.charge_id,
+        bcr.charge_line_id,
+        bcr.patient_service_product_id,
+        bcr.patient_id,
+        bcr.encounter_id,
+        bcr.responsible_party_type,
+        bcr.responsibility_role,
+        bcr.payer_id,
+        bcr.patient_insurance_id,
+        bcr.policy_number,
+        bcr.member_number,
+        bcr.responsibility_amount,
+        bcr.allocated_amount,
+        bcr.outstanding_amount,
+        bcr.coverage_percentage,
+        bcr.deductible_amount,
+        bcr.copay_amount,
+        bcr.coinsurance_amount,
+        bcr.non_covered_amount,
+        bcr.contractual_adjustment_amount,
+        bcr.currency,
+        bcr.status,
+        bcr.pre_authorization_required,
+        bcr.pre_authorization_status,
+        bcr.pre_authorization_reference_no,
+        bcr.claim_id,
+        bcr.claim_reference,
+        bcr.superseded_responsibility_id,
+        bcr.adjustment_reason,
+        bcr.effective_date,
+        bcr.closed_date,
+        bcr.idempotency_key,
+        bcr.created_by,
+        bcr.created_date,
+        bcr.last_modified_by,
+        bcr.last_modified_date
+      FROM public.billing_charge_responsibility bcr;
+    </sql>
+    <sql>GRANT SELECT ON reports.vwbillingchargeresponsibility TO report_user;</sql>
+
+    <!-- 1790670365_SA_BillingReservationView.xml -->
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwbillingreservation AS
+      SELECT
+        br.id,
+        br.reservation_number,
+        br.wallet_id,
+        br.payment_id,
+        br.payment_transaction_id,
+        br.patient_id,
+        br.encounter_id,
+        br.charge_id,
+        br.charge_line_id,
+        br.charge_responsibility_id,
+        br.patient_service_product_id,
+        br.original_reserved_amount,
+        br.remaining_reserved_amount,
+        br.consumed_amount,
+        br.released_amount,
+        br.currency,
+        br.status,
+        br.reserved_date,
+        br.consumed_date,
+        br.released_date,
+        br.cancelled_date,
+        br.release_reason,
+        br.release_notes,
+        br.released_by,
+        br.cancelled_by,
+        br.cancellation_reason,
+        br.previous_reservation_id,
+        br.idempotency_key,
+        br.transaction_group_id,
+        br.created_by,
+        br.created_date,
+        br.last_modified_by,
+        br.last_modified_date
+      FROM public.billing_reservation br;
+    </sql>
+    <sql>GRANT SELECT ON reports.vwbillingreservation TO report_user;</sql>
+
+    <!-- 1790670365_SA_BillingAllocationView.xml -->
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwbillingallocation AS
+      SELECT
+        ba.id,
+        ba.allocation_number,
+        ba.charge_id,
+        ba.charge_line_id,
+        ba.charge_responsibility_id,
+        ba.patient_service_product_id,
+        ba.patient_id,
+        ba.encounter_id,
+        ba.allocation_source_type,
+        ba.reservation_id,
+        ba.payment_id,
+        ba.payment_transaction_id,
+        ba.debit_transaction_id,
+        ba.source_reference_type,
+        ba.source_reference_id,
+        ba.source_reference_number,
+        ba.allocated_amount,
+        ba.remaining_allocated_amount,
+        ba.reversed_amount,
+        ba.currency,
+        ba.status,
+        ba.allocation_date,
+        ba.reversed_date,
+        ba.reversed_by,
+        ba.reversal_reason,
+        ba.original_allocation_id,
+        ba.idempotency_key,
+        ba.transaction_group_id,
+        ba.notes,
+        ba.created_by,
+        ba.created_date,
+        ba.last_modified_by,
+        ba.last_modified_date
+      FROM public.billing_allocation ba;
+    </sql>
+    <sql>GRANT SELECT ON reports.vwbillingallocation TO report_user;</sql>
+
+    <!-- 1790670365_SA_BillingLedgerView.xml -->
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwbillingledger AS
+      SELECT
+        bl.id,
+        bl.ledger_number,
+        bl.transaction_group_id,
+        bl.correlation_id,
+        bl.idempotency_key,
+        bl.patient_id,
+        bl.encounter_id,
+        bl.wallet_id,
+        bl.payment_id,
+        bl.payment_transaction_id,
+        bl.charge_id,
+        bl.charge_line_id,
+        bl.charge_responsibility_id,
+        bl.reservation_id,
+        bl.allocation_id,
+        bl.debit_account_id,
+        bl.debit_transaction_id,
+        bl.refund_id,
+        bl.transaction_type,
+        bl.ledger_scope,
+        bl.amount,
+        bl.currency,
+        bl.available_change,
+        bl.reserved_change,
+        bl.consumed_change,
+        bl.refunded_change,
+        bl.debit_balance_change,
+        bl.allocated_change,
+        bl.outstanding_change,
+        bl.wallet_available_before,
+        bl.wallet_available_after,
+        bl.wallet_reserved_before,
+        bl.wallet_reserved_after,
+        bl.debit_balance_before,
+        bl.debit_balance_after,
+        bl.responsibility_outstanding_before,
+        bl.responsibility_outstanding_after,
+        bl.entry_direction,
+        bl.entry_category,
+        bl.reversed_ledger_id,
+        bl.reference_type,
+        bl.reference_id,
+        bl.reference_number,
+        bl.description,
+        bl.reason,
+        bl.transaction_date,
+        bl.source_channel,
+        bl.created_by,
+        bl.created_date,
+        bl.last_modified_by,
+        bl.last_modified_date
+      FROM public.billing_ledger bl;
+    </sql>
+    <sql>GRANT SELECT ON reports.vwbillingledger TO report_user;</sql>
+
+    <!-- 1790670365_SA_BillingDebitTransactionView.xml -->
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwbillingdebittransaction AS
+      SELECT
+        bdt.id,
+        bdt.transaction_number,
+        bdt.debit_account_id,
+        bdt.patient_id,
+        bdt.encounter_id,
+        bdt.charge_responsibility_id,
+        bdt.charge_id,
+        bdt.charge_line_id,
+        bdt.patient_service_product_id,
+        bdt.payment_id,
+        bdt.payment_transaction_id,
+        bdt.parent_transaction_id,
+        bdt.transaction_type,
+        bdt.amount,
+        bdt.currency,
+        bdt.balance_before,
+        bdt.balance_after,
+        bdt.status,
+        bdt.transaction_date,
+        bdt.due_date,
+        bdt.settled_date,
+        bdt.reference_type,
+        bdt.reference_id,
+        bdt.reference_number,
+        bdt.reason,
+        bdt.approved_by,
+        bdt.approved_date,
+        bdt.idempotency_key,
+        bdt.transaction_group_id,
+        bdt.notes,
+        bdt.created_by,
+        bdt.created_date,
+        bdt.last_modified_by,
+        bdt.last_modified_date
+      FROM public.billing_debit_transaction bdt;
+    </sql>
+    <sql>GRANT SELECT ON reports.vwbillingdebittransaction TO report_user;</sql>
+
+    <!-- 1790670365_SA_BillingPricingSnapshotView.xml -->
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwbillingpricingsnapshot AS
+      SELECT
+        bps.id,
+        bps.charge_line_id,
+        bps.patient_service_product_id,
+        bps.patient_id,
+        bps.encounter_id,
+        bps.price_list_id,
+        bps.price_list_item_id,
+        bps.billing_configuration_id,
+        bps.discount_id,
+        bps.tax_id,
+        bps.pricing_source,
+        bps.pricing_version,
+        bps.price_list_code,
+        bps.price_list_name,
+        bps.price_list_item_code,
+        bps.quantity,
+        bps.base_unit_price,
+        bps.gross_amount,
+        bps.discount_type,
+        bps.discount_rate,
+        bps.discount_amount,
+        bps.discount_reason,
+        bps.discount_approved_by,
+        bps.exemption_type,
+        bps.exemption_rate,
+        bps.exemption_amount,
+        bps.exemption_reason,
+        bps.tax_type,
+        bps.tax_rate,
+        bps.taxable_amount,
+        bps.tax_amount,
+        bps.net_amount,
+        bps.currency,
+        bps.calculation_order,
+        bps.rounding_mode,
+        bps.rounding_scale,
+        bps.patient_responsibility_amount,
+        bps.insurance_responsibility_amount,
+        bps.other_payer_responsibility_amount,
+        bps.calculation_payload,
+        bps.status,
+        bps.effective_date,
+        bps.superseded_date,
+        bps.superseded_by_snapshot_id,
+        bps.pricing_reason,
+        bps.override_reason,
+        bps.idempotency_key,
+        bps.created_by,
+        bps.created_date,
+        bps.price_source,
+        bps.setup_source_id,
+        bps.last_modified_by,
+        bps.last_modified_date
+      FROM public.billing_pricing_snapshot bps;
+    </sql>
+    <sql>GRANT SELECT ON reports.vwbillingpricingsnapshot TO report_user;</sql>
   </changeSet>
 
 </databaseChangeLog>
