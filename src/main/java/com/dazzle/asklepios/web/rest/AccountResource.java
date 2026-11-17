@@ -2,7 +2,6 @@ package com.dazzle.asklepios.web.rest;
 
 import com.dazzle.asklepios.repository.UserRepository;
 import com.dazzle.asklepios.security.SecurityUtils;
-import com.dazzle.asklepios.service.MailService;
 import com.dazzle.asklepios.service.UserService;
 import com.dazzle.asklepios.service.dto.AdminUserDTO;
 import com.dazzle.asklepios.service.dto.CreatePasswordKeyValidationDTO;
@@ -27,7 +26,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  * REST controller for managing the current user's account.
@@ -49,12 +47,9 @@ public class AccountResource {
 
     private final UserService userService;
 
-    private final MailService mailService;
-
-    public AccountResource(UserRepository userRepository, UserService userService, MailService mailService) {
+    public AccountResource(UserRepository userRepository, UserService userService) {
         this.userRepository = userRepository;
         this.userService = userService;
-        this.mailService = mailService;
     }
 
     /**
@@ -135,9 +130,7 @@ public class AccountResource {
         return userService
             .requestPasswordReset(mail)
             .doOnSuccess(user -> {
-                if (Objects.nonNull(user)) {
-                    mailService.sendPasswordResetMail(user);
-                } else {
+                if (user == null) {
                     LOG.warn("Password reset requested for non existing mail");
                 }
             })

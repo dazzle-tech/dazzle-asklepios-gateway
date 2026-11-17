@@ -88,7 +88,12 @@ public class UserService {
                 user.setResetDate(Instant.now());
                 return user;
             })
-            .flatMap(this::saveUser);
+            .flatMap(this::saveUser)
+            .flatMap(user ->
+                Mono.fromRunnable(() -> mailService.sendPasswordResetMail(user))
+                    .subscribeOn(Schedulers.boundedElastic())
+                    .thenReturn(user)
+            );
     }
 
     @Transactional(readOnly = true)
@@ -100,6 +105,7 @@ public class UserService {
                 user.isCanUnDischargeUrgentCare(),
                 user.isCanUnCompleteEncounter(),
                 user.isCanReturnClaimForResubmit(),
+                user.isCanCancelServiceBeforeInvoice(),
                 user.isCanEditSubmittedPrescription()
             ));
     }
@@ -117,6 +123,7 @@ public class UserService {
                 user.setCanUnDischargeUrgentCare(accessDTO.isCanUnDischargeUrgentCare());
                 user.setCanUnCompleteEncounter(accessDTO.isCanUnCompleteEncounter());
                 user.setCanReturnClaimForResubmit(accessDTO.isCanReturnClaimForResubmit());
+                user.setCanCancelServiceBeforeInvoice(accessDTO.isCanCancelServiceBeforeInvoice());
                 user.setCanEditSubmittedPrescription(accessDTO.isCanEditSubmittedPrescription());
 
                 return user;
@@ -127,6 +134,7 @@ public class UserService {
                 user.isCanUnDischargeUrgentCare(),
                 user.isCanUnCompleteEncounter(),
                 user.isCanReturnClaimForResubmit(),
+                user.isCanCancelServiceBeforeInvoice(),
                 user.isCanEditSubmittedPrescription()
             ));
     }
