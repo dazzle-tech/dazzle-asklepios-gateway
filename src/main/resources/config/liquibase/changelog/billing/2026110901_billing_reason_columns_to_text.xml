@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!--
+    Reason columns that carry the free-text cancellation reason become text,
+    so a long reason (and the prefix added by the visit max-limit
+    redistribution) is never rejected. Existing values are kept as they are.
+  -->
+  <changeSet id="2026110901_billing_reason_columns_to_text" author="Batool_Bushra">
+    <modifyDataType tableName="billing_charge_line" columnName="cancellation_reason" newDataType="text"/>
+    <modifyDataType tableName="billing_charge" columnName="cancellation_reason" newDataType="text"/>
+    <modifyDataType tableName="billing_charge_responsibility" columnName="adjustment_reason" newDataType="text"/>
+    <modifyDataType tableName="billing_reservation" columnName="cancellation_reason" newDataType="text"/>
+    <modifyDataType tableName="billing_allocation" columnName="reversal_reason" newDataType="text"/>
+    <modifyDataType tableName="billing_ledger" columnName="reason" newDataType="text"/>
+    <modifyDataType tableName="billing_debit_transaction" columnName="reason" newDataType="text"/>
+    <modifyDataType tableName="billing_pricing_snapshot" columnName="override_reason" newDataType="text"/>
+  </changeSet>
+
+</databaseChangeLog>

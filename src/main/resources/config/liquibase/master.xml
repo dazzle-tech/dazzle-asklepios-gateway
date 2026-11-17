@@ -1421,4 +1421,10 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/appUser/1794297979_H_add_can_edit_submitted_prescription.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/appUser/2026110301_add_can_cancel_service_before_invoice.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/billing/2026110901_billing_reason_columns_to_text.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/billing/2026110902_financial_documents_document_number_100.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>

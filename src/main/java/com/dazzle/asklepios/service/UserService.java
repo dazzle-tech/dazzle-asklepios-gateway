@@ -105,6 +105,7 @@ public class UserService {
                 user.isCanUnDischargeUrgentCare(),
                 user.isCanUnCompleteEncounter(),
                 user.isCanReturnClaimForResubmit(),
+                user.isCanCancelServiceBeforeInvoice(),
                 user.isCanEditSubmittedPrescription()
             ));
     }
@@ -122,6 +123,7 @@ public class UserService {
                 user.setCanUnDischargeUrgentCare(accessDTO.isCanUnDischargeUrgentCare());
                 user.setCanUnCompleteEncounter(accessDTO.isCanUnCompleteEncounter());
                 user.setCanReturnClaimForResubmit(accessDTO.isCanReturnClaimForResubmit());
+                user.setCanCancelServiceBeforeInvoice(accessDTO.isCanCancelServiceBeforeInvoice());
                 user.setCanEditSubmittedPrescription(accessDTO.isCanEditSubmittedPrescription());
 
                 return user;
@@ -132,6 +134,7 @@ public class UserService {
                 user.isCanUnDischargeUrgentCare(),
                 user.isCanUnCompleteEncounter(),
                 user.isCanReturnClaimForResubmit(),
+                user.isCanCancelServiceBeforeInvoice(),
                 user.isCanEditSubmittedPrescription()
             ));
     }
