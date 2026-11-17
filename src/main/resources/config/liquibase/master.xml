@@ -255,8 +255,6 @@
   <include file="config/liquibase/changelog/1768722141_R_patient_allergies.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/allergies/1777540518_add_field_B_allergens.xml"
            relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/allergies/1790850437_FA_Fix_Null_Columns.xml"
-           relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1768730708_R_patient_allergies_active_ingredients.xml"
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1763382042_Q_PatientPreferredHealthProfessional.xml"
@@ -317,6 +315,8 @@
     relativeToChangelogFile="false"/>
 
   <include file="config/liquibase/changelog/1770533404_R_patient_allergies_log.xml" relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/allergies/1790850437_FA_Fix_Null_Columns.xml"
+           relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1764016179_H_Relation_Matrix.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1765448261_H_Next_Of_Kin.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1771843369_R_patient_warnings_log.xml" relativeToChangelogFile="false"/>
@@ -352,8 +352,6 @@
   <include file="/config/liquibase/changelog/hospitalization/1778674502_hospitalization_add_cancel_fields.xml"
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/hospitalization/1790846305_FA_hospitalization_add_FREE_TEXT.xml"
-           relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/currentmedication/1790846488_FA_ADD_FREE_TEXT_fields.xml"
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/surgicalhistory/1790850031_FA_surgical_history_add_FREE_TEXT.xml"
            relativeToChangelogFile="false"/>
@@ -419,6 +417,8 @@
   <include
     file="/config/liquibase/changelog/currentmedication/1783350900_current_medication_replace_instructions_with_dosage_fields.xml"
     relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/currentmedication/1790846488_FA_ADD_FREE_TEXT_fields.xml"
+           relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1776165512_BM_Appointment_Request.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/appUser/1788255133_FA_add_user_encounters_access.xml"
            relativeToChangelogFile="false"/>
@@ -533,8 +533,6 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/billing/1784664349_BM_Billing_Pricing_Snapshot.xml"
            relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/BillingPricingSnapshot/1786124415_Billing_Pricing_Snapshot.xml"
-           relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/billing/1784701001_BM_Billing_Charge_Responsibility.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/billing/1784702558_BM_Billing_Reservation.xml"
@@ -547,8 +545,6 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/billing/1784706738_BM_Billing_Refund.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/billing/1784707531_BM_Billing_Ledger.xml" relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/BillingLedger/1786124482_Billing_Ledger.xml"
-           relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/billing/1784714856_BM_Billing_Rule.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/billing/1784715102_BM_Add_Billing_Rule_ID_to_Billing_Item_Setup.xml"
            relativeToChangelogFile="false"/>
@@ -620,6 +616,10 @@
 
   <include file="/config/liquibase/changelog/billing/1785869584_B_add_missing_data.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/BillingPricingSnapshot/1786124415_Billing_Pricing_Snapshot.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/BillingLedger/1786124482_Billing_Ledger.xml"
+           relativeToChangelogFile="false"/>
 
   <include file="config/liquibase/changelog/billing/1785870000_B_add_audit_columns_to_billing_debit_transaction.xml"
            relativeToChangelogFile="false"/>
@@ -646,6 +646,10 @@
   <include file="config/liquibase/changelog/1787475077_SA_DocumentVersion.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1787475621_SA_DocumentAssignment.xml" relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/encounterAttachment/1787476174_SA_EncounterAttachment_DocumentsColumns.xml"
+           relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/surgicalhistory/1788721153_H_Add_Patient_Is_free.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patientproblems/1788723942_H_Add_Patient_is_Free.xml"
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/patientproblems/1790838212_FA_Add_FREE_TEXT.xml"
            relativeToChangelogFile="false"/>
@@ -762,8 +766,6 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/report/views/1790501389_SA_DiagnosticOrderTestView.xml"
            relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/report/views/1790503277_SA_IcdDiagnosisView.xml"
-           relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/report/views/1790509523_SA_DiagnosticTestLaboratory.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/report/views/1790510025_SA_DiagnosticTestRadiologyView.xml"
@@ -879,8 +881,6 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/report/views/1790686325_SA_ClaimItemView.xml"
            relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/report/views/1790686325_SA_ClaimRequestView.xml"
-           relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/report/views/1790689612_SA_WalletTransactionsView.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/report/views/1790689612_SA_WaseelItemMappingView.xml"
@@ -921,8 +921,6 @@
   <include file="config/liquibase/changelog/report/views/1790720044_SA_EmergencyTriageView.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/report/views/1790720044_SA_EncounterAttachmentsView.xml"
-           relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/report/views/1790720044_SA_EncounterDischargeLogView.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/report/views/1790720044_SA_EncounterPlansView.xml"
            relativeToChangelogFile="false"/>
@@ -1050,14 +1048,16 @@
   <include file="config/liquibase/changelog/1788291540_SA_EncounterDischargeLog.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/claim_WaseelIntegration/1788292800_BM_claim_request_type.xml"
            relativeToChangelogFile="false"/>
-  <include file="/config/liquibase/changelog/surgicalhistory/1788721153_H_Add_Patient_Is_free.xml"
-           relativeToChangelogFile="false"/>
-  <include file="config/liquibase/changelog/patientproblems/1788723942_H_Add_Patient_is_Free.xml"
-           relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1788851627_R_FLACC_Pain_Scale.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/flaccPainScale/1789376822_R_FLACC_pain_level_column.xml"
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/1788867600_B_icd_category_as_diagnosis.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790503277_SA_IcdDiagnosisView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790686325_SA_ClaimRequestView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/1790720044_SA_EncounterDischargeLogView.xml"
            relativeToChangelogFile="false"/>
   <include file="/config/liquibase/changelog/departments/20260914_department_age_specific.xml"
            relativeToChangelogFile="false"/>
@@ -1421,6 +1421,21 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/patientPrescriptionMedication/2026111201_H_patient_prescription_medications_dose_decimal.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1794297977_H_nahdi_integration_log_add_prescription_id.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1794297978_H_prescription_medications_add_dispensing.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/appUser/1794297979_H_add_can_edit_submitted_prescription.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/appUser/2026110301_add_can_cancel_service_before_invoice.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/billing/2026110901_billing_reason_columns_to_text.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/billing/2026110902_financial_documents_document_number_100.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/appUser/2026111701_add_can_collect_zero_payment.xml"
+           relativeToChangelogFile="false"/>
+
   <include file="config/liquibase/changelog/dentalChart/1794823001_FA_dental_tooth_numbering_method.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/dentalChart/1794823002_FA_dental_tooth_numbering_links.xml"
