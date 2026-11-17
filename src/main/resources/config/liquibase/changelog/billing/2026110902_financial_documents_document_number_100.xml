@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="2026110902_financial_documents_document_number_100" author="Batool_Bushra">
+    <!-- reports.vwfinancialdocuments selects document_number: PostgreSQL cannot change the type of a column
+         a view uses, so the view is dropped first. No CASCADE, so nothing else can be dropped. -->
+    <sql>DROP VIEW IF EXISTS reports.vwfinancialdocuments;</sql>
+
+    <modifyDataType tableName="financial_documents" columnName="document_number" newDataType="varchar(100)"/>
+
+    <!-- The same report view, recreated exactly as defined in changelog/report/views, with its grant. -->
+    <!-- 1790684908_SA_FinancialDocumentsView.xml -->
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwfinancialdocuments AS
+      SELECT
+        fd.id,
+        fd.document_number,
+        fd.document_type,
+        fd.status,
+        fd.patient_id,
+        fd.encounter_id,
+        fd.parent_document_id,
+        fd.total_amount,
+        fd.currency,
+        fd.created_date,
+        fd.created_by,
+        fd.last_modified_date,
+        fd.last_modified_by,
+        fd.document_subtype,
+        fd.eligibility_reference,
+        fd.claim_reference,
+        fd.adjustment_reason
+      FROM public.financial_documents fd;
+    </sql>
+    <sql>GRANT SELECT ON reports.vwfinancialdocuments TO report_user;</sql>
+  </changeSet>
+
+</databaseChangeLog>

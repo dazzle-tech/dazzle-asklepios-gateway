@@ -27,6 +27,7 @@ public class PostgreSqlTestContainer implements SqlTestContainer {
             postgreSQLContainer = new PostgreSQLContainer<>("postgres:17.2")
                 .withDatabaseName("asklepios")
                 .withTmpFs(Collections.singletonMap("/testtmpfs", "rw"))
+                .withInitScript("config/testcontainers/external-tables.sql")
                 .withLogConsumer(new Slf4jLogConsumer(LOG))
                 .withReuse(true);
         }
