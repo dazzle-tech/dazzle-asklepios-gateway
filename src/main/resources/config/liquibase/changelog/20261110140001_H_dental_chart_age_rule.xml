@@ -20,10 +20,8 @@
         <constraints nullable="false"/>
       </column>
 
-      <!-- Exclusive upper bound; NULL means open-ended -->
       <column name="age_to" type="int"/>
 
-      <!-- Persisted as ADULT or CHILD -->
       <column name="chart_type" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
@@ -45,24 +43,6 @@
     <createIndex indexName="idx_dental_chart_age_rule_active" tableName="dental_chart_age_rule">
       <column name="is_active"/>
     </createIndex>
-  </changeSet>
-
-  <changeSet id="20261110140002_H_dental_chart_setup_permissions" author="Faroukdhelea">
-    <sql>
-      INSERT INTO role_screen (role_id, screen, operation)
-      VALUES
-        (1, 'DENTAL_CHART_SETUP', 'VIEW'),
-        (1, 'DENTAL_CHART_SETUP', 'EDIT')
-      ON CONFLICT DO NOTHING;
-    </sql>
-
-    <sql>
-      INSERT INTO language_translation (lang_key, translation_key, translation_text, verified, translated)
-      VALUES
-        ('en', 'DENTAL_CHART_SETUP', 'Dental Chart Setup', false, false),
-        ('arb', 'DENTAL_CHART_SETUP', 'إعداد مخطط الأسنان', false, false)
-      ON CONFLICT (lang_key, translation_key) DO NOTHING;
-    </sql>
   </changeSet>
 
 </databaseChangeLog>

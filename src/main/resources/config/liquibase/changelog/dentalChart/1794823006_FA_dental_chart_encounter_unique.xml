@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="FA000000000071" author="Faroukdhelea">
+    <preConditions onFail="HALT"
+                   onFailMessage="Duplicate dental charts exist for an encounter.">
+      <sqlCheck expectedResult="0">
+        SELECT COUNT(*) FROM (
+          SELECT encounter_id FROM dental_chart GROUP BY encounter_id HAVING COUNT(*) &gt; 1
+        ) duplicate_encounters
+      </sqlCheck>
+    </preConditions>
+    <createIndex indexName="uq_dental_chart_encounter" tableName="dental_chart" unique="true">
+      <column name="encounter_id"/>
+    </createIndex>
+  </changeSet>
+
+</databaseChangeLog>

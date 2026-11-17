@@ -1410,6 +1410,7 @@
   <include file="config/liquibase/changelog/20261111160001_H_dental_chart_age_rule_numbering.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/dentalChart/20261111180001_dental_chart_setup_snapshot.xml"
+           relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1794293018_R_claim_encounter_copy_original_created.xml"
             relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/2026111001_S_mobile_app_config_value_text.xml"
@@ -1419,5 +1420,19 @@
   <include file="/config/liquibase/changelog/departments/1794501686_FA_department_assign_practitioner_on_visit_start.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/patientPrescriptionMedication/2026111201_H_patient_prescription_medications_dose_decimal.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalChart/1794823001_FA_dental_tooth_numbering_method.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalChart/1794823002_FA_dental_tooth_numbering_links.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalChart/1794823004_FA_dental_chart_inventory_columns.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalChart/1794823005_FA_dental_chart_inventory_audit.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalChart/1794823006_FA_dental_chart_encounter_unique.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalChart/1794823007_FA_tooth_action_carried_from.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalChart/1794823008_FA_tooth_action_source_planned_treatment.xml"
            relativeToChangelogFile="false"/>
 </databaseChangeLog>

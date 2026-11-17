@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="FA000000000065" author="Faroukdhelea">
+    <addColumn tableName="dental_chart_age_rule">
+      <column name="numbering_method_id" type="bigint"/>
+    </addColumn>
+
+    <addForeignKeyConstraint
+      baseTableName="dental_chart_age_rule"
+      baseColumnNames="numbering_method_id"
+      referencedTableName="dental_tooth_numbering_method"
+      referencedColumnNames="id"
+      constraintName="fk_dental_chart_age_rule_numbering_method"/>
+  </changeSet>
+
+  <changeSet id="FA000000000066" author="Faroukdhelea">
+    <addColumn tableName="dental_chart">
+      <column name="numbering_method_id" type="bigint"/>
+      <column name="numbering_labels" type="text"/>
+    </addColumn>
+  </changeSet>
+
+</databaseChangeLog>

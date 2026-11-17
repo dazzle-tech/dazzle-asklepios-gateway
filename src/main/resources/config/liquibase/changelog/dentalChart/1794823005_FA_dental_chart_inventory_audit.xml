@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="FA000000000070" author="Faroukdhelea">
+    <createTable tableName="dental_chart_inventory_audit">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+      <column name="chart_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="batch_id" type="varchar(36)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="action" type="varchar(20)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="tooth_number" type="varchar(10)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="related_tooth_number" type="varchar(10)"/>
+      <column name="status_before" type="varchar(20)"/>
+      <column name="status_after" type="varchar(20)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="reason" type="varchar(500)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="reopen_session_id" type="bigint"/>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="dental_chart_inventory_audit"
+      baseColumnNames="chart_id"
+      referencedTableName="dental_chart"
+      referencedColumnNames="id"
+      constraintName="fk_dental_chart_inventory_audit_chart"/>
+
+    <addForeignKeyConstraint
+      baseTableName="dental_chart_inventory_audit"
+      baseColumnNames="encounter_id"
+      referencedTableName="patient_encounters"
+      referencedColumnNames="id"
+      constraintName="fk_dental_chart_inventory_audit_encounter"/>
+
+    <createIndex indexName="idx_dental_chart_inventory_audit_chart" tableName="dental_chart_inventory_audit">
+      <column name="chart_id"/>
+    </createIndex>
+  </changeSet>
+
+</databaseChangeLog>
