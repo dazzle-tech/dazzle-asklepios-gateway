@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="20261111180001_dental_chart_setup_snapshot" author="Faroukdhelea">
+    <addColumn tableName="dental_chart">
+      <column name="numbering_system" type="varchar(50)" defaultValue="UNIVERSAL">
+        <constraints nullable="false"/>
+      </column>
+      <column name="age_rule_id" type="bigint"/>
+    </addColumn>
+  </changeSet>
+
+</databaseChangeLog>

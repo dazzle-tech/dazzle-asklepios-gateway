@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="FA000000000075" author="Faroukdhelea">
+    <addColumn tableName="dental_planned_treatment_status_log">
+      <column name="previous_status" type="varchar(30)"/>
+      <column name="new_status" type="varchar(30)"/>
+      <column name="reason" type="text"/>
+    </addColumn>
+  </changeSet>
+
+</databaseChangeLog>

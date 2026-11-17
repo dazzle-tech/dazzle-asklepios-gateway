@@ -1405,6 +1405,12 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/patientFamilyEducation/2026110913_patient_family_education.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/20261110140001_H_dental_chart_age_rule.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/20261111160001_H_dental_chart_age_rule_numbering.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalChart/20261111180001_dental_chart_setup_snapshot.xml"
+           relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1794293018_R_claim_encounter_copy_original_created.xml"
             relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/2026111001_S_mobile_app_config_value_text.xml"
@@ -1428,5 +1434,24 @@
   <include file="config/liquibase/changelog/billing/2026110902_financial_documents_document_number_100.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/appUser/2026111701_add_can_collect_zero_payment.xml"
+           relativeToChangelogFile="false"/>
+
+  <include file="config/liquibase/changelog/dentalChart/1794823001_FA_dental_tooth_numbering_method.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalChart/1794823002_FA_dental_tooth_numbering_links.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalChart/1794823004_FA_dental_chart_inventory_columns.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalChart/1794823005_FA_dental_chart_inventory_audit.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalChart/1794823006_FA_dental_chart_encounter_unique.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalChart/1794823007_FA_tooth_action_carried_from.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalChart/1794823008_FA_tooth_action_source_planned_treatment.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalChart/1794823009_FA_dental_planned_treatment_cdt_optional.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalChart/1794823010_FA_dental_planned_treatment_status_log_reason.xml"
            relativeToChangelogFile="false"/>
 </databaseChangeLog>
