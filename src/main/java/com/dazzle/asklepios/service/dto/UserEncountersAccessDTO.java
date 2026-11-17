@@ -13,6 +13,7 @@ public class UserEncountersAccessDTO implements Serializable {
     private boolean canReturnClaimForResubmit;
     private boolean canCancelServiceBeforeInvoice;
     private boolean canEditSubmittedPrescription;
+    private boolean canCollectZeroPayment;
 
     public UserEncountersAccessDTO() {
     }
@@ -23,7 +24,8 @@ public class UserEncountersAccessDTO implements Serializable {
         boolean canUnCompleteEncounter,
         boolean canReturnClaimForResubmit,
         boolean canCancelServiceBeforeInvoice,
-        boolean canEditSubmittedPrescription
+        boolean canEditSubmittedPrescription,
+        boolean canCollectZeroPayment
     ) {
         this.allowOngoingVisit = allowOngoingVisit;
         this.canUnDischargeUrgentCare = canUnDischargeUrgentCare;
@@ -31,5 +33,6 @@ public class UserEncountersAccessDTO implements Serializable {
         this.canReturnClaimForResubmit = canReturnClaimForResubmit;
         this.canCancelServiceBeforeInvoice = canCancelServiceBeforeInvoice;
         this.canEditSubmittedPrescription = canEditSubmittedPrescription;
+        this.canCollectZeroPayment = canCollectZeroPayment;
     }
 }

@@ -1427,4 +1427,6 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/billing/2026110902_financial_documents_document_number_100.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/appUser/2026111701_add_can_collect_zero_payment.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>

@@ -103,6 +103,9 @@ public class User extends AbstractAuditingEntity<Long> implements Serializable {
     @Column("can_edit_submitted_prescription")
     private boolean canEditSubmittedPrescription;
 
+    @Column("can_collect_zero_payment")
+    private boolean canCollectZeroPayment;
+
     @Column("gender")
     private Gender gender;
 
