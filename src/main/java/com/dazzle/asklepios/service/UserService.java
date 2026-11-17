@@ -106,7 +106,8 @@ public class UserService {
                 user.isCanUnCompleteEncounter(),
                 user.isCanReturnClaimForResubmit(),
                 user.isCanCancelServiceBeforeInvoice(),
-                user.isCanEditSubmittedPrescription()
+                user.isCanEditSubmittedPrescription(),
+                user.isCanCollectZeroPayment()
             ));
     }
 
@@ -125,6 +126,7 @@ public class UserService {
                 user.setCanReturnClaimForResubmit(accessDTO.isCanReturnClaimForResubmit());
                 user.setCanCancelServiceBeforeInvoice(accessDTO.isCanCancelServiceBeforeInvoice());
                 user.setCanEditSubmittedPrescription(accessDTO.isCanEditSubmittedPrescription());
+                user.setCanCollectZeroPayment(accessDTO.isCanCollectZeroPayment());
 
                 return user;
             })
@@ -135,7 +137,8 @@ public class UserService {
                 user.isCanUnCompleteEncounter(),
                 user.isCanReturnClaimForResubmit(),
                 user.isCanCancelServiceBeforeInvoice(),
-                user.isCanEditSubmittedPrescription()
+                user.isCanEditSubmittedPrescription(),
+                user.isCanCollectZeroPayment()
             ));
     }
 
