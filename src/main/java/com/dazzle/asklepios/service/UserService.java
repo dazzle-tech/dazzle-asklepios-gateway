@@ -79,9 +79,45 @@ public class UserService {
 
     @Transactional
     public Mono<User> requestPasswordReset(String mail) {
-        return userRepository
-            .findOneByEmailIgnoreCase(mail)
+        return startPasswordReset(userRepository.findOneByEmailIgnoreCase(mail));
+    }
+
+    /**
+     * Self-service "forgot password" from the sign-in screen: finds the user by user name
+     * (or by email when the value contains '@') and emails a reset link to the user's registered email.
+     *
+     * @return the masked registered email, or empty when no active user with an email matches.
+     */
+    @Transactional
+    public Mono<String> requestPasswordResetByLogin(String login) {
+        if (login == null || login.isBlank()) {
+            return Mono.empty();
+        }
+        String value = login.trim();
+        Mono<User> user = value.contains("@")
+            ? userRepository.findOneByEmailIgnoreCase(value)
+            : userRepository.findOneByLogin(value.toLowerCase());
+        return startPasswordReset(user).map(found -> maskEmail(found.getEmail()));
+    }
+
+    /**
+     * Hides most of an email's local part: {@code hanan@gmail.com} becomes {@code ha****@gmail.com}.
+     * Local parts of 1-2 characters keep only their first character.
+     */
+    static String maskEmail(String email) {
+        int at = email.indexOf('@');
+        if (at <= 0) {
+            return "****";
+        }
+        String local = email.substring(0, at);
+        int visible = local.length() > 2 ? 2 : 1;
+        return local.substring(0, visible) + "****" + email.substring(at);
+    }
+
+    private Mono<User> startPasswordReset(Mono<User> userLookup) {
+        return userLookup
             .filter(User::isActivated)
+            .filter(user -> user.getEmail() != null && !user.getEmail().isBlank())
             .publishOn(Schedulers.boundedElastic())
             .map(user -> {
                 user.setResetKey(RandomUtil.generateResetKey());

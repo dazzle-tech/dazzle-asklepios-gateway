@@ -102,6 +102,7 @@ public class SecurityConfiguration {
                 .pathMatchers("/api/ai/v1/**").permitAll()
                 .pathMatchers("/api/account/reset-password/init").permitAll()
                 .pathMatchers("/api/account/reset-password/finish").permitAll()
+                .pathMatchers(HttpMethod.POST, "/api/account/forgot-password").permitAll()
                 .pathMatchers("/v3/api-docs").authenticated()
                 .pathMatchers(
                     HttpMethod.GET,

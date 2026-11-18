@@ -5,9 +5,11 @@ import com.dazzle.asklepios.security.SecurityUtils;
 import com.dazzle.asklepios.service.UserService;
 import com.dazzle.asklepios.service.dto.AdminUserDTO;
 import com.dazzle.asklepios.service.dto.CreatePasswordKeyValidationDTO;
+import com.dazzle.asklepios.service.dto.ForgotPasswordResponseDTO;
 import com.dazzle.asklepios.service.dto.PasswordChangeDTO;
 import com.dazzle.asklepios.web.rest.errors.EmailAlreadyUsedException;
 import com.dazzle.asklepios.web.rest.errors.InvalidPasswordException;
+import com.dazzle.asklepios.web.rest.vm.ForgotPasswordVM;
 import com.dazzle.asklepios.web.rest.vm.KeyAndPasswordVM;
 import com.dazzle.asklepios.web.rest.vm.ManagedUserVM;
 import com.dazzle.asklepios.web.rest.vm.UserBasicNameResponseVM;
@@ -135,6 +137,24 @@ public class AccountResource {
                 }
             })
             .then();
+    }
+
+    /**
+     * {@code POST   /account/forgot-password} : self-service reset from the sign-in screen.
+     * Finds the user by user name (or email) and emails a reset link to the registered email.
+     *
+     * @param request the user name (or email) typed by the user.
+     * @return the masked registered email, or {@code maskedEmail = null} when no active user with an email matches.
+     */
+    @PostMapping(path = "/account/forgot-password")
+    public Mono<ForgotPasswordResponseDTO> forgotPassword(@RequestBody ForgotPasswordVM request) {
+        return userService
+            .requestPasswordResetByLogin(request == null ? null : request.login())
+            .map(ForgotPasswordResponseDTO::new)
+            .switchIfEmpty(Mono.fromCallable(() -> {
+                LOG.warn("Forgot password requested for unknown, inactive or email-less user");
+                return new ForgotPasswordResponseDTO(null);
+            }));
     }
 
     /**
