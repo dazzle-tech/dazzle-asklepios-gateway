@@ -1454,4 +1454,6 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/dentalChart/1794823010_FA_dental_planned_treatment_status_log_reason.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/patientPrescriptionMedication/1794297981_H_patient_prescription_medications_quantity.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
