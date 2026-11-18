@@ -1435,7 +1435,6 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/appUser/2026111701_add_can_collect_zero_payment.xml"
            relativeToChangelogFile="false"/>
-
   <include file="config/liquibase/changelog/dentalChart/1794823001_FA_dental_tooth_numbering_method.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/dentalChart/1794823002_FA_dental_tooth_numbering_links.xml"
