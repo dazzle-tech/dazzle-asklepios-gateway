@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!-- Why a Waseel insurance visit had no laboratory or radiology investigation. Sent with the INP code on the claim. -->
+  <changeSet id="1795097398_B_patient_encounters_investigation_not_performed_reason" author="Batool">
+    <preConditions onFail="MARK_RAN">
+      <not><columnExists tableName="patient_encounters" columnName="investigation_not_performed_reason"/></not>
+    </preConditions>
+    <addColumn tableName="patient_encounters">
+      <column name="investigation_not_performed_reason" type="text"/>
+    </addColumn>
+  </changeSet>
+
+  <changeSet id="1795097398_B_claim_encounter_copies_investigation_not_performed_reason" author="Batool">
+    <preConditions onFail="MARK_RAN">
+      <not><columnExists tableName="claim_encounter_copies" columnName="investigation_not_performed_reason"/></not>
+    </preConditions>
+    <addColumn tableName="claim_encounter_copies">
+      <column name="investigation_not_performed_reason" type="text"/>
+    </addColumn>
+  </changeSet>
+</databaseChangeLog>

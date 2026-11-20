@@ -1462,4 +1462,6 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/dentalChart/1795008174_FA_dental_planned_treatment_discount_type.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1795097398_B_investigation_not_performed_reason.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
