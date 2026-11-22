@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="FA000000000077" author="sondos">
+    <createTable tableName="child_growth_setup">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+      <column name="scope_type" type="varchar(20)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="facility_id" type="bigint"/>
+      <column name="user_id" type="bigint"/>
+      <column name="document" type="jsonb">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addForeignKeyConstraint
+      baseTableName="child_growth_setup"
+      baseColumnNames="facility_id"
+      referencedTableName="facility"
+      referencedColumnNames="id"
+      constraintName="fk_child_growth_setup_facility"/>
+
+    <addForeignKeyConstraint
+      baseTableName="child_growth_setup"
+      baseColumnNames="user_id"
+      referencedTableName="app_user"
+      referencedColumnNames="id"
+      constraintName="fk_child_growth_setup_user"/>
+
+    <sql><![CDATA[
+      ALTER TABLE child_growth_setup
+        ADD CONSTRAINT ck_child_growth_setup_scope
+          CHECK (
+            (scope_type = 'ORGANIZATION' AND facility_id IS NULL AND user_id IS NULL)
+            OR (scope_type = 'FACILITY' AND facility_id IS NOT NULL AND user_id IS NULL)
+            OR (scope_type = 'USER' AND facility_id IS NOT NULL AND user_id IS NOT NULL)
+          );
+
+      CREATE UNIQUE INDEX ux_child_growth_setup_scope
+        ON child_growth_setup (scope_type, COALESCE(facility_id, 0), COALESCE(user_id, 0));
+      ]]></sql>
+  </changeSet>
+
+</databaseChangeLog>

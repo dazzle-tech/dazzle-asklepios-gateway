@@ -1460,4 +1460,6 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/vitalsigns/1795001638_FA_vital_sign_range.xml"
            relativeToChangelogFile="false"/>
+  <include file="/config/liquibase/changelog/childgrowth/1795001700_S_child_growth_setup.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
