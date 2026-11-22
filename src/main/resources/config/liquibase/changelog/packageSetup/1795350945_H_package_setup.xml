@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!-- Package: a fixed price for a set of items (lab, radiology, service, procedure, medication, vaccine...),
+       each with a quantity. The patient pays the full price even if some items are never ordered. -->
+  <changeSet id="1795350945-1" author="hanan253yahya">
+    <createTable tableName="package_setup">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false" primaryKeyName="pk_package_setup"/>
+      </column>
+      <column name="code" type="varchar(50)">
+        <constraints nullable="false" unique="true" uniqueConstraintName="uq_package_setup_code"/>
+      </column>
+      <column name="name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="description" type="varchar(1000)"/>
+      <column name="price" type="numeric(19,4)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+  </changeSet>
+
+  <!-- One row per item in the package. item_type uses the price list item types; source_id is the id in
+       diagnostic_test / service / procedure / brand_medication / vaccine_brands. Code and name are kept for display. -->
+  <changeSet id="1795350945-2" author="hanan253yahya">
+    <createTable tableName="package_setup_item">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false" primaryKeyName="pk_package_setup_item"/>
+      </column>
+      <column name="package_setup_id" type="bigint">
+        <constraints nullable="false"
+                     referencedTableName="package_setup"
+                     referencedColumnNames="id"
+                     foreignKeyName="fk_package_setup_item_package"
+                     deleteCascade="true"/>
+      </column>
+      <column name="item_type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="source_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="item_code" type="varchar(255)"/>
+      <column name="item_name" type="varchar(1000)"/>
+      <column name="quantity" type="int" defaultValueNumeric="1">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <addUniqueConstraint tableName="package_setup_item"
+                         columnNames="package_setup_id, item_type, source_id"
+                         constraintName="uq_package_setup_item_source"/>
+
+    <sql>alter table package_setup_item add constraint ck_package_setup_item_quantity check (quantity &gt; 0)</sql>
+    <sql>alter table package_setup add constraint ck_package_setup_price check (price &gt;= 0)</sql>
+  </changeSet>
+
+</databaseChangeLog>

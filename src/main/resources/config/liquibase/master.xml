@@ -1464,4 +1464,6 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/1795097398_B_investigation_not_performed_reason.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/packageSetup/1795350945_H_package_setup.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
