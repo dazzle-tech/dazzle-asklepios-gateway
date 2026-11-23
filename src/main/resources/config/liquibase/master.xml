@@ -1472,4 +1472,6 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/packageSetup/1795436400_H_package_price_optional_item_active.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/packageSetup/1795444800_H_package_rules.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
