@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!-- Package price is optional: the price can come later from the code linked to the package. -->
+  <changeSet id="1795436400-1" author="hanan253yahya">
+    <dropNotNullConstraint tableName="package_setup" columnName="price" columnDataType="numeric(19,4)"/>
+    <dropNotNullConstraint tableName="patient_package" columnName="package_price" columnDataType="numeric(19,4)"/>
+  </changeSet>
+
+  <!-- An item can be switched off without removing it; packages given from then on leave it out. -->
+  <changeSet id="1795436400-2" author="hanan253yahya">
+    <addColumn tableName="package_setup_item">
+      <column name="is_active" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+    </addColumn>
+  </changeSet>
+</databaseChangeLog>

@@ -1470,5 +1470,6 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/2026112301_add_discount_max_usage_per_patient.xml"
            relativeToChangelogFile="false"/>
-
+  <include file="config/liquibase/changelog/packageSetup/1795436400_H_package_price_optional_item_active.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
