@@ -1466,4 +1466,6 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/packageSetup/1795350945_H_package_setup.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/packageSetup/1795352737_H_patient_package.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!-- A package bought for a patient. Code, name and price are copied from package_setup at the time,
+       so later setup changes do not touch packages already bought. -->
+  <changeSet id="1795352737-1" author="hanan253yahya">
+    <createTable tableName="patient_package">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false" primaryKeyName="pk_patient_package"/>
+      </column>
+      <column name="patient_id" type="bigint">
+        <constraints nullable="false"
+                     referencedTableName="patients"
+                     referencedColumnNames="id"
+                     foreignKeyName="fk_patient_package_patient"/>
+      </column>
+      <!-- the visit where the package was chosen -->
+      <column name="encounter_id" type="bigint">
+        <constraints referencedTableName="patient_encounters"
+                     referencedColumnNames="id"
+                     foreignKeyName="fk_patient_package_encounter"/>
+      </column>
+      <column name="package_setup_id" type="bigint">
+        <constraints nullable="false"
+                     referencedTableName="package_setup"
+                     referencedColumnNames="id"
+                     foreignKeyName="fk_patient_package_setup"/>
+      </column>
+      <column name="package_code" type="varchar(50)"/>
+      <column name="package_name" type="varchar(255)"/>
+      <column name="package_price" type="numeric(19,4)">
+        <constraints nullable="false"/>
+      </column>
+      <!-- ACTIVE / COMPLETED / CANCELLED -->
+      <column name="status" type="varchar(30)" defaultValue="ACTIVE">
+        <constraints nullable="false"/>
+      </column>
+      <column name="cancel_reason" type="varchar(500)"/>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+    <createIndex tableName="patient_package" indexName="ix_patient_package_patient">
+      <column name="patient_id"/>
+      <column name="status"/>
+    </createIndex>
+    <createIndex tableName="patient_package" indexName="ix_patient_package_encounter">
+      <column name="encounter_id"/>
+    </createIndex>
+  </changeSet>
+
+  <!-- The items of the bought package with the quantity left. remaining = quantity_total - quantity_used. -->
+  <changeSet id="1795352737-2" author="hanan253yahya">
+    <createTable tableName="patient_package_item">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false" primaryKeyName="pk_patient_package_item"/>
+      </column>
+      <column name="patient_package_id" type="bigint">
+        <constraints nullable="false"
+                     referencedTableName="patient_package"
+                     referencedColumnNames="id"
+                     foreignKeyName="fk_patient_package_item_package"
+                     deleteCascade="true"/>
+      </column>
+      <!-- the setup line it was copied from; kept for reference only, no foreign key because setup items are
+           replaced when a package is edited -->
+      <column name="package_setup_item_id" type="bigint"/>
+      <column name="item_type" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="source_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="item_code" type="varchar(255)"/>
+      <column name="item_name" type="varchar(1000)"/>
+      <column name="quantity_total" type="int">
+        <constraints nullable="false"/>
+      </column>
+      <column name="quantity_used" type="int" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+    <createIndex tableName="patient_package_item" indexName="ix_patient_package_item_package">
+      <column name="patient_package_id"/>
+    </createIndex>
+    <sql>alter table patient_package_item add constraint ck_patient_package_item_qty
+      check (quantity_total &gt; 0 and quantity_used &gt;= 0 and quantity_used &lt;= quantity_total)</sql>
+  </changeSet>
+
+  <!-- Every time an item is ordered from the package: which visit, how many and which order it made.
+       A reversed row (order cancelled) gives the quantity back. -->
+  <changeSet id="1795352737-3" author="hanan253yahya">
+    <createTable tableName="patient_package_usage">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false" primaryKeyName="pk_patient_package_usage"/>
+      </column>
+      <column name="patient_package_id" type="bigint">
+        <constraints nullable="false"
+                     referencedTableName="patient_package"
+                     referencedColumnNames="id"
+                     foreignKeyName="fk_patient_package_usage_package"
+                     deleteCascade="true"/>
+      </column>
+      <column name="patient_package_item_id" type="bigint">
+        <constraints nullable="false"
+                     referencedTableName="patient_package_item"
+                     referencedColumnNames="id"
+                     foreignKeyName="fk_patient_package_usage_item"
+                     deleteCascade="true"/>
+      </column>
+      <column name="encounter_id" type="bigint">
+        <constraints nullable="false"
+                     referencedTableName="patient_encounters"
+                     referencedColumnNames="id"
+                     foreignKeyName="fk_patient_package_usage_encounter"/>
+      </column>
+      <column name="quantity" type="int">
+        <constraints nullable="false"/>
+      </column>
+      <!-- where the order was made (same values as patient_services_and_products.service_source) and its id -->
+      <column name="order_source" type="varchar(50)"/>
+      <column name="order_id" type="bigint"/>
+      <!-- USED / REVERSED -->
+      <column name="status" type="varchar(30)" defaultValue="USED">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+    <createIndex tableName="patient_package_usage" indexName="ix_patient_package_usage_item">
+      <column name="patient_package_item_id"/>
+    </createIndex>
+    <createIndex tableName="patient_package_usage" indexName="ix_patient_package_usage_encounter">
+      <column name="encounter_id"/>
+    </createIndex>
+    <sql>alter table patient_package_usage add constraint ck_patient_package_usage_qty check (quantity &gt; 0)</sql>
+  </changeSet>
+
+</databaseChangeLog>
