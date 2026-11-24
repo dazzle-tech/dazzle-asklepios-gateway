@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="2026112403-add-discount-status" author="sondos">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <columnExists tableName="discount" columnName="status"/>
+      </not>
+    </preConditions>
+    <addColumn tableName="discount">
+      <column name="status" type="varchar(20)" defaultValue="ACTIVE">
+        <constraints nullable="false"/>
+      </column>
+    </addColumn>
+  </changeSet>
+
+  <changeSet id="2026112403-backfill-discount-status" author="sondos">
+    <preConditions onFail="MARK_RAN">
+      <columnExists tableName="discount" columnName="status"/>
+    </preConditions>
+    <sql>
+      UPDATE discount
+         SET status = CASE
+                        WHEN active IS TRUE THEN 'ACTIVE'
+                        ELSE 'INACTIVE'
+                      END;
+
+      UPDATE discount
+         SET status = 'EXPIRED',
+             active = FALSE,
+             is_default = FALSE
+       WHERE valid_to IS NOT NULL
+         AND valid_to &lt; CURRENT_DATE;
+    </sql>
+  </changeSet>
+
+</databaseChangeLog>

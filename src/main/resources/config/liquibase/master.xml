@@ -1478,6 +1478,12 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/2026112402_drop_discount_approval_user_column.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/2026112403_discount_status.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/2026112404_package_discount.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/2026112405_package_item_discount.xml"
+           relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/packageSetup/1795436400_H_package_price_optional_item_active.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/packageSetup/1795444800_H_package_rules.xml"
