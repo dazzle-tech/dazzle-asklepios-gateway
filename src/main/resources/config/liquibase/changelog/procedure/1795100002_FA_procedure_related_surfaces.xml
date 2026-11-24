@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="FA000000000078" author="Faroukdhelea">
+    <preConditions onFail="MARK_RAN" onError="HALT">
+      <tableExists schemaName="public" tableName="procedure"/>
+      <not>
+        <columnExists schemaName="public" tableName="procedure" columnName="related_surfaces"/>
+      </not>
+    </preConditions>
+    <addColumn schemaName="public" tableName="procedure">
+      <column name="related_surfaces" type="varchar(255)"/>
+    </addColumn>
+  </changeSet>
+
+</databaseChangeLog>
