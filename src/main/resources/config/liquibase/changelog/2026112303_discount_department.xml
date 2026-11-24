@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="2026112303-discount-department" author="sondos">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <tableExists tableName="discount_department"/>
+      </not>
+    </preConditions>
+
+    <createTable tableName="discount_department">
+      <column name="discount_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="department_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+
+    <addPrimaryKey
+      tableName="discount_department"
+      columnNames="discount_id, department_id"
+      constraintName="pk_discount_department"/>
+
+    <addForeignKeyConstraint
+      constraintName="fk_discount_department_discount"
+      baseTableName="discount_department"
+      baseColumnNames="discount_id"
+      referencedTableName="discount"
+      referencedColumnNames="id"
+      onDelete="CASCADE"/>
+
+    <addForeignKeyConstraint
+      constraintName="fk_discount_department_department"
+      baseTableName="discount_department"
+      baseColumnNames="department_id"
+      referencedTableName="department"
+      referencedColumnNames="id"/>
+
+    <createIndex tableName="discount_department" indexName="idx_discount_department_department">
+      <column name="department_id"/>
+    </createIndex>
+  </changeSet>
+
+</databaseChangeLog>

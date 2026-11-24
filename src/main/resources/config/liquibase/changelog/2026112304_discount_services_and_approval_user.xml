@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="2026112304-discount-approval-user" author="sondos">
+    <validCheckSum>ANY</validCheckSum>
+    <preConditions onFail="MARK_RAN">
+      <columnExists tableName="discount" columnName="approval_user_id"/>
+    </preConditions>
+    <comment>approval_user_id is not stored on discount; approval users use discount_approval_user</comment>
+  </changeSet>
+
+  <changeSet id="2026112304-discount-service" author="sondos">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <tableExists tableName="discount_service"/>
+      </not>
+    </preConditions>
+
+    <createTable tableName="discount_service">
+      <column name="discount_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="service_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+
+    <addPrimaryKey
+      tableName="discount_service"
+      columnNames="discount_id, service_id"
+      constraintName="pk_discount_service"/>
+
+    <addForeignKeyConstraint
+      constraintName="fk_discount_service_discount"
+      baseTableName="discount_service"
+      baseColumnNames="discount_id"
+      referencedTableName="discount"
+      referencedColumnNames="id"
+      onDelete="CASCADE"/>
+
+    <addForeignKeyConstraint
+      constraintName="fk_discount_service_service"
+      baseTableName="discount_service"
+      baseColumnNames="service_id"
+      referencedTableName="service"
+      referencedColumnNames="id"/>
+
+    <createIndex tableName="discount_service" indexName="idx_discount_service_service">
+      <column name="service_id"/>
+    </createIndex>
+  </changeSet>
+
+</databaseChangeLog>

@@ -1470,6 +1470,14 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/2026112301_add_discount_max_usage_per_patient.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/2026112303_discount_department.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/2026112304_discount_services_and_approval_user.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/2026112401_discount_approval_users.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/2026112402_drop_discount_approval_user_column.xml"
+           relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/packageSetup/1795436400_H_package_price_optional_item_active.xml"
            relativeToChangelogFile="false"/>
 </databaseChangeLog>

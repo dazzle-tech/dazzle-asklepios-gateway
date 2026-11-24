@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="2026112401-discount-approval-users" author="sondos">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <tableExists tableName="discount_approval_user"/>
+      </not>
+    </preConditions>
+
+    <createTable tableName="discount_approval_user">
+      <column name="discount_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="user_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+
+    <addPrimaryKey
+      tableName="discount_approval_user"
+      columnNames="discount_id, user_id"
+      constraintName="pk_discount_approval_user"/>
+
+    <addForeignKeyConstraint
+      constraintName="fk_discount_approval_user_discount"
+      baseTableName="discount_approval_user"
+      baseColumnNames="discount_id"
+      referencedTableName="discount"
+      referencedColumnNames="id"
+      onDelete="CASCADE"/>
+
+    <addForeignKeyConstraint
+      constraintName="fk_discount_approval_user_user"
+      baseTableName="discount_approval_user"
+      baseColumnNames="user_id"
+      referencedTableName="app_user"
+      referencedColumnNames="id"/>
+
+    <createIndex tableName="discount_approval_user" indexName="idx_discount_approval_user_user">
+      <column name="user_id"/>
+    </createIndex>
+  </changeSet>
+
+  <changeSet id="2026112401-move-discount-approval-user" author="sondos">
+    <validCheckSum>ANY</validCheckSum>
+    <preConditions onFail="MARK_RAN">
+      <columnExists tableName="discount" columnName="approval_user_id"/>
+    </preConditions>
+
+    <sql>
+      INSERT INTO discount_approval_user (discount_id, user_id)
+      SELECT d.id, d.approval_user_id
+      FROM discount d
+      WHERE d.approval_user_id IS NOT NULL
+        AND NOT EXISTS (
+          SELECT 1
+          FROM discount_approval_user existing
+          WHERE existing.discount_id = d.id
+            AND existing.user_id = d.approval_user_id
+        )
+    </sql>
+  </changeSet>
+
+</databaseChangeLog>
