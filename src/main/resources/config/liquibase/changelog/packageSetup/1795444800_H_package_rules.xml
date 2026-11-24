@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!-- Validity dates and departments of a package. all_departments = true means it can be used in any department. -->
+  <changeSet id="1795444800-1" author="hanan253yahya">
+    <addColumn tableName="package_setup">
+      <column name="valid_from" type="date"/>
+      <column name="valid_to" type="date"/>
+      <column name="all_departments" type="boolean" defaultValueBoolean="true">
+        <constraints nullable="false"/>
+      </column>
+    </addColumn>
+    <sql>alter table package_setup add constraint ck_package_setup_valid_dates check (valid_to is null or valid_from is null or valid_to &gt;= valid_from)</sql>
+
+    <createTable tableName="package_setup_department">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="package_setup_id" type="bigint">
+        <constraints nullable="false"
+                     references="package_setup(id)"
+                     foreignKeyName="fk_package_setup_department_package"
+                     deleteCascade="true"/>
+      </column>
+      <column name="department_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+    <addUniqueConstraint tableName="package_setup_department" columnNames="package_setup_id, department_id"
+                         constraintName="ux_package_setup_department"/>
+  </changeSet>
+
+  <!-- Category items: a whole item type (e.g. any LABORATORY test) instead of one item, so source_id is empty.
+       quantity = how many orders of that type the package covers; max_repeat = how many times the same item
+       may be counted (empty = no limit). discount_percent is the discount for the item. -->
+  <changeSet id="1795444800-2" author="hanan253yahya">
+    <addColumn tableName="package_setup_item">
+      <column name="is_category" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="max_repeat" type="int"/>
+      <column name="discount_percent" type="numeric(5,2)"/>
+    </addColumn>
+    <dropNotNullConstraint tableName="package_setup_item" columnName="source_id" columnDataType="bigint"/>
+    <sql>alter table package_setup_item add constraint ck_package_setup_item_source check (is_category or source_id is not null)</sql>
+    <sql>alter table package_setup_item add constraint ck_package_setup_item_repeat check (max_repeat is null or max_repeat &gt; 0)</sql>
+    <sql>alter table package_setup_item add constraint ck_package_setup_item_discount check (discount_percent is null or (discount_percent &gt;= 0 and discount_percent &lt;= 100))</sql>
+    <sql>create unique index ux_package_setup_item_category on package_setup_item (package_setup_id, item_type) where is_category</sql>
+  </changeSet>
+
+  <!-- The patient's copy keeps the same rules; a usage remembers which item was actually ordered. -->
+  <changeSet id="1795444800-3" author="hanan253yahya">
+    <addColumn tableName="patient_package_item">
+      <column name="is_category" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="max_repeat" type="int"/>
+      <column name="discount_percent" type="numeric(5,2)"/>
+    </addColumn>
+    <dropNotNullConstraint tableName="patient_package_item" columnName="source_id" columnDataType="bigint"/>
+    <addColumn tableName="patient_package_usage">
+      <column name="source_id" type="bigint"/>
+    </addColumn>
+  </changeSet>
+</databaseChangeLog>
