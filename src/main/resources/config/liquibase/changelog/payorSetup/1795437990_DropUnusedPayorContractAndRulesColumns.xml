@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!--
+    The payor contract period (start_date, expiry_date, renewable) and billing rules
+    (allow_partial_coverage, accept_copay, accept_deductibles, allow_package_pricing,
+    allow_drg_billing, force_preapproval) were stored but never read by any service.
+    Coverage now comes from coverage contracts and the Waseel eligibility benefit rules.
+
+    reports.vwpayor selects these columns, so it is dropped first and recreated without them.
+  -->
+  <changeSet id="1795437990-drop-unused-payor-contract-and-rules-columns" author="dazzle">
+    <sql splitStatements="false">
+      DROP VIEW IF EXISTS reports.vwpayor;
+
+      ALTER TABLE public.payor
+        DROP COLUMN IF EXISTS start_date,
+        DROP COLUMN IF EXISTS expiry_date,
+        DROP COLUMN IF EXISTS renewable,
+        DROP COLUMN IF EXISTS allow_partial_coverage,
+        DROP COLUMN IF EXISTS accept_copay,
+        DROP COLUMN IF EXISTS accept_deductibles,
+        DROP COLUMN IF EXISTS allow_package_pricing,
+        DROP COLUMN IF EXISTS allow_drg_billing,
+        DROP COLUMN IF EXISTS force_preapproval;
+
+      CREATE VIEW reports.vwpayor AS
+      SELECT
+        p.id,
+        p.code,
+        p.name,
+        p.category,
+        p.address,
+        p.phone,
+        p.email,
+        p.contract_manager_contact,
+        p.is_active,
+        p.created_date,
+        p.created_by,
+        p.last_modified_by,
+        p.last_modified_date,
+        p.nphies_id,
+        p.waseel_payer_id,
+        p.tpa_nphies_id,
+        p.is_waseel_enabled
+      FROM public.payor p;
+
+      GRANT SELECT ON reports.vwpayor TO report_user;
+    </sql>
+
+    <rollback>
+      <sql splitStatements="false">
+        DROP VIEW IF EXISTS reports.vwpayor;
+
+        ALTER TABLE public.payor
+          ADD COLUMN IF NOT EXISTS start_date DATE,
+          ADD COLUMN IF NOT EXISTS expiry_date DATE,
+          ADD COLUMN IF NOT EXISTS renewable BOOLEAN NOT NULL DEFAULT FALSE,
+          ADD COLUMN IF NOT EXISTS allow_partial_coverage BOOLEAN NOT NULL DEFAULT FALSE,
+          ADD COLUMN IF NOT EXISTS accept_copay BOOLEAN NOT NULL DEFAULT FALSE,
+          ADD COLUMN IF NOT EXISTS accept_deductibles BOOLEAN NOT NULL DEFAULT FALSE,
+          ADD COLUMN IF NOT EXISTS allow_package_pricing BOOLEAN NOT NULL DEFAULT FALSE,
+          ADD COLUMN IF NOT EXISTS allow_drg_billing BOOLEAN NOT NULL DEFAULT FALSE,
+          ADD COLUMN IF NOT EXISTS force_preapproval BOOLEAN NOT NULL DEFAULT FALSE;
+
+        CREATE VIEW reports.vwpayor AS
+        SELECT
+          p.id, p.code, p.name, p.category, p.address, p.phone, p.email,
+          p.contract_manager_contact, p.start_date, p.expiry_date, p.renewable,
+          p.allow_partial_coverage, p.accept_copay, p.accept_deductibles,
+          p.allow_package_pricing, p.allow_drg_billing, p.force_preapproval,
+          p.is_active, p.created_date, p.created_by, p.last_modified_by,
+          p.last_modified_date, p.nphies_id, p.waseel_payer_id, p.tpa_nphies_id,
+          p.is_waseel_enabled
+        FROM public.payor p;
+
+        GRANT SELECT ON reports.vwpayor TO report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>
