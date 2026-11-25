@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!-- override_default_service = true: when the package is given to a visit, the visit's default service is cancelled. -->
+  <changeSet id="1795529100-1" author="hanan253yahya">
+    <addColumn tableName="package_setup">
+      <column name="override_default_service" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+    </addColumn>
+  </changeSet>
+
+  <!-- Copied to the patient's package when it is given, so the visit's payment step knows to leave the default service out. -->
+  <changeSet id="1795529100-2" author="hanan253yahya">
+    <addColumn tableName="patient_package">
+      <column name="override_default_service" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+    </addColumn>
+  </changeSet>
+</databaseChangeLog>

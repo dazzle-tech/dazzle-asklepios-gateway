@@ -1488,4 +1488,10 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/packageSetup/1795444800_H_package_rules.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/packageSetup/1795529100_H_package_override_default_service.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/packageSetup/1795531000_H_package_item_discount_link.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/packageSetup/1795586700_H_package_usage_from_panel.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>

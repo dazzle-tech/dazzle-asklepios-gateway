@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!-- from_panel = true: the order was made from the package panel, not from the item's own screen
+       (shown in the package history). Services ordered from the panel are already marked by order_source PACKAGE. -->
+  <changeSet id="1795586700-1" author="hanan253yahya">
+    <addColumn tableName="patient_package_usage">
+      <column name="from_panel" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+    </addColumn>
+    <sql>update patient_package_usage set from_panel = true where order_source = 'PACKAGE'</sql>
+  </changeSet>
+</databaseChangeLog>

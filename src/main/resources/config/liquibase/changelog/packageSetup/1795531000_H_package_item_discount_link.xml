@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!-- An item is discounted by linking it to a discount setup record (package_setup_item.discount_id),
+       so the separate discount percent on package lines is removed. -->
+  <changeSet id="1795531000-1" author="hanan253yahya">
+    <sql>alter table package_setup_item drop constraint if exists ck_package_setup_item_discount</sql>
+    <dropColumn tableName="package_setup_item" columnName="discount_percent"/>
+  </changeSet>
+
+  <!-- The patient's package keeps the discount its line was linked to when it was given. -->
+  <changeSet id="1795531000-2" author="hanan253yahya">
+    <dropColumn tableName="patient_package_item" columnName="discount_percent"/>
+    <addColumn tableName="patient_package_item">
+      <column name="discount_id" type="bigint"/>
+    </addColumn>
+  </changeSet>
+</databaseChangeLog>
