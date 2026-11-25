@@ -14,7 +14,7 @@
 
     reports.vwpayor selects these columns, so it is dropped first and recreated without them.
   -->
-  <changeSet id="1795437990-drop-unused-payor-contract-and-rules-columns" author="dazzle">
+  <changeSet id="1795437990-drop-unused-payor-contract-and-rules-columns" author="Batool_Bushra">
     <sql splitStatements="false">
       DROP VIEW IF EXISTS reports.vwpayor;
 

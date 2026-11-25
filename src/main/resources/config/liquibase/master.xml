@@ -1475,5 +1475,5 @@
   <include file="config/liquibase/changelog/procedure/1795100002_FA_procedure_related_surfaces.xml"
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/dentalChart/1795100001_FA_dental_planned_treatment_multi_surface.xml"
-
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
