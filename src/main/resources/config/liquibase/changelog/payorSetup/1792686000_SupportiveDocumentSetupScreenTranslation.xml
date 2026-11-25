@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+      http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!--
+    Screen registration for Supportive Document Setup follows the same pattern as
+    comparable Setup pages (e.g. PAYER / BILLING_CONFIGURATION):
+    - Screen enum value in setup-service (SUPPORTIVE_DOCUMENT_SETUP)
+    - Optional language_translation labels in Gateway
+    - Role grants are assigned manually via Role Management (not seeded broadly)
+  -->
+  <changeSet id="FA00000047" author="Faroukdhelea">
+    <preConditions onFail="MARK_RAN">
+      <tableExists tableName="language_translation"/>
+    </preConditions>
+
+    <sql>
+      INSERT INTO language_translation
+      (lang_key, translation_key, translation_text, verified, translated)
+      VALUES
+        ('en', 'SUPPORTIVE_DOCUMENT_SETUP', 'Supportive Document Setup', FALSE, FALSE),
+        ('arb', 'SUPPORTIVE_DOCUMENT_SETUP', 'إعداد المستندات الداعمة', FALSE, FALSE)
+      ON CONFLICT (lang_key, translation_key) DO NOTHING;
+    </sql>
+  </changeSet>
+
+</databaseChangeLog>
