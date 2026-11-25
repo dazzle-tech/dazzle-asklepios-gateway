@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="FA000000000076" author="Faroukdhelea">
+    <createTable tableName="vital_sign_range">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+      <column name="vital_sign_key" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="unit" type="varchar(30)"/>
+      <column name="age_from_months" type="int" defaultValueNumeric="0">
+        <constraints nullable="false"/>
+      </column>
+      <column name="age_to_months" type="int"/>
+      <column name="normal_min" type="numeric(10,2)"/>
+      <column name="normal_max" type="numeric(10,2)"/>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_modified_by" type="varchar(50)"/>
+      <column name="last_modified_date" type="timestamp"/>
+    </createTable>
+
+    <sql><![CDATA[
+      ALTER TABLE vital_sign_range
+        ADD CONSTRAINT ck_vital_sign_range_min_max
+          CHECK (normal_min IS NULL OR normal_max IS NULL OR normal_min <= normal_max),
+        ADD CONSTRAINT ck_vital_sign_range_age
+          CHECK (age_from_months >= 0
+                 AND (age_to_months IS NULL OR age_to_months > age_from_months));
+      ]]></sql>
+
+    <createIndex indexName="idx_vital_sign_range_key_age" tableName="vital_sign_range">
+      <column name="vital_sign_key"/>
+      <column name="age_from_months"/>
+    </createIndex>
+  </changeSet>
+
+</databaseChangeLog>

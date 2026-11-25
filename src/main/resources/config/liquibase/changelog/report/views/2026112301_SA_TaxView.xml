@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet id="create-report-tax-view" author="sondos">
+    <sql splitStatements="false">
+      CREATE OR REPLACE VIEW reports.vwtax AS
+      SELECT
+        t.id,
+        t.facility_id,
+        t.code,
+        t.name,
+        t.tax_type,
+        t.percentage,
+        t.fixed_amount,
+        t.currency,
+        t.calculation_type,
+        t.applicable_on,
+        t.valid_from,
+        t.valid_to,
+        t.is_default,
+        t.active,
+        t.description,
+        t.created_by,
+        t.created_date,
+        t.last_modified_by,
+        t.last_modified_date,
+        t.citizen_category,
+        t.apply_on_patient_copayment,
+        t.apply_on_claim_share
+      FROM public.tax t;
+    </sql>
+
+    <rollback>
+      <sql>
+        DROP VIEW IF EXISTS reports.vwtax;
+      </sql>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="grant-report-tax-view-access" author="sondos">
+    <sql>
+      GRANT USAGE ON SCHEMA reports TO report_user;
+    </sql>
+
+    <sql>
+      GRANT SELECT ON reports.vwtax TO report_user;
+    </sql>
+
+    <rollback>
+      <sql>
+        REVOKE SELECT ON reports.vwtax FROM report_user;
+      </sql>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

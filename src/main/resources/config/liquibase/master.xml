@@ -1460,4 +1460,20 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/payorSetup/1795437990_DropUnusedPayorContractAndRulesColumns.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/vitalsigns/1795001638_FA_vital_sign_range.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalChart/1795008174_FA_dental_planned_treatment_discount_type.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/1795097398_B_investigation_not_performed_reason.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/2026112301_SA_TaxView.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/2026112302_SA_BillingChargeLineView_add_calculated_tax_amount.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/report/views/2026112303_SA_ClaimRequestView_add_settlement_no.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/procedure/1795100002_FA_procedure_related_surfaces.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/dentalChart/1795100001_FA_dental_planned_treatment_multi_surface.xml"
+
 </databaseChangeLog>
