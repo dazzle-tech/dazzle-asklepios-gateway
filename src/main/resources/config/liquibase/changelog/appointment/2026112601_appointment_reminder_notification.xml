@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="2026112601_appointment_reminder_notification" author="sondos">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <columnExists tableName="appointment" columnName="reminder_notification_sent"/>
+      </not>
+    </preConditions>
+
+    <addColumn tableName="appointment">
+      <column name="reminder_notification_sent" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="reminder_notification_sent_at" type="timestamp"/>
+    </addColumn>
+  </changeSet>
+
+</databaseChangeLog>

@@ -1476,4 +1476,6 @@
            relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/dentalChart/1795100001_FA_dental_planned_treatment_multi_surface.xml"
            relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/appointment/2026112601_appointment_reminder_notification.xml"
+           relativeToChangelogFile="false"/>
 </databaseChangeLog>
